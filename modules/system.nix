@@ -8,6 +8,7 @@
   time.timeZone = "UTC";
   i18n.extraLocaleSettings = {
     LC_TIME = "en_DK.UTF-8";
+    LC_MEASUREMENT = "en_AU.UTF-8";
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

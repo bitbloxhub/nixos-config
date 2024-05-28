@@ -34,6 +34,8 @@
     enableCompletion = true;
     bashrcExtra = ''
     export LS_COLORS=$(vivid generate catppuccin-mocha)
+    export LANGUAGE=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
     '';
   };
 
