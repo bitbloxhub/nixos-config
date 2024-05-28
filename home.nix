@@ -6,13 +6,13 @@
   home.username = "jonahgam";
   home.homeDirectory = "/home/jonahgam";
 
-  home.packages = [
-    pkgs.floorp
-    pkgs.keepassxc
-    pkgs.fira-code
-    pkgs.htop
-    pkgs.vivid
-    pkgs.eza
+  home.packages = with pkgs; [
+    floorp
+    keepassxc
+    fira-code
+    htop
+    vivid
+    eza
   ];
 
   catppuccin.enable = true;
