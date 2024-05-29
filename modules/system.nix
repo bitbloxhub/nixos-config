@@ -25,4 +25,6 @@
     extraGroups = [ "wheel" ];
     hashedPasswordFile = "/etc/nixos/passwordfile";
   };
+
+  security.polkit.enable = true;
 }
