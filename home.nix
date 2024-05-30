@@ -32,6 +32,9 @@
   programs.bash = {
     enable = true;
     enableCompletion = true;
+    shellAliases = {
+      kitty = "LIBGL_ALWAYS_SOFTWARE=true kitty"; # Virtualbox 3D Acceleration breaks kitty
+    };
     bashrcExtra = ''
     export LS_COLORS=$(vivid generate catppuccin-mocha)
     export LANGUAGE=en_US.UTF-8
