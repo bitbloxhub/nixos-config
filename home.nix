@@ -69,9 +69,12 @@
     };
   };
 
+  services.dunst.enable = true;
+
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
+    exec-once = [ "dunst" ];
     bind =
       [
         "$mod, T, exec, foot"
