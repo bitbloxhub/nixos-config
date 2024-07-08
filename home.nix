@@ -20,7 +20,7 @@
   catppuccin.accent = "green";
 
   qt = {
-    enable = true;
+    enable = false;
     style = {
       package = pkgs.catppuccin-kde.override {
         flavour = [ "mocha" ];
@@ -71,7 +71,7 @@
 
   services.dunst.enable = true;
 
-  wayland.windowManager.hyprland.enable = true;
+  /*wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
     exec-once = [ "dunst" ];
@@ -99,7 +99,7 @@
     settings = {
       monitor = ",preferred,auto,1";
     };
-  };
+  };*/
 
   programs.kitty = {
     enable = true;
@@ -108,11 +108,18 @@
     theme = "Catppuccin-Mocha";
     extraConfig = ''
     confirm_os_window_close 0
+    linux_display_server x11
     '';
   };
 
   programs.foot.enable = true;
   programs.wezterm.enable = true;
+  programs.wezterm.extraConfig = ''
+  return {
+    enable_wayland = false,
+    color_scheme = "Catppuccin Mocha"
+  }
+  '';
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

@@ -12,7 +12,6 @@
 
       ../../modules/system.nix
       ../../modules/plasma6.nix
-      ../../modules/hyprland.nix
     ];
 
   # Use the systemd-boot EFI boot loader.

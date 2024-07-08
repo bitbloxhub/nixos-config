@@ -10,13 +10,12 @@
     };
   };
 
-  outputs = { self, nixpkgs, catppuccin, disko, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, catppuccin, home-manager, ... }@inputs: {
     nixosConfigurations.nixos-bill = nixpkgs.lib.nixosSystem {
       system = "x86_64_linux";
       modules = [
         catppuccin.nixosModules.catppuccin
         ./hosts/nixos-bill
-        disko.nixosModules.disko
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
