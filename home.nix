@@ -13,6 +13,7 @@
     htop
     vivid
     eza
+    alacritty
   ];
 
   catppuccin.enable = true;

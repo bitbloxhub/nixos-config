@@ -12,7 +12,7 @@
 
       ../../modules/system.nix
       ../../modules/plasma6.nix
-      ../../modules/cosmic.nix
+      ../../modules/niri.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
