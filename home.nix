@@ -34,9 +34,9 @@
     enable = true;
     enableCompletion = true;
     bashrcExtra = ''
-    export LS_COLORS=$(vivid generate catppuccin-mocha)
-    export LANGUAGE=en_US.UTF-8
-    export LC_ALL=en_US.UTF-8
+      export LS_COLORS=$(vivid generate catppuccin-mocha)
+      export LANGUAGE=en_US.UTF-8
+      export LC_ALL=en_US.UTF-8
     '';
   };
 
@@ -76,8 +76,8 @@
     font.size = 12;
     theme = "Catppuccin-Mocha";
     extraConfig = ''
-    confirm_os_window_close 0
-    linux_display_server x11
+      confirm_os_window_close 0
+      linux_display_server x11
     '';
   };
 
