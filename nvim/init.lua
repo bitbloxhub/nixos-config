@@ -278,6 +278,55 @@ now(function()
 	})
 	vim.g.molten_image_provider = "image.nvim"
 end)
+now(function()
+	add({ source = "goerz/jupytext.nvim" })
+	require("jupytext").setup({
+		format = "qmd",
+		filetype = function(_, format, metadata)
+			if format == "markdown" then
+				return format
+			elseif format == "qmd" then
+				return "markdown"
+			elseif format == "ipynb" then
+				return "json"
+			elseif format:sub(1, 2) == "md" then
+				return "markdown"
+			elseif format:sub(1, 3) == "Rmd" then
+				return "markdown"
+			else
+				if metadata and metadata.kernelspec then
+					return metadata.kernelspec.language
+				else
+					return ""
+				end
+			end
+		end,
+	})
+end)
+now(function()
+	add({ source = "jmbuhr/otter.nvim" })
+	require("otter").setup()
+end)
+now(function()
+	add({ source = "quarto-dev/quarto-nvim" })
+	require("quarto").setup({
+		lspFeatures = {
+			enabled = true,
+			chunks = "all",
+			diagnostics = {
+				enabled = true,
+				triggers = { "BufWritePost" },
+			},
+			completion = {
+				enabled = true,
+			},
+		},
+		codeRunner = {
+			enabled = true,
+			default_method = "molten",
+		},
+	})
+end)
 -- Safely execute later
 later(function()
 	require("mini.ai").setup()

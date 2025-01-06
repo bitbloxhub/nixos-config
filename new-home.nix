@@ -9,6 +9,8 @@
   home.packages = [
     pkgs.nixfmt-rfc-style
     pkgs.stylua
+	pkgs.python3Packages.jupytext
+	pkgs.basedpyright
   ];
 
   programs.neovim = {
