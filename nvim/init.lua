@@ -119,6 +119,12 @@ now(function()
 		ensure_installed = { "lua", "vimdoc" },
 		highlight = { enable = true },
 	})
+	vim.opt.foldmethod = "expr"
+	vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+	vim.opt.foldcolumn = "0"
+	vim.opt.foldtext = ""
+	vim.opt.foldlevel = 99
+	vim.opt.foldnestmax = 4
 end)
 now(function()
 	local function build_blink(params)
