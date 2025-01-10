@@ -13,9 +13,14 @@
   home.packages = [
     pkgs.nixfmt-rfc-style
     pkgs.stylua
+	pkgs.delta
 	pkgs.python3Packages.jupytext
 	pkgs.basedpyright
   ];
+  
+  programs.bat.enable = true;
+  programs.fd.enable = true;
+  programs.fzf.enable = true;
 
   programs.neovim = {
     enable = true;
