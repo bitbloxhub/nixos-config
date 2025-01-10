@@ -6,6 +6,10 @@
   home.username = "jonahgam";
   home.homeDirectory = "/home/jonahgam";
 
+  catppuccin.enable = true;
+  catppuccin.flavor = "mocha";
+  catppuccin.accent = "mauve";
+
   home.packages = [
     pkgs.nixfmt-rfc-style
     pkgs.stylua
