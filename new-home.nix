@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  system-manager,
+  ...
+}:
 
 {
   # Home Manager needs a bit of information about you and the
@@ -16,6 +21,7 @@
     pkgs.delta
     pkgs.python3Packages.jupytext
     pkgs.basedpyright
+    system-manager.packages."${pkgs.system}".default
   ];
 
   programs.bat.enable = true;

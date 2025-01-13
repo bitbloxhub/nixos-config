@@ -163,6 +163,26 @@
         "type": "github"
       }
     },
+    "nix-system-graphics": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1729864290,
+        "narHash": "sha256-BBMfemVn4J0HKZ5DFFJf7pfgc9AJijbA7rliSzWFb8s=",
+        "owner": "soupglasses",
+        "repo": "nix-system-graphics",
+        "rev": "5a8d749e977090c7f8c5b920b13262174b2d7b55",
+        "type": "github"
+      },
+      "original": {
+        "owner": "soupglasses",
+        "repo": "nix-system-graphics",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1734424634,
@@ -238,7 +258,29 @@
       "inputs": {
         "catppuccin": "catppuccin",
         "home-manager": "home-manager_2",
-        "nixpkgs": "nixpkgs_2"
+        "nix-system-graphics": "nix-system-graphics",
+        "nixpkgs": "nixpkgs_2",
+        "system-manager": "system-manager"
+      }
+    },
+    "system-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1736520442,
+        "narHash": "sha256-rM7caMf6kN2YqW4QjDe5xWYuc0rcFZjMknAgxNBEgBE=",
+        "owner": "numtide",
+        "repo": "system-manager",
+        "rev": "489c060d2ecaf04142d8127733b97182454322e1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "system-manager",
+        "type": "github"
       }
     },
     "systems": {

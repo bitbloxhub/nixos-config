@@ -8,6 +8,14 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-system-graphics = {
+      url = "github:soupglasses/nix-system-graphics";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -16,6 +24,8 @@
       nixpkgs,
       catppuccin,
       home-manager,
+      system-manager,
+      nix-system-graphics,
       ...
     }@inputs:
     {
@@ -38,9 +48,38 @@
           }
         ];
       };
+      systemConfigs = {
+        extreme-creeper = system-manager.lib.makeSystemConfig {
+          modules = [
+            nix-system-graphics.systemModules.default
+            (
+              let
+                pkgs = import nixpkgs {
+                  system = "x86_64-linux";
+                  config.allowUnfree = true;
+                };
+              in
+              {
+                config = {
+                  nixpkgs.hostPlatform = "x86_64-linux";
+                  system-manager.allowAnyDistro = true;
+                  system-graphics.enable = true;
+                  system-graphics.package = pkgs.linuxPackages.nvidia_x11_beta.override {
+                    libsOnly = true;
+                    kernel = null;
+                  };
+                };
+              }
+            )
+          ];
+        };
+      };
       homeConfigurations = {
         "jonahgam@extreme-creeper" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = {
+            inherit system-manager;
+          };
           modules = [
             ./new-home.nix
             catppuccin.homeManagerModules.catppuccin
