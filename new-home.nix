@@ -50,6 +50,9 @@
     recursive = true;
   };
 
+  programs.wezterm.enable = true;
+  home.file."./.config/wezterm/wezterm.lua".source = ./wezterm.lua;
+
   xdg.enable = true;
   xdg.mime.enable = true;
   targets.genericLinux.enable = true;
