@@ -52,6 +52,12 @@
         extreme-creeper = system-manager.lib.makeSystemConfig {
           modules = [
             nix-system-graphics.systemModules.default
+            #"${nixpkgs}/nixos/modules/security/pam.nix"
+            #"${nixpkgs}/nixos/modules/config/system-environment.nix"
+            #"${nixpkgs}/nixos/modules/programs/wayland/uwsm.nix"
+            #"${nixpkgs}/nixos/modules/programs/xwayland.nix"
+            #"${nixpkgs}/nixos/modules/programs/dconf.nix"
+            #"${nixpkgs}/nixos/modules/programs/wayland/hyprland.nix"
             (
               let
                 pkgs = import nixpkgs {
@@ -68,6 +74,7 @@
                     libsOnly = true;
                     kernel = null;
                   };
+                  #programs.hyprland.enable = true;
                 };
               }
             )
