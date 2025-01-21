@@ -97,7 +97,27 @@ now(function()
 	lspconfig.basedpyright.setup({})
 	lspconfig.ts_ls.setup({
 		cmd = { "bunx", "--bun", "typescript-language-server", "--stdio" },
+		--[[
+		root_dir = function (startpath)
+			local package_json = lspconfig.util.root_pattern("package.json")(startpath)
+			local deno_lock = lspconfig.util.root_pattern("deno.lock")(startpath)
+			if deno_lock then
+				return nil
+			else
+				return package_json
+			end
+		end,
+		single_file_support = false,
+		]]
 	})
+	--[[
+	lspconfig.denols.setup({
+		root_dir = function (startpath)
+			local is_deno = lspconfig.util.root_pattern("deno.json", "deno.jsonc", "deno.lock")(startpath)
+			return is_deno
+		end,
+	})
+	]]
 	lspconfig.svelte.setup({}) -- unfortunately using bun does not work
 	lspconfig.lua_ls.setup({})
 end)
