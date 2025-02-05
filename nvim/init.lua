@@ -354,6 +354,10 @@ now(function()
 		},
 	})
 end)
+now(function()
+	add({ source = "akinsho/git-conflict.nvim" })
+	require("git-conflict").setup()
+end)
 -- Safely execute later
 later(function()
 	require("mini.ai").setup()
