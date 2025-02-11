@@ -120,6 +120,7 @@ now(function()
 	]]
 	lspconfig.svelte.setup({}) -- unfortunately using bun does not work
 	lspconfig.lua_ls.setup({})
+	lspconfig.ruff.setup({})
 end)
 now(function()
 	add({
