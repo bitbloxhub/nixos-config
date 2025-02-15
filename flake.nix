@@ -41,7 +41,7 @@
 
             home-manager.users.jonahgam = {
               imports = [
-                ./home.nix
+                ./old-home.nix
                 catppuccin.homeManagerModules.catppuccin
               ];
             };
@@ -88,7 +88,7 @@
             inherit system-manager;
           };
           modules = [
-            ./new-home.nix
+            ./home.nix
             catppuccin.homeManagerModules.catppuccin
           ];
         };

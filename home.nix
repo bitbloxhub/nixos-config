@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  system-manager,
+  ...
+}:
 
 {
   # Home Manager needs a bit of information about you and the
@@ -6,82 +11,86 @@
   home.username = "jonahgam";
   home.homeDirectory = "/home/jonahgam";
 
-  home.packages = with pkgs; [
-    floorp
-    keepassxc
-    fira-code
-    htop
-    vivid
-    eza
-    alacritty
-  ];
-
   catppuccin.enable = true;
   catppuccin.flavor = "mocha";
-  catppuccin.accent = "green";
+  catppuccin.accent = "mauve";
 
-  qt = {
-    enable = false;
-    style = {
-      package = pkgs.catppuccin-kde.override {
-        flavour = [ "mocha" ];
-        accents = [ "green" ];
-      };
-    };
-  };
+  home.packages = [
+    pkgs.nixfmt-rfc-style
+    pkgs.stylua
+    pkgs.delta
+    pkgs.python3Packages.jupytext
+    pkgs.basedpyright
+    system-manager.packages."${pkgs.system}".default
+  ];
 
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
-    bashrcExtra = ''
-      export LS_COLORS=$(vivid generate catppuccin-mocha)
-      export LANGUAGE=en_US.UTF-8
-      export LC_ALL=en_US.UTF-8
-    '';
-  };
-
-  programs.eza = {
-    enable = true;
-    enableBashIntegration = true;
-    extraOptions = [
-      "--group-directories-first"
-      "--header"
+  wayland.windowManager.hyprland.enable = true;
+  wayland.windowManager.hyprland.settings = {
+    "$mod" = "SUPER";
+    monitor = ",eDP-1,auto,auto";
+    env = [
+      "LIBVA_DRIVER_NAME,nvidia"
+      "XDG_SESSION_TYPE,wayland"
+      "GBM_BACKEND,nvidia-drm"
+      "__GLX_VENDOR_LIBRARY_NAME,nvidia"
     ];
-    git = true;
-    icons = true;
+    bind =
+      [
+        "$mod, F, exec, firefox"
+        "CTRL ALT, Delete, exec, hyprctl dispatch exit 0"
+        ", Print, exec, grimblast copy area"
+      ]
+      ++ (
+        # workspaces
+        # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
+        builtins.concatLists (
+          builtins.genList (
+            i:
+            let
+              ws = i + 1;
+            in
+            [
+              "$mod, code:1${toString i}, workspace, ${toString ws}"
+              "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+            ]
+          ) 9
+        )
+      );
+    debug.disable_logs = false;
   };
 
-  programs.git = {
+  programs.bat.enable = true;
+  programs.fd.enable = true;
+  programs.fzf.enable = true;
+
+  programs.neovim = {
     enable = true;
-    package = pkgs.gitFull;
-    extraConfig = {
-      init.defaultBranch = "main";
-      user.email = "45184892+bitbloxhub@users.noreply.github.com";
-      user.name = "bitbloxhub";
-    };
+    extraPackages = [
+      pkgs.imagemagick
+    ];
+    withPython3 = true;
+    extraPython3Packages =
+      ps: with ps; [
+        pynvim
+        jupyter-client
+        cairosvg # for image rendering
+        pnglatex # for image rendering
+        plotly # for image rendering
+        pyperclip
+      ];
   };
 
-  programs.ssh = {
-    enable = true;
-    matchBlocks = {
-      "github.com" = {
-        identityFile = "/home/jonahgam/.ssh/id_ed25519_github";
-      };
-    };
+  home.file."./.config/nvim/" = {
+    source = ./nvim;
+    recursive = true;
   };
 
-  programs.kitty = {
-    enable = true;
-    font.name = "Fira Code Light";
-    font.size = 12;
-    theme = "Catppuccin-Mocha";
-    extraConfig = ''
-      confirm_os_window_close 0
-      linux_display_server x11
-    '';
-  };
+  programs.wezterm.enable = true;
+  home.file."./.config/wezterm/wezterm.lua".source = ./wezterm.lua;
 
-  programs.foot.enable = true;
+  xdg.enable = true;
+  xdg.mime.enable = true;
+  targets.genericLinux.enable = true;
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
