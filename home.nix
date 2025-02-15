@@ -66,7 +66,7 @@
 
   programs.neovim = {
     enable = false;
-      };
+  };
 
   #home.file."./.config/nvim/" = {
   #  source = ./nvim;
@@ -78,13 +78,21 @@
     nixpkgs_version = inputs.nixpkgs;
     luaPath = "${./nvim}";
     packageNames = [ "nvim" ];
-    categoryDefinitions.replace = ({ pkgs, settings, categories, name, ... }@packageDef: {
-      lspsAndRuntimeDeps = {
-        general = with pkgs; [
-        ];
-      };
-      extraPython3Packages = {
-        general =
+    categoryDefinitions.replace = (
+      {
+        pkgs,
+        settings,
+        categories,
+        name,
+        ...
+      }@packageDef:
+      {
+        lspsAndRuntimeDeps = {
+          general = with pkgs; [
+          ];
+        };
+        extraPython3Packages = {
+          general =
             ps: with ps; [
               pynvim
               jupyter-client
@@ -93,42 +101,45 @@
               plotly # for image rendering
               pyperclip
             ];
-      };
-      startupPlugins = {
-        general = with pkgs.vimPlugins; [
-          mini-nvim
-          catppuccin-nvim
-          fidget-nvim
-          nvim-lspconfig
-          nvim-treesitter.withAllGrammars
-          blink-cmp
-          direnv-vim
-          neo-tree-nvim
-          fzf-lua
-          render-markdown-nvim
-          image-nvim
-          snacks-nvim
-          edgy-nvim
-          flatten-nvim
-          molten-nvim
-          jupytext-nvim
-          otter-nvim
-          quarto-nvim
-          git-conflict-nvim
-        ];
-      };
-    });
+        };
+        startupPlugins = {
+          general = with pkgs.vimPlugins; [
+            mini-nvim
+            catppuccin-nvim
+            fidget-nvim
+            nvim-lspconfig
+            nvim-treesitter.withAllGrammars
+            blink-cmp
+            direnv-vim
+            neo-tree-nvim
+            fzf-lua
+            render-markdown-nvim
+            image-nvim
+            snacks-nvim
+            edgy-nvim
+            flatten-nvim
+            molten-nvim
+            jupytext-nvim
+            otter-nvim
+            quarto-nvim
+            git-conflict-nvim
+          ];
+        };
+      }
+    );
     packageDefinitions.replace = {
-      nvim =  {pkgs , ... }: {
-        settings = {
-          wrapRc = true;
-          configDirName = "nvim";
-          withPython3 = true; 
+      nvim =
+        { pkgs, ... }:
+        {
+          settings = {
+            wrapRc = true;
+            configDirName = "nvim";
+            withPython3 = true;
+          };
+          categories = {
+            general = true;
+          };
         };
-        categories = {
-          general = true;
-        };
-      };
     };
   };
 
