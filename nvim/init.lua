@@ -1,30 +1,18 @@
--- Clone 'mini.nvim' manually in a way that it gets managed by 'mini.deps'
-local path_package = vim.fn.stdpath("data") .. "/site/"
-local mini_path = path_package .. "pack/deps/start/mini.nvim"
-if not vim.loop.fs_stat(mini_path) then
-	vim.cmd('echo "Installing `mini.nvim`" | redraw')
-	local clone_cmd = { "git", "clone", "--filter=blob:none", "https://github.com/echasnovski/mini.nvim", mini_path }
-	vim.fn.system(clone_cmd)
-	vim.cmd("packadd mini.nvim | helptags ALL")
-	vim.cmd('echo "Installed `mini.nvim`" | redraw')
-end
-
--- Set up 'mini.deps' (customize to your liking)
-require("mini.deps").setup({ path = { package = path_package } })
-
--- Use 'mini.deps'. `now()` and `later()` are helpers for a safe two-stage
--- startup and are optional.
-local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
-
 local function set_user_var(key, value)
 	io.write(string.format("\027]1337;SetUserVar=%s=%s\a", key, vim.base64.encode(tostring(value))))
+end
+
+local function now(f)
+	f()
+end
+
+local function later(f)
+	f() --TODO: should not be same as now
 end
 
 -- Safely execute immediately
 now(function()
 	vim.o.termguicolors = true
-	--vim.cmd('colorscheme randomhue')
-	add({ source = "catppuccin/nvim" })
 	require("catppuccin").setup({
 		flavour = "mocha",
 		transparent_background = true,
@@ -52,7 +40,6 @@ now(function()
 	end
 end)
 now(function()
-	add({ source = "j-hui/fidget.nvim" })
 	local fidget = require("fidget")
 	fidget.setup({
 		notification = {
@@ -100,7 +87,6 @@ now(function()
 	}
 end)
 now(function()
-	add({ source = "neovim/nvim-lspconfig" })
 	local lspconfig = require("lspconfig")
 	lspconfig.basedpyright.setup({})
 	lspconfig.ts_ls.setup({
@@ -131,21 +117,8 @@ now(function()
 	lspconfig.ruff.setup({})
 end)
 now(function()
-	add({
-		source = "nvim-treesitter/nvim-treesitter",
-		-- Use 'master' while monitoring updates in 'main'
-		checkout = "master",
-		monitor = "main",
-		-- Perform action after every checkout
-		hooks = {
-			post_checkout = function()
-				vim.cmd("TSUpdate")
-			end,
-		},
-	})
-	-- Possible to immediately execute code which depends on the added plugin
 	require("nvim-treesitter.configs").setup({
-		ensure_installed = { "lua", "vimdoc" },
+		--ensure_installed = { "lua", "vimdoc" },
 		highlight = { enable = true },
 	})
 	vim.opt.foldmethod = "expr"
@@ -157,25 +130,6 @@ now(function()
 	vim.opt.foldnestmax = 4
 end)
 now(function()
-	local function build_blink(params)
-		vim.notify("Building blink.cmp", vim.log.levels.INFO)
-		local obj = vim.system({ "cargo", "build", "--release" }, { cwd = params.path }):wait()
-		if obj.code == 0 then
-			vim.notify("Building blink.cmp done", vim.log.levels.INFO)
-		else
-			vim.notify("Building blink.cmp failed", vim.log.levels.ERROR)
-		end
-	end
-	add({
-		source = "Saghen/blink.cmp",
-		depends = {
-			"rafamadriz/friendly-snippets",
-		},
-		hooks = {
-			post_install = build_blink,
-			post_checkout = build_blink,
-		},
-	})
 	require("blink.cmp").setup({
 		keymap = {
 			preset = "super-tab",
@@ -204,16 +158,6 @@ now(function()
 	require("blink.cmp")
 end)
 now(function()
-	add({ source = "direnv/direnv.vim" })
-end)
-now(function()
-	add({
-		source = "nvim-neo-tree/neo-tree.nvim",
-		depends = {
-			"nvim-lua/plenary.nvim",
-			"MunifTanjim/nui.nvim",
-		},
-	})
 	require("neo-tree").setup({
 		default_component_configs = {
 			icon = {
@@ -242,15 +186,12 @@ now(function()
 	})
 end)
 now(function()
-	add({ source = "ibhagwan/fzf-lua" })
 	require("fzf-lua").setup({})
 end)
 now(function()
-	add({ source = "MeanderingProgrammer/render-markdown.nvim" })
 	require("render-markdown").setup({})
 end)
 now(function()
-	add({ source = "3rd/image.nvim" })
 	require("image").setup({
 		backend = "kitty",
 		processor = "magick_cli",
@@ -268,7 +209,6 @@ now(function()
 	})
 end)
 now(function()
-	add({ source = "folke/snacks.nvim" })
 	local snacks = require("snacks")
 	snacks.setup({})
 	vim.keymap.set("n", "<leader>ft", function()
@@ -276,7 +216,6 @@ now(function()
 	end, { desc = "Open Terminal" })
 end)
 now(function()
-	add({ source = "folke/edgy.nvim" })
 	require("edgy").setup({
 		bottom = {
 			{
@@ -300,22 +239,13 @@ now(function()
 	})
 end)
 now(function()
-	add({ source = "willothy/flatten.nvim" })
 	require("flatten").setup({})
 end)
 now(function()
-	add({
-		source = "benlubas/molten-nvim",
-		hooks = {
-			post_checkout = function()
-				vim.cmd("UpdateRemotePlugins")
-			end,
-		},
-	})
+	--vim.cmd("UpdateRemotePlugins")
 	vim.g.molten_image_provider = "image.nvim"
 end)
 now(function()
-	add({ source = "goerz/jupytext.nvim" })
 	require("jupytext").setup({
 		format = "qmd",
 		filetype = function(_, format, metadata)
@@ -340,11 +270,9 @@ now(function()
 	})
 end)
 now(function()
-	add({ source = "jmbuhr/otter.nvim" })
 	require("otter").setup()
 end)
 now(function()
-	add({ source = "quarto-dev/quarto-nvim" })
 	require("quarto").setup({
 		lspFeatures = {
 			enabled = true,
@@ -364,7 +292,6 @@ now(function()
 	})
 end)
 now(function()
-	add({ source = "akinsho/git-conflict.nvim" })
 	require("git-conflict").setup()
 end)
 now(function()

@@ -16,6 +16,7 @@
       url = "github:soupglasses/nix-system-graphics";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixCats.url = "github:BirdeeHub/nixCats-nvim";
   };
 
   outputs =
@@ -26,6 +27,7 @@
       home-manager,
       system-manager,
       nix-system-graphics,
+      nixCats,
       ...
     }@inputs:
     {
@@ -85,11 +87,12 @@
         "jonahgam@extreme-creeper" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = {
-            inherit system-manager;
+            inherit system-manager inputs;
           };
           modules = [
             ./home.nix
             catppuccin.homeManagerModules.catppuccin
+            nixCats.homeModule
           ];
         };
       };
