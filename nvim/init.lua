@@ -90,6 +90,14 @@ now(function()
 	vim.o.mousescroll = "ver:1,hor:1"
 	vim.g.mapleader = " "
 	vim.g.maplocalleader = " "
+	vim.g.python_indent = {
+		disable_parentheses_indenting = false,
+		closed_paren_align_last_line = false,
+		searchpair_timeout = 150,
+		continue = "shiftwidth()",
+		open_paren = "shiftwidth()",
+		nested_paren = "shiftwidth()",
+	}
 end)
 now(function()
 	add({ source = "neovim/nvim-lspconfig" })
@@ -359,7 +367,7 @@ now(function()
 	add({ source = "akinsho/git-conflict.nvim" })
 	require("git-conflict").setup()
 end)
-now(function ()
+now(function()
 	vim.opt.clipboard = "unnamedplus"
 end)
 -- Safely execute later
