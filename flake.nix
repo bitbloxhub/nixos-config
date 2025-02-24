@@ -76,6 +76,7 @@
                     libsOnly = true;
                     kernel = null;
                   };
+                  system-graphics.extraPackages = [ pkgs.mesa.drivers ];
                   #programs.hyprland.enable = true;
                 };
               }
