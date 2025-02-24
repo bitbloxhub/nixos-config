@@ -68,6 +68,7 @@ end)
 wezterm.on("format-window-title", function(tab)
 	return tab.tab_title
 end)
+config.enable_wayland = false
 
 -- and finally, return the configuration to wezterm
 return config
