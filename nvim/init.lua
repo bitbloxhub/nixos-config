@@ -307,6 +307,12 @@ now(function()
 			["<Left>"] = {},
 			["<Right>"] = {},
 		},
+		restricted_keys = {
+			["<Up>"] = { "n", "x" },
+			["<Down>"] = { "n", "x" },
+			["<Left>"] = { "n", "x" },
+			["<Right>"] = { "n", "x" },
+		},
 	})
 end)
 now(function()
