@@ -297,6 +297,21 @@ end)
 now(function()
 	vim.opt.clipboard = "unnamedplus"
 end)
+now(function()
+	require("hardtime").setup({
+		disable_mouse = false,
+		restriction_mode = "hint",
+		disabled_keys = {
+			["<Up>"] = {},
+			["<Down>"] = {},
+			["<Left>"] = {},
+			["<Right>"] = {},
+		},
+	})
+end)
+now(function()
+	require("precognition").setup()
+end)
 -- Safely execute later
 later(function()
 	require("mini.ai").setup()

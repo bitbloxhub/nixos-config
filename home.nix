@@ -123,6 +123,8 @@
             otter-nvim
             quarto-nvim
             git-conflict-nvim
+            precognition-nvim
+            hardtime-nvim
           ];
         };
       }
