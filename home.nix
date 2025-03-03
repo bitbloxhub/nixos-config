@@ -3,6 +3,9 @@
   config,
   pkgs,
   system-manager,
+  hyprswitch,
+  nvidia,
+  hostname,
   ...
 }:
 
@@ -29,7 +32,6 @@
   services.hyprpaper.settings = {
     ipc = "on";
     splash = false;
-    splash_offset = 2.0;
 
     preload = [ "/home/jonahgam/.local/share/eog-wallpaper.png" ];
     wallpaper = [ ",/home/jonahgam/.local/share/eog-wallpaper.png" ];
@@ -55,15 +57,22 @@
   ];
 
   wayland.windowManager.hyprland.enable = true;
+  wayland.windowManager.hyprland.plugins = [
+    pkgs.hyprlandPlugins.hyprspace
+  ];
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
-    monitor = ",preferred,auto,1";
-    env = [
-      "LIBVA_DRIVER_NAME,nvidia"
-      "XDG_SESSION_TYPE,wayland"
-      "GBM_BACKEND,nvidia-drm"
-      "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-    ];
+    monitor = if (hostname == "extreme-creeper") then ",preferred,auto,1" else "";
+    env =
+      if nvidia then
+        [
+          "LIBVA_DRIVER_NAME,nvidia"
+          "XDG_SESSION_TYPE,wayland"
+          "GBM_BACKEND,nvidia-drm"
+          "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+        ]
+      else
+        [ ];
     exec-once = [
       "waybar"
     ];
@@ -96,6 +105,8 @@
       "maximize, class:.*"
     ];
     misc = {
+      disable_hyprland_logo = true;
+      disable_splash_rendering = true;
       exit_window_retains_fullscreen = true;
     };
     input.touchpad.tap-to-click = false;
@@ -108,6 +119,9 @@
     };
     debug.disable_logs = false;
   };
+
+  programs.rofi.enable = true;
+  programs.rofi.package = pkgs.rofi-wayland;
 
   programs.bat.enable = true;
   programs.fd.enable = true;

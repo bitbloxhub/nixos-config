@@ -89,6 +89,8 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = {
             inherit system-manager inputs;
+            nvidia = true;
+            hostname = "extreme-creeper";
           };
           modules = [
             ./home.nix
