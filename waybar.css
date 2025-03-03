@@ -1,0 +1,55 @@
+* {
+	font-family: Fira Code;
+	color: @text;
+}
+
+window#waybar {
+	background-color: shade(@base, 0.9);
+	border: 2px solid alpha(@crust, 0.3);
+}
+
+#workspaces {
+	border-radius: 1rem;
+	margin: 5px;
+	background-color: @surface0;
+	margin-left: 1rem;
+}
+
+#workspaces button {
+	color: @lavender;
+	border-radius: 1rem;
+	padding: 0.4rem;
+}
+
+#workspaces button.active {
+	color: @sky;
+	border-radius: 1rem;
+}
+
+#workspaces button:hover {
+	color: @sapphire;
+	border-radius: 1rem;
+}
+
+#clock,
+#battery,
+#pulseaudio {
+	background-color: @surface0;
+	padding: 0.5rem 0.5rem;
+}
+
+#clock {
+	color: @blue;
+}
+
+#battery {
+	color: @green;
+}
+
+#battery.charging {
+	color: @green;
+}
+
+#battery.warning:not(.charging) {
+	color: @red;
+}
