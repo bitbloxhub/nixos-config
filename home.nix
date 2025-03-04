@@ -25,6 +25,9 @@
     pkgs.delta
     pkgs.python3Packages.jupytext
     pkgs.basedpyright
+    (pkgs.writeShellScriptBin "hyprland-window-switch" (
+      builtins.readFile ./scripts/hyprland-window-switch
+    ))
     system-manager.packages."${pkgs.system}".default
   ];
 
@@ -57,9 +60,6 @@
   ];
 
   wayland.windowManager.hyprland.enable = true;
-  wayland.windowManager.hyprland.plugins = [
-    pkgs.hyprlandPlugins.hyprspace
-  ];
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
     monitor = if (hostname == "extreme-creeper") then ",preferred,auto,1" else "";
@@ -81,7 +81,7 @@
         "$mod, F, exec, firefox"
         "$mod, T, exec, wezterm"
         "$mod, M, fullscreen, 1"
-        "ALT, Tab, cyclenext"
+        "ALT, Tab, exec, hyprland-window-switch"
         "CTRL ALT, Delete, exec, hyprctl dispatch exit 0"
         ", Print, exec, grimblast copy area"
       ]
@@ -120,8 +120,17 @@
     debug.disable_logs = false;
   };
 
-  programs.rofi.enable = true;
-  programs.rofi.package = pkgs.rofi-wayland;
+  programs.fuzzel = {
+    enable = true;
+    settings.main = {
+      font = "Fira Code:size=10";
+      lines = 20;
+      width = 60;
+      horizontal-pad = 40;
+      vertical-pad = 16;
+      inner-pad = 6;
+    };
+  };
 
   programs.bat.enable = true;
   programs.fd.enable = true;
