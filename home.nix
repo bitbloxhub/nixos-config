@@ -23,6 +23,7 @@
     pkgs.nixfmt-rfc-style
     pkgs.stylua
     pkgs.delta
+    pkgs.grimblast
     (pkgs.writeShellScriptBin "hyprland-window-switch" (
       builtins.readFile ./scripts/hyprland-window-switch
     ))
@@ -43,7 +44,7 @@
   programs.waybar.settings = [
     {
       layer = "top";
-      position = "top";
+      position = "bottom";
       output = [ "eDP-1" ];
       modules-left = [ "hyprland/workspaces" ];
       modules-center = [
@@ -60,10 +61,14 @@
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
-    monitor = if (hostname == "extreme-creeper") then [
-      ",preferred,auto,1"
-      "WAYLAND-1,disable"
-    ] else "";
+    monitor =
+      if (hostname == "extreme-creeper") then
+        [
+          ",preferred,auto,1"
+          "WAYLAND-1,disable"
+        ]
+      else
+        "";
     env =
       if nvidia then
         [

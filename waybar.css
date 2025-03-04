@@ -1,11 +1,20 @@
 * {
 	font-family: Fira Code;
+	font-size: 14px;
 	color: @text;
+	border: none;
+    border-radius: 0;
+    min-height: 0;
 }
 
 window#waybar {
+	background-color: transparent;
+}
+
+window > box {
 	background-color: shade(@base, 0.9);
-	border: 2px solid alpha(@crust, 0.3);
+	border-radius: 1rem;
+	margin: 0px 10px 10px 10px;
 }
 
 #workspaces {
@@ -35,15 +44,19 @@ window#waybar {
 #battery,
 #pulseaudio {
 	background-color: @surface0;
-	padding: 0.5rem 0.5rem;
+	padding: 0.5rem 1rem;
+	margin: 5px 0;
 }
 
 #clock {
 	color: @blue;
+	border-radius: 0px 1rem 1rem 0px;
+	margin-right: 1rem;
 }
 
 #battery {
 	color: @green;
+	border-radius: 0;
 }
 
 #battery.charging {
@@ -52,4 +65,8 @@ window#waybar {
 
 #battery.warning:not(.charging) {
 	color: @red;
+}
+
+#pulseaudio {
+	border-radius: 1rem 0px 0px 1rem;
 }
