@@ -23,8 +23,6 @@
     pkgs.nixfmt-rfc-style
     pkgs.stylua
     pkgs.delta
-    pkgs.python3Packages.jupytext
-    pkgs.basedpyright
     (pkgs.writeShellScriptBin "hyprland-window-switch" (
       builtins.readFile ./scripts/hyprland-window-switch
     ))
@@ -164,6 +162,10 @@
       {
         lspsAndRuntimeDeps = {
           general = with pkgs; [
+            pkgs.python3Packages.jupytext
+            basedpyright
+            ruff
+            lua-language-server
           ];
         };
         extraPython3Packages = {
