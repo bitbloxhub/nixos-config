@@ -62,7 +62,10 @@
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
-    monitor = if (hostname == "extreme-creeper") then ",preferred,auto,1" else "";
+    monitor = if (hostname == "extreme-creeper") then [
+      ",preferred,auto,1"
+      "WAYLAND-1,disable"
+    ] else "";
     env =
       if nvidia then
         [
