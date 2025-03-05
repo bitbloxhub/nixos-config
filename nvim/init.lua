@@ -324,6 +324,19 @@ end)
 now(function()
 	vim.opt.number = true
 	vim.opt.relativenumber = true
+	local relnum_group = vim.api.nvim_create_augroup("relnum", { clear = true })
+	vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave", "FocusLost", "BufNewFile", "BufReadPost" }, {
+		group = relnum_group,
+		callback = function()
+			vim.opt.relativenumber = false
+		end,
+	})
+	vim.api.nvim_create_autocmd({ "VimEnter", "InsertLeave", "WinEnter", "FocusGained" }, {
+		group = relnum_group,
+		callback = function()
+			vim.opt.relativenumber = true
+		end,
+	})
 end)
 -- Safely execute later
 later(function()
