@@ -18,6 +18,8 @@
   catppuccin.enable = true;
   catppuccin.flavor = "mocha";
   catppuccin.accent = "mauve";
+  catppuccin.cursors.enable = true;
+  catppuccin.cursors.accent = "dark";
 
   home.packages = [
     pkgs.nixfmt-rfc-style
@@ -70,15 +72,21 @@
       else
         "";
     env =
-      if nvidia then
-        [
-          "LIBVA_DRIVER_NAME,nvidia"
-          "XDG_SESSION_TYPE,wayland"
-          "GBM_BACKEND,nvidia-drm"
-          "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-        ]
-      else
-        [ ];
+      [
+        "HYPRCURSOR_THEME, catppuccin-mocha-dark-cursors"
+        "HYPRCURSOR_SIZE, 32"
+      ]
+      ++ (
+        if nvidia then
+          [
+            "LIBVA_DRIVER_NAME,nvidia"
+            "XDG_SESSION_TYPE,wayland"
+            "GBM_BACKEND,nvidia-drm"
+            "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+          ]
+        else
+          [ ]
+      );
     exec-once = [
       "waybar"
     ];
@@ -87,6 +95,7 @@
         "$mod, F, exec, firefox"
         "$mod, T, exec, wezterm"
         "$mod, M, fullscreen, 1"
+        "$mod, H, exec, fuzzel"
         "ALT, Tab, exec, hyprland-window-switch"
         "CTRL ALT, Delete, exec, hyprctl dispatch exit 0"
         ", Print, exec, grimblast copy area"
@@ -107,9 +116,22 @@
           ) 9
         )
       );
+    binde = [
+      ", XF86AudioRaiseVolume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"
+      ", XF86AudioLowerVolume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%-"
+      ", XF86MonBrightnessUp, exec, light -A 4.95"
+      ", XF86MonBrightnessDown, exec, light -U 4.95"
+    ];
+    bindl = [
+      ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    ];
     windowrulev2 = [
       "maximize, class:.*"
     ];
+    general = {
+      gaps_in = 5;
+      gaps_out = 10;
+    };
     misc = {
       disable_hyprland_logo = true;
       disable_splash_rendering = true;
