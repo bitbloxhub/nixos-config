@@ -300,7 +300,7 @@ end)
 now(function()
 	require("hardtime").setup({
 		disable_mouse = false,
-		restriction_mode = "hint",
+		restriction_mode = "block",
 		disabled_keys = {
 			["<Up>"] = {},
 			["<Down>"] = {},
@@ -320,6 +320,10 @@ now(function()
 end)
 now(function()
 	require("AniMotion").setup({})
+end)
+now(function()
+	vim.opt.number = true
+	vim.opt.relativenumber = true
 end)
 -- Safely execute later
 later(function()
