@@ -324,17 +324,29 @@ end)
 now(function()
 	vim.opt.number = true
 	vim.opt.relativenumber = true
+	local excluded_filetypes = {
+		["neo-tree"] = true,
+	}
+	local function set_relative(relative)
+		if excluded_filetypes[vim.bo.filetype] then
+			vim.opt.number = false
+			vim.opt.relativenumber = false
+			return
+		end
+		vim.opt.number = true
+		vim.opt.relativenumber = relative
+	end
 	local relnum_group = vim.api.nvim_create_augroup("relnum", { clear = true })
 	vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave", "FocusLost", "BufNewFile", "BufReadPost" }, {
 		group = relnum_group,
 		callback = function()
-			vim.opt.relativenumber = false
+			set_relative(false)
 		end,
 	})
 	vim.api.nvim_create_autocmd({ "VimEnter", "InsertLeave", "WinEnter", "FocusGained" }, {
 		group = relnum_group,
 		callback = function()
-			vim.opt.relativenumber = true
+			set_relative(true)
 		end,
 	})
 end)
