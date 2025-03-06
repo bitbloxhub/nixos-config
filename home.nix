@@ -95,6 +95,7 @@
         "$mod, F, exec, firefox"
         "$mod, T, exec, wezterm"
         "$mod, M, fullscreen, 1"
+        "$mod SHIFT, M, fullscreen, 0"
         "$mod, H, exec, fuzzel"
         "ALT, Tab, exec, hyprland-window-switch"
         "CTRL ALT, Delete, exec, hyprctl dispatch exit 0"
@@ -127,10 +128,12 @@
     ];
     windowrulev2 = [
       "maximize, class:.*"
+      "prop immediate, fullscreen:1, class: (com.mojang.minecraft)"
     ];
     general = {
       gaps_in = 5;
       gaps_out = 10;
+      allow_tearing = true;
     };
     misc = {
       disable_hyprland_logo = true;
