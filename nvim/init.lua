@@ -326,6 +326,7 @@ now(function()
 	vim.opt.relativenumber = true
 	local excluded_filetypes = {
 		["neo-tree"] = true,
+		["snacks_terminal"] = true,
 	}
 	local function set_relative(relative)
 		if excluded_filetypes[vim.bo.filetype] then
