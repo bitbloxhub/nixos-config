@@ -351,6 +351,11 @@ now(function()
 		end,
 	})
 end)
+now(function()
+	vim.g.loaded_sql_completion = 1
+	vim.g.omni_sql_default_compl_type = "syntax"
+	vim.g.omni_sql_no_default_maps = 1
+end)
 -- Safely execute later
 later(function()
 	require("mini.ai").setup()
