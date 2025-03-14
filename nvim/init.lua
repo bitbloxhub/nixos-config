@@ -11,6 +11,18 @@ local function later(f)
 end
 
 -- Safely execute immediately
+
+now(function()
+	if vim.env.PROF then
+		require("snacks.profiler").startup({
+			startup = {
+				event = "VimEnter", -- stop profiler on this event. Defaults to `VimEnter`
+				-- event = "UIEnter",
+				-- event = "VeryLazy",
+			},
+		})
+	end
+end)
 now(function()
 	vim.o.termguicolors = true
 	require("catppuccin").setup({
@@ -355,6 +367,11 @@ now(function()
 	vim.g.loaded_sql_completion = 1
 	vim.g.omni_sql_default_compl_type = "syntax"
 	vim.g.omni_sql_no_default_maps = 1
+end)
+now(function()
+	require("snacks").toggle.profiler():map("<leader>pp")
+	-- Toggle the profiler highlights
+	require("snacks").toggle.profiler_highlights():map("<leader>ph")
 end)
 -- Safely execute later
 later(function()
