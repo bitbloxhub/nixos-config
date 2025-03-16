@@ -57,43 +57,7 @@
         extreme-creeper = system-manager.lib.makeSystemConfig {
           modules = [
             nix-system-graphics.systemModules.default
-            #"${nixpkgs}/nixos/modules/security/pam.nix"
-            #"${nixpkgs}/nixos/modules/config/system-environment.nix"
-            #"${nixpkgs}/nixos/modules/programs/wayland/uwsm.nix"
-            #"${nixpkgs}/nixos/modules/programs/xwayland.nix"
-            #"${nixpkgs}/nixos/modules/programs/dconf.nix"
-            #"${nixpkgs}/nixos/modules/programs/wayland/hyprland.nix"
-            (
-              let
-                pkgs = import nixpkgs {
-                  system = "x86_64-linux";
-                  config.allowUnfree = true;
-                };
-                driver =
-                  (pkgs.linuxPackages.nvidiaPackages.mkDriver {
-                    version = "565.77";
-                    sha256_64bit = "sha256-CnqnQsRrzzTXZpgkAtF7PbH9s7wbiTRNcM0SPByzFHw=";
-                    sha256_aarch64 = "sha256-LSAYUnhfnK3rcuPe1dixOwAujSof19kNOfdRHE7bToE=";
-                    openSha256 = "sha256-Fxo0t61KQDs71YA8u7arY+503wkAc1foaa51vi2Pl5I=";
-                    settingsSha256 = "sha256-VUetj3LlOSz/LB+DDfMCN34uA4bNTTpjDrb6C6Iwukk=";
-                    persistencedSha256 = "sha256-wnDjC099D8d9NJSp9D0CbsL+vfHXyJFYYgU3CwcqKww=";
-                  }).override
-                    {
-                      libsOnly = true;
-                      kernel = null;
-                    };
-              in
-              {
-                config = {
-                  nixpkgs.hostPlatform = "x86_64-linux";
-                  system-manager.allowAnyDistro = true;
-                  system-graphics.enable = true;
-                  system-graphics.package = driver;
-                  system-graphics.extraPackages = [ pkgs.mesa ];
-                  #programs.hyprland.enable = true;
-                };
-              }
-            )
+            ./hosts/extreme-creeper/system-manager.nix
           ];
         };
       };
@@ -106,7 +70,7 @@
             hostname = "extreme-creeper";
           };
           modules = [
-            ./home.nix
+            ./hosts/extreme-creeper/home.nix
             catppuccin.homeManagerModules.catppuccin
             nixCats.homeModule
           ];
