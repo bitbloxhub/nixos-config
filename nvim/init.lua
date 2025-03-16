@@ -373,6 +373,19 @@ now(function()
 	-- Toggle the profiler highlights
 	require("snacks").toggle.profiler_highlights():map("<leader>ph")
 end)
+now(function()
+	require("orgmode").setup({
+		org_agenda_files = "~/notes/**/*",
+		org_default_notes_file = "~/notes/refile.org",
+		org_startup_folded = "inherit",
+		org_todo_keywords = { "TODO", "STARTED", "|", "DONE", "CANCELED" },
+	})
+end)
+now(function()
+	require("org-roam").setup({
+		directory = "~/notes/",
+	})
+end)
 -- Safely execute later
 later(function()
 	require("mini.ai").setup()

@@ -71,6 +71,8 @@
               precognition-nvim
               hardtime-nvim
               animotion-nvim
+              orgmode
+              org-roam-nvim
             ];
         };
       }
