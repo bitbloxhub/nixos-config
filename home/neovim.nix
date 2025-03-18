@@ -73,6 +73,7 @@
               animotion-nvim
               orgmode
               org-roam-nvim
+              codecompanion-nvim
             ];
         };
       }
