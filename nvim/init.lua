@@ -368,14 +368,28 @@ now(function()
 		vim.opt.relativenumber = relative
 	end
 	local relnum_group = vim.api.nvim_create_augroup("relnum", { clear = true })
-	vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave", "FocusLost", "BufNewFile", "BufReadPost" }, {
+	vim.api.nvim_create_autocmd({ "WinLeave", "FocusLost", }, {
 		group = relnum_group,
 		callback = function()
 			set_relative(false)
 		end,
 	})
-	vim.api.nvim_create_autocmd({ "VimEnter", "InsertLeave", "WinEnter", "FocusGained" }, {
+	vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "FocusGained", "BufNewFile", "BufReadPost" }, {
 		group = relnum_group,
+		callback = function()
+			set_relative(true)
+		end,
+	})
+	vim.api.nvim_create_autocmd("ModeChanged", {
+		group = relnum_group,
+		pattern = "*:i",
+		callback = function()
+			set_relative(false)
+		end,
+	})
+	vim.api.nvim_create_autocmd("ModeChanged", {
+		group = relnum_group,
+		pattern = "i:*",
 		callback = function()
 			set_relative(true)
 		end,
