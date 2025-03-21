@@ -1,5 +1,6 @@
 {
   imports = [
+    ./cuda.nix
     ./catppuccin.nix
     ./neovim.nix
     ./waybar.nix
@@ -7,5 +8,6 @@
     ./fuzzel.nix
     ./weztem.nix
     ./shell
+    ./llama.nix
   ];
 }
