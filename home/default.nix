@@ -2,11 +2,11 @@
   imports = [
     ./cuda.nix
     ./catppuccin.nix
-    ./neovim.nix
-    ./waybar.nix
+    ./nvim
+    ./waybar
     ./hyprland.nix
     ./fuzzel.nix
-    ./weztem.nix
+    ./wezterm
     ./shell
     ./llama.nix
   ];

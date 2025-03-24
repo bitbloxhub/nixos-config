@@ -17,5 +17,5 @@
           --replace-fail "Exec=wezterm start --cwd ." "Exec=$out/bin/wezterm start --cwd . --always-new-process"
     '';
   };
-  home.file."./.config/wezterm/wezterm.lua".source = ../wezterm.lua;
+  home.file."./.config/wezterm/wezterm.lua".source = ./wezterm.lua;
 }

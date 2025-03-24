@@ -1,6 +1,6 @@
 {
   programs.waybar.enable = true;
-  programs.waybar.style = builtins.readFile ../waybar.css;
+  programs.waybar.style = builtins.readFile ./waybar.css;
   programs.waybar.settings = [
     {
       layer = "top";

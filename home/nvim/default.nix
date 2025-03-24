@@ -2,11 +2,12 @@
   inputs,
   ...
 }:
+
 {
   nixCats = {
     enable = true;
     nixpkgs_version = inputs.nixpkgs;
-    luaPath = "${../nvim}";
+    luaPath = ./.;
     packageNames = [ "nvim" ];
     categoryDefinitions.replace = (
       {
