@@ -50,6 +50,8 @@
             in
             with pkgs.vimPlugins;
             [
+              lze
+              lzextras
               mini-nvim
               catppuccin-nvim
               fidget-nvim
@@ -69,7 +71,7 @@
               otter-nvim
               quarto-nvim
               git-conflict-nvim
-              precognition-nvim
+              #precognition-nvim # Has issues with fzf-lua.
               hardtime-nvim
               animotion-nvim
               orgmode
