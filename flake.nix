@@ -20,6 +20,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    deploy-rs = {
+      url = "github:isabelroses/deploy-rs/no-fu";
+
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "";
+      };
+    };
   };
 
   outputs =
@@ -31,6 +39,7 @@
       system-manager,
       nix-system-graphics,
       nixCats,
+      deploy-rs,
       ...
     }@inputs:
     {
@@ -76,5 +85,17 @@
           ];
         };
       };
+      
+      deploy.nodes.extreme-creeper = {
+        hostname = "localhost";
+        sshUser = "jonahgam";
+        user = "root";
+        interactiveSudo = true;
+        sshOpts = [ "-vvv" "-p 10022" "-oControlMaster=no" ];
+        fastConnection = true;
+        profiles.system.path = deploy-rs.lib.x86_64-linux.activate.custom self.systemConfigs.extreme-creeper "sudo ./bin/activate";
+      };
+
+      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 }
