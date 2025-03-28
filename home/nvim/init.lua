@@ -47,6 +47,9 @@ vim.g.loaded_sql_completion = 1
 vim.g.omni_sql_default_compl_type = "syntax"
 vim.g.omni_sql_no_default_maps = 1
 
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw = 1
+
 if os.getenv("TERM_PROGRAM") == "WezTerm" then
 	local group = vim.api.nvim_create_augroup("wezterm", {})
 	set_user_var("NEOVIM", "true")
@@ -151,6 +154,7 @@ require("lze").load({
 require("lze").load({
 	"mini.nvim",
 	event = "DeferredUIEnter",
+	on_require = { "mini.icons" },
 	after = function()
 		require("mini.pairs").setup()
 		require("mini.icons").setup()
@@ -308,7 +312,7 @@ require("lze").load({
 
 require("lze").load({
 	"neo-tree",
-	event = "DeferredUIEnter",
+	lazy = false, -- neo-tree does its own lazy loading
 	after = function()
 		require("neo-tree").setup({
 			default_component_configs = {
@@ -511,6 +515,7 @@ require("lze").load({
 require("lze").load({
 	"orgmode",
 	event = "DeferredUIEnter",
+	dep_of = { "org-roam" },
 	after = function()
 		require("orgmode").setup({
 			org_agenda_files = "~/notes/**/*",
