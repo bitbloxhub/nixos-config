@@ -629,3 +629,19 @@ require("lze").load({
 		vim.cmd([[cab cc CodeCompanion]])
 	end,
 })
+
+require("lze").load({
+	"tiny-inline-diagnostic.nvim",
+	event = "LspAttach",
+	after = function()
+		require("tiny-inline-diagnostic").setup({
+			preset = "classic",
+			transparent_bg = true,
+			transparent_cursorline = true,
+			hi = {
+				background = "None",
+			},
+		})
+		vim.diagnostic.config({ virtual_text = false })
+	end,
+})
