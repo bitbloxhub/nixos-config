@@ -360,7 +360,16 @@ require("lze").load({
 	"neo-tree",
 	lazy = false, -- neo-tree does its own lazy loading
 	after = function()
+		local function on_move(data)
+			require("snacks").rename.on_rename_file(data.source, data.destination)
+		end
+		local events = require("neo-tree.events")
+
 		require("neo-tree").setup({
+			event_handlers = {
+				{ event = events.FILE_MOVED,   handler = on_move },
+				{ event = events.FILE_RENAMED, handler = on_move },
+			},
 			default_component_configs = {
 				icon = {
 					provider = function(icon, node) -- setup a custom icon provider
@@ -621,7 +630,8 @@ require("lze").load({
 								type = "number",
 								optional = true,
 								default = 0.8,
-								desc = "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or top_p but not both.",
+								desc =
+								"What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or top_p but not both.",
 								validate = function(n)
 									return n >= 0 and n <= 2, "Must be between 0 and 2"
 								end,
@@ -643,7 +653,8 @@ require("lze").load({
 								type = "string",
 								optional = true,
 								default = nil,
-								desc = "Sets the stop sequences to use. When this pattern is encountered the LLM will stop generating text and return. Multiple stop patterns may be set by specifying multiple separate stop parameters in a modelfile.",
+								desc =
+								"Sets the stop sequences to use. When this pattern is encountered the LLM will stop generating text and return. Multiple stop patterns may be set by specifying multiple separate stop parameters in a modelfile.",
 								validate = function(s)
 									return s:len() > 0, "Cannot be an empty string"
 								end,
@@ -654,7 +665,8 @@ require("lze").load({
 								type = "map",
 								optional = true,
 								default = nil,
-								desc = "Modify the likelihood of specified tokens appearing in the completion. Maps tokens (specified by their token ID) to an associated bias value from -100 to 100. Use https://platform.openai.com/tokenizer to find token IDs.",
+								desc =
+								"Modify the likelihood of specified tokens appearing in the completion. Maps tokens (specified by their token ID) to an associated bias value from -100 to 100. Use https://platform.openai.com/tokenizer to find token IDs.",
 								subtype_key = {
 									type = "integer",
 								},
