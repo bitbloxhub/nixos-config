@@ -155,6 +155,11 @@ require("lze").load({
 	"mini.nvim",
 	event = "DeferredUIEnter",
 	on_require = { "mini.icons" },
+	keys = {
+		key2spec("n", "<leader>bd", function()
+			require("mini.bufremove").delete(vim.fn.bufnr(), false)
+		end, { desc = "Closes the current buffer" }),
+	},
 	after = function()
 		require("mini.pairs").setup()
 		require("mini.icons").setup()
@@ -165,6 +170,7 @@ require("lze").load({
 		require("mini.ai").setup()
 		require("mini.comment").setup()
 		require("mini.surround").setup()
+		require("mini.bufremove").setup()
 	end,
 })
 
