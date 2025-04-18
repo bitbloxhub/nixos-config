@@ -299,9 +299,7 @@ require("lze").load({
 	},
 	{
 		"ts_ls",
-		lsp = {
-			cmd = { "bunx", "--bun", "typescript-language-server", "--stdio" },
-		},
+		lsp = {},
 	},
 	{
 		"svelte",

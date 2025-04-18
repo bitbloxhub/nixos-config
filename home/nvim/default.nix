@@ -24,6 +24,7 @@
             basedpyright
             ruff
             lua-language-server
+            typescript-language-server
           ];
         };
         extraPython3Packages = {
