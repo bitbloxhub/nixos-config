@@ -256,7 +256,9 @@ require("lze").load({
 						vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
 					end
 					nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-					nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+					nmap("<leader>ca", function()
+						require("fzf-lua").lsp_code_actions()
+					end, "[C]ode [A]ction")
 
 					nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
 
@@ -416,7 +418,13 @@ require("lze").load({
 		key2spec("n", "<F1>", require("fzf-lua").help_tags),
 	},
 	after = function()
-		require("fzf-lua").setup({})
+		require("fzf-lua").setup({
+			lsp = {
+				code_actions = {
+					previewer = "codeaction_native",
+				},
+			},
+		})
 		require("fzf-lua").register_ui_select(function(_, items)
 			local min_h, max_h = 0.15, 0.70
 			local h = (#items + 4) / vim.o.lines
