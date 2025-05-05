@@ -1,5 +1,6 @@
+---@diagnostic disable: missing-fields
 -- Pull in the wezterm API
-local wezterm = require("wezterm")
+local wezterm = require("wezterm") --[[@as Wezterm]]
 
 -- This will hold the configuration.
 local config = wezterm.config_builder()
@@ -12,6 +13,7 @@ config.background = {
 		source = { File = "/home/jonahgam/miku-hacker0.jpg" },
 	},
 	{
+		---@diagnostic disable-next-line: assign-type-mismatch
 		source = { Color = "#1e1e2e" },
 		opacity = 0.9,
 		width = "100%",
@@ -66,6 +68,7 @@ wezterm.on("user-var-changed", function(window, pane)
 	end
 end)
 wezterm.on("format-window-title", function(tab)
+	---@diagnostic disable-next-line
 	return tab.tab_title
 end)
 config.enable_wayland = false

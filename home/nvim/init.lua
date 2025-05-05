@@ -1,3 +1,5 @@
+---@diagnostic disable: missing-fields
+
 local function set_user_var(key, value)
 	io.write(string.format("\027]1337;SetUserVar=%s=%s\a", key, vim.base64.encode(tostring(value))))
 end
@@ -124,6 +126,8 @@ end)()
 require("lze").register_handlers(require("lzextras").lsp)
 
 local key2spec = require("lzextras").key2spec
+
+vim.env.NIXCATS_PACK_DIR = nixCats.vimPackDir
 
 require("lze").load({
 	"catppuccin",

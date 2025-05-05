@@ -1,0 +1,3 @@
+[submodule "home/wezterm/wezterm-types"]
+	path = home/wezterm/wezterm-types
+	url = https://github.com/gonstoll/wezterm-types
