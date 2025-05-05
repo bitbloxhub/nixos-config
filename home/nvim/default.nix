@@ -87,6 +87,7 @@
               org-roam-nvim
               codecompanion-nvim
               tiny-inline-diagnostic-nvim
+              visual-whitespace-nvim
             ];
         };
       }

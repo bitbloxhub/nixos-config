@@ -712,3 +712,11 @@ require("lze").load({
 		vim.diagnostic.config({ virtual_text = false })
 	end,
 })
+
+require("lze").load({
+	"visual-whitespace",
+	event = "DeferredUIEnter",
+	after = function()
+		require("visual-whitespace").setup({})
+	end,
+})
