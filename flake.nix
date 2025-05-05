@@ -71,7 +71,7 @@
           };
           modules = [
             ./hosts/extreme-creeper/home.nix
-            catppuccin.homeManagerModules.catppuccin
+            catppuccin.homeModules.catppuccin
             nixCats.homeModule
           ];
         };

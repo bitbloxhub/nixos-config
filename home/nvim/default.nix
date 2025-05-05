@@ -27,7 +27,7 @@
             typescript-language-server
           ];
         };
-        extraPython3Packages = {
+        python3.libraries = {
           general =
             ps: with ps; [
               pynvim
@@ -98,7 +98,7 @@
           settings = {
             wrapRc = true;
             configDirName = "nvim";
-            withPython3 = true;
+            hosts.python3.enable = true;
           };
           categories = {
             general = true;
