@@ -88,6 +88,7 @@
               codecompanion-nvim
               tiny-inline-diagnostic-nvim
               visual-whitespace-nvim
+              treewalker-nvim
             ];
         };
       }

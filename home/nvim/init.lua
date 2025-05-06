@@ -284,7 +284,7 @@ require("lze").load({
 
 					-- See `:help K` for why this keymap
 					nmap("K", vim.lsp.buf.hover, "Hover Documentation")
-					nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
+					nmap("<M-k>", vim.lsp.buf.signature_help, "Signature Documentation")
 
 					-- Lesser used LSP functionality
 					nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
@@ -726,5 +726,23 @@ require("lze").load({
 	event = "DeferredUIEnter",
 	after = function()
 		require("visual-whitespace").setup({})
+	end,
+})
+
+require("lze").load({
+	"treewalker.nvim",
+	event = "DeferredUIEnter",
+	keys = {
+		key2spec({ "n", "v" }, "<C-k>", "<cmd>Treewalker Up<cr>", { silent = true }),
+		key2spec({ "n", "v" }, "<C-j>", "<cmd>Treewalker Down<cr>", { silent = true }),
+		key2spec({ "n", "v" }, "<C-h>", "<cmd>Treewalker Left<cr>", { silent = true }),
+		key2spec({ "n", "v" }, "<C-l>", "<cmd>Treewalker Right<cr>", { silent = true }),
+		key2spec("n", "<C-S-k>", "<cmd>Treewalker SwapUp<cr>", { silent = true }),
+		key2spec("n", "<C-S-j>", "<cmd>Treewalker SwapDown<cr>", { silent = true }),
+		key2spec("n", "<C-S-h>", "<cmd>Treewalker SwapLeft<cr>", { silent = true }),
+		key2spec("n", "<C-S-l>", "<cmd>Treewalker SwapRight<cr>", { silent = true }),
+	},
+	after = function()
+		require("treewalker").setup()
 	end,
 })
