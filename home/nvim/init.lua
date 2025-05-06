@@ -417,14 +417,12 @@ require("lze").load({
 	"fzf-lua",
 	event = "DeferredUIEnter",
 	keys = {
-		key2spec("n", "<leader>f\\", require("fzf-lua").buffers),
-		key2spec("n", "<leader>fk", require("fzf-lua").builtin),
-		key2spec("n", "<leader>fp", require("fzf-lua").files),
-		key2spec("n", "<leader>fg", require("fzf-lua").live_grep_glob),
-		key2spec("n", "<leader>fG", require("fzf-lua").lgrep_curbuf),
-		-- key2spec("n", "<leader>fs", require("fzf-lua").lsp_workspace_symbols),
-		-- key2spec("n", "<leader>fS", require("fzf-lua").lsp_document_symbols),
-		key2spec("n", "<F1>", require("fzf-lua").help_tags),
+		key2spec("n", "<leader>f\\", require("fzf-lua").buffers, { desc = "Fzf Buffers" }),
+		key2spec("n", "<leader>fk", require("fzf-lua").builtin, { desc = "Fzf Builtin" }),
+		key2spec("n", "<leader>fp", require("fzf-lua").files, { desc = "Fzf Files" }),
+		key2spec("n", "<leader>fg", require("fzf-lua").live_grep_glob, { desc = "Fzf Grep" }),
+		key2spec("n", "<leader>fG", require("fzf-lua").lgrep_curbuf, { desc = "Fzf Grep current buffer" }),
+		key2spec("n", "<F1>", require("fzf-lua").help_tags, { desc = "Fzf Help" }),
 	},
 	after = function()
 		require("fzf-lua").setup({
