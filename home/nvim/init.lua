@@ -13,6 +13,7 @@ if vim.env.PROF then
 end
 
 vim.o.termguicolors = true
+vim.o.guicursor = "n-v-c-sm-t:block,i-ci-ve:ver25,r-cr-o:hor20"
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
