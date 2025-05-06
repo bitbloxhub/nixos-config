@@ -303,22 +303,27 @@ require("lze").load({
 	},
 	{
 		"basedpyright",
+		---@type vim.lsp.ClientConfig
 		lsp = {},
 	},
 	{
 		"ruff",
+		---@type vim.lsp.ClientConfig
 		lsp = {},
 	},
 	{
 		"ts_ls",
+		---@type vim.lsp.ClientConfig
 		lsp = {},
 	},
 	{
 		"svelte",
+		---@type vim.lsp.ClientConfig
 		lsp = {},
 	},
 	{
 		"lua_ls",
+		---@type vim.lsp.ClientConfig
 		lsp = {},
 	},
 })
