@@ -89,6 +89,7 @@
               tiny-inline-diagnostic-nvim
               visual-whitespace-nvim
               treewalker-nvim
+              smear-cursor-nvim
             ];
         };
       }

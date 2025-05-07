@@ -746,3 +746,14 @@ require("lze").load({
 		require("treewalker").setup()
 	end,
 })
+
+require("lze").load({
+	"smear-cursor.nvim",
+	event = "DeferredUIEnter",
+	after = function()
+		require("smear_cursor").setup({
+			legacy_computing_symbols_support = false,
+			smear_insert_mode = false,
+		})
+	end,
+})
