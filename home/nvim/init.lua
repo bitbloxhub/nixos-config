@@ -318,6 +318,11 @@ require("lze").load({
 		lsp = {},
 	},
 	{
+		"deno_ls",
+		---@type vim.lsp.ClientConfig
+		lsp = {},
+	},
+	{
 		"svelte",
 		---@type vim.lsp.ClientConfig
 		lsp = {},

@@ -25,6 +25,8 @@
             ruff
             lua-language-server
             typescript-language-server
+            svelte-language-server
+            deno
           ];
         };
         python3.libraries = {
@@ -102,6 +104,7 @@
             wrapRc = true;
             configDirName = "nvim";
             hosts.python3.enable = true;
+            suffix-path = false;
           };
           categories = {
             general = true;
