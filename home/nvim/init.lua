@@ -315,12 +315,19 @@ require("lze").load({
 	{
 		"ts_ls",
 		---@type vim.lsp.ClientConfig
-		lsp = {},
+		lsp = {
+			single_file_support = false,
+			---@diagnostic disable-next-line: assign-type-mismatch
+			root_dir = require("lspconfig").util.root_pattern("package.json"),
+		},
 	},
 	{
-		"deno_ls",
+		"denols",
 		---@type vim.lsp.ClientConfig
-		lsp = {},
+		lsp = {
+			---@diagnostic disable-next-line: assign-type-mismatch
+			root_dir = require("lspconfig").util.root_pattern("deno.json", "deno.jsonc")
+		},
 	},
 	{
 		"svelte",
