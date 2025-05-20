@@ -465,18 +465,6 @@ require("lze").load({
 		require("hardtime").setup({
 			disable_mouse = false,
 			restriction_mode = "block",
-			disabled_keys = {
-				["<Up>"] = {},
-				["<Down>"] = {},
-				["<Left>"] = {},
-				["<Right>"] = {},
-			},
-			restricted_keys = {
-				["<Up>"] = { "n", "x" },
-				["<Down>"] = { "n", "x" },
-				["<Left>"] = { "n", "x" },
-				["<Right>"] = { "n", "x" },
-			},
 		})
 	end,
 })
