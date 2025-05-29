@@ -176,6 +176,7 @@ require("lze").load({
 		require("mini.comment").setup()
 		require("mini.surround").setup()
 		require("mini.bufremove").setup()
+		require("mini.splitjoin").setup()
 	end,
 })
 
