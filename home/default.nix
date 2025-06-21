@@ -9,6 +9,7 @@
     ./wezterm
     ./shell
     ./llama.nix
+    ./just.nix
     ./nushell.nix
   ];
 }
