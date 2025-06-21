@@ -5,6 +5,6 @@
     accent = "mauve";
     cursors.enable = true;
     cursors.accent = "dark";
-    mako.enable = false;  # https://github.com/catppuccin/nix/issues/552
+    mako.enable = false; # https://github.com/catppuccin/nix/issues/552
   };
 }

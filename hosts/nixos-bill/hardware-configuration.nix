@@ -8,7 +8,6 @@
   modulesPath,
   ...
 }:
-
 {
   imports = [ ];
 

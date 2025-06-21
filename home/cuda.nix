@@ -4,7 +4,6 @@
   nvidia,
   ...
 }:
-
 {
   nixpkgs.config.allowUnfreePredicate =
     pkg:

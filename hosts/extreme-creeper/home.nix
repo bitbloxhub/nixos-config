@@ -1,9 +1,10 @@
 {
   pkgs,
+  catppuccin,
+  nixCats,
   system-manager,
   ...
 }:
-
 {
   home.username = "jonahgam";
   home.homeDirectory = "/home/jonahgam";
@@ -16,6 +17,9 @@
 
   imports = [
     ../../home
+
+    catppuccin.homeModules.catppuccin
+    nixCats.homeModule
   ];
 
   xdg.enable = true;

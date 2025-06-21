@@ -4,7 +4,6 @@
   nvidia,
   ...
 }:
-
 {
   home.packages = with pkgs; [
     grimblast

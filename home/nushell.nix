@@ -1,7 +1,3 @@
 {
-  ...
-}:
-
-{
   programs.nushell.enable = true;
 }

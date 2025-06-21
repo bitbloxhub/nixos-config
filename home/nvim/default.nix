@@ -2,7 +2,6 @@
   inputs,
   ...
 }:
-
 {
   nixCats = {
     enable = true;

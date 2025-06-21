@@ -1,16 +1,17 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 {
   config,
   lib,
   pkgs,
+  catppuccin,
+  home-manager,
   ...
 }:
-
 {
+  system = "x86_64_linux";
+
   imports = [
+    catppuccin.nixosModules.catppuccin
+    home-manager.nixosModules.home-manager
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
 
@@ -30,10 +31,15 @@
   services.avahi.enable = true;
   services.avahi.nssmdns4 = true;
 
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+
+  home-manager.users.jonahgam = {
+    imports = [
+      ../../old-home.nix
+      catppuccin.homeManagerModules.catppuccin
+    ];
+  };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

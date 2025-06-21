@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  nix-system-graphics,
   ...
 }:
 let
@@ -27,4 +28,8 @@ in
     system-graphics.package = driver;
     system-graphics.extraPackages = [ pkgs.mesa ];
   };
+
+  imports = [
+    nix-system-graphics.systemModules.default
+  ];
 }

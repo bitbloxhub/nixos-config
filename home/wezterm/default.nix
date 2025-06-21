@@ -2,7 +2,6 @@
   pkgs,
   ...
 }:
-
 {
   programs.wezterm.enable = true;
   programs.wezterm.package = pkgs.symlinkJoin {
