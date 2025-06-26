@@ -41,23 +41,6 @@
         };
         startupPlugins = {
           general =
-            let
-              animotion-nvim = pkgs.vimUtils.buildVimPlugin {
-                name = "AniMotion.nvim";
-                src = builtins.fetchGit {
-                  url = "https://github.com/luiscassih/AniMotion.nvim.git";
-                  rev = "a1adf214e276fa8c3f439ce3fa13a6f647744dab";
-                };
-              };
-              # TODO: temporary solution, needed for commit https://github.com/rachartier/tiny-inline-diagnostic.nvim/commit/e563f38
-              tiny-inline-diagnostic-nvim = pkgs.vimUtils.buildVimPlugin {
-                name = "tiny-inline-diagnostic.nvim";
-                src = builtins.fetchGit {
-                  url = "https://github.com/rachartier/tiny-inline-diagnostic.nvim.git";
-                  rev = "842983e91e0b8825f1084b8323c7806c8bf64c74";
-                };
-              };
-            in
             with pkgs.vimPlugins;
             [
               lze
@@ -83,13 +66,11 @@
               git-conflict-nvim
               #precognition-nvim # Has issues with fzf-lua.
               hardtime-nvim
-              animotion-nvim
               orgmode
               org-roam-nvim
               codecompanion-nvim
               tiny-inline-diagnostic-nvim
               visual-whitespace-nvim
-              treewalker-nvim
               smear-cursor-nvim
             ];
         };

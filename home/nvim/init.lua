@@ -78,7 +78,6 @@ end
 	vim.opt.relativenumber = true
 	local excluded_filetypes = {
 		["neo-tree"] = true,
-		["snacks_terminal"] = true,
 		["codecompanion"] = true,
 	}
 	local function set_relative(relative)
@@ -184,9 +183,6 @@ require("lze").load({
 	"snacks",
 	event = "DeferredUIEnter",
 	keys = {
-		key2spec("n", "<leader>ft", function()
-			require("snacks").terminal.toggle()
-		end, { desc = "Open Terminal" }),
 		key2spec("n", "<leader>pp", function()
 			require("snacks").toggle.profiler()
 		end, { desc = "Toggle Profiler" }),
@@ -205,16 +201,6 @@ require("lze").load({
 	event = "DeferredUIEnter",
 	after = function()
 		require("edgy").setup({
-			bottom = {
-				{
-					ft = "snacks_terminal",
-					size = { height = 0.3 },
-					-- exclude floating windows
-					filter = function(_, win)
-						return vim.api.nvim_win_get_config(win).relative == ""
-					end,
-				},
-			},
 			left = {
 				{
 					title = "Neo-Tree",
@@ -471,14 +457,6 @@ require("lze").load({
 })
 
 require("lze").load({
-	"AniMotion",
-	event = "DeferredUIEnter",
-	after = function()
-		require("AniMotion").setup({})
-	end,
-})
-
-require("lze").load({
 	"git-conflict",
 	event = "DeferredUIEnter",
 	after = function()
@@ -727,24 +705,6 @@ require("lze").load({
 	event = "DeferredUIEnter",
 	after = function()
 		require("visual-whitespace").setup({})
-	end,
-})
-
-require("lze").load({
-	"treewalker.nvim",
-	event = "DeferredUIEnter",
-	keys = {
-		key2spec({ "n", "v" }, "<C-k>", "<cmd>Treewalker Up<cr>", { silent = true }),
-		key2spec({ "n", "v" }, "<C-j>", "<cmd>Treewalker Down<cr>", { silent = true }),
-		key2spec({ "n", "v" }, "<C-h>", "<cmd>Treewalker Left<cr>", { silent = true }),
-		key2spec({ "n", "v" }, "<C-l>", "<cmd>Treewalker Right<cr>", { silent = true }),
-		key2spec("n", "<C-S-k>", "<cmd>Treewalker SwapUp<cr>", { silent = true }),
-		key2spec("n", "<C-S-j>", "<cmd>Treewalker SwapDown<cr>", { silent = true }),
-		key2spec("n", "<C-S-h>", "<cmd>Treewalker SwapLeft<cr>", { silent = true }),
-		key2spec("n", "<C-S-l>", "<cmd>Treewalker SwapRight<cr>", { silent = true }),
-	},
-	after = function()
-		require("treewalker").setup()
 	end,
 })
 
