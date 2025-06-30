@@ -34,7 +34,6 @@ config.colors = {
 }
 config.tab_bar_at_bottom = true
 config.tab_max_width = 40
-config.text_background_opacity = 0.7
 config.alternate_buffer_wheel_scroll_speed = 1
 local act = wezterm.action
 config.mouse_bindings = {
