@@ -62,6 +62,21 @@
         "type": "github"
       }
     },
+    "import-tree": {
+      "locked": {
+        "lastModified": 1751270547,
+        "narHash": "sha256-crsdw+SVF+8JewH2npzM5iy2RowD3min24DqzCZX7uQ=",
+        "owner": "vic",
+        "repo": "import-tree",
+        "rev": "e5a363c65db721944ec29d42c210f33f7dee9808",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "import-tree",
+        "type": "github"
+      }
+    },
     "nix-system-graphics": {
       "inputs": {
         "nixpkgs": [
@@ -118,6 +133,7 @@
         "catppuccin": "catppuccin",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
+        "import-tree": "import-tree",
         "nix-system-graphics": "nix-system-graphics",
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs",
