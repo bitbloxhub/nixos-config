@@ -9,6 +9,8 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
+    import-tree.url = "github:vic/import-tree";
+
     catppuccin = {
       url = "github:catppuccin/nix/main";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,6 +39,7 @@
       self,
       nixpkgs,
       flake-parts,
+      import-tree,
       catppuccin,
       home-manager,
       system-manager,
@@ -44,69 +47,42 @@
       nixCats,
       ...
     }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "aarch64-darwin"
-      ];
-      flake =
-        let
-          mapFromHosts =
-            { type, constructor }:
-            (builtins.listToAttrs (
-              builtins.filter (x: x != null) (
-                builtins.map (
-                  host: if builtins.pathExists ./hosts/${host}/${type}.nix then (constructor host) else null
-                ) (builtins.attrNames (builtins.readDir ./hosts))
-              )
-            ));
-        in
-        {
-          nixosConfigurations = mapFromHosts {
-            type = "nixos";
-            constructor = host: {
-              name = host;
-              value = (
-                nixpkgs.lib.nixosSystem {
-                  modules = [ ./hosts/${host}/nixos.nix ];
-                }
-              );
+    let
+      lib = nixpkgs.lib.extend (lib: _: { my = (import ./lib { inherit inputs lib; }); });
+    in
+    flake-parts.lib.mkFlake
+      {
+        inherit inputs;
+        specialArgs = { inherit lib; };
+      }
+      {
+        systems = [
+          "x86_64-linux"
+          "aarch64-linux"
+          "x86_64-darwin"
+          "aarch64-darwin"
+        ];
+
+        imports = [
+          flake-parts.flakeModules.modules
+          inputs.home-manager.flakeModules.home-manager
+          {
+            options.flake = flake-parts.lib.mkSubmoduleOptions {
+              systemConfigs = lib.mkOption {
+                type = lib.types.lazyAttrsOf lib.types.raw;
+                default = { };
+                description = ''
+                  Instantiated system-manager configurations.
+                '';
+              };
             };
-          };
-          systemConfigs = mapFromHosts {
-            type = "system-manager";
-            constructor = host: {
-              name = host;
-              value = (
-                system-manager.lib.makeSystemConfig {
-                  extraSpecialArgs = { inherit (inputs) nix-system-graphics; };
-                  modules = [ ./hosts/${host}/system-manager.nix ];
-                }
-              );
-            };
-          };
-          homeConfigurations = mapFromHosts {
-            type = "home";
-            constructor = host: {
-              name = "${(import ./hosts/${host}/home-meta.nix).username}@${host}";
-              value = (
-                home-manager.lib.homeManagerConfiguration {
-                  extraSpecialArgs = {
-                    inherit
-                      system-manager
-                      catppuccin
-                      nixCats
-                      inputs
-                      ;
-                  } // (import ./hosts/${host}/home-meta.nix);
-                  pkgs = nixpkgs.legacyPackages.${(import ./hosts/${host}/home-meta.nix).system};
-                  modules = [ ./hosts/${host}/home.nix ];
-                }
-              );
-            };
-          };
+          }
+          (import-tree ./modules)
+          ((import-tree.filter (lib.hasSuffix "default.nix")) ./hosts)
+        ];
+
+        flake = {
+          inherit lib;
         };
-    };
+      };
 }
