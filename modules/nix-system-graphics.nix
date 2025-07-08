@@ -15,9 +15,9 @@
     { config, ... }:
     {
       system-graphics = {
-        enable = config.my.nix-system-graphics.enable;
+        inherit (config.my.nix-system-graphics) enable;
         package = config.my.nix-system-graphics.driver;
-        extraPackages = config.my.nix-system-graphics.extraPackages;
+        inherit (config.my.nix-system-graphics) extraPackages;
       };
     };
 }

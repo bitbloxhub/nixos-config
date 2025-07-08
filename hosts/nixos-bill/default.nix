@@ -1,6 +1,5 @@
 {
   lib,
-  inputs,
   ...
 }:
 lib.my.deepMerge

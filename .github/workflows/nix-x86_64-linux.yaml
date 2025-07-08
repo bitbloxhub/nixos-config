@@ -1,0 +1,63 @@
+jobs:
+  fast-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: determinatesystems/nix-installer-action@main
+      with:
+        determinate: false
+        diagnostic-endpoint: ''
+        logger: pretty
+        source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
+    - uses: DeterminateSystems/magic-nix-cache-action@main
+      with:
+        diagnostic-endpoint: ''
+    - name: nix-fast-build
+      run: nix run --inputs-from . nixpkgs#lixPackageSets.latest.nix-fast-build --
+        --no-nom --flake ".#checks.x86_64-linux" --result-file result.json || true
+    - name: transform
+      run: nix run --inputs-from . .#nix-auto-ci-transform -- result.json
+    - name: upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: results
+        path: './result_parsed.json
+
+          ./result-*
+
+          '
+    timeout-minutes: 60
+  report:
+    needs:
+    - fast-build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: determinatesystems/nix-installer-action@main
+      with:
+        determinate: false
+        diagnostic-endpoint: ''
+        logger: pretty
+        source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
+    - uses: DeterminateSystems/magic-nix-cache-action@main
+      with:
+        diagnostic-endpoint: ''
+    - uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+    - name: report
+      run: nix run --inputs-from . .#nix-auto-ci-report artifacts/results/result_parsed.json
+        ${{ matrix.attr }}
+    strategy:
+      fail-fast: false
+      matrix:
+        attr:
+        - pre-commit
+        - treefmt
+    timeout-minutes: 60
+name: Nix x86_64-linux
+'on':
+  pull_request: {}
+  push:
+    branches:
+    - main

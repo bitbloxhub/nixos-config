@@ -9,6 +9,32 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "";
+    };
+
+    actions-nix = {
+      url = "github:nialov/actions.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.pre-commit-hooks.follows = "git-hooks";
+    };
+
+    nix-auto-ci = {
+      url = "github:aigis-llm/nix-auto-ci";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.git-hooks.follows = "git-hooks";
+      inputs.actions-nix.follows = "actions-nix";
+    };
+
     import-tree.url = "github:vic/import-tree";
 
     catppuccin = {
@@ -36,19 +62,18 @@
 
   outputs =
     inputs@{
-      self,
       nixpkgs,
       flake-parts,
+      treefmt-nix,
+      git-hooks,
+      actions-nix,
+      nix-auto-ci,
       import-tree,
-      catppuccin,
       home-manager,
-      system-manager,
-      nix-system-graphics,
-      nixCats,
       ...
     }:
     let
-      lib = nixpkgs.lib.extend (lib: _: { my = (import ./lib { inherit inputs lib; }); });
+      lib = nixpkgs.lib.extend (lib: _: { my = import ./lib { inherit inputs lib; }; });
     in
     flake-parts.lib.mkFlake
       {
@@ -65,6 +90,10 @@
 
         imports = [
           flake-parts.flakeModules.modules
+          treefmt-nix.flakeModule
+          git-hooks.flakeModule
+          actions-nix.flakeModules.default
+          nix-auto-ci.flakeModule
           inputs.home-manager.flakeModules.home-manager
           {
             options.flake = flake-parts.lib.mkSubmoduleOptions {
@@ -77,6 +106,9 @@
               };
             };
           }
+          ./ci.nix
+          ./devshell.nix
+          ./treefmt.nix
           (import-tree ./modules)
           ((import-tree.filter (lib.hasSuffix "default.nix")) ./hosts)
         ];

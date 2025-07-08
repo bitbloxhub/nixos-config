@@ -35,7 +35,7 @@
         isNormalUser = true;
         extraGroups = [ "wheel" ];
         hashedPasswordFile = "/etc/nixos/passwordfile";
-        home = config.my.user.home;
+        inherit (config.my.user) home;
       };
 
       home-manager.users.${config.my.user.username} = {
@@ -46,7 +46,7 @@
           inputs.self.modules.generic.default
           inputs.self.modules.homeManager.default
 
-          { my = config.my; }
+          { inherit (config) my; }
         ];
       };
     };

@@ -313,7 +313,7 @@ require("lze").load({
 		---@type vim.lsp.ClientConfig
 		lsp = {
 			---@diagnostic disable-next-line: assign-type-mismatch
-			root_dir = require("lspconfig").util.root_pattern("deno.json", "deno.jsonc")
+			root_dir = require("lspconfig").util.root_pattern("deno.json", "deno.jsonc"),
 		},
 	},
 	{

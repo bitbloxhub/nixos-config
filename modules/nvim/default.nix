@@ -17,18 +17,15 @@
     }:
     {
       nixCats = {
-        enable = config.my.programs.nvim.enable;
+        inherit (config.my.programs.nvim) enable;
         nixpkgs_version = inputs.nixpkgs;
         luaPath = ./.;
         packageNames = [ "nvim" ];
-        categoryDefinitions.replace = (
+        categoryDefinitions.replace =
           {
             pkgs,
-            settings,
-            categories,
-            name,
             ...
-          }@packageDef:
+          }:
           {
             lspsAndRuntimeDeps = {
               general = with pkgs; [
@@ -85,22 +82,19 @@
                 smear-cursor-nvim
               ];
             };
-          }
-        );
+          };
         packageDefinitions.replace = {
-          nvim =
-            { pkgs, ... }:
-            {
-              settings = {
-                wrapRc = true;
-                configDirName = "nvim";
-                hosts.python3.enable = true;
-                suffix-path = false;
-              };
-              categories = {
-                general = true;
-              };
+          nvim = _: {
+            settings = {
+              wrapRc = true;
+              configDirName = "nvim";
+              hosts.python3.enable = true;
+              suffix-path = false;
             };
+            categories = {
+              general = true;
+            };
+          };
         };
       };
     };

@@ -1,6 +1,5 @@
 # Provides sane defaults for everything
 {
-  lib,
   inputs,
   ...
 }:

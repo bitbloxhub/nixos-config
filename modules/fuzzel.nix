@@ -16,7 +16,7 @@
     }:
     {
       programs.fuzzel = {
-        enable = config.my.programs.fuzzel.enable;
+        inherit (config.my.programs.fuzzel) enable;
         settings.main = {
           font = "Fira Code:size=10";
           lines = 20;
