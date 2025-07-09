@@ -94,7 +94,7 @@
           git-hooks.flakeModule
           actions-nix.flakeModules.default
           nix-auto-ci.flakeModule
-          inputs.home-manager.flakeModules.home-manager
+          home-manager.flakeModules.home-manager
           {
             options.flake = flake-parts.lib.mkSubmoduleOptions {
               systemConfigs = lib.mkOption {
