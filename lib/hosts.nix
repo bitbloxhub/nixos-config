@@ -14,6 +14,7 @@
 
             inputs.self.modules.generic.default
             inputs.self.modules.nixos.default
+
             (inputs.self.modules.nixos."host_${config.my.hostname}" or { })
 
             config
