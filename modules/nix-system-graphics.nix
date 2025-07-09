@@ -1,4 +1,7 @@
-{ lib, ... }:
+{
+  lib,
+  ...
+}:
 {
   flake.modules.generic.default = {
     options.my.nix-system-graphics = {
@@ -12,7 +15,10 @@
   };
 
   flake.modules.systemManager.default =
-    { config, ... }:
+    {
+      config,
+      ...
+    }:
     {
       system-graphics = {
         inherit (config.my.nix-system-graphics) enable;
