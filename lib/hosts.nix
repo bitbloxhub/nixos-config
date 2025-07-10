@@ -11,6 +11,7 @@
           modules = [
             inputs.catppuccin.nixosModules.catppuccin
             inputs.home-manager.nixosModules.home-manager
+            inputs.niri-flake.nixosModules.niri
 
             inputs.self.modules.generic.default
             inputs.self.modules.nixos.default
@@ -45,6 +46,7 @@
           modules = [
             inputs.catppuccin.homeModules.catppuccin
             inputs.nixCats.homeModule
+            inputs.niri-flake.homeModules.niri
 
             inputs.self.modules.generic.default
             inputs.self.modules.homeManager.default
