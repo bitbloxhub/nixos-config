@@ -21,7 +21,7 @@ in
     {
       niri-flake.cache.enable = false; # I enable this in ./nix.nix.
       programs.niri = {
-        enable = config.my.programs.niri.enable;
+        inherit (config.my.programs.niri) enable;
         package = (niriPkgsForSystem config.my.hardware.platform).niri-unstable;
       };
     };
@@ -34,12 +34,12 @@ in
     }:
     {
       programs.niri = {
-        enable = config.my.programs.niri.enable;
+        inherit (config.my.programs.niri) enable;
         package = (niriPkgsForSystem config.my.hardware.platform).niri-unstable;
         settings = {
           xwayland-satellite = {
             enable = true;
-            path = lib.getExe ((niriPkgsForSystem config.my.hardware.platform).xwayland-satellite-unstable);
+            path = lib.getExe (niriPkgsForSystem config.my.hardware.platform).xwayland-satellite-unstable;
           };
           screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
           layout = {
@@ -192,7 +192,7 @@ in
             "Mod+Shift+Minus".action.set-window-height = "-10%";
             "Mod+Shift+Equal".action.set-window-height = "+10%";
 
-            "Mod+V"     .action.toggle-window-floating = { };
+            "Mod+V".action.toggle-window-floating = { };
             "Mod+Shift+V".action.switch-focus-between-floating-and-tiling = { };
 
             "Mod+W".action.toggle-column-tabbed-display = { };
@@ -202,7 +202,7 @@ in
             "Alt+Print".action.screenshot-window = { };
 
             "Mod+Escape" = {
-              allow-inhibiting=false;
+              allow-inhibiting = false;
               action.toggle-keyboard-shortcuts-inhibit = { };
             };
 
