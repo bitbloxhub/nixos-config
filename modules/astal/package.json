@@ -1,0 +1,8 @@
+{
+	"name": "astal-shell",
+	"type": "module",
+	"dependencies": {
+		"@catppuccin/palette": "v1.7.1",
+		"ags": "https://gitpkg.vercel.app/Aylur/ags/lib?22f37ccb0db58d9d8a11ad0054ab20ecfad005ad"
+	}
+}

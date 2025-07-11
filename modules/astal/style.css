@@ -1,0 +1,18 @@
+@import "@catppuccin/palette/css/catppuccin.css";
+
+window.Bar {
+	background: transparent;
+	color: var(--ctp-mocha-text);
+	font-weight: bold;
+
+	> centerbox {
+		background: var(--ctp-mocha-base);
+		border-radius: 10px;
+		margin: 8px;
+	}
+
+	button {
+		border-radius: 8px;
+		margin: 2px;
+	}
+}

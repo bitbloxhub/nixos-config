@@ -47,6 +47,7 @@
             inputs.catppuccin.homeModules.catppuccin
             inputs.nixCats.homeModule
             inputs.niri-flake.homeModules.niri
+            inputs.ags.homeManagerModules.default
 
             inputs.self.modules.generic.default
             inputs.self.modules.homeManager.default

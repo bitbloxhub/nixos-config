@@ -1,4 +1,8 @@
 {
+  inputs,
+  ...
+}:
+{
   perSystem =
     {
       pkgs,
@@ -13,6 +17,10 @@
           pkgs.statix
           pkgs.stylua
           pkgs.lua-language-server
+          pkgs.typescript-language-server
+          pkgs.nodejs_24
+          pkgs.prettier
+          inputs.ags.packages.${pkgs.system}.default
         ];
       };
     };
