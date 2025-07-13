@@ -14,6 +14,8 @@
       networking.firewall.enable = false;
       services.openssh.enable = true;
       programs.ssh.startAgent = true;
+      # Why does niri-flake do this?
+      services.gnome.gcr-ssh-agent.enable = false;
       services.avahi.enable = true;
       services.avahi.nssmdns4 = true;
 

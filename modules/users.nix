@@ -38,10 +38,13 @@
         inherit (config.my.user) home;
       };
 
+      # niri-flake issue
+      home-manager.sharedModules = lib.mkForce [ ];
       home-manager.users.${config.my.user.username} = {
         imports = [
           inputs.catppuccin.homeModules.catppuccin
           inputs.nixCats.homeModule
+          inputs.niri-flake.homeModules.niri
 
           inputs.self.modules.generic.default
           inputs.self.modules.homeManager.default
