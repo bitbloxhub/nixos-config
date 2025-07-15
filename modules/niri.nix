@@ -45,6 +45,12 @@ in
           layout = {
             default-column-width.proportion = 0.5;
           };
+          # WHY IS UNNATURAL SCROLL EVEN A THING
+          input.touchpad = {
+            tap = false;
+            dwt = true;
+            natural-scroll = false;
+          };
           binds = {
             "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
