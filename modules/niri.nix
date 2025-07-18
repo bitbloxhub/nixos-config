@@ -43,8 +43,16 @@ in
           };
           screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
           layout = {
+            gaps = 8;
             default-column-width.proportion = 1.0;
+            focus-ring.enable = false;
+            shadow.enable = true;
+            preset-column-widths = [
+              { proportion = 1. / 2.; }
+              { proportion = 1.; }
+            ];
           };
+          input.focus-follows-mouse.enable = true;
           # WHY IS UNNATURAL SCROLL EVEN A THING
           input.touchpad = {
             tap = false;
