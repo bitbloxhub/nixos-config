@@ -3,6 +3,6 @@
 	"type": "module",
 	"dependencies": {
 		"@catppuccin/palette": "v1.7.1",
-		"ags": "https://gitpkg.vercel.app/Aylur/ags/lib?22f37ccb0db58d9d8a11ad0054ab20ecfad005ad"
+		"ags": "https://gitpkg.vercel.app/Aylur/ags/lib?22f37ccb0db58d9d8a11ad0054ab20ecfad005ad&scripts.postinstall=git%20clone%20https%3A%2F%2Fgithub.com%2FAylur%2Fgnim%20gnim%20%26%26%20cd%20gnim%20%26%26%20git%20checkout%209bffa83f52f711b13e3c139454623a9aea4f5552"
 	}
 }

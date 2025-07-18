@@ -8,6 +8,7 @@
 		"moduleResolution": "Bundler",
 		// "checkJs": true,
 		// "allowJs": true,
+		"experimentalDecorators": false,
 		"jsx": "react-jsx",
 		"jsxImportSource": "ags/gtk4"
 	}

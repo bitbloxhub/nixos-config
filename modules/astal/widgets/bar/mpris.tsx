@@ -1,0 +1,144 @@
+import { Gtk } from "ags/gtk4"
+import { Accessor, For, createState, createBinding, createComputed } from "ags"
+import AstalMpris from "gi://AstalMpris"
+import AstalApps from "gi://AstalApps"
+import RoundImage from "../../utils/round_image"
+import Pango from "gi://Pango?version=1.0"
+
+function Player({ player }: { player: AstalMpris.Player }) {
+	const artist = createBinding(player, "artist")
+	const title = createBinding(player, "title")
+	const artistTitle = createComputed([artist, title], (artist, title) => {
+		return `${artist} - ${title}`
+	})
+
+	return (
+		<box
+			class="mpris-player"
+			name={player.bus_name}
+			$type="named"
+			orientation={Gtk.Orientation.VERTICAL}
+			halign={Gtk.Align.CENTER}
+			valign={Gtk.Align.CENTER}
+		>
+			<Gtk.AspectFrame ratio={1} class="mpris-cover">
+				<RoundImage
+					size={188}
+					radius={10}
+					file={createBinding(player, "coverArt")}
+				/>
+			</Gtk.AspectFrame>
+			<label label={artistTitle} max_width_chars={50} />
+		</box>
+	)
+}
+
+export default function Mpris() {
+	const mpris = AstalMpris.get_default()
+	const apps = new AstalApps.Apps()
+	const playersBinding = createBinding(mpris, "players")
+	const players = playersBinding((players) => {
+		return players.filter((player) => {
+			return player.entry != null
+		})
+	})
+	const [activePlayer, setActivePlayer] = createState<AstalMpris.Player>(
+		players.get()[0],
+	)
+	// TODO: figure out why bindings are not working with this
+	const shouldShow = players((players) => {
+		return players.length != 0
+	})
+	const activePlayerBusName = activePlayer((player) => {
+		return player?.bus_name || ""
+	})
+	const activePlayerIdentity = activePlayer((player) => {
+		return player?.identity || "No Players!"
+	})
+	const nextPlayer = (shiftNum: number) => {
+		const players_list = players.get()
+
+		const newPlayer =
+			players_list[
+				(players_list.findIndex((player) => {
+					return player.bus_name == activePlayerBusName.get()
+				}) +
+					shiftNum) %
+					players_list.length
+			]
+
+		setActivePlayer(newPlayer)
+	}
+
+	return (
+		<menubutton class="mpris-button" visible={shouldShow}>
+			<box>
+				<For each={players}>
+					{(player) => {
+						const [app] = apps.exact_query(player.entry)
+						const artist = createBinding(player, "artist")
+						const title = createBinding(player, "title")
+						const artistTitle = createComputed(
+							[artist, title],
+							(artist, title) => {
+								return `${artist} - ${title}`
+							},
+						)
+						return (
+							<box>
+								<label
+									label={artistTitle}
+									max_width_chars={50}
+									ellipsize={Pango.EllipsizeMode.END}
+									class="mpris-button-title"
+								/>
+								<image
+									class="mpris-button-image"
+									visible={!!app.iconName}
+									iconName={app?.iconName}
+								/>
+							</box>
+						)
+					}}
+				</For>
+			</box>
+			<popover class="mpris-popover" has_arrow={false}>
+				<box orientation={Gtk.Orientation.VERTICAL}>
+					<box orientation={Gtk.Orientation.HORIZONTAL}>
+						<button
+							iconName="pan-start-symbolic"
+							halign={Gtk.Align.START}
+							onClicked={() => {
+								nextPlayer(-1)
+							}}
+						/>
+						<label
+							label={activePlayerIdentity}
+							hexpand
+							halign={Gtk.Align.CENTER}
+						/>
+						<button
+							iconName="pan-end-symbolic"
+							halign={Gtk.Align.END}
+							onClicked={() => {
+								nextPlayer(1)
+							}}
+						/>
+					</box>
+					<box spacing={4} orientation={Gtk.Orientation.VERTICAL}>
+						<stack
+							visible_child_name={activePlayerBusName}
+							transition_type={
+								Gtk.StackTransitionType.SLIDE_LEFT_RIGHT
+							}
+						>
+							<For each={players}>
+								{(player) => <Player player={player} />}
+							</For>
+						</stack>
+					</box>
+				</box>
+			</popover>
+		</menubutton>
+	)
+}
