@@ -43,7 +43,7 @@ in
           };
           screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
           layout = {
-            default-column-width.proportion = 0.5;
+            default-column-width.proportion = 1.0;
           };
           # WHY IS UNNATURAL SCROLL EVEN A THING
           input.touchpad = {
