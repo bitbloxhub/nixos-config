@@ -70,7 +70,7 @@ wezterm.on("format-window-title", function(tab)
 	---@diagnostic disable-next-line
 	return tab.tab_title
 end)
-if (os.getenv("XDG_CURRENT_DESKTOP") == "GNOME") then
+if os.getenv("XDG_CURRENT_DESKTOP") == "GNOME" then
 	config.enable_wayland = false
 end
 
