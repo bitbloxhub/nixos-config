@@ -37,6 +37,7 @@ in
         inherit (config.my.programs.niri) enable;
         package = (niriPkgsForSystem config.my.hardware.platform).niri-unstable;
         settings = {
+          prefer-no-csd = true;
           xwayland-satellite = {
             enable = true;
             path = lib.getExe (niriPkgsForSystem config.my.hardware.platform).xwayland-satellite-unstable;
@@ -46,7 +47,11 @@ in
             gaps = 8;
             default-column-width.proportion = 1.0;
             focus-ring.enable = false;
-            shadow.enable = true;
+            shadow = {
+              enable = true;
+              softness = 5;
+              spread = 0;
+            };
             preset-column-widths = [
               { proportion = 1. / 2.; }
               { proportion = 1.; }
@@ -59,11 +64,28 @@ in
             dwt = true;
             natural-scroll = false;
           };
+          window-rules = [
+            {
+              clip-to-geometry = true;
+            }
+            {
+              matches = [ { app-id = "Zoom Workplace"; } ];
+              excludes = [
+                { title = "Zoom Meeting"; }
+                { title = "Meeting"; }
+              ];
+              open-floating = true;
+              open-focused = false;
+            }
+          ];
           binds = {
             "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
             "Mod+T".action.spawn = "wezterm";
-            "Mod+B".action.spawn = "brave-browser-beta";
+            "Mod+B".action.spawn = [
+              "brave-browser-beta"
+              "--gtk-version=4"
+            ];
 
             "XF86AudioRaiseVolume" = {
               allow-when-locked = true;
@@ -71,7 +93,7 @@ in
                 "wpctl"
                 "set-volume"
                 "@DEFAULT_AUDIO_SINK@"
-                "0.1+"
+                "0.05+"
               ];
             };
             "XF86AudioLowerVolume" = {
@@ -80,7 +102,7 @@ in
                 "wpctl"
                 "set-volume"
                 "@DEFAULT_AUDIO_SINK@"
-                "0.1-"
+                "0.05-"
               ];
             };
             "XF86AudioMute" = {
