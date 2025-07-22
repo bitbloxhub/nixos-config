@@ -57,7 +57,10 @@ in
               { proportion = 1.; }
             ];
           };
-          input.focus-follows-mouse.enable = true;
+          input.focus-follows-mouse = {
+            enable = true;
+            max-scroll-amount = "0%";
+          };
           # WHY IS UNNATURAL SCROLL EVEN A THING
           input.touchpad = {
             tap = false;
