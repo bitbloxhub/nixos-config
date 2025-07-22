@@ -47,6 +47,9 @@ in
             gaps = 8;
             default-column-width.proportion = 1.0;
             focus-ring.enable = false;
+            tab-indicator = {
+              place-within-column = true;
+            };
             shadow = {
               enable = true;
               softness = 5;
