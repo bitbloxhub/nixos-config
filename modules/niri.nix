@@ -4,7 +4,23 @@
   ...
 }:
 let
-  niriPkgsForSystem = system: inputs.niri-flake.packages.${system};
+  niriPkgsForSystem =
+    system:
+    (lib.makeExtensible (_final: inputs.niri-flake.packages.${system})).extend (
+      _final: prev: {
+        niri-unstable = prev.niri-unstable.overrideAttrs (
+          _final: _prev: {
+            patches = [
+              (inputs.nixpkgs.legacyPackages.${system}.fetchpatch {
+                name = "niri-support-shm.patch";
+                url = "https://github.com/YaLTeR/niri/compare/1911cf3...wrvsrx:d9cc496.patch";
+                hash = "sha256-Of+WA05jHnuV8rnz4ZjjQNzI8CcLLT8zoSnUg5n1APU=";
+              })
+            ];
+          }
+        );
+      }
+    );
 in
 {
   flake.modules.generic.default = {
