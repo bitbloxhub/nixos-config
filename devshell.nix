@@ -20,7 +20,16 @@
           pkgs.typescript-language-server
           pkgs.nodejs_24
           pkgs.prettier
-          inputs.ags.packages.${pkgs.system}.default
+          (inputs.ags.packages.${pkgs.system}.ags.override {
+            extraPackages = with inputs.ags.packages.${pkgs.system}; [
+              apps
+              battery
+              mpris
+              notifd
+              tray
+              wireplumber
+            ];
+          })
         ];
       };
     };

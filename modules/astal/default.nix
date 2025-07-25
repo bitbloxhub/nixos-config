@@ -19,13 +19,11 @@
     let
       package = builtins.fromJSON (builtins.readFile ./package.json);
       prodPackage = builtins.removeAttrs package [ "devDependencies" ];
-      npmDeps = builtins.trace inputs.ags.packages.${pkgs.system}.gjsPackage.outPath (
-        pkgs.importNpmLock.buildNodeModules {
-          nodejs = pkgs.nodejs_24;
-          npmRoot = ./.;
-          package = prodPackage;
-        }
-      );
+      npmDeps = pkgs.importNpmLock.buildNodeModules {
+        nodejs = pkgs.nodejs_24;
+        npmRoot = ./.;
+        package = prodPackage;
+      };
 
       astalShellSource = pkgs.runCommand "astal-shell-source" { } ''
         mkdir -p $out
@@ -54,11 +52,17 @@
             pkgs.gjs
             inputs.astal.packages.${pkgs.system}.io
             inputs.astal.packages.${pkgs.system}.astal4
+            inputs.astal.packages.${pkgs.system}.apps
+            inputs.astal.packages.${pkgs.system}.battery
+            inputs.astal.packages.${pkgs.system}.mpris
+            inputs.astal.packages.${pkgs.system}.notifd
+            inputs.astal.packages.${pkgs.system}.tray
+            inputs.astal.packages.${pkgs.system}.wireplumber
           ];
 
           installPhase = ''
             mv style.css style.old.css
-            ${pkgs.esbuild}/bin/esbuild --bundle style.old.css --outfile=style.css
+            ${pkgs.esbuild}/bin/esbuild --bundle style.old.css --outfile=style.css --supported:nesting=false
             mkdir -p $out/bin
             ags bundle app.ts $out/bin/astal-shell
           '';
@@ -68,7 +72,7 @@
       programs.niri.settings.spawn-at-startup = lib.mkIf config.my.programs.astal.enable [
         {
           command = [
-            "astal-shell"
+            #"astal-shell"
           ];
         }
       ];
