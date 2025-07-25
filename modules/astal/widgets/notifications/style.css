@@ -1,0 +1,28 @@
+window#notifications {
+	font-family: "Fira Code", "Symbols Nerd Font Mono";
+	font-size: 16px;
+	color: var(--ctp-mocha-text);
+	background-image: none;
+	background-color: transparent;
+	margin: 5px;
+
+	button {
+		background-image: none;
+		background-color: var(--ctp-mocha-base);
+		&:hover {
+			background-color: var(--ctp-mocha-surface2);
+		}
+	}
+
+	.notification {
+		background-image: none;
+		background-color: var(--ctp-mocha-base);
+		margin: 5px;
+		padding: 5px 10px;
+		border-radius: 6px;
+		&:hover,
+		&:focus {
+			background-color: var(--ctp-mocha-surface0);
+		}
+	}
+}
