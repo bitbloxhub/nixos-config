@@ -5,6 +5,7 @@ local wezterm = require("wezterm") --[[@as Wezterm]]
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
+config.default_prog = { "nu" }
 config.color_scheme = "Catppuccin Mocha"
 config.font = wezterm.font("Fira Code")
 config.font_size = 12
