@@ -1,0 +1,1 @@
+All icons starting with ~tabler-~ are from [[https://tabler.io/icons]]

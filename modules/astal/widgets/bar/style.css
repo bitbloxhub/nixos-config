@@ -1,0 +1,70 @@
+window#bar {
+	font-family: "Fira Code", "Symbols Nerd Font Mono";
+	font-size: 14px;
+	color: var(--ctp-mocha-text);
+	background-image: none;
+	background-color: transparent;
+	margin: 5px 5px 0px 5px;
+
+	> centerbox {
+		border-radius: 1rem;
+	}
+
+	.workspaces {
+		background-image: none;
+		background-color: var(--ctp-mocha-base);
+		border-radius: 1rem;
+
+		.workspace-button {
+			border-radius: 0;
+			padding: 4px;
+		}
+
+		.workspace-button:first-child {
+			border-radius: 1rem 0 0 1rem;
+		}
+
+		.workspace-button:last-child {
+			border-radius: 0 1rem 1rem 0;
+		}
+
+		.workspace-button-focused {
+			color: var(--ctp-mocha-green);
+		}
+	}
+
+	.mpris-button {
+		.mpris-button-image {
+			-gtk-icon-size: 14px;
+			margin-right: 4px;
+		}
+
+		.mpris-button-title {
+			padding: 4px;
+		}
+	}
+
+	.mpris-popover {
+		> contents {
+			background-image: none;
+			background-color: var(--ctp-mocha-base);
+		}
+
+		.mpris-cover {
+			padding: 1em;
+		}
+
+		.control-button {
+			border-radius: 0;
+			padding: 4px;
+		}
+
+		.control-button:first-child {
+			border-radius: 1rem 0 0 1rem;
+		}
+
+		.control-button:last-child {
+			border-radius: 0 1rem 1rem 0;
+		}
+	}
+}

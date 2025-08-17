@@ -1,0 +1,57 @@
+window#osd {
+	font-family: "Fira Code", "Symbols Nerd Font Mono";
+	font-size: 16px;
+	color: var(--ctp-mocha-text);
+	background-image: none;
+	background-color: transparent;
+
+	> revealer {
+		padding: 16px;
+	}
+
+	.osd {
+		background-color: var(--ctp-mocha-base);
+		border-radius: 1rem;
+		padding: 12px;
+	}
+
+	levelbar {
+		trough {
+			border-radius: 1rem;
+			margin: 1px 0.6rem;
+		}
+
+		block {
+			border-radius: 1rem;
+			min-height: 0.4rem;
+		}
+	}
+
+	levelbar.brightness {
+		block.low {
+			background-color: var(--ctp-mocha-sapphire);
+		}
+
+		block.medium {
+			background-color: var(--ctp-mocha-teal);
+		}
+
+		block.high {
+			background-color: var(--ctp-mocha-green);
+		}
+	}
+
+	levelbar.speaker {
+		block.low {
+			background-color: var(--ctp-mocha-sapphire);
+		}
+
+		block.medium {
+			background-color: var(--ctp-mocha-green);
+		}
+
+		block.high {
+			background-color: var(--ctp-mocha-red);
+		}
+	}
+}

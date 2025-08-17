@@ -1,0 +1,15 @@
+.notification {
+	background-image: none;
+	background-color: var(--ctp-mocha-base);
+	margin: 5px;
+	padding: 5px 10px;
+	border-radius: 12px;
+
+	button {
+		background-color: var(--ctp-mocha-surface0);
+		&:hover,
+		&:focus {
+			background-color: var(--ctp-mocha-surface1);
+		}
+	}
+}
