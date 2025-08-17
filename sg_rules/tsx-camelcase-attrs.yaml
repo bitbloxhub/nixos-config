@@ -1,0 +1,16 @@
+id: tsx-camelcase-attrs
+language: TSX
+files:
+    - modules/astal/**/*.tsx
+rule:
+    kind: property_identifier
+    inside:
+        kind: jsx_attribute
+    regex: "[a-z]+(_[a-z]+)*"
+    pattern: $SNAKECASE
+transform:
+    CAMELCASE:
+        convert:
+            source: $SNAKECASE
+            toCase: camelCase
+fix: $CAMELCASE

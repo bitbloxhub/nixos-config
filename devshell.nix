@@ -1,5 +1,6 @@
 {
   inputs,
+  lib,
   ...
 }:
 {
@@ -16,11 +17,14 @@
           pkgs.deadnix
           pkgs.statix
           pkgs.stylua
+          pkgs.ast-grep
           pkgs.lua-language-server
           pkgs.typescript-language-server
           pkgs.nodejs_24
           pkgs.prettier
-          inputs.ags.packages.${pkgs.system}.default
+          (inputs.ags.packages.${pkgs.system}.ags.override {
+            extraPackages = lib.my.agsExtraPackagesForPkgs pkgs;
+          })
         ];
       };
     };

@@ -1,0 +1,12 @@
+window#notifications {
+	font-family: "Fira Code", "Symbols Nerd Font Mono";
+	font-size: 16px;
+	color: var(--ctp-mocha-text);
+	background-image: none;
+	background-color: transparent;
+	margin: 5px;
+
+	.notificationbox {
+		padding: 1px;
+	}
+}

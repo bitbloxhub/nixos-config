@@ -1,18 +1,15 @@
 @import "@catppuccin/palette/css/catppuccin.css";
+@import "./components/notification.css";
+@import "./widgets/bar/style.css";
+@import "./widgets/launcher/style.css";
+@import "./widgets/notifications/style.css";
+@import "./widgets/control_center/style.css";
+@import "./widgets/osd/style.css";
 
-window.Bar {
-	background: transparent;
-	color: var(--ctp-mocha-text);
-	font-weight: bold;
-
-	> centerbox {
-		background: var(--ctp-mocha-base);
-		border-radius: 10px;
-		margin: 8px;
-	}
-
-	button {
-		border-radius: 8px;
-		margin: 2px;
+button {
+	background-image: none;
+	background-color: var(--ctp-mocha-base);
+	&:hover {
+		background-color: var(--ctp-mocha-surface2);
 	}
 }

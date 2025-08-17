@@ -19,13 +19,11 @@
     let
       package = builtins.fromJSON (builtins.readFile ./package.json);
       prodPackage = builtins.removeAttrs package [ "devDependencies" ];
-      npmDeps = builtins.trace inputs.ags.packages.${pkgs.system}.gjsPackage.outPath (
-        pkgs.importNpmLock.buildNodeModules {
-          nodejs = pkgs.nodejs_24;
-          npmRoot = ./.;
-          package = prodPackage;
-        }
-      );
+      npmDeps = pkgs.importNpmLock.buildNodeModules {
+        nodejs = pkgs.nodejs_24;
+        npmRoot = ./.;
+        package = prodPackage;
+      };
 
       astalShellSource = pkgs.runCommand "astal-shell-source" { } ''
         mkdir -p $out
@@ -38,6 +36,9 @@
     in
     {
       home.packages = lib.mkIf config.my.programs.astal.enable [
+        (inputs.ags.packages.${pkgs.system}.ags.override {
+          extraPackages = lib.my.agsExtraPackagesForPkgs pkgs;
+        })
         (pkgs.stdenv.mkDerivation {
           name = "astal-shell";
 
@@ -52,25 +53,37 @@
           buildInputs = [
             pkgs.glib
             pkgs.gjs
-            inputs.astal.packages.${pkgs.system}.io
-            inputs.astal.packages.${pkgs.system}.astal4
-          ];
+          ] ++ (lib.my.agsExtraPackagesForPkgs pkgs);
 
           installPhase = ''
             mv style.css style.old.css
-            ${pkgs.esbuild}/bin/esbuild --bundle style.old.css --outfile=style.css
+            ${pkgs.esbuild}/bin/esbuild --bundle style.old.css --outfile=style.css --supported:nesting=false
             mkdir -p $out/bin
             ags bundle app.ts $out/bin/astal-shell
           '';
         })
       ];
 
-      programs.niri.settings.spawn-at-startup = lib.mkIf config.my.programs.astal.enable [
-        {
-          command = [
-            "astal-shell"
+      home.file."${config.xdg.dataHome}/astal-shell/icons/" = {
+        source = ./icons;
+        recursive = true;
+      };
+
+      programs.niri.settings = {
+        spawn-at-startup = lib.mkIf config.my.programs.astal.enable [
+          {
+            command = [
+              "astal-shell"
+            ];
+          }
+        ];
+        binds = {
+          "Mod+Return".action.spawn = [
+            "ags"
+            "toggle"
+            "launcher"
           ];
-        }
-      ];
+        };
+      };
     };
 }

@@ -1,0 +1,25 @@
+window#control_center {
+	font-family: "Fira Code", "Symbols Nerd Font Mono";
+	font-size: 16px;
+	color: var(--ctp-mocha-text);
+	background-image: none;
+	background-color: transparent;
+	margin: 5px;
+
+	.notification {
+		background-color: var(--ctp-mocha-mantle);
+	}
+
+	.audio_volume_box {
+		padding: 0px 12px;
+	}
+
+	> revealer {
+		border-radius: 1rem;
+		background-color: rgba(0, 0, 0, 0.01);
+		> box {
+			min-width: 500px;
+			background-color: var(--ctp-mocha-base);
+		}
+	}
+}

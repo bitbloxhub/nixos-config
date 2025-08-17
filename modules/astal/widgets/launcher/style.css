@@ -1,0 +1,22 @@
+window#launcher {
+	font-family: "Fira Code", "Symbols Nerd Font Mono";
+	font-size: 16px;
+	color: var(--ctp-mocha-text);
+	background-image: none;
+	background-color: transparent;
+
+	.launcher {
+		background-color: var(--ctp-mocha-base);
+		min-width: 500px;
+		border-radius: 12px;
+		padding: 6px;
+
+		.app_name {
+			font-size: 18px;
+		}
+
+		.app_description {
+			font-size: 12px;
+		}
+	}
+}
