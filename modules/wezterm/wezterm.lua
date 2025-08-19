@@ -11,9 +11,6 @@ config.font = wezterm.font("Fira Code")
 config.font_size = 12
 config.background = {
 	{
-		source = { File = "/home/jonahgam/miku-hacker0.jpg" },
-	},
-	{
 		---@diagnostic disable-next-line: assign-type-mismatch
 		source = { Color = "#1e1e2e" },
 		opacity = 0.9,

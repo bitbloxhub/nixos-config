@@ -60,6 +60,7 @@ in
           };
           screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
           layout = {
+            background-color = "transparent";
             gaps = 8;
             default-column-width.proportion = 1.0;
             focus-ring.enable = false;
@@ -86,6 +87,16 @@ in
             dwt = true;
             natural-scroll = false;
           };
+          layer-rules = [
+            {
+              matches = [
+                {
+                  namespace = "^swww-daemon$";
+                }
+              ];
+              place-within-backdrop = true;
+            }
+          ];
           window-rules = [
             {
               clip-to-geometry = true;
@@ -100,6 +111,7 @@ in
               open-focused = false;
             }
           ];
+          overview.workspace-shadow.enable = false;
           binds = {
             "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
