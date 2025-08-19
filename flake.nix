@@ -24,7 +24,7 @@
       url = "github:nialov/actions.nix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
-      inputs.pre-commit-hooks.follows = "git-hooks";
+      inputs.git-hooks.follows = "git-hooks";
     };
 
     nix-auto-ci = {

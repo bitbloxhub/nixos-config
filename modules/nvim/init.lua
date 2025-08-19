@@ -135,6 +135,9 @@ require("lze").load({
 	after = function()
 		require("catppuccin").setup({
 			flavour = "mocha",
+			float = {
+				transparent = true,
+			},
 			transparent_background = true,
 		})
 		vim.cmd.colorscheme("catppuccin")
@@ -372,7 +375,7 @@ require("lze").load({
 })
 
 require("lze").load({
-	"neo-tree",
+	"neo-tree.nvim",
 	lazy = false, -- neo-tree does its own lazy loading
 	after = function()
 		local function on_move(data)
@@ -420,7 +423,7 @@ require("lze").load({
 		key2spec("n", "<leader>f\\", require("fzf-lua").buffers, { desc = "Fzf Buffers" }),
 		key2spec("n", "<leader>fk", require("fzf-lua").builtin, { desc = "Fzf Builtin" }),
 		key2spec("n", "<leader>fp", require("fzf-lua").files, { desc = "Fzf Files" }),
-		key2spec("n", "<leader>fg", require("fzf-lua").live_grep_glob, { desc = "Fzf Grep" }),
+		key2spec("n", "<leader>fg", require("fzf-lua").live_grep, { desc = "Fzf Grep" }),
 		key2spec("n", "<leader>fG", require("fzf-lua").lgrep_curbuf, { desc = "Fzf Grep current buffer" }),
 		key2spec("n", "<F1>", require("fzf-lua").help_tags, { desc = "Fzf Help" }),
 	},

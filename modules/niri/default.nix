@@ -11,10 +11,15 @@ let
         niri-unstable = prev.niri-unstable.overrideAttrs (
           _final: _prev: {
             patches = [
+              #(inputs.nixpkgs.legacyPackages.${system}.fetchpatch {
+              #  name = "niri-support-shm.patch";
+              #  url = "https://github.com/YaLTeR/niri/compare/1911cf3...wrvsrx:d9cc496.patch";
+              #  hash = "sha256-Of+WA05jHnuV8rnz4ZjjQNzI8CcLLT8zoSnUg5n1APU=";
+              #})
               (inputs.nixpkgs.legacyPackages.${system}.fetchpatch {
-                name = "niri-support-shm.patch";
-                url = "https://github.com/YaLTeR/niri/compare/1911cf3...wrvsrx:d9cc496.patch";
-                hash = "sha256-Of+WA05jHnuV8rnz4ZjjQNzI8CcLLT8zoSnUg5n1APU=";
+                name = "niri-blur.patch";
+                url = "https://github.com/YaLTeR/niri/compare/52c579d...visualglitch91:129ca25.diff";
+                hash = "sha256-nEyYtMOnZmYJPhu1/5p4H9RWBKHMq0/IYwvkorMgwoo=";
               })
             ];
           }
@@ -282,6 +287,23 @@ in
             "Mod+Shift+P".action.power-off-monitors = { };
           };
         };
+      };
+
+      xdg.configFile.niri-config = lib.mkForce {
+        enable = true;
+        target = "niri/config.kdl";
+        text = ''
+${config.programs.niri.finalConfig}
+window-rule {
+  match app-id="org.wezfurlong.wezterm"
+  blur {
+    on
+    passes 300
+    radius 50
+    noise 10
+  }
+}
+        '';
       };
     };
 }

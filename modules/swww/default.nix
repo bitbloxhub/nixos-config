@@ -30,9 +30,9 @@
           }
           {
             command = [
-              "swww"
-              "img"
-              "${./wallpapers/miku-hacker0.jpg}"
+              "sh"
+              "-c"
+              "sleep 2 && swww img ${./wallpapers/miku-hacker0.jpg}"
             ];
           }
         ];
