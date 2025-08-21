@@ -53,7 +53,8 @@
           buildInputs = [
             pkgs.glib
             pkgs.gjs
-          ] ++ (lib.my.agsExtraPackagesForPkgs pkgs);
+          ]
+          ++ (lib.my.agsExtraPackagesForPkgs pkgs);
 
           installPhase = ''
             mv style.css style.old.css
