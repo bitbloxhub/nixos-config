@@ -36,6 +36,7 @@
                 typescript-language-server
                 svelte-language-server
                 deno
+                rust-analyzer
               ];
             };
             python3.libraries = {

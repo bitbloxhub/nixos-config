@@ -368,6 +368,11 @@ require("lze").load({
 		---@type vim.lsp.ClientConfig
 		lsp = {},
 	},
+	{
+		"rust_analyzer",
+		---@type vim.lsp.ClientConfig
+		lsp = {},
+	},
 })
 
 require("lze").load({
