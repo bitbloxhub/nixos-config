@@ -16,7 +16,7 @@
     }:
     {
       programs.keepassxc = {
-        enable = config.my.programs.keepassxc.enable;
+        inherit (config.my.programs.keepassxc) enable;
         settings = {
           General.ConfigVersion = 2;
           Browser.UpdateBinaryPath = false;
