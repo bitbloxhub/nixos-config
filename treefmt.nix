@@ -14,6 +14,7 @@
         programs.stylua.enable = true;
         programs.prettier.enable = true;
         programs.prettier.settings = builtins.fromJSON (builtins.readFile ./.prettierrc);
+        programs.rustfmt.enable = true;
         settings.formatter."ast-grep" = {
           command = pkgs.bash;
           options = [

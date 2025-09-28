@@ -17,6 +17,13 @@ let
               #  hash = "sha256-Of+WA05jHnuV8rnz4ZjjQNzI8CcLLT8zoSnUg5n1APU=";
               #})
             ];
+            # work around bug in firefox opaque region setting by just disabling all
+            # opaque_region requests
+            postPatch = ''
+              pushd /build/cargo-vendor-dir/smithay-0.7.0
+              patch -Np1 < ${./disable_smithay_opaque_regions.patch}
+              popd
+            '';
           }
         );
       }
@@ -280,6 +287,8 @@ in
             "Ctrl+Alt+Delete".action.quit = { };
 
             "Mod+Shift+P".action.power-off-monitors = { };
+
+            "Mod+Shift+Ctrl+O".action.debug-toggle-opaque-regions = { };
           };
         };
       };

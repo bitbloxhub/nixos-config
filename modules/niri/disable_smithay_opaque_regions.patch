@@ -1,0 +1,24 @@
+diff --git a/src/wayland/compositor/handlers.rs b/src/wayland/compositor/handlers.rs
+index c7341ba4..4b05705e 100644
+--- a/src/wayland/compositor/handlers.rs
++++ b/src/wayland/compositor/handlers.rs
+@@ -238,7 +238,10 @@ where
+                         .push(callback.clone());
+                 });
+             }
+-            wl_surface::Request::SetOpaqueRegion { region } => {
++            wl_surface::Request::SetOpaqueRegion { region: _ } => {
++                // work around bug in firefox opaque region setting by just disabling all
++                // opaque_region requests
++                /*
+                 let attributes = region.map(|r| {
+                     let attributes_mutex = &r.data::<RegionUserData>().unwrap().inner;
+                     attributes_mutex.lock().unwrap().clone()
+@@ -250,6 +253,7 @@ where
+                         .pending()
+                         .opaque_region = attributes;
+                 });
++                */
+             }
+             wl_surface::Request::SetInputRegion { region } => {
+                 let attributes = region.map(|r| {
