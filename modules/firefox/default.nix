@@ -129,9 +129,6 @@
                 widget-overflow-fixed-list = [ ];
                 unified-extensions-area = [
                   "surfingkeys_brookhong_github_io-browser-action"
-                  "tab-session-manager_sienori-browser-action"
-                  "_aecec67f-0d10-4fa7-b7c7-609a2db280cf_-browser-action"
-                  "_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action"
                 ];
                 nav-bar = [
                   "firefox-view-button"
@@ -142,6 +139,10 @@
                   "urlbar-container"
                   "vertical-spacer"
                   "userchrome-toggle-extended_n2ezr_ru-browser-action"
+                  "keepassxc-browser_keepassxc_org-browser-action"
+                  "tab-session-manager_sienori-browser-action"
+                  "_aecec67f-0d10-4fa7-b7c7-609a2db280cf_-browser-action"
+                  "_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action"
                   "addon_darkreader_org-browser-action"
                   "ublock0_raymondhill_net-browser-action"
                   "unified-extensions-button"
@@ -176,6 +177,7 @@
                 "new-web-panel"
                 "sb2-collapse-button"
                 "screenshot-button"
+                "keepassxc-browser_keepassxc_org-browser-action"
               ];
               dirtyAreaCache = [
                 "unified-extensions-area"
