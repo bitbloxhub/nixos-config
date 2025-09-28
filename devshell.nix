@@ -25,6 +25,9 @@
           (inputs.ags.packages.${pkgs.system}.ags.override {
             extraPackages = lib.my.agsExtraPackagesForPkgs pkgs;
           })
+          pkgs.cargo
+          pkgs.rustc
+          pkgs.rustfmt
         ];
       };
     };

@@ -19,7 +19,10 @@
         inherit (config.my.programs.keepassxc) enable;
         settings = {
           General.ConfigVersion = 2;
-          Browser.UpdateBinaryPath = false;
+          Browser = {
+            Enabled = true;
+            UpdateBinaryPath = false;
+          };
           Security.IconDownloadFallback = true;
         };
       };

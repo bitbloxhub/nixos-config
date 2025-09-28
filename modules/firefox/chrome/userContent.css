@@ -1,0 +1,70 @@
+/* partially based on https://github.com/catppuccin/zen-browser */
+@import url("catppuccin.css");
+
+@-moz-document url-prefix("about:") {
+	:root {
+		--tinted-background-color: rgb(
+			from var(--uc-ctp-mocha-base) r g b / 0.9
+		);
+		background-color: var(--tinted-background-color) !important;
+		--text-color: var(--uc-ctp-mocha-text) !important;
+		--newtab-background-color: transparent !important;
+		--color-accent-primary: var(--uc-ctp-mocha-mauve) !important;
+		--color-accent-primary-hover: hsl(
+			from var(--uc-ctp-mocha-mauve) h s calc(l + 5)
+		) !important;
+		--color-accent-primary-active: hsl(
+			from var(--uc-ctp-mocha-mauve) calc(h + 15) s l
+		) !important;
+		--background-color-canvas: transparent !important;
+		--background-color-warning: var(--uc-ctp-mocha-surface0) !important;
+		--in-content-table-background: transparent !important;
+		--table-row-background-color-alternate: rgb(
+			from var(--uc-ctp-mocha-mantle) r g b / 0.7
+		) !important;
+	}
+
+	* {
+		font-family: "Fira Code" !important;
+	}
+
+	.toggle-button {
+		--toggle-dot-background-color-on-pressed: var(
+			--uc-ctp-mocha-surface0
+		) !important;
+	}
+}
+
+@-moz-document url-prefix("about:addons") {
+	:root {
+		--background-color-box: var(--uc-ctp-mocha-base) !important;
+	}
+}
+
+@-moz-document url-prefix("about:protections") {
+	:root {
+		--social-color: var(--uc-ctp-mocha-mauve) !important;
+		--cookie-color: var(--uc-ctp-mocha-sky) !important;
+		--tracker-color: var(--uc-ctp-mocha-green) !important;
+		--fingerprinter-color: var(--uc-ctp-mocha-yellow) !important;
+		--cryptominer-color: var(--uc-ctp-mocha-lavender) !important;
+		--in-content-primary-button-background-hover: hsl(
+			from var(--uc-ctp-mocha-surface1) h s calc(l + 5)
+		);
+		--in-content-primary-button-text-color-hover: var(
+			--uc-ctp-mocha-text
+		) !important;
+		--in-content-primary-button-background: var(
+			--uc-ctp-mocha-surface1
+		) !important;
+		--in-content-primary-button-text-color: var(
+			--uc-ctp-mocha-text
+		) !important;
+	}
+
+	.card {
+		background-color: rgb(
+			from var (--uc-ctp-mocha-surface0) r g b / 0.9
+		) !important;
+	}
+}

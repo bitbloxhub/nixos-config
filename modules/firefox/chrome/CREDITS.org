@@ -1,0 +1,5 @@
+Thanks to the following projects which i copied some things from:
+* [[https://codeberg.org/awwpotato/potatofox]]
+* [[https://github.com/Naezr/ShyFox]]
+* [[https://github.com/cyp3rr/firefox-lab/blob/main/invisiblefox-linux.css]]
+* [[https://github.com/MrOtherGuy/firefox-csshacks]]

@@ -1,0 +1,125 @@
+@import url("catppuccin.css");
+
+* {
+	font-family: "Fira Code" !important;
+	font-feature-settings: "calt" 1 !important;
+}
+
+/* transparency */
+:root {
+	--tinted-background-color: rgb(from var(--uc-ctp-mocha-base) r g b / 0.9);
+	--tab-block-margin: 0 !important;
+	--tabpanel-background-color: transparent !important;
+	background: transparent !important;
+}
+
+#navigator-toolbox {
+	background-color: var(--tinted-background-color) !important;
+}
+
+vbox#titlebar {
+	* {
+		background-color: var(--tinted-background-color) !important;
+	}
+}
+
+#sidebar-main,
+#sb2-main {
+	background-color: var(--tinted-background-color) !important;
+}
+
+#tabbrowser-tabbox {
+	border-radius: 0px !important;
+}
+
+#sidebar-splitter,
+#sidebar-launcher-splitter,
+#sb2-splitter-pinned {
+	background-color: var(--tinted-background-color) !important;
+}
+
+#browser {
+	background-color: transparent !important;
+}
+
+#tabbrowser-arrowscrollbox {
+	overflow: scroll;
+}
+
+/* firefox-second-sidebar fixes */
+html[taskbartab] {
+	#sb2-main,
+	#sb2-splitter-pinned {
+		display: none !important;
+	}
+}
+
+#sb2-splitter-pinned {
+	/* the toolbar is order: 17 */
+	order: 16;
+}
+
+/* floating urlbar from potatofox, see CREDITS.org for link */
+#main-window:not([customizing]) {
+	--uc-urlbar-width: clamp(
+		min(calc(100vw - 16px - 12px), 500px),
+		64vw,
+		800px
+	);
+
+	#urlbar,
+	#urlbar-container {
+		margin: auto !important;
+	}
+
+	#urlbar-container {
+		flex: 1;
+		max-width: 1000px;
+	}
+
+	#urlbar[breakout-extend] {
+		position: fixed !important;
+		width: var(--uc-urlbar-width) !important;
+		right: 0px !important;
+		left: 0px !important;
+
+		top: 20vh !important;
+		bottom: auto !important;
+
+		.urlbar-input,
+		#urlbar-input {
+			font-size: 16px !important;
+		}
+	}
+
+	#urlbar:not([breakout-extend]) {
+		& .urlbar-input-container,
+		& #urlbar-input-container {
+			visibility: visible !important;
+			& .urlbar-input-box {
+				transition: none !important;
+			}
+		}
+	}
+}
+
+/* userchrome toggles */
+:root[titlepreface*="\180E"] {
+	#sidebar-main,
+	#sidebar-launcher-splitter {
+		display: none !important;
+	}
+}
+
+:root[titlepreface*="\200B"] {
+	#sb2-main,
+	#sb2-splitter-pinned {
+		display: none !important;
+	}
+}
+
+:root[titlepreface*="\200C"] {
+	#navigator-toolbox {
+		display: none !important;
+	}
+}
