@@ -55,12 +55,15 @@
           violentmonkey-declarative
         ];
       };
-      programs.firefox.policies."3rdparty".Extensions.${violentmonkeyExtensionId} = {
-        options.autoUpdate = 0;
-        scripts = builtins.map (path: builtins.readFile path) [
-          # Disabled do to bugs i can't figure out how to fix
-          #./userscripts/font-and-transparency.js
-        ];
+      programs.firefox.policies = {
+        ExtensionSettings.${violentmonkeyExtensionId}.private_browsing = true;
+        "3rdparty".Extensions.${violentmonkeyExtensionId} = {
+          options.autoUpdate = 0;
+          scripts = builtins.map (path: builtins.readFile path) [
+            # Disabled do to bugs i can't figure out how to fix
+            #./userscripts/font-and-transparency.js
+          ];
+        };
       };
     };
 }

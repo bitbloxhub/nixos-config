@@ -53,9 +53,12 @@
           surfingkeys-declarative
         ];
       };
-      programs.firefox.policies."3rdparty".Extensions.${surfingkeysExtensionId} = {
-        showAdvanced = true;
-        snippets = builtins.readFile ./surfingkeys.js;
+      programs.firefox.policies = {
+        ExtensionSettings.${surfingkeysExtensionId}.private_browsing = true;
+        "3rdparty".Extensions.${surfingkeysExtensionId} = {
+          showAdvanced = true;
+          snippets = builtins.readFile ./surfingkeys.js;
+        };
       };
     };
 }
