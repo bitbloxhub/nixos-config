@@ -45,6 +45,7 @@
           inputs.catppuccin.homeModules.catppuccin
           inputs.nixCats.homeModule
           inputs.niri-flake.homeModules.niri
+          inputs.betterfox-nix.homeModules.betterfox
 
           inputs.self.modules.generic.default
           inputs.self.modules.homeManager.default
