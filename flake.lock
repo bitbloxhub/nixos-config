@@ -467,6 +467,21 @@
         "type": "github"
       }
     },
+    "nixos-facter-modules": {
+      "locked": {
+        "lastModified": 1756491981,
+        "narHash": "sha256-lXyDAWPw/UngVtQfgQ8/nrubs2r+waGEYIba5UX62+k=",
+        "owner": "nix-community",
+        "repo": "nixos-facter-modules",
+        "rev": "c1b29520945d3e148cd96618c8a0d1f850965d8c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixos-facter-modules",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1755615617,
@@ -517,6 +532,7 @@
         "nix-auto-ci": "nix-auto-ci",
         "nix-system-graphics": "nix-system-graphics",
         "nixCats": "nixCats",
+        "nixos-facter-modules": "nixos-facter-modules",
         "nixpkgs": "nixpkgs",
         "system-manager": "system-manager",
         "treefmt-nix": "treefmt-nix"

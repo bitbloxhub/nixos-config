@@ -10,6 +10,9 @@
     }:
     {
       options.my.hardware = {
+        facter-report = lib.mkOption {
+          type = lib.types.path;
+        };
         platform = lib.mkOption {
           type = lib.types.str;
         };
@@ -21,5 +24,14 @@
         "libcublas"
         "cuda_nvcc"
       ];
+    };
+
+  flake.modules.nixos.default =
+    {
+      config,
+      ...
+    }:
+    {
+      facter.reportPath = config.my.hardware.facter-report;
     };
 }

@@ -7,7 +7,7 @@ lib.my.deepMerge
     my.user.username = "jonahgam";
     my.hostname = "nixos-bill";
     my.hardware.platform = "x86_64-linux";
-    my.virtualization.qemu.guest.enable = true;
+    my.hardware.facter-report = ./facter.json;
   })
   {
     flake.modules.nixos.host_nixos-bill = {

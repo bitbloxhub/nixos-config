@@ -99,6 +99,8 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
   };
 
   outputs =

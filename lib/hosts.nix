@@ -12,6 +12,7 @@
             inputs.catppuccin.nixosModules.catppuccin
             inputs.home-manager.nixosModules.home-manager
             inputs.niri-flake.nixosModules.niri
+            inputs.nixos-facter-modules.nixosModules.facter
 
             inputs.self.modules.generic.default
             inputs.self.modules.nixos.default
