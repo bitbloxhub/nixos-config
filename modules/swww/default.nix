@@ -32,7 +32,7 @@
             command = [
               "swww"
               "img"
-              "${./wallpapers/miku-hacker0.jpg}"
+              "${./wallpapers/miku-polygons.jpg}"
             ];
           }
         ];
