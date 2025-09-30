@@ -49,6 +49,7 @@
             inputs.nixCats.homeModule
             inputs.niri-flake.homeModules.niri
             inputs.betterfox-nix.homeModules.betterfox
+            inputs.cosmic-manager.homeManagerModules.cosmic-manager
 
             inputs.self.modules.generic.default
             inputs.self.modules.homeManager.default

@@ -117,6 +117,22 @@
         "type": "github"
       }
     },
+    "catppuccin-cosmic": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1745319148,
+        "narHash": "sha256-NAQnHS+XrMJ/rPgSS5nEQOMBhQtF6mP1i/0QP5arQ64=",
+        "owner": "catppuccin",
+        "repo": "cosmic-desktop",
+        "rev": "95e81098042dd2102f0b258f6990f886c5759692",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "cosmic-desktop",
+        "type": "github"
+      }
+    },
     "catppuccin-userstyles": {
       "flake": false,
       "locked": {
@@ -130,6 +146,32 @@
       "original": {
         "owner": "catppuccin",
         "repo": "userstyles",
+        "type": "github"
+      }
+    },
+    "cosmic-manager": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1744387566,
+        "narHash": "sha256-O39zTv7LdRgr4Hw38d+eQG2LYpP75rw2XKqTGV5qzgs=",
+        "owner": "HeitorAugustoLN",
+        "repo": "cosmic-manager",
+        "rev": "52d3fdd080a9dd4639948687682a68282fbf0314",
+        "type": "github"
+      },
+      "original": {
+        "owner": "HeitorAugustoLN",
+        "repo": "cosmic-manager",
         "type": "github"
       }
     },
@@ -520,7 +562,9 @@
         "astal": "astal",
         "betterfox-nix": "betterfox-nix",
         "catppuccin": "catppuccin",
+        "catppuccin-cosmic": "catppuccin-cosmic",
         "catppuccin-userstyles": "catppuccin-userstyles",
+        "cosmic-manager": "cosmic-manager",
         "crane": "crane",
         "firefox-addons": "firefox-addons",
         "flake-firefox-nightly": "flake-firefox-nightly",

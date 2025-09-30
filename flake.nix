@@ -101,6 +101,20 @@
     };
 
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
+
+    cosmic-manager = {
+      url = "github:HeitorAugustoLN/cosmic-manager";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+        flake-parts.follows = "flake-parts";
+      };
+    };
+
+    catppuccin-cosmic = {
+      url = "github:catppuccin/cosmic-desktop";
+      flake = false;
+    };
   };
 
   outputs =
