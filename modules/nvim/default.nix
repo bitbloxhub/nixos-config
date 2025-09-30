@@ -82,6 +82,8 @@
                 visual-whitespace-nvim
                 smear-cursor-nvim
                 which-key-nvim
+                nvim-bqf
+                quicker-nvim
               ];
             };
           };

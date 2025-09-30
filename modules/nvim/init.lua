@@ -777,3 +777,20 @@ require("lze").load({
 		})
 	end,
 })
+
+require("lze").load({
+	"nvim-bqf",
+	after = function()
+		require("bqf").setup({
+			preview = { winblend = 0 },
+		})
+	end,
+})
+
+require("lze").load({
+	"quicker.nvim",
+	event = "DeferredUIEnter",
+	after = function()
+		require("quicker").setup()
+	end,
+})
