@@ -765,3 +765,15 @@ require("lze").load({
 		})
 	end,
 })
+
+require("lze").load({
+	"which-key.nvim",
+	event = "DeferredUIEnter",
+	after = function()
+		require("which-key").setup()
+
+		require("which-key").add({
+			{ "<leader>f", group = "[F]zf-lua" },
+		})
+	end,
+})
