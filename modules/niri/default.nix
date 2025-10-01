@@ -123,10 +123,7 @@ in
             "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
             "Mod+T".action.spawn = "wezterm";
-            "Mod+B".action.spawn = [
-              "brave-browser-beta"
-              "--gtk-version=4"
-            ];
+            "Mod+B".action.spawn = [ "firefox-nightly" ];
 
             "XF86AudioRaiseVolume" = {
               allow-when-locked = true;
