@@ -208,6 +208,9 @@
             # See https://www.reddit.com/r/firefox/comments/1mtbugu/comment/n9bvk9e/
             "browser.taskbarTabs.enabled" = true;
             "browser.search.separatePrivateDefault" = false;
+            "gfx.webrender.all" = true;
+            "gfx.webrender.compositor" = true;
+            "gfx.webrender.compositor.force-enabled" = true;
           };
         };
       };
