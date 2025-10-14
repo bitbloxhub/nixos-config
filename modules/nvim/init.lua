@@ -355,7 +355,14 @@ require("lze").load({
 		---@type vim.lsp.ClientConfig
 		lsp = {
 			---@diagnostic disable-next-line: assign-type-mismatch
-			root_dir = require("lspconfig").util.root_pattern("deno.json", "deno.jsonc"),
+			root_dir = function(fname)
+				if require("lspconfig").util.root_pattern("package.json")(fname) then
+					-- Projects can have both package.json and deno.jsonc. If
+					-- we have both, prefer ts_ls.
+					return
+				end
+				return require("lspconfig").util.root_pattern("deno.json", "deno.jsonc")(fname)
+			end,
 		},
 	},
 	{
