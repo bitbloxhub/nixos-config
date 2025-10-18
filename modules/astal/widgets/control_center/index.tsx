@@ -2,18 +2,14 @@ import { Accessor, createBinding, createState, Setter } from "ags"
 import { Astal, Gdk, Gtk } from "ags/gtk4"
 import app from "ags/gtk4/app"
 import NiriGObject from "../../utils/niri"
-import NotificationsGObject from "../../utils/notifications"
 import Audio from "./audio"
-import Notifications from "./notifications"
 
 export default function ControlCenter({
 	niri,
-	notifications,
 	showingControlCenter,
 	setShowingControlCenter,
 }: {
 	niri: NiriGObject
-	notifications: NotificationsGObject
 	showingControlCenter: Accessor<boolean>
 	setShowingControlCenter: Setter<boolean>
 }) {
@@ -60,8 +56,6 @@ export default function ControlCenter({
 			>
 				<box orientation={Gtk.Orientation.VERTICAL}>
 					<Audio />
-					<Gtk.Separator />
-					<Notifications notifications={notifications} />
 				</box>
 			</revealer>
 		</window>

@@ -16,17 +16,7 @@ export default function Notifications({
 }) {
 	const { TOP, RIGHT } = Astal.WindowAnchor
 
-	const shownNotifications = createComputed(
-		[
-			createBinding(notifications, "notifications"),
-			createBinding(notifications, "hiddenNotificationIDs"),
-		],
-		() => {
-			return notifications.notifd.notifications.filter((n) => {
-				return !notifications.hiddenNotificationIDs.includes(n.id)
-			})
-		},
-	)
+	const shownNotifications = createBinding(notifications, "notifications")
 
 	const visible = createComputed(
 		[shownNotifications, showingControlCenter],
@@ -80,15 +70,6 @@ export default function Notifications({
 							>
 								<Notification
 									notification={notification}
-									onHide={() => {
-										revealer.reveal_child = false
-										setTimeout(() => {
-											notifications.hiddenNotificationIDs =
-												notifications.hiddenNotificationIDs.concat(
-													notification.id,
-												)
-										}, 300)
-									}}
 									onRemove={() => {
 										revealer.reveal_child = false
 										notification.dismiss()

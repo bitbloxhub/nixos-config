@@ -7,12 +7,10 @@ import Pango from "gi://Pango?version=1.0"
 
 export default function Notification({
 	notification,
-	onHide,
 	onRemove,
 	maxWidth = 400,
 }: {
 	notification: Notifd.Notification
-	onHide: () => void
 	onRemove: () => void
 	maxWidth?: number
 }) {
@@ -39,30 +37,13 @@ export default function Notification({
 								iconName="tabler-x-symbolic"
 								hexpand
 							>
-								<Gtk.GestureClick
-									onPressed={(gesture) => {
-										if (
-											gesture.get_current_event_state() &
-											Gdk.ModifierType.CONTROL_MASK
-										) {
-											onRemove()
-										} else {
-											onHide()
-										}
-									}}
-								/>
+								<Gtk.GestureClick onPressed={onRemove} />
 								<Gtk.EventControllerKey
-									onKeyPressed={(_e, keyval, _, mask) => {
+									onKeyPressed={(_e, keyval) => {
 										if (keyval != Gdk.KEY_Return) {
 											return
 										}
-										if (
-											mask & Gdk.ModifierType.CONTROL_MASK
-										) {
-											onRemove()
-										} else {
-											onHide()
-										}
+										onRemove()
 									}}
 								/>
 							</button>
