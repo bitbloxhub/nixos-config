@@ -280,7 +280,11 @@ require("lze").load({
 		-- define a function to run over all type(plugin.lsp) == table
 		-- when their filetype trigger loads them
 		lsp = function(plugin)
-			require("lspconfig")[plugin.name].setup(vim.tbl_extend("force", {
+			vim.lsp.config(plugin.name, plugin.lsp or {})
+			vim.lsp.enable(plugin.name)
+		end,
+		before = function()
+			vim.lsp.config("*", {
 				on_attach = function(_, bufnr)
 					-- thanks to https://github.com/BirdeeHub/nixCats-nvim/blob/142b95e/templates/home-manager/init.lua#L617
 					local nmap = function(keys, func, desc)
@@ -328,7 +332,7 @@ require("lze").load({
 						vim.lsp.buf.format()
 					end, { desc = "Format current buffer with LSP" })
 				end,
-			}, plugin.lsp or {}))
+			})
 		end,
 	},
 	{
