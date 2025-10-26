@@ -284,14 +284,14 @@ require("lze").load({
 			vim.lsp.enable(plugin.name)
 		end,
 		before = function()
-			vim.lsp.config("*", {
-				on_attach = function(_, bufnr)
+			vim.api.nvim_create_autocmd("LspAttach", {
+				callback = function(event)
 					-- thanks to https://github.com/BirdeeHub/nixCats-nvim/blob/142b95e/templates/home-manager/init.lua#L617
 					local nmap = function(keys, func, desc)
 						if desc then
 							desc = "LSP: " .. desc
 						end
-						vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
+						vim.keymap.set("n", keys, func, { buffer = event.buf, desc = desc })
 					end
 					nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
 					nmap("<leader>ca", function()
@@ -328,7 +328,7 @@ require("lze").load({
 					end, "[W]orkspace [L]ist Folders")
 
 					-- Create a command `:Format` local to the LSP buffer
-					vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
+					vim.api.nvim_buf_create_user_command(event.buf, "Format", function(_)
 						vim.lsp.buf.format()
 					end, { desc = "Format current buffer with LSP" })
 				end,
