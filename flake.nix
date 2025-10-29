@@ -115,6 +115,12 @@
       url = "github:catppuccin/cosmic-desktop";
       flake = false;
     };
+
+    nix-bwrapper = {
+      url = "github:Naxdy/nix-bwrapper";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
   };
 
   outputs =
