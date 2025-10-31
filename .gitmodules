@@ -1,3 +1,6 @@
-[submodule "home/wezterm/wezterm-types"]
+[submodule "modules/wezterm/resurrect.wezterm"]
+	path = modules/wezterm/resurrect.wezterm
+	url = https://github.com/MLFlexer/resurrect.wezterm
+[submodule "modules/wezterm/wezterm-types"]
 	path = modules/wezterm/wezterm-types
-	url = https://github.com/gonstoll/wezterm-types
+	url = https://github.com/DrKJeff16/wezterm-types

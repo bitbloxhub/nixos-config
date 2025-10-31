@@ -84,6 +84,7 @@
                 which-key-nvim
                 nvim-bqf
                 quicker-nvim
+                resession-nvim
               ];
             };
           };

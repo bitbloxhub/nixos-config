@@ -1,0 +1,139 @@
+From 2a5199c86bd0761a95ccfd9149b9e3037e26ded1 Mon Sep 17 00:00:00 2001
+From: bitbloxhub <45184892+bitbloxhub@users.noreply.github.com>
+Date: Fri, 31 Oct 2025 16:26:44 +0000
+Subject: [PATCH 2/2] feat: add save and restore hooks for tabs, windows, and
+ workspaces
+
+---
+ plugin/resurrect/tab_state.lua       | 18 ++++++++++++++++--
+ plugin/resurrect/window_state.lua    | 18 ++++++++++++++++--
+ plugin/resurrect/workspace_state.lua | 15 +++++++++++++--
+ 3 files changed, 45 insertions(+), 6 deletions(-)
+
+diff --git a/plugin/resurrect/tab_state.lua b/plugin/resurrect/tab_state.lua
+index c312333..2014f11 100644
+--- a/plugin/resurrect/tab_state.lua
++++ b/plugin/resurrect/tab_state.lua
+@@ -1,6 +1,19 @@
+ local wezterm = require("wezterm") --[[@as Wezterm]] --- this type cast invokes the LSP module for Wezterm
+ local pane_tree_mod = require("resurrect.pane_tree")
+-local pub = {}
++
++local pub = {
++	---@param current_state tab_state
++	---@param tab MuxTab
++	---@return tab_state
++	save_hook = function(current_state, tab)
++		return current_state
++	end,
++	---@param state tab_state
++	---@param tab MuxTab
++	post_restore_hook = function(state, tab)
++		return
++	end,
++}
+ 
+ ---Function used to split panes when mapping over the pane_tree
+ ---@param opts restore_opts
+@@ -74,7 +87,7 @@ function pub.get_tab_state(tab)
+ 		pane_tree = pane_tree_mod.create_pane_tree(panes),
+ 	}
+ 
+-	return tab_state
++	return pub.save_hook(tab_state, tab)
+ end
+ 
+ ---Force closes all other tabs in the window but one
+@@ -116,6 +129,7 @@ function pub.restore_tab(tab, tab_state, opts)
+ 
+ 	local acc = pane_tree_mod.fold(tab_state.pane_tree, { is_zoomed = false }, make_splits(opts))
+ 	acc.active_pane:activate()
++	pub.post_restore_hook(tab_state, tab)
+ 	wezterm.emit("resurrect.tab_state.restore_tab.finished")
+ end
+ 
+diff --git a/plugin/resurrect/window_state.lua b/plugin/resurrect/window_state.lua
+index d556f2a..5b79bdb 100644
+--- a/plugin/resurrect/window_state.lua
++++ b/plugin/resurrect/window_state.lua
+@@ -1,6 +1,19 @@
+ local wezterm = require("wezterm") --[[@as Wezterm]] --- this type cast invokes the LSP module for Wezterm
+ local tab_state_mod = require("resurrect.tab_state")
+-local pub = {}
++
++local pub = {
++	---@param current_state window_state
++	---@param window MuxWindow
++	---@return window_state
++	save_hook = function(current_state, window)
++		return current_state
++	end,
++	---@param state window_state
++	---@param window MuxWindow
++	post_restore_hook = function(state, window)
++		return
++	end,
++}
+ 
+ ---Returns the state of the window
+ ---@param window MuxWindow
+@@ -21,7 +34,7 @@ function pub.get_window_state(window)
+ 
+ 	window_state.size = tabs[1].tab:get_size()
+ 
+-	return window_state
++	return pub.save_hook(window_state, window)
+ end
+ 
+ ---Force closes all other tabs in the window but one
+@@ -80,6 +93,7 @@ function pub.restore_window(window, window_state, opts)
+ 	end
+ 
+ 	active_tab:activate()
++	pub.post_restore_hook(window_state, window)
+ 	wezterm.emit("resurrect.window_state.restore_window.finished")
+ end
+ 
+diff --git a/plugin/resurrect/workspace_state.lua b/plugin/resurrect/workspace_state.lua
+index 319f92b..cc390e5 100644
+--- a/plugin/resurrect/workspace_state.lua
++++ b/plugin/resurrect/workspace_state.lua
+@@ -1,7 +1,17 @@
+ local wezterm = require("wezterm") --[[@as Wezterm]] --- this type cast invokes the LSP module for Wezterm
+ local window_state_mod = require("resurrect.window_state")
+ 
+-local pub = {}
++local pub = {
++	---@param current_state workspace_state
++	---@return workspace_state
++	save_hook = function(current_state)
++		return current_state
++	end,
++	---@param state workspace_state
++	post_restore_hook = function(state)
++		return
++	end,
++}
+ 
+ ---restore workspace state
+ ---@param workspace_state workspace_state
+@@ -42,6 +52,7 @@ function pub.restore_workspace(workspace_state, opts)
+ 
+ 		window_state_mod.restore_window(opts.window, window_state, opts)
+ 	end
++	pub.post_restore_hook(workspace_state)
+ 	wezterm.emit("resurrect.workspace_state.restore_workspace.finished")
+ end
+ 
+@@ -57,7 +68,7 @@ function pub.get_workspace_state()
+ 			table.insert(workspace_state.window_states, window_state_mod.get_window_state(mux_win))
+ 		end
+ 	end
+-	return workspace_state
++	return pub.save_hook(workspace_state)
+ end
+ 
+ return pub
+-- 
+2.43.0
+
