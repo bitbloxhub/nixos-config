@@ -1,0 +1,45 @@
+From bb38b735c668e40d2f0b334717881b9d165b88b1 Mon Sep 17 00:00:00 2001
+From: bitbloxhub <45184892+bitbloxhub@users.noreply.github.com>
+Date: Fri, 24 Oct 2025 17:33:52 +0000
+Subject: [PATCH 1/2] feat: use XDG_STATE_HOME as the default state dir
+
+Also drops the requirement on dev.wezterm.
+---
+ plugin/init.lua | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
+
+diff --git a/plugin/init.lua b/plugin/init.lua
+index 799c249..9238b4b 100644
+--- a/plugin/init.lua
++++ b/plugin/init.lua
+@@ -1,21 +1,18 @@
+ local wezterm = require("wezterm") --[[@as Wezterm]] --- this type cast invokes the LSP module for Wezterm
+-local dev = wezterm.plugin.require("https://github.com/chrisgve/dev.wezterm")
+ 
+ local pub = {}
+ 
+ --- checks if the user is on windows
+ local is_windows = wezterm.target_triple == "x86_64-pc-windows-msvc"
+ local separator = is_windows and "\\" or "/"
++local home = is_windows and os.getenv("USERPROFILE") or os.getenv("HOME")
++local state_dir = (os.getenv("XDG_STATE_HOME") or (home .. separator .. ".local" .. separator .. "state"))
++	.. separator
++	.. "resurrect.wezterm"
++	.. separator
+ 
+ local function init()
+-	-- enable_sub_modules()
+-	local opts = {
+-		auto = true,
+-		keywords = { "github", "MLFlexer", "resurrect", "wezterm" },
+-	}
+-	local plugin_path = dev.setup(opts)
+-
+-	require("resurrect.state_manager").change_state_save_dir(plugin_path .. separator .. "state" .. separator)
++	require("resurrect.state_manager").change_state_save_dir(state_dir)
+ 
+ 	-- Export submodules
+ 	pub.workspace_state = require("resurrect.workspace_state")
+-- 
+2.43.0
+
