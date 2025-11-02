@@ -250,6 +250,9 @@ require("lze").load({
 					filter = function(buf)
 						return vim.b[buf].neo_tree_source == "filesystem"
 					end,
+					open = function()
+						require("neo-tree.command").execute({ action = "show", source = "filesystem" })
+					end,
 				},
 			},
 			right = {
@@ -805,5 +808,44 @@ require("lze").load({
 	event = "DeferredUIEnter",
 	after = function()
 		require("quicker").setup()
+	end,
+})
+
+require("lze").load({
+	"resession.nvim",
+	lazy = false,
+	keys = {
+		key2spec("n", "<leader>ss", require("resession").save, {}),
+		key2spec("n", "<leader>sl", require("resession").load, {}),
+		key2spec("n", "<leader>sL", function()
+			require("resession").load(nil, { dir = "dirsession" })
+		end, {}),
+		key2spec("n", "<leader>sd", require("resession").delete, {}),
+	},
+	after = function()
+		require("resession").setup({
+			extensions = {
+				edgy = {
+					enable_in_tab = true,
+				},
+			},
+		})
+		local autosave_timer = assert(vim.uv.new_timer())
+		vim.api.nvim_create_autocmd("DirChanged", {
+			callback = function()
+				autosave_timer:start(
+					0,
+					60 * 1000,
+					vim.schedule_wrap(function()
+						require("resession").save(vim.fn.getcwd(), { dir = "dirsession", notify = false })
+					end)
+				)
+			end,
+		})
+		vim.api.nvim_create_autocmd("VimLeavePre", {
+			callback = function()
+				require("resession").save(vim.fn.getcwd(), { dir = "dirsession", notify = false })
+			end,
+		})
 	end,
 })
