@@ -130,7 +130,7 @@ local key2spec = require("lzextras").key2spec
 vim.env.NIXCATS_PACK_DIR = nixCats.vimPackDir
 
 require("lze").load({
-	"catppuccin",
+	"catppuccin-nvim",
 	lazy = false,
 	after = function()
 		require("catppuccin").setup({
