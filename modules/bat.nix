@@ -1,11 +1,11 @@
 {
-  lib,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.bat = {
-      enable = lib.my.mkDisableOption "bat";
+      enable = self.lib.mkDisableOption "bat";
     };
   };
 

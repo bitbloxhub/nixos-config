@@ -1,12 +1,12 @@
 {
-  lib,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.atuin = {
-      enable = lib.my.mkDisableOption "Atuin";
-      enableNushellIntegration = lib.my.mkDisableOption "Atuin Nushell integration";
+      enable = self.lib.mkDisableOption "Atuin";
+      enableNushellIntegration = self.lib.mkDisableOption "Atuin Nushell integration";
     };
   };
 

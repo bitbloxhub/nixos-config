@@ -1,11 +1,11 @@
 {
-  lib,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.fzf = {
-      enable = lib.my.mkDisableOption "fzf";
+      enable = self.lib.mkDisableOption "fzf";
     };
   };
 

@@ -1,11 +1,12 @@
 {
   lib,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.nushell = {
-      enable = lib.my.mkDisableOption "Nushell";
+      enable = self.lib.mkDisableOption "Nushell";
     };
   };
 

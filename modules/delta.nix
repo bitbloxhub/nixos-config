@@ -1,11 +1,12 @@
 {
   lib,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.delta = {
-      enable = lib.my.mkDisableOption "delta";
+      enable = self.lib.mkDisableOption "delta";
     };
   };
 

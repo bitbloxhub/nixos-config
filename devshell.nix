@@ -1,6 +1,6 @@
 {
   inputs,
-  lib,
+  self,
   ...
 }:
 {
@@ -23,7 +23,7 @@
           pkgs.nodejs_24
           pkgs.prettier
           (inputs.ags.packages.${pkgs.system}.ags.override {
-            extraPackages = lib.my.agsExtraPackagesForPkgs pkgs;
+            extraPackages = self.lib.agsExtraPackagesForPkgs pkgs;
           })
           pkgs.cargo
           pkgs.rustc

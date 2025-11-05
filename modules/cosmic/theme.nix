@@ -1,4 +1,5 @@
 {
+  lib,
   inputs,
   ...
 }:
@@ -6,7 +7,6 @@
   flake.modules.homeManager.default =
     {
       config,
-      lib,
       ...
     }:
     let

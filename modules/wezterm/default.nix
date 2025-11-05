@@ -1,11 +1,11 @@
 {
-  lib,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.wezterm = {
-      enable = lib.my.mkDisableOption "Wezterm";
+      enable = self.lib.mkDisableOption "Wezterm";
     };
   };
 

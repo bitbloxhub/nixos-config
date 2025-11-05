@@ -1,11 +1,11 @@
 {
-  lib,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.jq = {
-      enable = lib.my.mkDisableOption "jq";
+      enable = self.lib.mkDisableOption "jq";
     };
   };
 

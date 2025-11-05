@@ -125,7 +125,6 @@
 
   outputs =
     inputs@{
-      nixpkgs,
       flake-parts,
       treefmt-nix,
       git-hooks,
@@ -133,15 +132,12 @@
       nix-auto-ci,
       import-tree,
       home-manager,
+      nixpkgs,
       ...
     }:
-    let
-      lib = nixpkgs.lib.extend (lib: _: { my = import ./lib { inherit inputs lib; }; });
-    in
     flake-parts.lib.mkFlake
       {
         inherit inputs;
-        specialArgs = { inherit lib; };
       }
       {
         systems = [
@@ -160,8 +156,8 @@
           home-manager.flakeModules.home-manager
           {
             options.flake = flake-parts.lib.mkSubmoduleOptions {
-              systemConfigs = lib.mkOption {
-                type = lib.types.lazyAttrsOf lib.types.raw;
+              systemConfigs = nixpkgs.lib.mkOption {
+                type = nixpkgs.lib.types.lazyAttrsOf nixpkgs.lib.types.raw;
                 default = { };
                 description = ''
                   Instantiated system-manager configurations.
@@ -172,12 +168,9 @@
           ./ci.nix
           ./devshell.nix
           ./treefmt.nix
+          (import-tree ./lib)
           (import-tree ./modules)
-          ((import-tree.filter (lib.hasSuffix "default.nix")) ./hosts)
+          ((import-tree.filter (nixpkgs.lib.hasSuffix "default.nix")) ./hosts)
         ];
-
-        flake = {
-          inherit lib;
-        };
       };
 }

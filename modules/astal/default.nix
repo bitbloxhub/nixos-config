@@ -1,12 +1,13 @@
 {
   lib,
   inputs,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.astal = {
-      enable = lib.my.mkDisableOption "Astal shell";
+      enable = self.lib.mkDisableOption "Astal shell";
     };
   };
 
@@ -37,7 +38,7 @@
     {
       home.packages = lib.mkIf config.my.programs.astal.enable [
         (inputs.ags.packages.${pkgs.system}.ags.override {
-          extraPackages = lib.my.agsExtraPackagesForPkgs pkgs;
+          extraPackages = self.lib.agsExtraPackagesForPkgs pkgs;
         })
         (pkgs.stdenv.mkDerivation {
           name = "astal-shell";
@@ -54,7 +55,7 @@
             pkgs.glib
             pkgs.gjs
           ]
-          ++ (lib.my.agsExtraPackagesForPkgs pkgs);
+          ++ (self.lib.agsExtraPackagesForPkgs pkgs);
 
           installPhase = ''
             mv style.css style.old.css

@@ -3,7 +3,7 @@
   ...
 }:
 {
-  lib.agsExtraPackagesForPkgs =
+  flake.lib.agsExtraPackagesForPkgs =
     pkgs: with inputs.ags.packages.${pkgs.system}; [
       io
       astal4

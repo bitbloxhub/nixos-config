@@ -1,11 +1,12 @@
 {
   lib,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.llama-cpp = {
-      enable = lib.my.mkDisableOption "llama.cpp";
+      enable = self.lib.mkDisableOption "llama.cpp";
     };
   };
 

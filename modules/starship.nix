@@ -1,12 +1,13 @@
 {
   lib,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.starship = {
-      enable = lib.my.mkDisableOption "Starship";
-      enableNushellIntegration = lib.my.mkDisableOption "Starship Nushell integration";
+      enable = self.lib.mkDisableOption "Starship";
+      enableNushellIntegration = self.lib.mkDisableOption "Starship Nushell integration";
     };
   };
 

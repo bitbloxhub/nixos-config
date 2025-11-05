@@ -1,12 +1,13 @@
 {
   lib,
   inputs,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.firefox = {
-      enable = lib.my.mkDisableOption "Firefox";
+      enable = self.lib.mkDisableOption "Firefox";
     };
   };
 

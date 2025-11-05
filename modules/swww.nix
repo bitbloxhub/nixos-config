@@ -1,18 +1,18 @@
 {
   lib,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.swww = {
-      enable = lib.my.mkDisableOption "swww";
+      enable = self.lib.mkDisableOption "swww";
     };
   };
 
   flake.modules.homeManager.default =
     {
       config,
-      lib,
       pkgs,
       ...
     }:

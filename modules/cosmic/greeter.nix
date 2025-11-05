@@ -1,11 +1,11 @@
 {
-  lib,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.desktops.cosmic.greeter = {
-      enable = lib.my.mkDisableOption "COSMIC";
+      enable = self.lib.mkDisableOption "COSMIC";
     };
   };
 

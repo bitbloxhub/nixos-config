@@ -1,5 +1,6 @@
 {
   lib,
+  self,
   ...
 }:
 let
@@ -23,7 +24,7 @@ in
 {
   flake.modules.generic.default = {
     options.my.themes.catppuccin = {
-      enable = lib.my.mkDisableOption "Catppuccin";
+      enable = self.lib.mkDisableOption "Catppuccin";
       flavor = lib.mkOption {
         type = lib.types.enum [
           "latte"

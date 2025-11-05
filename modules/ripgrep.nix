@@ -1,11 +1,11 @@
 {
-  lib,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.ripgrep = {
-      enable = lib.my.mkDisableOption "ripgrep";
+      enable = self.lib.mkDisableOption "ripgrep";
     };
   };
 

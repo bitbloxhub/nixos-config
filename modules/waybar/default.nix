@@ -1,11 +1,11 @@
 {
-  lib,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.waybar = {
-      enable = lib.my.mkDisableOption "waybar";
+      enable = self.lib.mkDisableOption "waybar";
     };
   };
 

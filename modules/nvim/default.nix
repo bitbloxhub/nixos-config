@@ -1,12 +1,12 @@
 {
-  lib,
   inputs,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.nvim = {
-      enable = lib.my.mkDisableOption "Neovim";
+      enable = self.lib.mkDisableOption "Neovim";
     };
   };
 

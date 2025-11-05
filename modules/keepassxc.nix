@@ -1,11 +1,11 @@
 {
-  lib,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.keepassxc = {
-      enable = lib.my.mkDisableOption "KeePassXC";
+      enable = self.lib.mkDisableOption "KeePassXC";
     };
   };
 

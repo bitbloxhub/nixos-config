@@ -1,12 +1,12 @@
 {
-  lib,
+  self,
   ...
 }:
 {
   flake.modules.generic.default = {
     options.my.programs.direnv = {
-      enable = lib.my.mkDisableOption "Direnv";
-      enableNushellIntegration = lib.my.mkDisableOption "Direnv Nushell integration";
+      enable = self.lib.mkDisableOption "Direnv";
+      enableNushellIntegration = self.lib.mkDisableOption "Direnv Nushell integration";
     };
   };
 

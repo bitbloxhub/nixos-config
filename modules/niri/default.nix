@@ -1,6 +1,7 @@
 {
   lib,
   inputs,
+  self,
   ...
 }:
 let
@@ -32,7 +33,7 @@ in
 {
   flake.modules.generic.default = {
     options.my.programs.niri = {
-      enable = lib.my.mkDisableOption "Niri";
+      enable = self.lib.mkDisableOption "Niri";
     };
   };
 
@@ -52,7 +53,6 @@ in
   flake.modules.homeManager.default =
     {
       config,
-      lib,
       ...
     }:
     {
