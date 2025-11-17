@@ -81,7 +81,8 @@
       { classes, config, ... }:
       {
         name = "${config.my.user.username}@${config.my.hostname}";
-        value = if (builtins.elem "home-manager" classes) then
+        value =
+          if (builtins.elem "home-manager" classes) then
             inputs.home-manager.lib.homeManagerConfiguration {
               pkgs = inputs.nixpkgs.legacyPackages.${config.my.hardware.platform};
               modules = [

@@ -1,4 +1,3 @@
-_:
 {
   hosts."nixos-bill" = {
     classes = [ "nixos" ];
