@@ -39,6 +39,8 @@
       xdg.enable = true;
       xdg.mime.enable = true;
       targets.genericLinux.enable = true;
+      # I use nix-system-graphics.
+      targets.genericLinux.gpu.enable = false;
       home.stateVersion = "23.11";
       programs.home-manager.enable = true;
     };

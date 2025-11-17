@@ -3,7 +3,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: determinatesystems/nix-installer-action@main
+    - uses: determinatesystems/nix-installer-action@v20
       with:
         determinate: false
         diagnostic-endpoint: ''
@@ -21,11 +21,9 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: results
-        path: './result_parsed.json
-
+        path: |-
+          ./result_parsed.json
           ./result-*
-
-          '
     timeout-minutes: 60
   report:
     needs:
@@ -33,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: determinatesystems/nix-installer-action@main
+    - uses: determinatesystems/nix-installer-action@v20
       with:
         determinate: false
         diagnostic-endpoint: ''

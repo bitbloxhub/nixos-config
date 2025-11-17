@@ -14,6 +14,16 @@
         programs.stylua.enable = true;
         programs.prettier.enable = true;
         programs.prettier.settings = builtins.fromJSON (builtins.readFile ./.prettierrc);
+        programs.xmllint.enable = true;
+        programs.xmllint.package = pkgs.symlinkJoin {
+          name = "libxml2-wrapped";
+          paths = [ pkgs.libxml2 ];
+          buildInputs = [ pkgs.makeWrapper ];
+          postBuild = ''
+            wrapProgram $out/bin/xmllint \
+              --set XMLLINT_INDENT "${"\t"}"
+          '';
+        };
         programs.rustfmt.enable = true;
         settings.formatter."ast-grep" = {
           command = pkgs.bash;
@@ -26,7 +36,11 @@
             ''
             "--"
           ];
-          includes = [ "modules/astal/**/*.tsx" ];
+          # TODO: generate this from ./sg_rules
+          includes = [
+            "modules/astal/**/*.tsx"
+            "modules/astal/**/*-symbolic.svg"
+          ];
         };
       };
     };

@@ -1,0 +1,11 @@
+id: svg-symbolic-class
+language: xml
+files:
+    - modules/astal/icons/**/*-symbolic.svg
+rule:
+    pattern: <path $$$ARGS/>
+    not:
+        has:
+            kind: EmptyElemTag > Attribute
+            regex: class
+fix: <path class="transparent-fill foreground-stroke" $$$ARGS/>

@@ -46,6 +46,10 @@ vbox#titlebar {
 	overflow: scroll;
 }
 
+.browserContainer {
+	border-radius: 0 !important;
+}
+
 /* firefox-second-sidebar fixes */
 html[taskbartab] {
 	#sb2-main,

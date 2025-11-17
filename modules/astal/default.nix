@@ -46,7 +46,7 @@
           src = astalShellSource;
 
           nativeBuildInputs = [
-            pkgs.wrapGAppsHook
+            pkgs.wrapGAppsHook4
             pkgs.gobject-introspection
             inputs.ags.packages.${pkgs.system}.default
           ];
