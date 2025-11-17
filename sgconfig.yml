@@ -1,5 +1,5 @@
 ruleDirs: ["./sg_rules/"]
 customLanguages:
     xml:
-        libraryPath: /tmp/bitbloxhub-nixos-config-treesitter-xml/parser/xml.so
+        libraryPath: ./tree-sitter-xml/parser/xml.so
         extensions: [xml, svg]
