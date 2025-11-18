@@ -22,6 +22,21 @@ let
   ];
 in
 {
+  flake-file.inputs = {
+    catppuccin = {
+      url = "github:catppuccin/nix/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    catppuccin-userstyles = {
+      url = "github:catppuccin/userstyles";
+      flake = false;
+    };
+    catppuccin-cosmic = {
+      url = "github:catppuccin/cosmic-desktop";
+      flake = false;
+    };
+  };
+
   flake.modules.generic.default = {
     options.my.themes.catppuccin = {
       enable = self.lib.mkDisableOption "Catppuccin";

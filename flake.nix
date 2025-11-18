@@ -1,176 +1,145 @@
+# DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
+# Use `nix run .#write-flake` to regenerate it.
 {
-  description = "system configuration flake";
+
+  outputs = inputs: import ./outputs.nix inputs;
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
-
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    git-hooks = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-compat.follows = "";
-    };
-
     actions-nix = {
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        git-hooks.follows = "git-hooks";
+        nixpkgs.follows = "nixpkgs";
+      };
       url = "github:nialov/actions.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.git-hooks.follows = "git-hooks";
     };
-
-    nix-auto-ci = {
-      url = "github:aigis-llm/nix-auto-ci";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.git-hooks.follows = "git-hooks";
-      inputs.actions-nix.follows = "actions-nix";
-    };
-
-    import-tree.url = "github:vic/import-tree";
-
-    crane.url = "github:ipetkov/crane";
-
-    catppuccin = {
-      url = "github:catppuccin/nix/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    catppuccin-userstyles = {
-      url = "github:catppuccin/userstyles";
-      flake = false;
-    };
-
-    home-manager = {
-      url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    system-manager = {
-      url = "github:numtide/system-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-system-graphics = {
-      url = "github:soupglasses/nix-system-graphics";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixCats.url = "github:BirdeeHub/nixCats-nvim";
-
-    niri-flake = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs";
-    };
-
-    astal = {
-      url = "github:aylur/astal";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     ags = {
+      inputs = {
+        astal.follows = "astal";
+        nixpkgs.follows = "nixpkgs";
+      };
       url = "github:aylur/ags";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.astal.follows = "astal";
     };
-
-    flake-firefox-nightly = {
-      url = "github:nix-community/flake-firefox-nightly";
+    astal = {
       inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:aylur/astal";
     };
-
     betterfox-nix = {
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        import-tree.follows = "import-tree";
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+      };
       url = "github:HeitorAugustoLN/betterfox-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.import-tree.follows = "import-tree";
     };
-
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    catppuccin = {
       inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:catppuccin/nix/main";
     };
-
-    nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
-
+    catppuccin-cosmic = {
+      flake = false;
+      url = "github:catppuccin/cosmic-desktop";
+    };
+    catppuccin-userstyles = {
+      flake = false;
+      url = "github:catppuccin/userstyles";
+    };
     cosmic-manager = {
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        home-manager.follows = "home-manager";
+        nixpkgs.follows = "nixpkgs";
+      };
       url = "github:HeitorAugustoLN/cosmic-manager";
+    };
+    crane.url = "github:ipetkov/crane";
+    firefox-addons = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    };
+    flake-file.url = "github:vic/flake-file";
+    flake-firefox-nightly = {
+      inputs = {
+        flake-compat.follows = "";
+        lib-aggregate.follows = "lib-aggregate";
+        nixpkgs.follows = "nixpkgs";
+      };
+      url = "github:nix-community/flake-firefox-nightly";
+    };
+    flake-parts = {
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+      url = "github:hercules-ci/flake-parts";
+    };
+    flake-utils = {
+      inputs.systems.follows = "systems";
+      url = "github:numtide/flake-utils";
+    };
+    flint = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:NotAShelf/flint";
+    };
+    git-hooks = {
+      inputs = {
+        flake-compat.follows = "";
+        nixpkgs.follows = "nixpkgs";
+      };
+      url = "github:cachix/git-hooks.nix";
+    };
+    home-manager = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager/master";
+    };
+    import-tree.url = "github:vic/import-tree";
+    lib-aggregate = {
+      inputs = {
+        flake-utils.follows = "flake-utils";
+        nixpkgs-lib.follows = "nixpkgs";
+      };
+      url = "github:nix-community/lib-aggregate";
+    };
+    niri-flake = {
+      inputs = {
+        niri-stable.follows = "";
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable.follows = "nixpkgs";
+        xwayland-satellite-stable.follows = "";
+      };
+      url = "github:sodiboo/niri-flake";
+    };
+    nix-auto-ci = {
+      inputs = {
+        actions-nix.follows = "actions-nix";
+        flake-parts.follows = "flake-parts";
+        git-hooks.follows = "git-hooks";
+        nixpkgs.follows = "nixpkgs";
+      };
+      url = "github:aigis-llm/nix-auto-ci";
+    };
+    nix-bwrapper = {
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-        flake-parts.follows = "flake-parts";
+        nuschtosSearch.follows = "";
+        treefmt-nix.follows = "treefmt-nix";
       };
-    };
-
-    catppuccin-cosmic = {
-      url = "github:catppuccin/cosmic-desktop";
-      flake = false;
-    };
-
-    nix-bwrapper = {
       url = "github:Naxdy/nix-bwrapper";
+    };
+    nix-system-graphics = {
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.treefmt-nix.follows = "treefmt-nix";
+      url = "github:soupglasses/nix-system-graphics";
+    };
+    nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    system-manager = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:numtide/system-manager";
+    };
+    systems.url = "github:nix-systems/default";
+    treefmt-nix = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:numtide/treefmt-nix";
     };
   };
 
-  outputs =
-    inputs@{
-      flake-parts,
-      treefmt-nix,
-      git-hooks,
-      actions-nix,
-      nix-auto-ci,
-      import-tree,
-      home-manager,
-      nixpkgs,
-      ...
-    }:
-    flake-parts.lib.mkFlake
-      {
-        inherit inputs;
-      }
-      {
-        systems = [
-          "x86_64-linux"
-          "aarch64-linux"
-          "x86_64-darwin"
-          "aarch64-darwin"
-        ];
-
-        imports = [
-          flake-parts.flakeModules.modules
-          treefmt-nix.flakeModule
-          git-hooks.flakeModule
-          actions-nix.flakeModules.default
-          nix-auto-ci.flakeModule
-          home-manager.flakeModules.home-manager
-          {
-            options.flake = flake-parts.lib.mkSubmoduleOptions {
-              systemConfigs = nixpkgs.lib.mkOption {
-                type = nixpkgs.lib.types.lazyAttrsOf nixpkgs.lib.types.raw;
-                default = { };
-                description = ''
-                  Instantiated system-manager configurations.
-                '';
-              };
-            };
-          }
-          ./ci.nix
-          ./devshell.nix
-          ./treefmt.nix
-          (import-tree ./lib)
-          (import-tree ./modules)
-          ((import-tree.filter (nixpkgs.lib.hasSuffix "default.nix")) ./hosts)
-        ];
-      };
 }

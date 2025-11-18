@@ -7,6 +7,7 @@
   perSystem =
     {
       pkgs,
+      inputs',
       ...
     }:
     {
@@ -29,6 +30,7 @@
           pkgs.rustc
           pkgs.rustfmt
           pkgs.nixos-facter
+          inputs'.flint.packages.default
         ];
         shellHook = ''
           # For ast-grep

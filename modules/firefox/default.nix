@@ -5,6 +5,29 @@
   ...
 }:
 {
+  flake-file.inputs = {
+    flake-firefox-nightly = {
+      url = "github:nix-community/flake-firefox-nightly";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        lib-aggregate.follows = "lib-aggregate";
+        flake-compat.follows = "";
+      };
+    };
+    betterfox-nix = {
+      url = "github:HeitorAugustoLN/betterfox-nix";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        import-tree.follows = "import-tree";
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+      };
+    };
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
   flake.modules.generic.default = {
     options.my.programs.firefox = {
       enable = self.lib.mkDisableOption "Firefox";

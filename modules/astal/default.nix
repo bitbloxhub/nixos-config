@@ -5,6 +5,21 @@
   ...
 }:
 {
+
+  flake-file.inputs = {
+    astal = {
+      url = "github:aylur/astal";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    ags = {
+      url = "github:aylur/ags";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        astal.follows = "astal";
+      };
+    };
+  };
+
   flake.modules.generic.default = {
     options.my.programs.astal = {
       enable = self.lib.mkDisableOption "Astal shell";

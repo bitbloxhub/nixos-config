@@ -4,6 +4,8 @@
   ...
 }:
 {
+  flake-file.inputs.nixCats.url = "github:BirdeeHub/nixCats-nvim";
+
   flake.modules.generic.default = {
     options.my.programs.nvim = {
       enable = self.lib.mkDisableOption "Neovim";

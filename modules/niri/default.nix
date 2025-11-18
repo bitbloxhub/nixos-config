@@ -31,6 +31,18 @@ let
     );
 in
 {
+  flake-file.inputs = {
+    niri-flake = {
+      url = "github:sodiboo/niri-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable.follows = "nixpkgs";
+        niri-stable.follows = "";
+        xwayland-satellite-stable.follows = "";
+      };
+    };
+  };
+
   flake.modules.generic.default = {
     options.my.programs.niri = {
       enable = self.lib.mkDisableOption "Niri";

@@ -3,6 +3,11 @@
   ...
 }:
 {
+  flake-file.inputs.nix-system-graphics = {
+    url = "github:soupglasses/nix-system-graphics";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   flake.modules.generic.default = {
     options.my.nix-system-graphics = {
       enable = lib.mkEnableOption "nix-system-graphics";

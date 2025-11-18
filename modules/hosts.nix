@@ -6,6 +6,20 @@
   ...
 }:
 {
+  config.flake-file.inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
   options.hosts = lib.mkOption {
     type = lib.types.attrsOf (
       lib.types.submodule {
