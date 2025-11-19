@@ -71,7 +71,9 @@
             immedateModify = false;
           };
           disabledFor =
-            (lib.importJSON inputs.self.packages.${pkgs.system}.catppuccin-userstyles-domains)
+            (lib.importJSON
+              inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.catppuccin-userstyles-domains
+            )
             ++ [
               "github.com"
               "en.wikipedia.org"

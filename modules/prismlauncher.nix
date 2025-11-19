@@ -11,7 +11,7 @@
     }:
     {
       home.packages = [
-        (inputs.nix-bwrapper.lib.${pkgs.system}.bwrapper (
+        (inputs.nix-bwrapper.lib.${pkgs.stdenv.hostPlatform.system}.bwrapper (
           {
             config,
             ...

@@ -4,7 +4,7 @@
 }:
 {
   flake.lib.agsExtraPackagesForPkgs =
-    pkgs: with inputs.ags.packages.${pkgs.system}; [
+    pkgs: with inputs.ags.packages.${pkgs.stdenv.hostPlatform.system}; [
       io
       astal4
       apps

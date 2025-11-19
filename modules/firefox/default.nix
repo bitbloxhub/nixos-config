@@ -68,11 +68,13 @@
       programs.firefox = {
         inherit (config.my.programs.firefox) enable;
         # supports unsigned extensions and is updated maybe a bit too frequently
-        package = inputs.flake-firefox-nightly.packages.${pkgs.system}.firefox-nightly-bin.override {
-          extraPrefsFiles = [
-            "${fx-autoconfig}/program/config.js"
-          ];
-        };
+        package =
+          inputs.flake-firefox-nightly.packages.${pkgs.stdenv.hostPlatform.system}.firefox-nightly-bin.override
+            {
+              extraPrefsFiles = [
+                "${fx-autoconfig}/program/config.js"
+              ];
+            };
 
         betterfox = {
           enable = true;
@@ -84,7 +86,7 @@
         profiles.nix = {
           id = 0;
           isDefault = true;
-          extensions.packages = with inputs.firefox-addons.packages.${pkgs.system}; [
+          extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
             tab-session-manager
             keepassxc-browser
           ];

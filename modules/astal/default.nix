@@ -52,7 +52,7 @@
     in
     {
       home.packages = lib.mkIf config.my.programs.astal.enable [
-        (inputs.ags.packages.${pkgs.system}.ags.override {
+        (inputs.ags.packages.${pkgs.stdenv.hostPlatform.system}.ags.override {
           extraPackages = self.lib.agsExtraPackagesForPkgs pkgs;
         })
         (pkgs.stdenv.mkDerivation {
@@ -63,7 +63,7 @@
           nativeBuildInputs = [
             pkgs.wrapGAppsHook4
             pkgs.gobject-introspection
-            inputs.ags.packages.${pkgs.system}.default
+            inputs.ags.packages.${pkgs.stdenv.hostPlatform.system}.default
           ];
 
           buildInputs = [

@@ -52,7 +52,9 @@
         "3rdparty".Extensions.${stylusExtensionId} = {
           prefs.patchCsp = true;
           prefs.updateInterval = 0;
-          styles = lib.importJSON inputs.self.packages.${pkgs.system}.catppuccin-userstyles;
+          styles =
+            lib.importJSON
+              inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.catppuccin-userstyles;
         };
       };
     };
