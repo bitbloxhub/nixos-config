@@ -23,7 +23,11 @@ export default class AppsProvider implements LauncherItemProvider {
 							window.visible = false
 							entry.text = ""
 							search("")
-							action("spawn-sh", "--", app.executable.replace(/%[fFcuUik]/g, ""))
+							action(
+								"spawn-sh",
+								"--",
+								app.executable.replace(/%[fFcuUik]/g, ""),
+							)
 						}}
 					>
 						<box
