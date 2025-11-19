@@ -2,6 +2,7 @@ import AstalApps from "gi://AstalApps?version=0.1"
 import { LauncherItemProvider } from "."
 import { Astal, Gtk } from "ags/gtk4"
 import Pango from "gi://Pango?version=1.0"
+import { action } from "../../utils/niri"
 
 export default class AppsProvider implements LauncherItemProvider {
 	apps: AstalApps.Apps = new AstalApps.Apps()
@@ -22,7 +23,7 @@ export default class AppsProvider implements LauncherItemProvider {
 							window.visible = false
 							entry.text = ""
 							search("")
-							app.launch()
+							action("spawn-sh", "--", app.executable.replace(/%[fFcuUik]/g, ""))
 						}}
 					>
 						<box

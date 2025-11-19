@@ -60,7 +60,7 @@ interface NiriSignals extends GObject.Object.SignalSignatures {
 	"focus-changed": NiriGObject["focusChanged"]
 }
 
-function action(...args: string[]) {
+export function action(...args: string[]) {
 	return execAsync(["niri", "msg", "action", ...args])
 }
 
