@@ -18,6 +18,15 @@
       url = "github:numtide/system-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        utils.follows = "flake-utils";
+        flake-compat.follows = "";
+      };
+    };
   };
 
   options.hosts = lib.mkOption {
@@ -118,5 +127,59 @@
             null;
       }
     ) config.hosts;
+
+    flake.deploy = {
+      magicRollback = false;
+
+      nodes = lib.mapAttrs (
+        _:
+        { classes, config, ... }:
+        {
+          inherit (config.my) hostname;
+          sshUser = config.my.user.username;
+          interactiveSudo = true;
+          profilesOrder = lib.intersectLists [
+            "nixos"
+            "system-manager"
+            "home-manager"
+          ] classes;
+          profiles = lib.filterAttrs (_: p: p != null) {
+            nixos =
+              if (builtins.elem "nixos" classes) then
+                {
+                  user = "root";
+                  path =
+                    inputs.deploy-rs.lib.${config.my.hardware.platform}.activate.nixos
+                      self.nixosConfigurations.${config.my.hostname};
+                }
+              else
+                null;
+            system-manager =
+              if (builtins.elem "system-manager" classes) then
+                {
+                  user = "root";
+                  profilePath = "/nix/var/nix/profiles/system-manager-profiles/system-manager";
+                  path =
+                    inputs.deploy-rs.lib.${config.my.hardware.platform}.activate.custom
+                      self.systemConfigs.${config.my.hostname}
+                      "./bin/activate";
+                }
+              else
+                null;
+            home-manager =
+              if (builtins.elem "home-manager" classes) then
+                {
+                  interactiveSudo = false;
+                  profilePath = "${config.my.user.home}/.local/state/nix/profiles/home-manager";
+                  path =
+                    inputs.deploy-rs.lib.${config.my.hardware.platform}.activate.home-manager
+                      self.homeConfigurations."${config.my.user.username}@${config.my.hostname}";
+                }
+              else
+                null;
+          };
+        }
+      ) config.hosts;
+    };
   };
 }

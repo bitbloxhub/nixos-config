@@ -192,6 +192,30 @@
         "type": "github"
       }
     },
+    "deploy-rs": {
+      "inputs": {
+        "flake-compat": [],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": [
+          "flake-utils"
+        ]
+      },
+      "locked": {
+        "lastModified": 1762286984,
+        "narHash": "sha256-9I2H9x5We6Pl+DBYHjR1s3UT8wgwcpAH03kn9CqtdQc=",
+        "owner": "serokell",
+        "repo": "deploy-rs",
+        "rev": "9c870f63e28ec1e83305f7f6cb73c941e699f74f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "serokell",
+        "repo": "deploy-rs",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -588,6 +612,7 @@
         "catppuccin-userstyles": "catppuccin-userstyles",
         "cosmic-manager": "cosmic-manager",
         "crane": "crane",
+        "deploy-rs": "deploy-rs",
         "firefox-addons": "firefox-addons",
         "flake-file": "flake-file",
         "flake-firefox-nightly": "flake-firefox-nightly",

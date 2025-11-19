@@ -35,7 +35,10 @@
       ...
     }:
     {
-      home.packages = [ inputs.system-manager.packages."${pkgs.stdenv.hostPlatform.system}".default ];
+      home.packages = [
+        inputs.system-manager.packages."${pkgs.stdenv.hostPlatform.system}".default
+        inputs.deploy-rs.packages.${pkgs.stdenv.hostPlatform.system}.default
+      ];
       xdg.enable = true;
       xdg.mime.enable = true;
       targets.genericLinux.enable = true;
