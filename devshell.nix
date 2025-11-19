@@ -22,7 +22,7 @@
           pkgs.typescript-language-server
           pkgs.nodejs_24
           pkgs.prettier
-          (inputs'.ags.ags.override {
+          (inputs'.ags.packages.ags.override {
             extraPackages = self.lib.agsExtraPackagesForPkgs pkgs;
           })
           pkgs.cargo
