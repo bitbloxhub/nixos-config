@@ -51,6 +51,7 @@ jobs:
       matrix:
         attr:
         - check-flake-file
+        - default-shell
         - pre-commit
         - treefmt
     timeout-minutes: 60

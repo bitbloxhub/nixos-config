@@ -103,4 +103,21 @@
         };
       };
     };
+
+  perSystem =
+    {
+      pkgs,
+      inputs',
+      ...
+    }:
+    {
+      make-shells.default = {
+        name = "nixos-config";
+        packages = [
+          (inputs'.ags.packages.ags.override {
+            extraPackages = self.lib.agsExtraPackagesForPkgs pkgs;
+          })
+        ];
+      };
+    };
 }

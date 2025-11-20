@@ -106,6 +106,10 @@
       };
       url = "github:nix-community/lib-aggregate";
     };
+    make-shell = {
+      inputs.flake-compat.follows = "";
+      url = "github:nicknovitski/make-shell";
+    };
     niri-flake = {
       inputs = {
         niri-stable.follows = "";

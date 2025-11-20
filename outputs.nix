@@ -40,7 +40,6 @@ flake-parts.lib.mkFlake
         };
       }
       ./ci.nix
-      ./devshell.nix
       ./treefmt.nix
       ./flake-file.nix
       (import-tree ./lib)
