@@ -37,7 +37,15 @@
     {
       home.packages = [
         inputs.system-manager.packages."${pkgs.stdenv.hostPlatform.system}".default
-        inputs.deploy-rs.packages.${pkgs.stdenv.hostPlatform.system}.default
+        (inputs.deploy-rs.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
+          patches = (old.patches or [ ]) ++ [
+            # Fix multiple targets
+            (pkgs.fetchurl {
+              url = "https://github.com/serokell/deploy-rs/compare/125ae9e...c8b2cbe.diff";
+              hash = "sha256-18fFMbpLUy5hsdqsYVu/BIRYxroPuVhuJvARV1C+emw=";
+            })
+          ];
+        }))
       ];
       xdg.enable = true;
       xdg.mime.enable = true;
