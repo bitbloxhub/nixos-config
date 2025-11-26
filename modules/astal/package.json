@@ -3,7 +3,7 @@
 	"type": "module",
 	"dependencies": {
 		"@catppuccin/palette": "^1.7.1",
-		"ags": "https://gitpkg.vercel.app/Aylur/ags?0cbca42b11d23aad8c0689fc7385e517bde94c61",
+		"ags": "github:Aylur/ags",
 		"fzf": "^0.5.2",
 		"gnim": "^1.8.2"
 	}

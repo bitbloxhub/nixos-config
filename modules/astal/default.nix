@@ -33,22 +33,10 @@
       ...
     }:
     let
-      package = builtins.fromJSON (builtins.readFile ./package.json);
-      prodPackage = builtins.removeAttrs package [ "devDependencies" ];
-      npmDeps = pkgs.importNpmLock.buildNodeModules {
-        nodejs = pkgs.nodejs_24;
-        npmRoot = ./.;
-        package = prodPackage;
+      npmDeps = pkgs.fetchNpmDeps {
+        src = ./.;
+        hash = "sha256-3hOZDP7m/YsNZFMLUNB/2mHJYiBuPAzuLxO4Vfl+NSU=";
       };
-
-      astalShellSource = pkgs.runCommand "astal-shell-source" { } ''
-        mkdir -p $out
-        cp -r ${builtins.filterSource (path: _type: baseNameOf path != "node_modules") ./.}/* $out/
-        mkdir -p $out/node_modules
-        cp -r ${npmDeps}/node_modules/* $out/node_modules/
-        mkdir -p $out/node_modules/astal
-        cp -r ${inputs.astal}/lang/gjs/src/* $out/node_modules/astal/
-      '';
     in
     {
       home.packages = lib.mkIf config.my.programs.astal.enable [
@@ -58,9 +46,10 @@
         (pkgs.stdenv.mkDerivation {
           name = "astal-shell";
 
-          src = astalShellSource;
+          src = ./.;
 
           nativeBuildInputs = [
+            pkgs.nodejs_24
             pkgs.wrapGAppsHook4
             pkgs.gobject-introspection
             inputs.ags.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -73,6 +62,13 @@
           ++ (self.lib.agsExtraPackagesForPkgs pkgs);
 
           installPhase = ''
+            cp -r ${npmDeps} $TMPDIR/npmDeps
+            chmod -R 700 "$TMPDIR/npmDeps"
+            export npm_config_cache=$TMPDIR/npmDeps
+            npm i --ignore-scripts
+            mkdir -p $out/node_modules/astal
+            cp -r node_modules/* $out/node_modules/
+            cp -r ${inputs.astal}/lang/gjs/src/* $out/node_modules/astal/
             mv style.css style.old.css
             ${pkgs.esbuild}/bin/esbuild --bundle style.old.css --outfile=style.css --supported:nesting=false
             mkdir -p $out/bin
