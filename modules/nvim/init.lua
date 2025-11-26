@@ -538,6 +538,7 @@ require("lze").load({
 
 require("lze").load({
 	"image",
+	dep_of = { "molten" },
 	ft = { "markdown" },
 	after = function()
 		require("image").setup({
