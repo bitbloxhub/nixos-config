@@ -123,6 +123,20 @@ end
 	})
 end)()
 
+---Workaround for rust settings sometimes overriding .editorconfig,
+---see https://github.com/neovim/neovim/issues/30334#issuecomment-2348238522
+vim.g.rust_recommended_style = 0
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "rust",
+	desc = "Set recommended Rust style settings if no editorconfig is used",
+	callback = function()
+		if not vim.b.editorconfig then
+			vim.cmd("setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab textwidth=99")
+		end
+	end,
+})
+
 require("lze").register_handlers(require("lzextras").lsp)
 
 local key2spec = require("lzextras").key2spec
