@@ -403,6 +403,19 @@ require("lze").load({
 		---@type vim.lsp.ClientConfig
 		lsp = {},
 	},
+	{
+		"ts_query_ls",
+		---@type vim.lsp.ClientConfig
+		lsp = {
+			init_options = {
+				parser_install_directories = {
+					nixCats.vimPackDir
+						.. "/pack/myNeovimGrammars/start/vimplugin-treesitter-grammar-ALL-INCLUDED/parser",
+					nixCats.extra.tree_sitter_orgmode_path .. "/lib/lua/5.1/parser/",
+				},
+			},
+		},
+	},
 })
 
 require("lze").load({

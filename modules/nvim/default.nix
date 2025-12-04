@@ -15,6 +15,7 @@
   flake.modules.homeManager.default =
     {
       config,
+      pkgs,
       ...
     }:
     {
@@ -39,6 +40,7 @@
                 svelte-language-server
                 deno
                 rust-analyzer
+                ts_query_ls
               ];
             };
             python3.libraries = {
@@ -100,6 +102,9 @@
             };
             categories = {
               general = true;
+            };
+            extra = {
+              tree_sitter_orgmode_path = "${pkgs.luajitPackages.tree-sitter-orgmode}";
             };
           };
         };
