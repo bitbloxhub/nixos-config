@@ -369,7 +369,10 @@ require("lze").load({
 			single_file_support = false,
 			---@diagnostic disable-next-line: assign-type-mismatch
 			root_dir = function(bufnr, on_dir)
-				on_dir(vim.fs.root(bufnr, "package.json"))
+				local package_json_root = vim.fs.root(bufnr, "package.json")
+				if package_json_root then
+					on_dir(package_json_root)
+				end
 			end,
 		},
 	},
