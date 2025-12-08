@@ -1,0 +1,70 @@
+{
+  "pins": {
+    "Surfingkeys-declarative": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "bitbloxhub",
+        "repo": "Surfingkeys-declarative"
+      },
+      "branch": "declarative",
+      "submodules": false,
+      "revision": "e9b93994efb36cf90c41717d4e9c4840c02bf176",
+      "url": "https://github.com/bitbloxhub/Surfingkeys-declarative/archive/e9b93994efb36cf90c41717d4e9c4840c02bf176.tar.gz",
+      "hash": "1xzqb7lrnsjbzvcrmzg0amypxd8gxa289a2glpfzjzn38w2q1b1p"
+    },
+    "darkreader-declarative": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "bitbloxhub",
+        "repo": "darkreader-declarative"
+      },
+      "branch": "declarative",
+      "submodules": false,
+      "revision": "c7118f12a11307d2b7cfc96424a02cafef73b9c1",
+      "url": "https://github.com/bitbloxhub/darkreader-declarative/archive/c7118f12a11307d2b7cfc96424a02cafef73b9c1.tar.gz",
+      "hash": "0vjl4gkxddjpk3x02q4d3f3fm3ka35rb9rbzp9xlpv7vbqf1grfg"
+    },
+    "stylus-declarative": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "bitbloxhub",
+        "repo": "stylus-declarative"
+      },
+      "branch": "declarative",
+      "submodules": false,
+      "revision": "d954389fa489f3f1cd0bb56aef25cf2b452aed48",
+      "url": "https://github.com/bitbloxhub/stylus-declarative/archive/d954389fa489f3f1cd0bb56aef25cf2b452aed48.tar.gz",
+      "hash": "16ap5fwh428r21znlgaqkj1zgcif9wvnrx9gj8mv5zaqh04rr7fb"
+    },
+    "userchrome-toggle-extended-2-declarative": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "bitbloxhub",
+        "repo": "userchrome-toggle-extended-2-declarative"
+      },
+      "branch": "declarative",
+      "submodules": false,
+      "revision": "ade2f8f9c003a04cfccc99f16e110359729303c0",
+      "url": "https://github.com/bitbloxhub/userchrome-toggle-extended-2-declarative/archive/ade2f8f9c003a04cfccc99f16e110359729303c0.tar.gz",
+      "hash": "07njkvnzcnhaib72x2krarhf1fjwbypms60810xqkxhsmpvn92xh"
+    },
+    "violentmonkey-declarative": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "bitbloxhub",
+        "repo": "violentmonkey-declarative"
+      },
+      "branch": "declarative",
+      "submodules": false,
+      "revision": "ef3b2102fa07ac8994f56fd79a1b451f7fd85b29",
+      "url": "https://github.com/bitbloxhub/violentmonkey-declarative/archive/ef3b2102fa07ac8994f56fd79a1b451f7fd85b29.tar.gz",
+      "hash": "0ss8v9zg7k47sc213blc8mgx1m2qnv47hg3gcy9cj9ydks9szda7"
+    }
+  },
+  "version": 5
+}

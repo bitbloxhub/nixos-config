@@ -6,12 +6,7 @@
     }:
     let
       userChromeToggleExtensionId = "userchrome-toggle-extended@n2ezr.ru";
-      src = pkgs.fetchFromGitHub {
-        owner = "bitbloxhub";
-        repo = "userchrome-toggle-extended-2-declarative";
-        rev = "ade2f8f9c003a04cfccc99f16e110359729303c0";
-        hash = "sha256-sItk960a9ok7CAgYXa9fXLrgYFZ5ii7Oigpa9u2e0h4=";
-      };
+      src = (import ./npins).userchrome-toggle-extended-2-declarative;
       userchrome-toggle-extended-2-declarative = pkgs.stdenv.mkDerivation {
         inherit src;
         name = "userchrome-toggle-extended-2-declarative";

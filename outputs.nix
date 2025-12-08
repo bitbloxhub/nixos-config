@@ -43,7 +43,7 @@ flake-parts.lib.mkFlake
       ./treefmt.nix
       ./flake-file.nix
       (import-tree ./lib)
-      (import-tree ./modules)
+      ((import-tree.filterNot (nixpkgs.lib.hasSuffix "npins/default.nix")) ./modules)
       ((import-tree.filter (nixpkgs.lib.hasSuffix "default.nix")) ./hosts)
     ];
   }

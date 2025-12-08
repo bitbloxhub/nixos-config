@@ -10,12 +10,7 @@
       ...
     }:
     let
-      src = pkgs.fetchFromGitHub {
-        owner = "bitbloxhub";
-        repo = "darkreader-declarative";
-        rev = "ae1a0684699c0a4604bb6f7240424e42d16aa96f";
-        hash = "sha256-8DYFpVYQJ3o+lrVpROjYERP+lxLzncgLH1pHPyYtlvQ=";
-      };
+      src = (import ./npins).darkreader-declarative;
       npmDeps = pkgs.importNpmLock.buildNodeModules {
         nodejs = pkgs.nodejs_24;
         npmRoot = src;

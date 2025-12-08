@@ -6,16 +6,11 @@
     }:
     let
       violentmonkeyExtensionId = "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}";
-      src = pkgs.fetchFromGitHub {
-        owner = "bitbloxhub";
-        repo = "violentmonkey-declarative";
-        rev = "ba5a25bc7cb32b5b2a1a6a1be375f3ffb4afea95";
-        hash = "sha256-/HS4lMXoY8KXkorQKgpecYC5QSBF6aubpSWzf5cnV7E=";
-      };
+      src = (import ./npins).violentmonkey-declarative;
       yarnDeps = pkgs.fetchYarnDeps {
         inherit src;
         pname = "violentmonkey-yarn-deps";
-        hash = "sha256-O3373btwBNl7ASzhAf7pxSBSv8LwTuWe6HIkInBhLY4=";
+        hash = "sha256-k8kQgo1bDasECRdxs2/Asgc7itV/sB0hbFdpjTXmqvk=";
       };
       violentmonkey-declarative = pkgs.stdenv.mkDerivation {
         inherit src;

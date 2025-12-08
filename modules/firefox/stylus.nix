@@ -11,16 +11,11 @@
     }:
     let
       stylusExtensionId = "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}";
-      src = pkgs.fetchFromGitHub {
-        owner = "bitbloxhub";
-        repo = "stylus-declarative";
-        rev = "da8f092e6658eb20a741e3592a2799861f79cbf0";
-        hash = "sha256-le3hXt6gSesFPliEpQRTmmVz18Vb+V51S5l0Nk1IUmQ=";
-      };
+      src = (import ./npins).stylus-declarative;
       pnpmDeps = pkgs.pnpm.fetchDeps {
         inherit src;
         pname = "stylus-pnpm-deps";
-        hash = "sha256-ua5n5ZBNwUr9PfUy2UKAlC8ao0vzTvXhjUjsiEzPp6w=";
+        hash = "sha256-9ZPH3FucdwRud6ifJPzGAIjIaVbevJI4ryAHha/v2xc=";
         fetcherVersion = 2; # https://nixos.org/manual/nixpkgs/stable/#javascript-pnpm-fetcherVersion
       };
       stylus-declarative = pkgs.stdenv.mkDerivation {

@@ -7,12 +7,7 @@
     let
       # not official but its in my fork
       surfingkeysExtensionId = "surfingkeys@brookhong.github.io";
-      src = pkgs.fetchFromGitHub {
-        owner = "bitbloxhub";
-        repo = "Surfingkeys-declarative";
-        rev = "248bab90685f1d0b5cdf8c11ac0ce4c39089cdc1";
-        hash = "sha256-17aez95vTBYzZQm8KVk8XSTYTgGogQwJIZVwWYWfeIU=";
-      };
+      src = (import ./npins).Surfingkeys-declarative;
       npmDeps = pkgs.importNpmLock.buildNodeModules {
         nodejs = pkgs.nodejs_24;
         npmRoot = src;

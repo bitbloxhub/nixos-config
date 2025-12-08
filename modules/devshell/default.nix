@@ -22,6 +22,8 @@
       make-shells.default = {
         name = "nixos-config";
         packages = [
+          # Used for pinning some non-flake inputs (e.g. my custom Firefox addons)
+          pkgs.npins
           pkgs.nixos-facter
           inputs'.flint.packages.default
         ];

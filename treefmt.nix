@@ -48,6 +48,10 @@
             "modules/astal/**/*-symbolic.svg"
           ];
         };
+
+        settings.global.excludes = [
+          "*/npins/*"
+        ];
       };
     };
 }
