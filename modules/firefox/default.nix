@@ -150,6 +150,7 @@
             "extensions.webextensions.restrictedDomains" = "";
             "userChromeJS.firstRunShown" = true;
             "sidebar.verticalTabs.dragToPinPromo.dismissed" = true;
+            "browser.download.useDownloadDir" = false;
             "browser.uiCustomization.state" = builtins.toJSON {
               placements = {
                 widget-overflow-fixed-list = [ ];
