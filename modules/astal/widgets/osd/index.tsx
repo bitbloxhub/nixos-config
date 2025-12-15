@@ -16,7 +16,7 @@ export function OsdWrapper({
 	currentValue,
 }: {
 	type: string
-	id: string
+	id: Accessor<string>
 	offsets?: Array<{ name: string; value: number }>
 	iconName: string | Accessor<string>
 	minValue: number | Accessor<number>
@@ -26,7 +26,7 @@ export function OsdWrapper({
 	return (
 		<Adw.Clamp
 			$type="named"
-			name={`${type}-${id}`}
+			name={id((id) => `${type}-${id}`)}
 			maximumSize={1}
 			orientation={Gtk.Orientation.VERTICAL}
 		>

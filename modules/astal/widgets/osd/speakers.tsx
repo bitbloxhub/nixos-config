@@ -48,7 +48,10 @@ export default function Speakers({
 				return (
 					<OsdWrapper
 						type="speaker"
-						id={speaker.device.id.toString()}
+						id={createBinding(
+							speaker,
+							"device_id",
+						)((id) => id.toString())}
 						offsets={[
 							{
 								name: "low",

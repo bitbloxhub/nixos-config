@@ -63,7 +63,7 @@ export default function Backlights({
 				return (
 					<OsdWrapper
 						type="brightness"
-						id={backlight.name}
+						id={createState(backlight.name)[0]}
 						offsets={[
 							{
 								name: "low",
