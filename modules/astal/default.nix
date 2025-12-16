@@ -1,6 +1,5 @@
 {
   lib,
-  inputs,
   self,
   ...
 }:
@@ -30,14 +29,16 @@
     {
       config,
       pkgs,
+      inputs',
+      self',
       ...
     }:
     {
       home.packages = lib.mkIf config.my.programs.astal.enable [
-        (inputs.ags.packages.${pkgs.stdenv.hostPlatform.system}.ags.override {
+        (inputs'.ags.packages.ags.override {
           extraPackages = self.lib.agsExtraPackagesForPkgs pkgs;
         })
-        inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.astal-shell
+        self'.packages.astal-shell
       ];
 
       home.file."${config.xdg.dataHome}/astal-shell/icons/" = {
@@ -105,7 +106,7 @@
           pkgs.pnpm_10.configHook
           pkgs.wrapGAppsHook4
           pkgs.gobject-introspection
-          inputs.ags.packages.${pkgs.stdenv.hostPlatform.system}.default
+          inputs'.ags.packages.default
         ];
 
         buildInputs = [

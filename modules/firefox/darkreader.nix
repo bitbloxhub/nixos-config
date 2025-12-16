@@ -1,12 +1,12 @@
 {
   lib,
-  inputs,
   ...
 }:
 {
   flake.modules.homeManager.default =
     {
       pkgs,
+      self',
       ...
     }:
     let
@@ -65,14 +65,10 @@
             lightColorScheme = "default";
             immedateModify = false;
           };
-          disabledFor =
-            (lib.importJSON
-              inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.catppuccin-userstyles-domains
-            )
-            ++ [
-              "github.com"
-              "en.wikipedia.org"
-            ];
+          disabledFor = (lib.importJSON self'.packages.catppuccin-userstyles-domains) ++ [
+            "github.com"
+            "en.wikipedia.org"
+          ];
         };
       };
     };

@@ -1,6 +1,7 @@
 {
   lib,
   inputs,
+  self,
   ...
 }:
 {
@@ -48,8 +49,8 @@
           inputs.betterfox-nix.homeModules.betterfox
           inputs.cosmic-manager.homeManagerModules.cosmic-manager
 
-          inputs.self.modules.generic.default
-          inputs.self.modules.homeManager.default
+          self.modules.generic.default
+          self.modules.homeManager.default
 
           { inherit (config) my; }
         ];

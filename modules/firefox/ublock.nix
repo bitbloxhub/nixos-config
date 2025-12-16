@@ -1,16 +1,12 @@
 {
-  inputs,
-  ...
-}:
-{
   flake.modules.homeManager.default =
     {
-      pkgs,
+      inputs',
       ...
     }:
     {
       programs.firefox.profiles.nix = {
-        extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
+        extensions.packages = with inputs'.firefox-addons.packages; [
           ublock-origin
         ];
       };

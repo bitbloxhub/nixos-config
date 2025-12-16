@@ -1,9 +1,5 @@
 # Provides sane defaults for everything
 {
-  inputs,
-  ...
-}:
-{
   flake.modules.nixos.default =
     {
       pkgs,
@@ -32,12 +28,13 @@
   flake.modules.homeManager.default =
     {
       pkgs,
+      inputs',
       ...
     }:
     {
       home.packages = [
-        inputs.system-manager.packages."${pkgs.stdenv.hostPlatform.system}".default
-        (inputs.deploy-rs.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
+        inputs'.system-manager.packages.default
+        (inputs'.deploy-rs.packages.default.overrideAttrs (old: {
           patches = (old.patches or [ ]) ++ [
             # Fix multiple targets
             (pkgs.fetchurl {

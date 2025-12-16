@@ -1,12 +1,12 @@
 {
   lib,
-  inputs,
   ...
 }:
 {
   flake.modules.homeManager.default =
     {
       pkgs,
+      self',
       ...
     }:
     let
@@ -47,9 +47,7 @@
         "3rdparty".Extensions.${stylusExtensionId} = {
           prefs.patchCsp = true;
           prefs.updateInterval = 0;
-          styles =
-            lib.importJSON
-              inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.catppuccin-userstyles;
+          styles = lib.importJSON self'.packages.catppuccin-userstyles;
         };
       };
     };

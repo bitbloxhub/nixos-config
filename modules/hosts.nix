@@ -3,6 +3,7 @@
   inputs,
   self,
   config,
+  withSystem,
   ...
 }:
 {
@@ -58,16 +59,22 @@
       (
         if (builtins.elem "nixos" classes) then
           lib.nixosSystem {
+            extraSpecialArgs = withSystem config.my.hardware.platform (
+              { inputs', self', ... }:
+              {
+                inherit inputs' self';
+              }
+            );
             modules = [
               inputs.catppuccin.nixosModules.catppuccin
               inputs.home-manager.nixosModules.home-manager
               inputs.niri-flake.nixosModules.niri
               inputs.nixos-facter-modules.nixosModules.facter
 
-              inputs.self.modules.generic.default
-              inputs.self.modules.nixos.default
+              self.modules.generic.default
+              self.modules.nixos.default
 
-              (inputs.self.modules.nixos."host_${config.my.hostname}" or { })
+              (self.modules.nixos."host_${config.my.hostname}" or { })
 
               config
             ];
@@ -83,13 +90,19 @@
       (
         if (builtins.elem "system-manager" classes) then
           inputs.system-manager.lib.makeSystemConfig {
+            extraSpecialArgs = withSystem config.my.hardware.platform (
+              { inputs', self', ... }:
+              {
+                inherit inputs' self';
+              }
+            );
             modules = [
               inputs.nix-system-graphics.systemModules.default
 
-              inputs.self.modules.generic.default
-              inputs.self.modules.systemManager.default
+              self.modules.generic.default
+              self.modules.systemManager.default
 
-              (inputs.self.modules.systemManager."host_${config.my.hostname}" or { })
+              (self.modules.systemManager."host_${config.my.hostname}" or { })
 
               config
             ];
@@ -108,6 +121,12 @@
           if (builtins.elem "home-manager" classes) then
             inputs.home-manager.lib.homeManagerConfiguration {
               pkgs = inputs.nixpkgs.legacyPackages.${config.my.hardware.platform};
+              extraSpecialArgs = withSystem config.my.hardware.platform (
+                { inputs', self', ... }:
+                {
+                  inherit inputs' self';
+                }
+              );
               modules = [
                 inputs.catppuccin.homeModules.catppuccin
                 inputs.nixCats.homeModule
@@ -115,10 +134,10 @@
                 inputs.betterfox-nix.homeModules.betterfox
                 inputs.cosmic-manager.homeManagerModules.cosmic-manager
 
-                inputs.self.modules.generic.default
-                inputs.self.modules.homeManager.default
+                self.modules.generic.default
+                self.modules.homeManager.default
 
-                (inputs.self.modules.systemManager."host_${config.my.hostname}" or { })
+                (self.modules.systemManager."host_${config.my.hostname}" or { })
 
                 config
               ];
