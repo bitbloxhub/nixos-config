@@ -95,31 +95,31 @@
       };
 
       packages.astal-shell = pkgs.stdenv.mkDerivation {
-          inherit pnpmDeps;
+        inherit pnpmDeps;
 
-          name = "astal-shell";
-          src = ./.;
+        name = "astal-shell";
+        src = ./.;
 
-          nativeBuildInputs = [
-            pkgs.nodejs_24
-            pkgs.pnpm_10.configHook
-            pkgs.wrapGAppsHook4
-            pkgs.gobject-introspection
-            inputs.ags.packages.${pkgs.stdenv.hostPlatform.system}.default
-          ];
+        nativeBuildInputs = [
+          pkgs.nodejs_24
+          pkgs.pnpm_10.configHook
+          pkgs.wrapGAppsHook4
+          pkgs.gobject-introspection
+          inputs.ags.packages.${pkgs.stdenv.hostPlatform.system}.default
+        ];
 
-          buildInputs = [
-            pkgs.glib
-            pkgs.gjs
-          ]
-          ++ (self.lib.agsExtraPackagesForPkgs pkgs);
+        buildInputs = [
+          pkgs.glib
+          pkgs.gjs
+        ]
+        ++ (self.lib.agsExtraPackagesForPkgs pkgs);
 
-          installPhase = ''
-            mv style.css style.old.css
-            ${pkgs.esbuild}/bin/esbuild --bundle style.old.css --outfile=style.css --supported:nesting=false
-            mkdir -p $out/bin
-            ags bundle app.ts $out/bin/astal-shell
-          '';
-        };
+        installPhase = ''
+          mv style.css style.old.css
+          ${pkgs.esbuild}/bin/esbuild --bundle style.old.css --outfile=style.css --supported:nesting=false
+          mkdir -p $out/bin
+          ags bundle app.ts $out/bin/astal-shell
+        '';
+      };
     };
 }
