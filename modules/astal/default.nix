@@ -33,9 +33,18 @@
       ...
     }:
     let
-      npmDeps = pkgs.fetchNpmDeps {
+      pnpmDeps = pkgs.pnpm.fetchDeps {
+        pname = "astal-shell-pnpm-deps";
         src = ./.;
-        hash = "sha256-3hOZDP7m/YsNZFMLUNB/2mHJYiBuPAzuLxO4Vfl+NSU=";
+
+        fetcherVersion = 2;
+        hash = "sha256-jQ9HOO8Cjh66C0ElatYmikTfMenjk5c5vANfZ4q7I2k=";
+
+        # From https://github.com/retrozinndev/colorshell/blob/babfd11/nix/colorshell.nix#L102
+        # fetcher version 2 fails if there are no *-exec files in the output
+        preFixup = ''
+          touch $out/.dummy-exec
+        '';
       };
     in
     {
@@ -44,12 +53,14 @@
           extraPackages = self.lib.agsExtraPackagesForPkgs pkgs;
         })
         (pkgs.stdenv.mkDerivation {
-          name = "astal-shell";
+          inherit pnpmDeps;
 
+          name = "astal-shell";
           src = ./.;
 
           nativeBuildInputs = [
             pkgs.nodejs_24
+            pkgs.pnpm.configHook
             pkgs.wrapGAppsHook4
             pkgs.gobject-introspection
             inputs.ags.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -62,13 +73,6 @@
           ++ (self.lib.agsExtraPackagesForPkgs pkgs);
 
           installPhase = ''
-            cp -r ${npmDeps} $TMPDIR/npmDeps
-            chmod -R 700 "$TMPDIR/npmDeps"
-            export npm_config_cache=$TMPDIR/npmDeps
-            npm i --ignore-scripts
-            mkdir -p $out/node_modules/astal
-            cp -r node_modules/* $out/node_modules/
-            cp -r ${inputs.astal}/lang/gjs/src/* $out/node_modules/astal/
             mv style.css style.old.css
             ${pkgs.esbuild}/bin/esbuild --bundle style.old.css --outfile=style.css --supported:nesting=false
             mkdir -p $out/bin

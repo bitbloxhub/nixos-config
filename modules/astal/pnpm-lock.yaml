@@ -1,0 +1,54 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      '@catppuccin/palette':
+        specifier: ^1.7.1
+        version: 1.7.1
+      ags:
+        specifier: github:Aylur/ags
+        version: https://codeload.github.com/Aylur/ags/tar.gz/e169694390548dfd38ff40f1ef2163d6c3ffe3ea(gnim@1.9.0)
+      fzf:
+        specifier: ^0.5.2
+        version: 0.5.2
+      gnim:
+        specifier: ^1.8.2
+        version: 1.9.0
+
+packages:
+
+  '@catppuccin/palette@1.7.1':
+    resolution: {integrity: sha512-aRc1tbzrevOTV7nFTT9SRdF26w/MIwT4Jwt4fDMc9itRZUDXCuEDBLyz4TQMlqO9ZP8mf5Hu4Jr6D03NLFc6Gw==}
+
+  ags@https://codeload.github.com/Aylur/ags/tar.gz/e169694390548dfd38ff40f1ef2163d6c3ffe3ea:
+    resolution: {tarball: https://codeload.github.com/Aylur/ags/tar.gz/e169694390548dfd38ff40f1ef2163d6c3ffe3ea}
+    version: 3.1.0
+    engines: {gjs: '>=1.79.0'}
+    os: [linux]
+    peerDependencies:
+      gnim: ^1.9.0
+
+  fzf@0.5.2:
+    resolution: {integrity: sha512-Tt4kuxLXFKHy8KT40zwsUPUkg1CrsgY25FxA2U/j/0WgEDCk3ddc/zLTCCcbSHX9FcKtLuVaDGtGE/STWC+j3Q==}
+
+  gnim@1.9.0:
+    resolution: {integrity: sha512-ubtl+BkcHFYImLQN/dg7XtM6VpOMZy1KlXOF+W/QlBVFG+c07lf+hC+bAkPqkyLwL1YUEIoLtk7iXlIuhbOYPA==}
+    engines: {gjs: '>=1.79.0'}
+
+snapshots:
+
+  '@catppuccin/palette@1.7.1': {}
+
+  ags@https://codeload.github.com/Aylur/ags/tar.gz/e169694390548dfd38ff40f1ef2163d6c3ffe3ea(gnim@1.9.0):
+    dependencies:
+      gnim: 1.9.0
+
+  fzf@0.5.2: {}
+
+  gnim@1.9.0: {}

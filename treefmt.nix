@@ -51,6 +51,7 @@
 
         settings.global.excludes = [
           "*/npins/*"
+          "**/pnpm-lock.yaml"
         ];
       };
     };
