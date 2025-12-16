@@ -33,7 +33,7 @@
       ...
     }:
     let
-      pnpmDeps = pkgs.pnpm.fetchDeps {
+      pnpmDeps = pkgs.pnpm_10.fetchDeps {
         pname = "astal-shell-pnpm-deps";
         src = ./.;
 
@@ -60,7 +60,7 @@
 
           nativeBuildInputs = [
             pkgs.nodejs_24
-            pkgs.pnpm.configHook
+            pkgs.pnpm_10.configHook
             pkgs.wrapGAppsHook4
             pkgs.gobject-introspection
             inputs.ags.packages.${pkgs.stdenv.hostPlatform.system}.default
