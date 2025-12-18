@@ -17,8 +17,8 @@
     }:
     {
       programs.zoxide = {
-        enable = config.my.programs.zoxide.enable;
-        enableNushellIntegration = config.my.programs.zoxide.enableNushellIntegration;
+        inherit (config.my.programs.zoxide) enable;
+        inherit (config.my.programs.zoxide) enableNushellIntegration;
       };
     };
 }
