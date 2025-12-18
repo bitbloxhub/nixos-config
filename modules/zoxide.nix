@@ -16,7 +16,9 @@
       ...
     }:
     {
-      programs.zoxide.enable = config.my.programs.zoxide.enable;
-      programs.zoxide.enableNushellIntegration = config.my.programs.atuin.enableNushellIntegration;
+      programs.zoxide = {
+        enable = config.my.programs.zoxide.enable;
+        enableNushellIntegration = config.my.programs.zoxide.enableNushellIntegration;
+      };
     };
 }
