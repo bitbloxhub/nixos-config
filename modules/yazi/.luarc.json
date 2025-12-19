@@ -1,0 +1,14 @@
+{
+	"$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+	"runtime": {
+		"version": "Lua 5.4"
+	},
+	"workspace": {
+		"library": [
+			"~/.config/yazi/yazi-plugin/preset",
+			"~/.config/yazi/yazi-plugin/preset/components",
+			"~/.config/yazi/yazi-plugin/preset/plugins",
+			"~/.config/yazi/plugins"
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+  "pins": {
+    "relative-motions": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "dedukun",
+        "repo": "relative-motions.yazi"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "a603d9ea924dfc0610bcf9d3129e7cba605d4501",
+      "url": "https://github.com/dedukun/relative-motions.yazi/archive/a603d9ea924dfc0610bcf9d3129e7cba605d4501.tar.gz",
+      "hash": "1kk8my0apb4ahp60krqalccp63crggh8jkvi0zdhsf26bkyv2bpn"
+    },
+    "yazi-plugins": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "yazi-rs",
+        "repo": "plugins"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "19dc890e33b8922eb1a3a165e685436ec4ac0a59",
+      "url": "https://github.com/yazi-rs/plugins/archive/19dc890e33b8922eb1a3a165e685436ec4ac0a59.tar.gz",
+      "hash": "06j1r6hiqma4ghlyyi2rpgj44kbzcggi9kj37l7d3sn69sgpns8y"
+    }
+  },
+  "version": 5
+}

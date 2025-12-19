@@ -90,5 +90,6 @@ in
       catppuccin.accent = config.my.themes.catppuccin.accent;
       catppuccin.cursors.enable = config.my.themes.catppuccin.enable;
       catppuccin.cursors.accent = config.my.themes.catppuccin.cursorAccent;
+      catppuccin.glamour.enable = true;
     };
 }
