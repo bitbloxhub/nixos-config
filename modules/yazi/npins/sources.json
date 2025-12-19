@@ -4,14 +4,14 @@
       "type": "Git",
       "repository": {
         "type": "GitHub",
-        "owner": "dedukun",
+        "owner": "bitbloxhub",
         "repo": "relative-motions.yazi"
       },
-      "branch": "main",
+      "branch": "transparent-bg",
       "submodules": false,
-      "revision": "a603d9ea924dfc0610bcf9d3129e7cba605d4501",
-      "url": "https://github.com/dedukun/relative-motions.yazi/archive/a603d9ea924dfc0610bcf9d3129e7cba605d4501.tar.gz",
-      "hash": "1kk8my0apb4ahp60krqalccp63crggh8jkvi0zdhsf26bkyv2bpn"
+      "revision": "e8a723b4af0a7824d08ffa2e992e885cbc452cb4",
+      "url": "https://github.com/bitbloxhub/relative-motions.yazi/archive/e8a723b4af0a7824d08ffa2e992e885cbc452cb4.tar.gz",
+      "hash": "04drcd2k4y5887nwdrwfyw2xp5r6p97m6y6fyc546qka4qjw8ijy"
     },
     "yazi-plugins": {
       "type": "Git",
