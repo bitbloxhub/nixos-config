@@ -14,6 +14,7 @@
     };
     flake-file.url = "github:vic/flake-file";
     import-tree.url = "github:vic/import-tree";
+    flake-aspects.url = "github:vic/flake-aspects";
 
     flint = {
       url = "github:NotAShelf/flint";

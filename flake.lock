@@ -238,6 +238,21 @@
         "type": "gitlab"
       }
     },
+    "flake-aspects": {
+      "locked": {
+        "lastModified": 1766081176,
+        "narHash": "sha256-JrsuNSIEXPS3AiIxuWZw+sJ2Td6ni1OkqbW6mO/F4Rs=",
+        "owner": "vic",
+        "repo": "flake-aspects",
+        "rev": "d0a226c84be2900d307aa1896e4e2c6e451844b2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "flake-aspects",
+        "type": "github"
+      }
+    },
     "flake-file": {
       "locked": {
         "lastModified": 1763255910,
@@ -632,6 +647,7 @@
         "crane": "crane",
         "deploy-rs": "deploy-rs",
         "firefox-addons": "firefox-addons",
+        "flake-aspects": "flake-aspects",
         "flake-file": "flake-file",
         "flake-firefox-nightly": "flake-firefox-nightly",
         "flake-parts": "flake-parts",

@@ -1,5 +1,7 @@
 {
+  config,
   self,
+  lib,
   ...
 }:
 {
@@ -9,12 +11,21 @@
     };
   };
 
-  flake.modules.homeManager.default =
+  flake.aspects.user =
     {
-      config,
+      aspect,
       ...
     }:
     {
-      programs.fd.enable = config.my.programs.fd.enable;
+      homeManager = { };
+      _.fd.homeManager =
+        {
+          config,
+          ...
+        }:
+        {
+          programs.fd.enable = config.my.programs.fd.enable;
+        };
+      includes = [ aspect._.fd ];
     };
 }

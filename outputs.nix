@@ -1,5 +1,6 @@
 inputs@{
   flake-parts,
+  flake-aspects,
   treefmt-nix,
   git-hooks,
   actions-nix,
@@ -23,6 +24,7 @@ flake-parts.lib.mkFlake
 
     imports = [
       flake-parts.flakeModules.modules
+      flake-aspects.flakeModule
       treefmt-nix.flakeModule
       git-hooks.flakeModule
       actions-nix.flakeModules.default

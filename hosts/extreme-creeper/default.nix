@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   ...
 }:
@@ -9,6 +10,12 @@ let
   };
 in
 {
+  flake.aspects."host_extreme-creeper" = {
+    homeManager = { };
+    includes = with config.flake.aspects; [
+      user._.fd
+    ];
+  };
   hosts."extreme-creeper" = {
     classes = [
       "system-manager"

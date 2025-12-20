@@ -73,6 +73,7 @@
 
               self.modules.generic.default
               self.modules.nixos.default
+              # self.modules.nixos.user.fd
 
               (self.modules.nixos."host_${config.my.hostname}" or { })
 
