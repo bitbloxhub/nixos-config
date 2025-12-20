@@ -137,7 +137,7 @@
                 self.modules.generic.default
                 self.modules.homeManager.default
 
-                (self.modules.systemManager."host_${config.my.hostname}" or { })
+                (self.modules.homeManager."host_${config.my.hostname}" or { })
 
                 config
               ];
