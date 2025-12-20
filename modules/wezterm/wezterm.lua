@@ -90,7 +90,7 @@ local function walk_pane_tree(pane_tree, modifier)
 end
 
 -- Better session restore for niri
-if os.getenv("XDG_CURRENT_DESKTOP") == "niri" then
+if os.getenv("XDG_CURRENT_DESKTOP") == "niri" and not os.getenv("TERMFILECHOOSER") then
 	--- Save the workspace index for niri in the window data
 	---@param current_state window_state
 	---@param window MuxWindow
@@ -159,21 +159,25 @@ resurrect.tab_state.save_hook = function(current_state, tab)
 	return current_state
 end
 
-resurrect.state_manager.periodic_save({
-	interval_seconds = 60,
-	save_workspaces = true,
-	save_windows = true,
-	save_tabs = true,
-})
-wezterm.on("gui-startup", function()
-	local opts = {
-		relative = true,
-		restore_text = true,
-		on_pane_restore = resurrect.tab_state.default_on_pane_restore,
-	}
-	local state = resurrect.state_manager.load_state("default", "workspace")
-	resurrect.workspace_state.restore_workspace(state, opts)
-end)
+if not os.getenv("TERMFILECHOOSER") then
+	resurrect.state_manager.periodic_save({
+		interval_seconds = 60,
+		save_workspaces = true,
+		save_windows = true,
+		save_tabs = true,
+	})
+	wezterm.on("gui-startup", function()
+		local opts = {
+			relative = true,
+			restore_text = true,
+			on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+		}
+		local state = resurrect.state_manager.load_state("default", "workspace")
+		resurrect.workspace_state.restore_workspace(state, opts)
+	end)
+else
+	config.hide_tab_bar_if_only_one_tab = true
+end
 
 config.default_prog = { "nu" }
 config.color_scheme = "Catppuccin Mocha"
