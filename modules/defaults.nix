@@ -1,5 +1,14 @@
 # Provides sane defaults for everything
 {
+  den,
+  ...
+}:
+{
+  den.default.includes = [
+    den._.inputs'
+    den._.self'
+  ];
+
   flake.modules.nixos.default =
     {
       pkgs,
@@ -25,7 +34,7 @@
       system.stateVersion = "23.11";
     };
 
-  flake.modules.homeManager.default =
+  den.default.homeManager =
     {
       pkgs,
       inputs',

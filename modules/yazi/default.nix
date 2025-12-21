@@ -1,7 +1,6 @@
 {
   lib,
   inputs,
-  self,
   ...
 }:
 {
@@ -13,14 +12,7 @@
     };
   };
 
-  flake.modules.generic.default = {
-    options.my.programs.yazi = {
-      enable = self.lib.mkDisableOption "Yazi";
-      enableNushellIntegration = self.lib.mkDisableOption "Yazi Nushell integration";
-    };
-  };
-
-  flake.modules.homeManager.default =
+  bitbloxhub.yazi.homeManager =
     {
       config,
       pkgs,
@@ -31,7 +23,7 @@
       npins = import ./npins;
     in
     {
-      home.packages = lib.mkIf config.my.programs.yazi.enable [
+      home.packages = [
         # For drag and drop
         pkgs.ripdrag
         # Markdown preview
@@ -39,8 +31,8 @@
       ];
 
       programs.yazi = {
-        inherit (config.my.programs.yazi) enable;
-        inherit (config.my.programs.yazi) enableNushellIntegration;
+        enable = true;
+        enableNushellIntegration = true;
         package = inputs'.yazi.packages.default;
         plugins = {
           inherit (npins) relative-motions;
@@ -179,7 +171,7 @@
       };
 
       xdg.configFile = {
-        "yazi/yazi-plugin".source = lib.mkIf config.my.programs.yazi.enable "${inputs.yazi}/yazi-plugin";
+        "yazi/yazi-plugin".source = "${inputs.yazi}/yazi-plugin";
 
         "yazi/flavors/catppuccin.yazi/flavor.toml".source =
           with config.catppuccin;

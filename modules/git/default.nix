@@ -1,23 +1,11 @@
 {
-  lib,
-  self,
-  ...
-}:
-{
-  flake.modules.generic.default = {
-    options.my.programs.git = {
-      enable = self.lib.mkDisableOption "git";
-    };
-  };
-
-  flake.modules.homeManager.default =
+  bitbloxhub.git.homeManager =
     {
-      config,
       pkgs,
       ...
     }:
     {
-      home.packages = lib.mkIf config.my.programs.git.enable [
+      home.packages = [
         (pkgs.git-branchless.overrideAttrs (
           let
             src = pkgs.fetchFromGitHub {
@@ -39,7 +27,7 @@
         ))
       ];
 
-      programs.git.enable = config.my.programs.git.enable;
+      programs.git.enable = true;
       programs.git.package = pkgs.git.overrideAttrs (old: {
         patches =
           (old.patches or [ ])

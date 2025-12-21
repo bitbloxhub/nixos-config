@@ -54,6 +54,7 @@
       url = "github:HeitorAugustoLN/cosmic-manager";
     };
     crane.url = "github:ipetkov/crane";
+    den.url = "github:vic/den";
     deploy-rs = {
       inputs = {
         flake-compat.follows = "";
@@ -66,6 +67,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
     };
+    flake-aspects.url = "github:vic/flake-aspects";
     flake-file.url = "github:vic/flake-file";
     flake-firefox-nightly = {
       inputs = {

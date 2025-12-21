@@ -1,26 +1,22 @@
 {
   inputs,
-  self,
   ...
 }:
 {
   flake-file.inputs.nixCats.url = "github:BirdeeHub/nixCats-nvim";
 
-  flake.modules.generic.default = {
-    options.my.programs.nvim = {
-      enable = self.lib.mkDisableOption "Neovim";
-    };
-  };
-
-  flake.modules.homeManager.default =
+  bitbloxhub.nvim.homeManager =
     {
-      config,
       pkgs,
       ...
     }:
     {
+      imports = [
+        inputs.nixCats.homeModule
+      ];
+
       nixCats = {
-        inherit (config.my.programs.nvim) enable;
+        enable = true;
         nixpkgs_version = inputs.nixpkgs;
         luaPath = ./.;
         packageNames = [ "nvim" ];

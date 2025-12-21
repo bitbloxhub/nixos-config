@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.default =
+  bitbloxhub.firefox._.surfingkeys.homeManager =
     {
       pkgs,
       ...

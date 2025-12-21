@@ -1,5 +1,6 @@
 {
   lib,
+  den,
   ...
 }:
 {
@@ -36,4 +37,15 @@
     {
       facter.reportPath = config.my.hardware.facter-report;
     };
+
+  bitbloxhub.nvidia = {
+    includes = [
+      (den._.unfree [
+        "cuda_cccl"
+        "cuda_cudart"
+        "libcublas"
+        "cuda_nvcc"
+      ])
+    ];
+  };
 }

@@ -1,23 +1,11 @@
 {
-  lib,
-  self,
-  ...
-}:
-{
-  flake.modules.generic.default = {
-    options.my.programs.delta = {
-      enable = self.lib.mkDisableOption "delta";
-    };
-  };
-
-  flake.modules.homeManager.default =
+  bitbloxhub.delta.homeManager =
     {
-      config,
       pkgs,
       ...
     }:
     {
-      home.packages = lib.mkIf config.my.programs.delta.enable [
+      home.packages = [
         pkgs.delta
       ];
     };

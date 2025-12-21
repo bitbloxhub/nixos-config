@@ -1,7 +1,6 @@
 {
   lib,
   inputs,
-  self,
   ...
 }:
 let
@@ -43,12 +42,6 @@ in
     };
   };
 
-  flake.modules.generic.default = {
-    options.my.programs.niri = {
-      enable = self.lib.mkDisableOption "Niri";
-    };
-  };
-
   flake.modules.nixos.default =
     {
       config,
@@ -62,20 +55,24 @@ in
       };
     };
 
-  flake.modules.homeManager.default =
+  bitbloxhub.niri.homeManager =
     {
-      config,
+      pkgs,
       ...
     }:
     {
+      imports = [
+        inputs.niri-flake.homeModules.niri
+      ];
+
       programs.niri = {
-        inherit (config.my.programs.niri) enable;
-        package = (niriPkgsForSystem config.my.hardware.platform).niri-unstable;
+        enable = true;
+        package = (niriPkgsForSystem pkgs.stdenv.hostPlatform.system).niri-unstable;
         settings = {
           prefer-no-csd = true;
           xwayland-satellite = {
             enable = true;
-            path = lib.getExe (niriPkgsForSystem config.my.hardware.platform).xwayland-satellite-unstable;
+            path = lib.getExe (niriPkgsForSystem pkgs.stdenv.hostPlatform.system).xwayland-satellite-unstable;
           };
           screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
           layout = {

@@ -192,6 +192,21 @@
         "type": "github"
       }
     },
+    "den": {
+      "locked": {
+        "lastModified": 1766081768,
+        "narHash": "sha256-8Ea1DW3YZHifezfdEFHWEIpZBNKvEL+3iFOEcl3eFBU=",
+        "owner": "vic",
+        "repo": "den",
+        "rev": "7271da18c60ab4d7c275ecaab480d29729f05d17",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "den",
+        "type": "github"
+      }
+    },
     "deploy-rs": {
       "inputs": {
         "flake-compat": [],
@@ -236,6 +251,21 @@
         "owner": "rycee",
         "repo": "nur-expressions",
         "type": "gitlab"
+      }
+    },
+    "flake-aspects": {
+      "locked": {
+        "lastModified": 1766081176,
+        "narHash": "sha256-JrsuNSIEXPS3AiIxuWZw+sJ2Td6ni1OkqbW6mO/F4Rs=",
+        "owner": "vic",
+        "repo": "flake-aspects",
+        "rev": "d0a226c84be2900d307aa1896e4e2c6e451844b2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "flake-aspects",
+        "type": "github"
       }
     },
     "flake-file": {
@@ -630,8 +660,10 @@
         "catppuccin-userstyles": "catppuccin-userstyles",
         "cosmic-manager": "cosmic-manager",
         "crane": "crane",
+        "den": "den",
         "deploy-rs": "deploy-rs",
         "firefox-addons": "firefox-addons",
+        "flake-aspects": "flake-aspects",
         "flake-file": "flake-file",
         "flake-firefox-nightly": "flake-firefox-nightly",
         "flake-parts": "flake-parts",

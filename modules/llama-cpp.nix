@@ -1,26 +1,32 @@
 {
   lib,
-  self,
   ...
 }:
 {
-  flake.modules.generic.default = {
-    options.my.programs.llama-cpp = {
-      enable = self.lib.mkDisableOption "llama.cpp";
-    };
+  flake.modules.generic.aaaa = {
+    isNvidia = lib.mkEnableOption "Nvidia";
   };
 
-  flake.modules.homeManager.default =
-    {
-      config,
-      pkgs,
-      ...
-    }:
-    {
-      home.packages = lib.mkIf config.my.programs.llama-cpp.enable [
-        (pkgs.llama-cpp.override {
-          cudaSupport = config.my.hardware.isNvidia;
-        })
-      ];
-    };
+  bitbloxhub.ai._.llama-cpp = cuda: {
+    includes =
+      if cuda then
+        (lib.traceVal [
+          {
+            homeManager =
+              {
+                pkgs,
+                ...
+              }:
+              {
+                home.packages = [
+                  (pkgs.llama-cpp.override {
+                    cudaSupport = cuda;
+                  })
+                ];
+              };
+          }
+        ])
+      else
+        [ ];
+  };
 }

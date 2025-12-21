@@ -3,7 +3,7 @@
   ...
 }:
 {
-  flake.modules.homeManager.default =
+  bitbloxhub.firefox._.stylus.homeManager =
     {
       pkgs,
       self',

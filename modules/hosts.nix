@@ -73,6 +73,7 @@
 
               self.modules.generic.default
               self.modules.nixos.default
+              # self.modules.nixos.user.fd
 
               (self.modules.nixos."host_${config.my.hostname}" or { })
 
@@ -112,40 +113,40 @@
       )
     ) config.hosts;
 
-    flake.homeConfigurations = lib.mapAttrs' (
-      _:
-      { classes, config, ... }:
-      {
-        name = "${config.my.user.username}@${config.my.hostname}";
-        value =
-          if (builtins.elem "home-manager" classes) then
-            inputs.home-manager.lib.homeManagerConfiguration {
-              pkgs = inputs.nixpkgs.legacyPackages.${config.my.hardware.platform};
-              extraSpecialArgs = withSystem config.my.hardware.platform (
-                { inputs', self', ... }:
-                {
-                  inherit inputs' self';
-                }
-              );
-              modules = [
-                inputs.catppuccin.homeModules.catppuccin
-                inputs.nixCats.homeModule
-                inputs.niri-flake.homeModules.niri
-                inputs.betterfox-nix.homeModules.betterfox
-                inputs.cosmic-manager.homeManagerModules.cosmic-manager
-
-                self.modules.generic.default
-                self.modules.homeManager.default
-
-                (self.modules.homeManager."host_${config.my.hostname}" or { })
-
-                config
-              ];
-            }
-          else
-            null;
-      }
-    ) config.hosts;
+    # flake.homeConfigurations = lib.mapAttrs' (
+    #   _:
+    #   { classes, config, ... }:
+    #   {
+    #     name = "${config.my.user.username}@${config.my.hostname}";
+    #     value =
+    #       if (builtins.elem "home-manager" classes) then
+    #         inputs.home-manager.lib.homeManagerConfiguration {
+    #           pkgs = inputs.nixpkgs.legacyPackages.${config.my.hardware.platform};
+    #           extraSpecialArgs = withSystem config.my.hardware.platform (
+    #             { inputs', self', ... }:
+    #             {
+    #               inherit inputs' self';
+    #             }
+    #           );
+    #           modules = [
+    #             inputs.catppuccin.homeModules.catppuccin
+    #             inputs.nixCats.homeModule
+    #             inputs.niri-flake.homeModules.niri
+    #             inputs.betterfox-nix.homeModules.betterfox
+    #             inputs.cosmic-manager.homeManagerModules.cosmic-manager
+    #
+    #             self.modules.generic.default
+    #             self.modules.homeManager.default
+    #
+    #             (self.modules.homeManager."host_${config.my.hostname}" or { })
+    #
+    #             config
+    #           ];
+    #         }
+    #       else
+    #         null;
+    #   }
+    # ) config.hosts;
 
     flake.deploy = {
       magicRollback = false;

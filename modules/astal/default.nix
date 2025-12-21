@@ -1,5 +1,4 @@
 {
-  lib,
   self,
   ...
 }:
@@ -19,13 +18,7 @@
     };
   };
 
-  flake.modules.generic.default = {
-    options.my.programs.astal = {
-      enable = self.lib.mkDisableOption "Astal shell";
-    };
-  };
-
-  flake.modules.homeManager.default =
+  bitbloxhub.astal-shell.homeManager =
     {
       config,
       pkgs,
@@ -34,7 +27,7 @@
       ...
     }:
     {
-      home.packages = lib.mkIf config.my.programs.astal.enable [
+      home.packages = [
         (inputs'.ags.packages.ags.override {
           extraPackages = self.lib.agsExtraPackagesForPkgs pkgs;
         })
@@ -47,7 +40,7 @@
       };
 
       programs.niri.settings = {
-        spawn-at-startup = lib.mkIf config.my.programs.astal.enable [
+        spawn-at-startup = [
           {
             command = [
               "astal-shell"

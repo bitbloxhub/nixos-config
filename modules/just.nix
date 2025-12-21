@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.default =
+  den.aspects.sjust.homeManager =
     {
       pkgs,
       ...

@@ -1,6 +1,6 @@
 {
   # From https://github.com/nix-community/home-manager/issues/4922#issuecomment-3618435885
-  flake.modules.homeManager.default =
+  bitbloxhub.hm-systemd-packages.homeManager =
     {
       config,
       pkgs,

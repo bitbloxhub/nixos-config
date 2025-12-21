@@ -1,5 +1,7 @@
 {
   inputs,
+  den,
+  bitbloxhub,
   ...
 }:
 let
@@ -9,10 +11,39 @@ let
   };
 in
 {
+  den.aspects."jonahgam@extreme-creeper" = {
+    homeManager = {
+      home.username = "jonahgam";
+      home.homeDirectory = "/home/jonahgam";
+    };
+    includes = with bitbloxhub; [
+      fd
+      nvim
+      nushell
+      starship
+      (theming._.catppuccin "mocha" "mauve" "dark")
+      astal-shell
+      niri
+      atuin
+      firefox
+      yazi
+      zoxide
+      git
+      delta
+      wezterm
+      xdg-desktop-portal
+      bat
+      den.aspects.sjust
+      direnv
+      nvidia
+      (ai._.llama-cpp true)
+    ];
+  };
+  den.homes.x86_64-linux."jonahgam@extreme-creeper" = { };
   hosts."extreme-creeper" = {
     classes = [
       "system-manager"
-      "home-manager"
+      # "home-manager"
     ];
     config = {
       my.user.username = "jonahgam";
