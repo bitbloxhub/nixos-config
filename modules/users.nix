@@ -30,6 +30,10 @@
       ...
     }:
     {
+      imports = [
+        inputs.home-manager.nixosModules.home-manager
+      ];
+
       users.mutableUsers = false;
       users.users.root.hashedPassword = "!";
       users.users.${config.my.user.username} = {
@@ -43,12 +47,6 @@
       home-manager.sharedModules = lib.mkForce [ ];
       home-manager.users.${config.my.user.username} = {
         imports = [
-          inputs.catppuccin.homeModules.catppuccin
-          inputs.nixCats.homeModule
-          inputs.niri-flake.homeModules.niri
-          inputs.betterfox-nix.homeModules.betterfox
-          inputs.cosmic-manager.homeManagerModules.cosmic-manager
-
           self.modules.generic.default
           self.modules.homeManager.default
 

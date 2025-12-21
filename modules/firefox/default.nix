@@ -1,5 +1,6 @@
 {
   lib,
+  inputs,
   self,
   ...
 }:
@@ -49,6 +50,10 @@
       };
     in
     {
+      imports = [
+        inputs.betterfox-nix.homeModules.betterfox
+      ];
+
       my.allowedUnfreePackages = [
         "firefox-nightly-bin"
         "firefox-nightly"

@@ -1,5 +1,6 @@
 {
   lib,
+  inputs,
   ...
 }:
 {
@@ -34,6 +35,10 @@
       ...
     }:
     {
+      imports = [
+        inputs.nixos-facter-modules.nixosModules.facter
+      ];
+
       facter.reportPath = config.my.hardware.facter-report;
     };
 }

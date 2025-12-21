@@ -1,5 +1,6 @@
 {
   lib,
+  inputs,
   ...
 }:
 {
@@ -25,6 +26,10 @@
       ...
     }:
     {
+      imports = [
+        inputs.nix-system-graphics.systemModules.default
+      ];
+
       system-graphics = {
         inherit (config.my.nix-system-graphics) enable;
         package = config.my.nix-system-graphics.driver;

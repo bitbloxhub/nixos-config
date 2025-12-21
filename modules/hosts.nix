@@ -66,11 +66,6 @@
               }
             );
             modules = [
-              inputs.catppuccin.nixosModules.catppuccin
-              inputs.home-manager.nixosModules.home-manager
-              inputs.niri-flake.nixosModules.niri
-              inputs.nixos-facter-modules.nixosModules.facter
-
               self.modules.generic.default
               self.modules.nixos.default
 
@@ -97,8 +92,6 @@
               }
             );
             modules = [
-              inputs.nix-system-graphics.systemModules.default
-
               self.modules.generic.default
               self.modules.systemManager.default
 
@@ -128,12 +121,6 @@
                 }
               );
               modules = [
-                inputs.catppuccin.homeModules.catppuccin
-                inputs.nixCats.homeModule
-                inputs.niri-flake.homeModules.niri
-                inputs.betterfox-nix.homeModules.betterfox
-                inputs.cosmic-manager.homeManagerModules.cosmic-manager
-
                 self.modules.generic.default
                 self.modules.homeManager.default
 

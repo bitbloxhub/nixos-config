@@ -1,5 +1,6 @@
 {
   lib,
+  inputs,
   self,
   ...
 }:
@@ -74,6 +75,10 @@ in
       ...
     }:
     {
+      imports = [
+        inputs.catppuccin.nixosModules.catppuccin
+      ];
+
       catppuccin.enable = config.my.themes.catppuccin.enable;
       catppuccin.flavor = config.my.themes.catppuccin.flavor;
       catppuccin.accent = config.my.themes.catppuccin.accent;
@@ -85,11 +90,19 @@ in
       ...
     }:
     {
-      catppuccin.enable = config.my.themes.catppuccin.enable;
-      catppuccin.flavor = config.my.themes.catppuccin.flavor;
-      catppuccin.accent = config.my.themes.catppuccin.accent;
-      catppuccin.cursors.enable = config.my.themes.catppuccin.enable;
-      catppuccin.cursors.accent = config.my.themes.catppuccin.cursorAccent;
-      catppuccin.glamour.enable = true;
+      imports = [
+        inputs.catppuccin.homeModules.catppuccin
+      ];
+
+      catppuccin = {
+        inherit (config.my.themes.catppuccin) enable;
+        inherit (config.my.themes.catppuccin) flavor;
+        inherit (config.my.themes.catppuccin) accent;
+        cursors = {
+          inherit (config.my.themes.catppuccin) enable;
+          accent = config.my.themes.catppuccin.cursorAccent;
+        };
+        glamour.enable = true;
+      };
     };
 }

@@ -1,4 +1,5 @@
 {
+  inputs,
   self,
   ...
 }:
@@ -24,6 +25,10 @@
       ...
     }:
     {
+      imports = [
+        inputs.cosmic-manager.homeManagerModules.cosmic-manager
+      ];
+
       wayland.desktopManager.cosmic.enable = config.my.desktops.cosmic.enable;
     };
 }

@@ -19,6 +19,10 @@
       ...
     }:
     {
+      imports = [
+        inputs.nixCats.homeModule
+      ];
+
       nixCats = {
         inherit (config.my.programs.nvim) enable;
         nixpkgs_version = inputs.nixpkgs;

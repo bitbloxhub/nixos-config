@@ -55,6 +55,10 @@ in
       ...
     }:
     {
+      imports = [
+        inputs.niri-flake.nixosModules.niri
+      ];
+
       niri-flake.cache.enable = false; # I enable this in ./nix.nix.
       programs.niri = {
         inherit (config.my.programs.niri) enable;
@@ -68,6 +72,10 @@ in
       ...
     }:
     {
+      imports = [
+        inputs.niri-flake.homeModules.niri
+      ];
+
       programs.niri = {
         inherit (config.my.programs.niri) enable;
         package = (niriPkgsForSystem config.my.hardware.platform).niri-unstable;
