@@ -106,11 +106,11 @@ in
         glamour.enable = true;
       };
 
-      dconf.settings."org/gnome/desktop/interface" = {
+      dconf.settings."org/gnome/desktop/interface" = lib.mkIf config.my.themes.catppuccin.enable {
         color-scheme = "prefer-dark";
       };
 
-      gtk = {
+      gtk = lib.mkIf config.my.themes.catppuccin.enable {
         enable = true;
         theme = {
           package = pkgs.magnetic-catppuccin-gtk;
