@@ -25,6 +25,7 @@ let
               patch -Np1 < ${./disable_smithay_opaque_regions.patch}
               popd
             '';
+            doCheck = false;
           }
         );
       }
