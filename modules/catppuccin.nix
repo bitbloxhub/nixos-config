@@ -118,8 +118,8 @@ in
         };
 
         iconTheme = {
-          package = lib.mkForce pkgs.pop-icon-theme;
-          name = lib.mkForce "Pop";
+          package = lib.mkForce pkgs.cosmic-icons;
+          name = lib.mkForce "Cosmic";
         };
       };
 
