@@ -87,6 +87,7 @@ in
   flake.modules.homeManager.default =
     {
       config,
+      pkgs,
       ...
     }:
     {
@@ -103,6 +104,18 @@ in
           accent = config.my.themes.catppuccin.cursorAccent;
         };
         glamour.enable = true;
+      };
+
+      dconf.settings."org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
+
+      gtk = {
+        enable = true;
+        theme = {
+          package = pkgs.magnetic-catppuccin-gtk;
+          name = "Catppuccin-GTK-Dark";
+        };
       };
     };
 }
