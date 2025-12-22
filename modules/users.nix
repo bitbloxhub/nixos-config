@@ -2,6 +2,7 @@
   lib,
   inputs,
   self,
+  withSystem,
   ...
 }:
 {
@@ -43,6 +44,12 @@
         inherit (config.my.user) home;
       };
 
+      home-manager.extraSpecialArgs = withSystem config.my.hardware.platform (
+        { inputs', self', ... }:
+        {
+          inherit inputs' self';
+        }
+      );
       # niri-flake issue
       home-manager.sharedModules = lib.mkForce [ ];
       home-manager.users.${config.my.user.username} = {
