@@ -59,7 +59,7 @@
       (
         if (builtins.elem "nixos" classes) then
           lib.nixosSystem {
-            extraSpecialArgs = withSystem config.my.hardware.platform (
+            specialArgs = withSystem config.my.hardware.platform (
               { inputs', self', ... }:
               {
                 inherit inputs' self';
