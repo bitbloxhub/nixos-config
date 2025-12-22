@@ -117,5 +117,14 @@ in
           name = "Catppuccin-GTK-Dark";
         };
       };
+
+      programs.vivid = lib.mkIf config.my.themes.catppuccin.enable {
+        enable = true;
+        activeTheme = "catppuccin-mocha";
+      };
+
+      programs.nushell.extraConfig = lib.mkIf config.my.themes.catppuccin.enable ''
+        $env.LS_COLORS = (${pkgs.vivid}/bin/vivid generate ${config.programs.vivid.activeTheme})
+      '';
     };
 }
