@@ -116,6 +116,11 @@ in
           package = pkgs.magnetic-catppuccin-gtk;
           name = "Catppuccin-GTK-Dark";
         };
+
+        iconTheme = {
+          package = lib.mkForce pkgs.pop-icon-theme;
+          name = lib.mkForce "Pop";
+        };
       };
 
       programs.vivid = lib.mkIf config.my.themes.catppuccin.enable {
