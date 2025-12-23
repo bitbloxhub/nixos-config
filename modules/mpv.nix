@@ -124,6 +124,15 @@
         enable = true;
         defaultApplications = {
           "image/*" = [ "mpv.desktop" ];
+          "image/png" = [ "mpv.desktop" ];
+          "image/jpeg" = [ "mpv.desktop" ];
+          "image/jpg" = [ "mpv.desktop" ];
+          "image/gif" = [ "mpv.desktop" ];
+          "image/bmp" = [ "mpv.desktop" ];
+          "image/webp" = [ "mpv.desktop" ];
+          "image/svg+xml" = [ "mpv.desktop" ];
+          "image/tiff" = [ "mpv.desktop" ];
+          "image/x-icon" = [ "mpv.desktop" ];
           "audio/*" = [ "mpv.desktop" ];
           "video/*" = [ "mpv.desktop" ];
         };
