@@ -31,7 +31,7 @@ export default function RoundImage({
 			hexpand={false}
 			$={(self) => {
 				self.set_draw_func((widget, cr) => {
-					const currentFile = file.get()
+					const currentFile = file.peek()
 
 					const allocation = widget.get_allocation()
 					const w = allocation.width

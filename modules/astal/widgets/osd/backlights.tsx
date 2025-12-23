@@ -37,8 +37,8 @@ export default function Backlights({
 					setBrightness(+readFile(backlight_file))
 					setCurrentOsd(`brightness-${backlight.name}`)
 					setRevealOsd(true)
-					if (timeoutSource.get() != null) {
-						clearTimeout(timeoutSource.get() as GLib.Source)
+					if (timeoutSource.peek() != null) {
+						clearTimeout(timeoutSource.peek() as GLib.Source)
 					}
 					setTimeoutSource(
 						setTimeout(() => {

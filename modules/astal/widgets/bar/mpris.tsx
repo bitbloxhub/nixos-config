@@ -9,8 +9,8 @@ import Adw from "gi://Adw?version=1"
 function Player({ player }: { player: AstalMpris.Player }) {
 	const artist = createBinding(player, "artist")
 	const title = createBinding(player, "title")
-	const artistTitle = createComputed([artist, title], (artist, title) => {
-		return `${artist} - ${title}`
+	const artistTitle = createComputed(() => {
+		return `${artist()} - ${title()}`
 	})
 
 	return (
@@ -90,7 +90,7 @@ export default function Mpris() {
 		})
 	})
 	const [activePlayer, setActivePlayer] = createState<AstalMpris.Player>(
-		players.get()[0],
+		players.peek()[0],
 	)
 	// TODO: figure out why bindings are not working with this
 	const shouldShow = players((players) => {
@@ -103,12 +103,12 @@ export default function Mpris() {
 		return player?.identity || "No Players!"
 	})
 	const nextPlayer = (shiftNum: number) => {
-		const players_list = players.get()
+		const players_list = players.peek()
 
 		const newPlayer =
 			players_list[
 				(players_list.findIndex((player) => {
-					return player.bus_name == activePlayerBusName.get()
+					return player.bus_name == activePlayerBusName.peek()
 				}) +
 					shiftNum) %
 					players_list.length
@@ -125,12 +125,9 @@ export default function Mpris() {
 						const [app] = apps.exact_query(player.entry)
 						const artist = createBinding(player, "artist")
 						const title = createBinding(player, "title")
-						const artistTitle = createComputed(
-							[artist, title],
-							(artist, title) => {
-								return `${artist} - ${title}`
-							},
-						)
+						const artistTitle = createComputed(() => {
+							return `${artist()} - ${title()}`
+						})
 						return (
 							<box>
 								<label

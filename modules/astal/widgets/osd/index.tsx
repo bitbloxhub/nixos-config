@@ -60,12 +60,12 @@ export default function Osd({ niri }: { niri: NiriGObject }) {
 	)
 
 	revealOsd.subscribe(() => {
-		if (!revealOsd.get()) {
+		if (!revealOsd.peek()) {
 			setTimeout(() => {
-				window.visible = revealOsd.get()
+				window.visible = revealOsd.peek()
 			}, 300)
 		} else {
-			window.visible = revealOsd.get()
+			window.visible = revealOsd.peek()
 		}
 	})
 

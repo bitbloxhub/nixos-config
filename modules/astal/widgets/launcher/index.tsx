@@ -52,7 +52,7 @@ export default function Launcher() {
 			new Fzf(
 				provider.getItems({
 					window,
-					entry: entry.get() as Gtk.Entry,
+					entry: entry.peek() as Gtk.Entry,
 					search,
 				}),
 				{
@@ -81,7 +81,7 @@ export default function Launcher() {
 					if (mask === Gdk.ModifierType.ALT_MASK) {
 						for (const i of [1, 2, 3, 4, 5, 6, 7, 8, 9] as const) {
 							if (keyval === Gdk[`KEY_${i}`]) {
-								items.get()[i - 1].rendered.activate()
+								items.peek()[i - 1].rendered.activate()
 							}
 						}
 					}

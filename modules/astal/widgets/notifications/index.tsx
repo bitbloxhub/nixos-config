@@ -18,16 +18,13 @@ export default function Notifications({
 
 	const shownNotifications = createBinding(notifications, "notifications")
 
-	const visible = createComputed(
-		[shownNotifications, showingControlCenter],
-		() => {
-			if (showingControlCenter.get()) {
-				return false
-			} else {
-				return shownNotifications.get().length != 0
-			}
-		},
-	)
+	const visible = createComputed(() => {
+		if (showingControlCenter()) {
+			return false
+		} else {
+			return shownNotifications().length != 0
+		}
+	})
 
 	return (
 		<window

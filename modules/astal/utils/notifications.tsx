@@ -1,6 +1,4 @@
-import { readFile, writeFile } from "ags/file"
 import GObject, { property, register, signal } from "ags/gobject"
-import GLib from "gi://GLib"
 import AstalNotifd from "gi://AstalNotifd"
 
 @register({ GTypeName: "Notifications" })

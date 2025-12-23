@@ -19,7 +19,7 @@ export default function ControlCenter({
 	return (
 		<button
 			onClicked={() => {
-				setShowingControlCenter(!showingControlCenter.get())
+				setShowingControlCenter(!showingControlCenter.peek())
 			}}
 		>
 			<box orientation={Gtk.Orientation.HORIZONTAL} spacing={6}>

@@ -60,7 +60,7 @@ export default function Bar({
 					<Clock
 						timezone={localTime}
 						format="%F %I:%M %p %Z"
-						visible={localTime(() => localTime.get() != "UTC")}
+						visible={localTime(() => localTime.peek() != "UTC")}
 					/>
 				</box>
 				<box $type="end" spacing={12}>

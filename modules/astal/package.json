@@ -5,6 +5,6 @@
 		"@catppuccin/palette": "^1.7.1",
 		"ags": "github:Aylur/ags",
 		"fzf": "^0.5.2",
-		"gnim": "^1.8.2"
+		"gnim": "^1.9.0"
 	}
 }

@@ -19,7 +19,7 @@ export default function Clock({
 			).format(format)!
 		} else {
 			return GLib.DateTime.new_now(
-				GLib.TimeZone.new_identifier(timezone.get().trim()),
+				GLib.TimeZone.new_identifier(timezone.peek().trim()),
 			).format(format)!
 		}
 	})

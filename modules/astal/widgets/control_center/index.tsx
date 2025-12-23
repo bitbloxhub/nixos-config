@@ -18,13 +18,13 @@ export default function ControlCenter({
 	const [revealControlCenter, setRevealControlCenter] = createState(false)
 
 	showingControlCenter.subscribe(() => {
-		if (!showingControlCenter.get()) {
+		if (!showingControlCenter.peek()) {
 			setRevealControlCenter(false)
 			setTimeout(() => {
-				window.visible = showingControlCenter.get()
+				window.visible = showingControlCenter.peek()
 			}, 300)
 		} else {
-			window.visible = showingControlCenter.get()
+			window.visible = showingControlCenter.peek()
 		}
 	})
 

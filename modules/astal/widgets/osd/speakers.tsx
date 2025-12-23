@@ -23,8 +23,8 @@ export default function Speakers({
 				speaker.connect("notify::mute", () => {
 					setCurrentOsd(`speaker-${speaker.device.id}`)
 					setRevealOsd(true)
-					if (timeoutSource.get() != null) {
-						clearTimeout(timeoutSource.get() as GLib.Source)
+					if (timeoutSource.peek() != null) {
+						clearTimeout(timeoutSource.peek() as GLib.Source)
 					}
 					setTimeoutSource(
 						setTimeout(() => {
@@ -35,8 +35,8 @@ export default function Speakers({
 				speaker.connect("notify::volume", () => {
 					setCurrentOsd(`speaker-${speaker.device.id}`)
 					setRevealOsd(true)
-					if (timeoutSource.get() != null) {
-						clearTimeout(timeoutSource.get() as GLib.Source)
+					if (timeoutSource.peek() != null) {
+						clearTimeout(timeoutSource.peek() as GLib.Source)
 					}
 					setTimeoutSource(
 						setTimeout(() => {
