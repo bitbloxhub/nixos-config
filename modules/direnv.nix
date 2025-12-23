@@ -16,7 +16,13 @@
       ...
     }:
     {
-      programs.direnv.enable = config.my.programs.direnv.enable;
-      programs.direnv.enableNushellIntegration = config.my.programs.direnv.enableNushellIntegration;
+      programs.direnv = {
+        enable = config.my.programs.direnv.enable;
+        enableNushellIntegration = config.my.programs.direnv.enableNushellIntegration;
+        config.global = {
+          strict_env = true;
+          warn_timeout = 0;
+        };
+      };
     };
 }
