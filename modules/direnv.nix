@@ -17,8 +17,8 @@
     }:
     {
       programs.direnv = {
-        enable = config.my.programs.direnv.enable;
-        enableNushellIntegration = config.my.programs.direnv.enableNushellIntegration;
+        inherit (config.my.programs.direnv) enable;
+        inherit (config.my.programs.direnv) enableNushellIntegration;
         config.global = {
           strict_env = true;
           warn_timeout = 0;
