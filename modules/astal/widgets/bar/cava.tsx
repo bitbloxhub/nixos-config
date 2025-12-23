@@ -17,7 +17,7 @@ export default function Cava() {
 	]
 
 	return (
-		<menubutton>
+		<menubutton class={"cava-button"}>
 			<label
 				label={createBinding(cava, "values").as((values) =>
 					values

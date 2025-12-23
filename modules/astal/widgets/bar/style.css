@@ -18,6 +18,7 @@ window#bar {
 		.workspace-button {
 			border-radius: 0;
 			padding: 4px;
+			min-width: 16px;
 		}
 
 		.workspace-button:first-child {
@@ -66,5 +67,10 @@ window#bar {
 		.control-button:last-child {
 			border-radius: 0 1rem 1rem 0;
 		}
+	}
+
+	.cava-button > button {
+		/* My GTK theme overrides this by default */
+		color: var(--ctp-mocha-text) !important;
 	}
 }
