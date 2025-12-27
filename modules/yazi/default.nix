@@ -48,6 +48,7 @@ inputs.not-denix.lib.module {
           git = "${npins.yazi-plugins}/git.yazi";
           vcs-files = "${npins.yazi-plugins}/vcs-files.yazi";
           piper = "${npins.yazi-plugins}/piper.yazi";
+          chmod = "${npins.yazi-plugins}/chmod.yazi";
           parent-arrow = ./plugins/parent-arrow.yazi;
         };
         initLua = ./init.lua;
@@ -126,6 +127,15 @@ inputs.not-denix.lib.module {
             ];
             run = "plugin vcs-files";
             desc = "Show Git file changes";
+          }
+          # chmod
+          {
+            on = [
+              "c"
+              "m"
+            ];
+            run = "plugin chmod";
+            desc = "Chmod on selected files";
           }
         ]
         ++
