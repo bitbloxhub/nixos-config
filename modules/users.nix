@@ -5,14 +5,16 @@
   withSystem,
   ...
 }:
-{
-  flake.modules.generic.default =
+inputs.not-denix.lib.module {
+  name = "user";
+
+  options =
     {
       config,
       ...
     }:
     {
-      options.my.user = {
+      user = {
         username = lib.mkOption {
           type = lib.types.str;
           description = "My username on the system.";
@@ -25,7 +27,7 @@
       };
     };
 
-  flake.modules.nixos.default =
+  nixos.always =
     {
       config,
       ...
@@ -62,7 +64,7 @@
       };
     };
 
-  flake.modules.homeManager.default =
+  homeManager.always =
     {
       config,
       ...

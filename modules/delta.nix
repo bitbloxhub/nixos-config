@@ -1,23 +1,22 @@
 {
-  lib,
+  inputs,
   self,
   ...
 }:
-{
-  flake.modules.generic.default = {
-    options.my.programs.delta = {
-      enable = self.lib.mkDisableOption "delta";
-    };
+inputs.not-denix.lib.module {
+  name = "programs.delta";
+
+  options.programs.delta = {
+    enable = self.lib.mkDisableOption "delta";
   };
 
-  flake.modules.homeManager.default =
+  homeManager.ifEnabled =
     {
-      config,
       pkgs,
       ...
     }:
     {
-      home.packages = lib.mkIf config.my.programs.delta.enable [
+      home.packages = [
         pkgs.delta
       ];
     };

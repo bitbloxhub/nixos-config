@@ -1,20 +1,16 @@
 {
+  inputs,
   self,
   ...
 }:
-{
-  flake.modules.generic.default = {
-    options.my.programs.fd = {
-      enable = self.lib.mkDisableOption "fd";
-    };
+inputs.not-denix.lib.module {
+  name = "programs.fd";
+
+  options.programs.fd = {
+    enable = self.lib.mkDisableOption "fd";
   };
 
-  flake.modules.homeManager.default =
-    {
-      config,
-      ...
-    }:
-    {
-      programs.fd.enable = config.my.programs.fd.enable;
-    };
+  homeManager.ifEnabled = {
+    programs.fd.enable = true;
+  };
 }

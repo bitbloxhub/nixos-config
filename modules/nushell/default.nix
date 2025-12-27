@@ -1,38 +1,36 @@
 {
-  lib,
+  inputs,
   self,
   ...
 }:
-{
-  flake.modules.generic.default = {
-    options.my.programs.nushell = {
-      enable = self.lib.mkDisableOption "Nushell";
-    };
+inputs.not-denix.lib.module {
+  name = "programs.nushell";
+
+  options.programs.nushell = {
+    enable = self.lib.mkDisableOption "Nushell";
   };
 
-  flake.modules.nixos.default =
-    { pkgs, config, ... }:
+  nixos.ifEnabled =
     {
-      users.defaultUserShell = lib.mkIf config.my.programs.nushell.enable pkgs.nushell;
-    };
-
-  flake.modules.homeManager.default =
-    {
-      config,
+      pkgs,
       ...
     }:
     {
-      programs.nushell.enable = config.my.programs.nushell.enable;
-      programs.nushell.settings = {
-        show_banner = false;
-      };
-      programs.nushell.extraConfig = "source ${./wezterm.nu}";
-
-      programs.nushell.environmentVariables = {
-        CARAPACE_BRIDGES = "zsh,fish,bash,inshellisense";
-      };
-
-      programs.carapace.enable = config.my.programs.nushell.enable;
-      programs.carapace.enableNushellIntegration = config.my.programs.nushell.enable;
+      users.defaultUserShell = pkgs.nushell;
     };
+
+  homeManager.ifEnabled = {
+    programs.nushell.enable = true;
+    programs.nushell.settings = {
+      show_banner = false;
+    };
+    programs.nushell.extraConfig = "source ${./wezterm.nu}";
+
+    programs.nushell.environmentVariables = {
+      CARAPACE_BRIDGES = "zsh,fish,bash,inshellisense";
+    };
+
+    programs.carapace.enable = true;
+    programs.carapace.enableNushellIntegration = true;
+  };
 }

@@ -1,24 +1,23 @@
 {
-  lib,
+  inputs,
   self,
   ...
 }:
-{
-  flake.modules.generic.default = {
-    options.my.programs.mpv = {
-      enable = self.lib.mkDisableOption "mpv";
-    };
+inputs.not-denix.lib.module {
+  name = "programs.mpv";
+
+  options.programs.mpv = {
+    enable = self.lib.mkDisableOption "mpv";
   };
 
-  flake.modules.homeManager.default =
+  homeManager.ifEnabled =
     {
-      config,
       pkgs,
       ...
     }:
     {
       programs.mpv = {
-        inherit (config.my.programs.mpv) enable;
+        enable = true;
         scripts = with pkgs.mpvScripts; [
           mpris
           uosc
@@ -120,7 +119,7 @@
         };
       };
 
-      xdg.mimeApps = lib.mkIf config.my.programs.mpv.enable {
+      xdg.mimeApps = {
         enable = true;
         defaultApplications = {
           "image/*" = [ "mpv.desktop" ];

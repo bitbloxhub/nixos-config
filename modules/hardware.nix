@@ -3,24 +3,27 @@
   inputs,
   ...
 }:
-{
+inputs.not-denix.lib.module {
+  name = "hardware";
+
   flake-file.inputs.nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
 
-  flake.modules.generic.default =
+  options.hardware = {
+    facter-report = lib.mkOption {
+      type = lib.types.path;
+    };
+    platform = lib.mkOption {
+      type = lib.types.str;
+    };
+    isNvidia = lib.mkEnableOption "Nvidia";
+  };
+
+  generic.always =
     {
       config,
       ...
     }:
     {
-      options.my.hardware = {
-        facter-report = lib.mkOption {
-          type = lib.types.path;
-        };
-        platform = lib.mkOption {
-          type = lib.types.str;
-        };
-        isNvidia = lib.mkEnableOption "Nvidia";
-      };
       config.my.allowedUnfreePackages = lib.mkIf config.my.hardware.isNvidia [
         "cuda_cccl"
         "cuda_cudart"
@@ -29,7 +32,7 @@
       ];
     };
 
-  flake.modules.nixos.default =
+  nixos.always =
     {
       config,
       ...

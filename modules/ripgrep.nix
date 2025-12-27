@@ -1,20 +1,16 @@
 {
+  inputs,
   self,
   ...
 }:
-{
-  flake.modules.generic.default = {
-    options.my.programs.ripgrep = {
-      enable = self.lib.mkDisableOption "ripgrep";
-    };
+inputs.not-denix.lib.module {
+  name = "programs.ripgrep";
+
+  options.programs.ripgrep = {
+    enable = self.lib.mkDisableOption "ripgrep";
   };
 
-  flake.modules.homeManager.default =
-    {
-      config,
-      ...
-    }:
-    {
-      programs.ripgrep.enable = config.my.programs.ripgrep.enable;
-    };
+  homeManager.ifEnabled = {
+    programs.ripgrep.enable = true;
+  };
 }

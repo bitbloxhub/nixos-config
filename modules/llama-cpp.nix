@@ -1,23 +1,23 @@
 {
-  lib,
+  inputs,
   self,
   ...
 }:
-{
-  flake.modules.generic.default = {
-    options.my.programs.llama-cpp = {
-      enable = self.lib.mkDisableOption "llama.cpp";
-    };
+inputs.not-denix.lib.module {
+  name = "programs.llama-cpp";
+
+  options.programs.llama-cpp = {
+    enable = self.lib.mkDisableOption "llama.cpp";
   };
 
-  flake.modules.homeManager.default =
+  homeManager.ifEnabled =
     {
       config,
       pkgs,
       ...
     }:
     {
-      home.packages = lib.mkIf config.my.programs.llama-cpp.enable [
+      home.packages = [
         (pkgs.llama-cpp.override {
           cudaSupport = config.my.hardware.isNvidia;
         })

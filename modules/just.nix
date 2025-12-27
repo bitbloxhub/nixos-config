@@ -1,4 +1,11 @@
 {
+  inputs,
+  self,
+  ...
+}:
+inputs.not-denix.lib.module {
+  name = "programs.just";
+
   perSystem =
     {
       pkgs,
@@ -12,13 +19,17 @@
       };
     };
 
-  flake.modules.homeManager.default =
+  options.programs.just = {
+    enable = self.lib.mkDisableOption "just";
+  };
+
+  homeManager.ifEnabled =
     {
       pkgs,
       ...
     }:
     {
-      home.packages = [
+      config.home.packages = [
         (pkgs.writeShellScriptBin "sjust" ''
           ${pkgs.just}/bin/just --justfile ${../Justfile} --working-directory ~/nixos-config/
         '')

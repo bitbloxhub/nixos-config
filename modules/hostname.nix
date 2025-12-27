@@ -1,16 +1,17 @@
 {
   lib,
+  inputs,
   ...
 }:
-{
-  flake.modules.generic.default = {
-    options.my.hostname = lib.mkOption {
-      type = lib.types.str;
-      description = "Hostname for the system";
-    };
+inputs.not-denix.lib.module {
+  name = "hostname";
+
+  options.hostname = lib.mkOption {
+    type = lib.types.str;
+    description = "Hostname for the system";
   };
 
-  flake.modules.nixos.default =
+  nixos.always =
     {
       config,
       ...

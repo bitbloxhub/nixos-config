@@ -1,28 +1,27 @@
 {
-  lib,
+  inputs,
   self,
   ...
 }:
-{
-  flake.modules.generic.default = {
-    options.my.programs.swww = {
-      enable = self.lib.mkDisableOption "swww";
-    };
+inputs.not-denix.lib.module {
+  name = "programs.swww";
+
+  options.programs.swww = {
+    enable = self.lib.mkDisableOption "swww";
   };
 
-  flake.modules.homeManager.default =
+  homeManager.ifEnabled =
     {
-      config,
       pkgs,
       ...
     }:
     {
-      home.packages = lib.mkIf config.my.programs.swww.enable [
+      home.packages = [
         pkgs.swww
       ];
 
       programs.niri.settings = {
-        spawn-at-startup = lib.mkIf config.my.programs.swww.enable [
+        spawn-at-startup = [
           {
             command = [
               "swww-daemon"

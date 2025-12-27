@@ -145,12 +145,12 @@
           sshUser = config.my.user.username;
           interactiveSudo = true;
           profilesOrder = lib.intersectLists [
-            "nixos"
+            "system"
             "system-manager"
             "home-manager"
-          ] classes;
+          ] (builtins.map (x: if x == "nixos" then "system" else x) classes);
           profiles = lib.filterAttrs (_: p: p != null) {
-            nixos =
+            system =
               if (builtins.elem "nixos" classes) then
                 {
                   user = "root";

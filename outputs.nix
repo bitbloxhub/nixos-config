@@ -6,6 +6,7 @@ inputs@{
   nix-auto-ci,
   import-tree,
   home-manager,
+  not-denix,
   nixpkgs,
   ...
 }:
@@ -28,6 +29,7 @@ flake-parts.lib.mkFlake
       actions-nix.flakeModules.default
       nix-auto-ci.flakeModule
       home-manager.flakeModules.home-manager
+      not-denix.flakeModules.default
       {
         options.flake = flake-parts.lib.mkSubmoduleOptions {
           systemConfigs = nixpkgs.lib.mkOption {
