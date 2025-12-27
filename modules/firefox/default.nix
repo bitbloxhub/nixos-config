@@ -241,5 +241,27 @@ inputs.not-denix.lib.module {
           };
         };
       };
+
+      xdg.mimeApps = {
+        enable = true;
+        defaultApplications = {
+          "text/html" = "firefox-nightly.desktop";
+          "x-scheme-handler/http" = "firefox-nightly.desktop";
+          "x-scheme-handler/https" = "firefox-nightly.desktop";
+          "x-scheme-handler/about" = "firefox-nightly.desktop";
+          "x-scheme-handler/unknown" = "firefox-nightly.desktop";
+
+          "application/xhtml+xml" = "firefox-nightly.desktop";
+          "application/x-extension-htm" = "firefox-nightly.desktop";
+          "application/x-extension-html" = "firefox-nightly.desktop";
+          "application/x-extension-shtml" = "firefox-nightly.desktop";
+          "application/x-extension-xhtml" = "firefox-nightly.desktop";
+          "application/x-extension-xht" = "firefox-nightly.desktop";
+          "x-scheme-handler/ftp" = "firefox-nightly.desktop";
+          "x-scheme-handler/chrome" = "firefox-nightly.desktop";
+          "application/x-www-browser" = "firefox-nightly.desktop";
+          "application/json" = "firefox-nightly.desktop";
+        };
+      };
     };
 }
