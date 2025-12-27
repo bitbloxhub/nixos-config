@@ -1,5 +1,7 @@
 {
   lib,
+  inputs,
+  self,
   ...
 }:
 let
@@ -24,12 +26,18 @@ let
     "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k="
   ];
 in
-{
+inputs.not-denix.lib.module {
+  name = "programs.nix";
+
   flake-file.nixConfig = {
     inherit extra-substituters extra-trusted-public-keys;
   };
 
-  flake.modules.nixos.default =
+  options.programs.nix = {
+    enable = self.lib.mkDisableOption "Nix";
+  };
+
+  nixos.ifEnabled =
     {
       pkgs,
       ...

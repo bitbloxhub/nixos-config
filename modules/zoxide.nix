@@ -1,24 +1,19 @@
 {
+  inputs,
   self,
   ...
 }:
-{
-  flake.modules.generic.default = {
-    options.my.programs.zoxide = {
-      enable = self.lib.mkDisableOption "Zoxide";
-      enableNushellIntegration = self.lib.mkDisableOption "Zoxide Nushell integration";
-    };
+inputs.not-denix.lib.module {
+  name = "programs.zoxide";
+
+  options.programs.zoxide = {
+    enable = self.lib.mkDisableOption "Zoxide";
   };
 
-  flake.modules.homeManager.default =
-    {
-      config,
-      ...
-    }:
-    {
-      programs.zoxide = {
-        inherit (config.my.programs.zoxide) enable;
-        inherit (config.my.programs.zoxide) enableNushellIntegration;
-      };
+  homeManager.ifEnabled = {
+    programs.zoxide = {
+      enable = true;
+      enableNushellIntegration = true;
     };
+  };
 }

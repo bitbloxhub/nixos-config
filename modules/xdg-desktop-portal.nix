@@ -1,15 +1,16 @@
 {
+  inputs,
   self,
   ...
 }:
-{
-  flake.modules.generic.default = {
-    options.my.programs.xdg-desktop-portal = {
-      enable = self.lib.mkDisableOption "xdg-desktop-portal";
-    };
+inputs.not-denix.lib.module {
+  name = "programs.xdg-desktop-portal";
+
+  options.programs.xdg-desktop-portal = {
+    enable = self.lib.mkDisableOption "xdg-desktop-portal";
   };
 
-  flake.modules.homeManager.default =
+  homeManager.ifEnabled =
     {
       config,
       pkgs,
@@ -17,7 +18,7 @@
     }:
     {
       xdg.portal = {
-        inherit (config.my.programs.xdg-desktop-portal) enable;
+        enable = true;
         extraPortals = [
           pkgs.xdg-desktop-portal-gtk
           pkgs.xdg-desktop-portal

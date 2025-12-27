@@ -22,7 +22,9 @@ let
     "yellow"
   ];
 in
-{
+inputs.not-denix.lib.module {
+  name = "themes.catppuccin";
+
   flake-file.inputs = {
     catppuccin = {
       url = "github:catppuccin/nix/main";
@@ -38,38 +40,36 @@ in
     };
   };
 
-  flake.modules.generic.default = {
-    options.my.themes.catppuccin = {
-      enable = self.lib.mkDisableOption "Catppuccin";
-      flavor = lib.mkOption {
-        type = lib.types.enum [
-          "latte"
-          "frappe"
-          "macchiato"
-          "mocha"
-        ];
-        default = "mocha";
-        description = "Global Catppuccin flavor";
-      };
-      accent = lib.mkOption {
-        type = catppuccinAccent;
-        default = "mauve";
-        description = "Global Catppuccin accent";
-      };
-      cursorAccent = lib.mkOption {
-        type = lib.types.mergeTypes catppuccinAccent (
-          lib.types.enum [
-            "dark"
-            "light"
-          ]
-        );
-        default = "dark";
-        description = "Catppuccin accent for pointer cursors";
-      };
+  options.themes.catppuccin = {
+    enable = self.lib.mkDisableOption "Catppuccin";
+    flavor = lib.mkOption {
+      type = lib.types.enum [
+        "latte"
+        "frappe"
+        "macchiato"
+        "mocha"
+      ];
+      default = "mocha";
+      description = "Global Catppuccin flavor";
+    };
+    accent = lib.mkOption {
+      type = catppuccinAccent;
+      default = "mauve";
+      description = "Global Catppuccin accent";
+    };
+    cursorAccent = lib.mkOption {
+      type = lib.types.mergeTypes catppuccinAccent (
+        lib.types.enum [
+          "dark"
+          "light"
+        ]
+      );
+      default = "dark";
+      description = "Catppuccin accent for pointer cursors";
     };
   };
 
-  flake.modules.nixos.default =
+  nixos.ifEnabled =
     {
       config,
       ...
@@ -79,38 +79,53 @@ in
         inputs.catppuccin.nixosModules.catppuccin
       ];
 
-      catppuccin.enable = config.my.themes.catppuccin.enable;
-      catppuccin.flavor = config.my.themes.catppuccin.flavor;
-      catppuccin.accent = config.my.themes.catppuccin.accent;
+      catppuccin = {
+        enable = true;
+        inherit (config.my.themes.catppuccin) flavor;
+        inherit (config.my.themes.catppuccin) accent;
+      };
     };
 
-  flake.modules.homeManager.default =
+  homeManager.ifEnabled =
     {
       config,
       pkgs,
       ...
     }:
+    let
+      # TODO: get rid of this hack when https://github.com/NixOS/nixpkgs/pull/440544 is merged
+      inherit
+        (
+          ((import "${inputs.cosmic-manager}/lib/ron.nix") {
+            lib = lib // {
+              cosmic = (import "${inputs.cosmic-manager}/lib/modules.nix") { inherit lib; };
+            };
+          })
+        )
+        importRON
+        ;
+    in
     {
       imports = [
         inputs.catppuccin.homeModules.catppuccin
       ];
 
       catppuccin = {
-        inherit (config.my.themes.catppuccin) enable;
+        enable = true;
         inherit (config.my.themes.catppuccin) flavor;
         inherit (config.my.themes.catppuccin) accent;
         cursors = {
-          inherit (config.my.themes.catppuccin) enable;
+          enable = true;
           accent = config.my.themes.catppuccin.cursorAccent;
         };
         glamour.enable = true;
       };
 
-      dconf.settings."org/gnome/desktop/interface" = lib.mkIf config.my.themes.catppuccin.enable {
+      dconf.settings."org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
       };
 
-      gtk = lib.mkIf config.my.themes.catppuccin.enable {
+      gtk = {
         enable = true;
         theme = {
           package = pkgs.magnetic-catppuccin-gtk;
@@ -123,13 +138,23 @@ in
         };
       };
 
-      programs.vivid = lib.mkIf config.my.themes.catppuccin.enable {
+      programs.vivid = {
         enable = true;
         activeTheme = "catppuccin-mocha";
       };
 
-      programs.nushell.extraConfig = lib.mkIf config.my.themes.catppuccin.enable ''
+      programs.nushell.extraConfig = ''
         $env.LS_COLORS = (${pkgs.vivid}/bin/vivid generate ${config.programs.vivid.activeTheme})
       '';
+
+      wayland.desktopManager.cosmic.appearance.theme.dark =
+        importRON "${inputs.catppuccin-cosmic}/themes/cosmic-settings/catppuccin-${config.my.themes.catppuccin.flavor}-${config.my.themes.catppuccin.accent}+round.ron";
+
+      wayland.desktopManager.cosmic.configFile = {
+        "com.system76.CosmicTheme.Mode" = {
+          version = 1;
+          entries.is_dark = true;
+        };
+      };
     };
 }

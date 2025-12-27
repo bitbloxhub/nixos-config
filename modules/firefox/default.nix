@@ -4,7 +4,9 @@
   self,
   ...
 }:
-{
+inputs.not-denix.lib.module {
+  name = "programs.firefox";
+
   flake-file.inputs = {
     flake-firefox-nightly = {
       url = "github:nix-community/flake-firefox-nightly";
@@ -28,15 +30,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  flake.modules.generic.default = {
-    options.my.programs.firefox = {
-      enable = self.lib.mkDisableOption "Firefox";
-    };
+
+  options.programs.firefox = {
+    enable = self.lib.mkDisableOption "Firefox";
   };
 
-  flake.modules.homeManager.default =
+  homeManager.ifEnabled =
     {
-      config,
       pkgs,
       inputs',
       ...
@@ -71,7 +71,7 @@
       };
 
       programs.firefox = {
-        inherit (config.my.programs.firefox) enable;
+        enable = true;
         # supports unsigned extensions and is updated maybe a bit too frequently
         package = inputs'.flake-firefox-nightly.packages.firefox-nightly-bin.override {
           extraPrefsFiles = [

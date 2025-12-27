@@ -1,10 +1,17 @@
 {
   lib,
   inputs,
+  self,
   ...
 }:
-{
-  flake.modules.homeManager.default =
+inputs.not-denix.lib.module {
+  name = "programs.gaming.prismlauncher";
+
+  options.programs.gaming.prismlauncher = {
+    enable = self.lib.mkDisableOption "PrismLauncher";
+  };
+
+  homeManager.ifEnabled =
     {
       pkgs,
       ...

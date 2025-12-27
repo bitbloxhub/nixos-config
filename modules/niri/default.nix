@@ -31,7 +31,9 @@ let
       }
     );
 in
-{
+inputs.not-denix.lib.module {
+  name = "programs.niri";
+
   flake-file.inputs = {
     niri-flake = {
       url = "github:sodiboo/niri-flake";
@@ -44,13 +46,11 @@ in
     };
   };
 
-  flake.modules.generic.default = {
-    options.my.programs.niri = {
-      enable = self.lib.mkDisableOption "Niri";
-    };
+  options.programs.niri = {
+    enable = self.lib.mkDisableOption "Niri";
   };
 
-  flake.modules.nixos.default =
+  nixos.ifEnabled =
     {
       config,
       ...
@@ -62,12 +62,12 @@ in
 
       niri-flake.cache.enable = false; # I enable this in ./nix.nix.
       programs.niri = {
-        inherit (config.my.programs.niri) enable;
+        enable = true;
         package = (niriPkgsForSystem config.my.hardware.platform).niri-unstable;
       };
     };
 
-  flake.modules.homeManager.default =
+  homeManager.ifEnabled =
     {
       config,
       ...
@@ -78,7 +78,7 @@ in
       ];
 
       programs.niri = {
-        inherit (config.my.programs.niri) enable;
+        enable = true;
         package = (niriPkgsForSystem config.my.hardware.platform).niri-unstable;
         settings = {
           prefer-no-csd = true;

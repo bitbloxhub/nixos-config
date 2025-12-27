@@ -1,17 +1,17 @@
 {
+  inputs,
   self,
   ...
 }:
-{
-  flake.modules.generic.default = {
-    options.my.programs.wezterm = {
-      enable = self.lib.mkDisableOption "Wezterm";
-    };
+inputs.not-denix.lib.module {
+  name = "programs.wezterm";
+
+  options.programs.wezterm = {
+    enable = self.lib.mkDisableOption "Wezterm";
   };
 
-  flake.modules.homeManager.default =
+  homeManager.ifEnabled =
     {
-      config,
       pkgs,
       ...
     }:
@@ -33,7 +33,7 @@
       };
     in
     {
-      programs.wezterm.enable = config.my.programs.wezterm.enable;
+      programs.wezterm.enable = true;
       home.file."./.config/wezterm/resurrect" = {
         source = resurrect + "/plugin/resurrect";
         recursive = true;

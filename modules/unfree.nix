@@ -1,16 +1,17 @@
 {
   lib,
+  inputs,
   ...
 }:
-{
-  flake.modules.generic.default = {
-    options.my.allowedUnfreePackages = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [ ];
-    };
+inputs.not-denix.lib.module {
+  name = "allowedUnfreePackages";
+
+  options.allowedUnfreePackages = lib.mkOption {
+    type = lib.types.listOf lib.types.str;
+    default = [ ];
   };
 
-  flake.modules.nixos.default =
+  nixos.always =
     {
       config,
       ...
@@ -20,7 +21,7 @@
         pkg: builtins.elem (lib.getName pkg) config.my.allowedUnfreePackages;
     };
 
-  flake.modules.homeManager.default =
+  homeManager.always =
     {
       config,
       ...
@@ -30,7 +31,7 @@
         pkg: builtins.elem (lib.getName pkg) config.my.allowedUnfreePackages;
     };
 
-  flake.modules.systemManager.default =
+  systemManager.always =
     {
       config,
       ...

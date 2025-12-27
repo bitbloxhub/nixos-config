@@ -1,5 +1,11 @@
 {
-  flake.modules.homeManager.default =
+  inputs,
+  ...
+}:
+inputs.not-denix.lib.module {
+  name = "programs.firefox";
+
+  homeManager.ifEnabled =
     {
       inputs',
       ...

@@ -3,24 +3,24 @@
   inputs,
   ...
 }:
-{
+inputs.not-denix.lib.module {
+  name = "nix-system-graphics";
+
   flake-file.inputs.nix-system-graphics = {
     url = "github:soupglasses/nix-system-graphics";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  flake.modules.generic.default = {
-    options.my.nix-system-graphics = {
-      enable = lib.mkEnableOption "nix-system-graphics";
-      driver = lib.mkOption { type = lib.types.package; };
-      extraPackages = lib.mkOption {
-        type = lib.types.listOf lib.types.package;
-        default = [ ];
-      };
+  options.nix-system-graphics = {
+    enable = lib.mkEnableOption "nix-system-graphics";
+    driver = lib.mkOption { type = lib.types.package; };
+    extraPackages = lib.mkOption {
+      type = lib.types.listOf lib.types.package;
+      default = [ ];
     };
   };
 
-  flake.modules.systemManager.default =
+  systemManager.ifEnabled =
     {
       config,
       ...
@@ -31,7 +31,7 @@
       ];
 
       system-graphics = {
-        inherit (config.my.nix-system-graphics) enable;
+        enable = true;
         package = config.my.nix-system-graphics.driver;
         inherit (config.my.nix-system-graphics) extraPackages;
       };

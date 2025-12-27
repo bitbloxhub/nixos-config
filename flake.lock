@@ -619,6 +619,53 @@
         "type": "github"
       }
     },
+    "not-denix": {
+      "inputs": {
+        "actions-nix": [
+          "actions-nix"
+        ],
+        "flake-file": [
+          "flake-file"
+        ],
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "flint": [
+          "flint"
+        ],
+        "git-hooks": [
+          "git-hooks"
+        ],
+        "import-tree": [
+          "import-tree"
+        ],
+        "make-shell": [
+          "make-shell"
+        ],
+        "nix-auto-ci": [
+          "nix-auto-ci"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1766787169,
+        "narHash": "sha256-03rs/OTBV3ZLDZXsHwdXu373ub67Rsb4kM+YGHoEuJQ=",
+        "owner": "bitbloxhub",
+        "repo": "not-denix",
+        "rev": "d6297d5b8af894cbcbc3a822dd3116963ed9edaa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bitbloxhub",
+        "repo": "not-denix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "actions-nix": "actions-nix",
@@ -649,6 +696,7 @@
         "nixCats": "nixCats",
         "nixos-facter-modules": "nixos-facter-modules",
         "nixpkgs": "nixpkgs",
+        "not-denix": "not-denix",
         "system-manager": "system-manager",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix",

@@ -45,5 +45,21 @@
         nixpkgs-lib.follows = "nixpkgs";
       };
     };
+
+    not-denix = {
+      url = "github:bitbloxhub/not-denix";
+      inputs = {
+        actions-nix.follows = "actions-nix";
+        flake-file.follows = "flake-file";
+        flake-parts.follows = "flake-parts";
+        flint.follows = "flint";
+        git-hooks.follows = "git-hooks";
+        import-tree.follows = "import-tree";
+        make-shell.follows = "make-shell";
+        nix-auto-ci.follows = "nix-auto-ci";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
   };
 }

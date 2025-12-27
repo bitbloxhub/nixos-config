@@ -1,5 +1,16 @@
 {
-  flake.modules.nixos.default =
+  inputs,
+  self,
+  ...
+}:
+inputs.not-denix.lib.module {
+  name = "fonts";
+
+  options.fonts = {
+    enable = self.lib.mkDisableOption "fonts";
+  };
+
+  nixos.ifEnabled =
     {
       pkgs,
       ...
@@ -11,7 +22,7 @@
       ];
     };
 
-  flake.modules.homeManager.default =
+  homeManager.ifEnabled =
     {
       pkgs,
       ...

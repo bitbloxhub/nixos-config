@@ -166,6 +166,21 @@
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    not-denix = {
+      inputs = {
+        actions-nix.follows = "actions-nix";
+        flake-file.follows = "flake-file";
+        flake-parts.follows = "flake-parts";
+        flint.follows = "flint";
+        git-hooks.follows = "git-hooks";
+        import-tree.follows = "import-tree";
+        make-shell.follows = "make-shell";
+        nix-auto-ci.follows = "nix-auto-ci";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+      url = "github:bitbloxhub/not-denix";
+    };
     system-manager = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/system-manager";

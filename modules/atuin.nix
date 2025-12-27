@@ -1,23 +1,18 @@
 {
+  inputs,
   self,
   ...
 }:
-{
-  flake.modules.generic.default = {
-    options.my.programs.atuin = {
-      enable = self.lib.mkDisableOption "Atuin";
-      enableNushellIntegration = self.lib.mkDisableOption "Atuin Nushell integration";
-    };
+inputs.not-denix.lib.module {
+  name = "programs.atuin";
+
+  options.programs.atuin = {
+    enable = self.lib.mkDisableOption "Atuin";
   };
 
-  flake.modules.homeManager.default =
-    {
-      config,
-      ...
-    }:
-    {
-      programs.atuin.enable = config.my.programs.atuin.enable;
-      programs.atuin.enableNushellIntegration = config.my.programs.atuin.enableNushellIntegration;
-      programs.atuin.flags = [ "--disable-up-arrow" ];
-    };
+  homeManager.ifEnabled = {
+    programs.atuin.enable = true;
+    programs.atuin.enableNushellIntegration = true;
+    programs.atuin.flags = [ "--disable-up-arrow" ];
+  };
 }
