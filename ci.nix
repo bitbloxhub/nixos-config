@@ -31,6 +31,12 @@
     };
   };
 
+  imports = [
+    inputs.git-hooks.flakeModule
+    inputs.actions-nix.flakeModules.default
+    inputs.nix-auto-ci.flakeModule
+  ];
+
   flake.actions-nix = {
     defaults = {
       jobs = {

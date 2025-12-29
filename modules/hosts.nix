@@ -7,26 +7,12 @@
   ...
 }:
 {
-  config.flake-file.inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    home-manager = {
-      url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    system-manager = {
-      url = "github:numtide/system-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        utils.follows = "flake-utils";
-        flake-compat.follows = "";
-      };
+  config.flake-file.inputs.deploy-rs = {
+    url = "github:serokell/deploy-rs";
+    inputs = {
+      nixpkgs.follows = "nixpkgs";
+      utils.follows = "flake-utils";
+      flake-compat.follows = "";
     };
   };
 

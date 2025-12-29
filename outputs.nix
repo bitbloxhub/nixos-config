@@ -1,9 +1,5 @@
 inputs@{
   flake-parts,
-  treefmt-nix,
-  git-hooks,
-  actions-nix,
-  nix-auto-ci,
   import-tree,
   home-manager,
   not-denix,
@@ -24,23 +20,8 @@ flake-parts.lib.mkFlake
 
     imports = [
       flake-parts.flakeModules.modules
-      treefmt-nix.flakeModule
-      git-hooks.flakeModule
-      actions-nix.flakeModules.default
-      nix-auto-ci.flakeModule
       home-manager.flakeModules.home-manager
       not-denix.flakeModules.default
-      {
-        options.flake = flake-parts.lib.mkSubmoduleOptions {
-          systemConfigs = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.lazyAttrsOf nixpkgs.lib.types.raw;
-            default = { };
-            description = ''
-              Instantiated system-manager configurations.
-            '';
-          };
-        };
-      }
       ./ci.nix
       ./treefmt.nix
       ./flake-file.nix
