@@ -18,7 +18,7 @@ inputs.not-denix.lib.module {
       pnpmDeps = pkgs.pnpm.fetchDeps {
         inherit src;
         pname = "stylus-pnpm-deps";
-        hash = "sha256-9ZPH3FucdwRud6ifJPzGAIjIaVbevJI4ryAHha/v2xc=";
+        hash = "sha256-U6KEfM2I0nxQpCCmhiPV+75+6aKch/wNloNngFYu/UI=";
         fetcherVersion = 2; # https://nixos.org/manual/nixpkgs/stable/#javascript-pnpm-fetcherVersion
       };
       stylus-declarative = pkgs.stdenv.mkDerivation {
@@ -28,14 +28,18 @@ inputs.not-denix.lib.module {
           pkgs.nodejs_24
           pkgs.pnpm
           pkgs.pnpm.configHook
+          pkgs.zip
         ];
         buildPhase = ''
-          pnpm run zip-firefox
+          pnpm run build-firefox
+          cd dist-firefox/
+          zip -r ../stylus.xpi .
+          cd ..
         '';
         installPhase = ''
           dst="$out/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
           mkdir -p $dst
-          cp stylus-firefox-*.zip $dst/${stylusExtensionId}.xpi
+          cp stylus.xpi $dst/${stylusExtensionId}.xpi
         '';
       };
     in
