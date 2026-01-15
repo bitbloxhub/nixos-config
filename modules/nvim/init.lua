@@ -397,6 +397,16 @@ require("lze").load({
 		lsp = {},
 	},
 	{
+		"astro",
+		---@type vim.lsp.ClientConfig
+		lsp = {},
+	},
+	{
+		"mdx_analyzer",
+		---@type vim.lsp.ClientConfig
+		lsp = {},
+	},
+	{
 		"lua_ls",
 		---@type vim.lsp.ClientConfig
 		lsp = {},
@@ -428,6 +438,12 @@ require("lze").load({
 		require("nvim-treesitter.configs").setup({
 			highlight = { enable = true },
 		})
+		vim.filetype.add({
+			extension = {
+				mdx = "mdx",
+			},
+		})
+		vim.treesitter.language.register("markdown", { "mdx" })
 	end,
 })
 

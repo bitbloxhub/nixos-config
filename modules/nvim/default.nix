@@ -41,6 +41,8 @@ inputs.not-denix.lib.module {
                 lua-language-server
                 typescript-language-server
                 svelte-language-server
+                astro-language-server
+                mdx-language-server
                 deno
                 rust-analyzer
                 ts_query_ls
