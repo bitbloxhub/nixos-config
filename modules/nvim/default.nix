@@ -36,6 +36,7 @@ inputs.not-denix.lib.module {
             lspsAndRuntimeDeps = {
               general = with pkgs; [
                 pkgs.python3Packages.jupytext
+                harper
                 basedpyright
                 ruff
                 lua-language-server

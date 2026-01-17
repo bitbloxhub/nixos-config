@@ -353,6 +353,11 @@ require("lze").load({
 		end,
 	},
 	{
+		"harper_ls",
+		---@type vim.lsp.ClientConfig
+		lsp = {},
+	},
+	{
 		"basedpyright",
 		---@type vim.lsp.ClientConfig
 		lsp = {},
