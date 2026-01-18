@@ -43,7 +43,7 @@
           options = [
             "-euc"
             ''
-              ln -sfT ${pkgs.vimPlugins.nvim-treesitter-parsers.xml} ./tree-sitter-xml
+              ln -sfT ${pkgs.vimPlugins.nvim-treesitter-parsers.xml} ./.tree-sitter-xml
               for f in "$@"; do
                 ${pkgs.ast-grep}/bin/ast-grep scan -U "$f"
               done
