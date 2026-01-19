@@ -504,6 +504,22 @@
         "type": "github"
       }
     },
+    "minimal-emacs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1768698358,
+        "narHash": "sha256-v2BtCIoR53kgy8bpeN4Vo6LHDb5bVooO2mk36rIAPaU=",
+        "owner": "jamescherti",
+        "repo": "minimal-emacs.d",
+        "rev": "5190f126c6a8eba5b2536f13682f53b494d1238c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jamescherti",
+        "repo": "minimal-emacs.d",
+        "type": "github"
+      }
+    },
     "niri-flake": {
       "inputs": {
         "niri-stable": [],
@@ -737,6 +753,7 @@
         "import-tree": "import-tree",
         "lib-aggregate": "lib-aggregate",
         "make-shell": "make-shell",
+        "minimal-emacs": "minimal-emacs",
         "niri-flake": "niri-flake",
         "nix-auto-ci": "nix-auto-ci",
         "nix-bwrapper": "nix-bwrapper",

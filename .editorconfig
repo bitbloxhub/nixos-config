@@ -7,7 +7,7 @@ end_of_line = lf
 indent_style = tab
 tab_width = 4
 
-[*.nix]
+[*.{nix,el}]
 indent_style = space
 indent_size = 2
 

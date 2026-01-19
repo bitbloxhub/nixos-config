@@ -148,6 +148,10 @@
       inputs.flake-compat.follows = "";
       url = "github:nicknovitski/make-shell";
     };
+    minimal-emacs = {
+      flake = false;
+      url = "github:jamescherti/minimal-emacs.d";
+    };
     niri-flake = {
       inputs = {
         niri-stable.follows = "";
