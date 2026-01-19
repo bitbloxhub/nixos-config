@@ -8,45 +8,17 @@ inputs.not-denix.lib.module {
 
   homeManager.ifEnabled =
     {
-      pkgs,
+      inputs',
       self',
       ...
     }:
     let
       stylusExtensionId = "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}";
-      src = (import ./npins).stylus-declarative;
-      pnpmDeps = pkgs.pnpm.fetchDeps {
-        inherit src;
-        pname = "stylus-pnpm-deps";
-        hash = "sha256-U6KEfM2I0nxQpCCmhiPV+75+6aKch/wNloNngFYu/UI=";
-        fetcherVersion = 2; # https://nixos.org/manual/nixpkgs/stable/#javascript-pnpm-fetcherVersion
-      };
-      stylus-declarative = pkgs.stdenv.mkDerivation {
-        inherit src pnpmDeps;
-        name = "stylus-declarative";
-        nativeBuildInputs = [
-          pkgs.nodejs_24
-          pkgs.pnpm
-          pkgs.pnpm.configHook
-          pkgs.zip
-        ];
-        buildPhase = ''
-          pnpm run build-firefox
-          cd dist-firefox/
-          zip -r ../stylus.xpi .
-          cd ..
-        '';
-        installPhase = ''
-          dst="$out/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
-          mkdir -p $dst
-          cp stylus.xpi $dst/${stylusExtensionId}.xpi
-        '';
-      };
     in
     {
       programs.firefox.profiles.nix = {
         extensions.packages = [
-          stylus-declarative
+          inputs'.firefox-extensions-declarative.packages.stylus-declarative
         ];
       };
       programs.firefox.policies = {

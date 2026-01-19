@@ -62,7 +62,6 @@ inputs.not-denix.lib.module {
         }
       ];
 
-      # See ./hm-systemd-packages.nix for more info
-      systemd.packages = [ pkgs.xdg-desktop-portal ] ++ config.xdg.portal.extraPortals;
+      systemd.user.packages = [ pkgs.xdg-desktop-portal ] ++ config.xdg.portal.extraPortals;
     };
 }

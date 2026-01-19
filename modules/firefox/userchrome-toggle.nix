@@ -7,32 +7,16 @@ inputs.not-denix.lib.module {
 
   homeManager.ifEnabled =
     {
-      pkgs,
+      inputs',
       ...
     }:
     let
       userChromeToggleExtensionId = "userchrome-toggle-extended@n2ezr.ru";
-      src = (import ./npins).userchrome-toggle-extended-2-declarative;
-      userchrome-toggle-extended-2-declarative = pkgs.stdenv.mkDerivation {
-        inherit src;
-        name = "userchrome-toggle-extended-2-declarative";
-        nativeBuildInputs = [
-          pkgs.zip
-        ];
-        buildPhase = ''
-          zip -r ../userchrome-toggle-extended-2-declarative.xpi .
-        '';
-        installPhase = ''
-          dst="$out/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
-          mkdir -p $dst
-          cp ../userchrome-toggle-extended-2-declarative.xpi $dst/${userChromeToggleExtensionId}.xpi
-        '';
-      };
     in
     {
       programs.firefox.profiles.nix = {
         extensions.packages = [
-          userchrome-toggle-extended-2-declarative
+          inputs'.firefox-extensions-declarative.packages.userchrome-toggle-extended-2-declarative
         ];
       };
       programs.firefox.policies = {

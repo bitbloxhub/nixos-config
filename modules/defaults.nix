@@ -27,22 +27,13 @@
 
   flake.modules.homeManager.default =
     {
-      pkgs,
       inputs',
       ...
     }:
     {
       home.packages = [
         inputs'.system-manager.packages.default
-        (inputs'.deploy-rs.packages.default.overrideAttrs (old: {
-          patches = (old.patches or [ ]) ++ [
-            # Fix multiple targets
-            (pkgs.fetchurl {
-              url = "https://github.com/serokell/deploy-rs/compare/125ae9e...c8b2cbe.diff";
-              hash = "sha256-18fFMbpLUy5hsdqsYVu/BIRYxroPuVhuJvARV1C+emw=";
-            })
-          ];
-        }))
+        inputs'.deploy-rs.packages.default
       ];
       xdg.enable = true;
       xdg.mime.enable = true;

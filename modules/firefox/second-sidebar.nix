@@ -12,18 +12,19 @@ inputs.not-denix.lib.module {
     }:
     let
       firefox-second-sidebar = pkgs.fetchFromGitHub {
-        owner = "aminought";
+        owner = "Satoxyan";
         repo = "firefox-second-sidebar";
-        rev = "0b77c8bc4e59e93acafeece99033a627fb68f67a";
-        hash = "sha256-sSclGRI5NnAuE+quzKuYHS547Qx37mtcAu89jpXUAt4=";
+        rev = "74aca2f60065537e2fc33f4b9d05cac70325dead";
+        hash = "sha256-HKJ7+yUBso6opIFPsyR3d6r+GB9pX5hHPflP0p+bstU=";
       };
     in
     {
-      home.file.".mozilla/firefox/nix/chrome/JS/second_sidebar.uc.mjs" = {
+      home.file.".mozilla/firefox/nix/chrome/JS" = {
         source = "${firefox-second-sidebar}/src/second_sidebar.uc.mjs";
+        recursive = true;
       };
-      home.file.".mozilla/firefox/nix/chrome/JS/second_sidebar" = {
-        source = "${firefox-second-sidebar}/src/second_sidebar";
+      home.file.".mozilla/firefox/nix/chrome/second_sidebar.css" = {
+        source = "${firefox-second-sidebar}/src/userChrome.css";
       };
     };
 }

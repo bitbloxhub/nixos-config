@@ -70,17 +70,20 @@ inputs.not-denix.lib.module {
       ...
     }:
     let
-      pnpmDeps = pkgs.pnpm_10.fetchDeps {
+      pnpm = pkgs.pnpm_10;
+      src = ./.;
+      pnpmDeps = pkgs.fetchPnpmDeps {
+        inherit src pnpm;
         pname = "astal-shell-pnpm-deps";
-        src = ./.;
 
-        fetcherVersion = 2;
-        hash = "sha256-jQ9HOO8Cjh66C0ElatYmikTfMenjk5c5vANfZ4q7I2k=";
+        fetcherVersion = 3;
+        hash = "sha256-+6d6uC++ColsHwcHmDmDYPLsS1L6efH10s/q3cp0Xo4=";
 
         # From https://github.com/retrozinndev/colorshell/blob/babfd11/nix/colorshell.nix#L102
-        # fetcher version 2 fails if there are no *-exec files in the output
+        # fetcher version 3 ALSO fails if there are no *-exec files in the output
+        # See https://github.com/NixOS/nixpkgs/commit/ee4e6c1 for storePath
         preFixup = ''
-          touch $out/.dummy-exec
+          touch $storePath/.dummy-exec
         '';
       };
     in
@@ -94,14 +97,14 @@ inputs.not-denix.lib.module {
       };
 
       packages.astal-shell = pkgs.stdenv.mkDerivation {
-        inherit pnpmDeps;
+        inherit src pnpmDeps;
 
         name = "astal-shell";
-        src = ./.;
 
         nativeBuildInputs = [
-          pkgs.nodejs_24
-          pkgs.pnpm_10.configHook
+          pkgs.nodejs_25
+          pnpm
+          pkgs.pnpmConfigHook
           pkgs.wrapGAppsHook4
           pkgs.gobject-introspection
           inputs'.ags.packages.default

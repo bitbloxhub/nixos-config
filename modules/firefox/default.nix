@@ -1,5 +1,4 @@
 {
-  lib,
   inputs,
   self,
   ...
@@ -29,6 +28,21 @@ inputs.not-denix.lib.module {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    firefox-extensions-declarative = {
+      url = "github:firefox-extensions-declarative/firefox-extensions-declarative";
+      inputs = {
+        actions-nix.follows = "actions-nix";
+        flake-file.follows = "flake-file";
+        flake-parts.follows = "flake-parts";
+        flint.follows = "flint";
+        git-hooks.follows = "git-hooks";
+        import-tree.follows = "import-tree";
+        make-shell.follows = "make-shell";
+        nix-auto-ci.follows = "nix-auto-ci";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
   };
 
   options.programs.firefox = {
@@ -37,6 +51,7 @@ inputs.not-denix.lib.module {
 
   homeManager.ifEnabled =
     {
+      lib,
       pkgs,
       inputs',
       ...
@@ -45,8 +60,8 @@ inputs.not-denix.lib.module {
       fx-autoconfig = pkgs.fetchFromGitHub {
         owner = "MrOtherGuy";
         repo = "fx-autoconfig";
-        rev = "849602523e2a7fe7747dd964cc028e54078a5247";
-        hash = "sha256-ibtYuRv21s4T+PbV0o3jRAuG/6mlaLzwWhkEivL1sho=";
+        rev = "76232083171a8d609bf0258549d843b0536685e1";
+        hash = "sha256-xiCikg8c855w+PCy7Wmc3kPwIHr80pMkkK7mFQbPCs4=";
       };
     in
     {
@@ -148,7 +163,8 @@ inputs.not-denix.lib.module {
             "browser.urlbar.trimHttps" = lib.mkForce false;
             "browser.urlbar.trimURLs" = false;
             "browser.tabs.allow_transparent_browser" = true;
-            "widget.wayland.opaque-region.enabled" = false;
+            # See https://bugzilla.mozilla.org/show_bug.cgi?id=2010733
+            # "widget.wayland.opaque-region.enabled" = false;
             "privacy.resistFingerprinting.block_mozAddonManager" = true;
             "extensions.webextensions.restrictedDomains" = "";
             "userChromeJS.firstRunShown" = true;
@@ -241,6 +257,37 @@ inputs.not-denix.lib.module {
           };
         };
       };
+
+      # See https://github.com/nix-community/home-manager/issues/6934#issuecomment-3471230590
+      # home.activation =
+      #   let
+      #     profilePath =
+      #       if pkgs.stdenv.isDarwin then
+      #         "/Users/${config.my.user.username}/Library/Application\ Support/Firefox"
+      #       else
+      #         "/home/${config.my.user.username}/.mozilla/firefox";
+      #   in
+      #   {
+      #     makeProfilesIniWritable =
+      #       lib.hm.dag.entryAfter [ "writeBoundary" ]
+      #         # bash
+      #         ''
+      #           ini="${profilePath}/profiles.ini"
+      #           bak="${profilePath}/profiles.ini.home-manager.backup" # or whatever you use as backupFileExtension
+      #
+      #           # prevent failing on initial run
+      #           if [ ! -e "$ini" ]; then
+      #             touch "$ini"
+      #           fi
+      #
+      #           if [ ! -f "$bak" ]; then
+      #             cp -L -- "$ini" "$bak"
+      #           fi
+      #
+      #           mv -f -- "$bak" "$ini"
+      #           chmod +w "$ini"
+      #         '';
+      #   };
 
       xdg.mimeApps = {
         enable = true;

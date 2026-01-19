@@ -1,4 +1,5 @@
 @import url("catppuccin.css");
+@import url("second_sidebar.css");
 
 * {
 	font-family: "Fira Code" !important;

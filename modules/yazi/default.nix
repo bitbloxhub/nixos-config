@@ -21,7 +21,6 @@ inputs.not-denix.lib.module {
 
   homeManager.ifEnabled =
     {
-      config,
       pkgs,
       inputs',
       ...
@@ -151,53 +150,6 @@ inputs.not-denix.lib.module {
               desc = "Move in relative steps";
             }
           ) (lib.lists.range 0 9));
-        theme = {
-          flavor = {
-            light = "catppuccin";
-            dark = "catppuccin";
-          };
-          which = {
-            mask.hidden = true;
-          };
-          # See https://github.com/sxyazi/yazi/pull/3419 and https://github.com/catppuccin/yazi/pull/29
-          indicator = {
-            parent = {
-              reversed = false;
-              fg = "#1e1e2e";
-              bg = "#cdd6f4";
-            };
-            current = {
-              fg = "#1e1e2e";
-              bg = "#cba6f7";
-            };
-            preview = {
-              fg = "#1e1e2e";
-              bg = "#cba6f7";
-            };
-          };
-        };
-      };
-
-      # See https://github.com/catppuccin/nix/pull/704#issuecomment-3213454236
-      catppuccin.yazi.enable = false;
-      # Use the yazi nightly theme from https://github.com/catppuccin/yazi/pull/29
-      catppuccin.sources.yazi = pkgs.fetchFromGitHub {
-        owner = "xfzv";
-        repo = "yazi";
-        rev = "699c43d149c216732b6e0b103933ae10c37bcd15";
-        hash = "sha256-ScigFyqbAHEGi19TyNNeVyE4iOgWLMpD833XiiRL0Nc=";
-      };
-
-      xdg.configFile = {
-        "yazi/yazi-plugin".source = "${inputs.yazi}/yazi-plugin";
-
-        "yazi/flavors/catppuccin.yazi/flavor.toml".source =
-          with config.catppuccin;
-          "${sources.yazi}/themes/${flavor}/catppuccin-${flavor}-${accent}.toml";
-
-        "yazi/flavors/catppuccin.yazi/tmtheme.xml".source =
-          with config.catppuccin;
-          "${sources.bat}/Catppuccin ${lib.toSentenceCase flavor}.tmTheme";
       };
     };
 }

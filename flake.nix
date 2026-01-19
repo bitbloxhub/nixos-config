@@ -89,6 +89,21 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
     };
+    firefox-extensions-declarative = {
+      inputs = {
+        actions-nix.follows = "actions-nix";
+        flake-file.follows = "flake-file";
+        flake-parts.follows = "flake-parts";
+        flint.follows = "flint";
+        git-hooks.follows = "git-hooks";
+        import-tree.follows = "import-tree";
+        make-shell.follows = "make-shell";
+        nix-auto-ci.follows = "nix-auto-ci";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+      url = "github:firefox-extensions-declarative/firefox-extensions-declarative";
+    };
     flake-file.url = "github:vic/flake-file";
     flake-firefox-nightly = {
       inputs = {

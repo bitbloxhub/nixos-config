@@ -8,37 +8,14 @@ inputs.not-denix.lib.module {
 
   homeManager.ifEnabled =
     {
-      pkgs,
+      inputs',
       self',
       ...
     }:
-    let
-      src = (import ./npins).darkreader-declarative;
-      npmDeps = pkgs.importNpmLock.buildNodeModules {
-        nodejs = pkgs.nodejs_24;
-        npmRoot = src;
-        package = builtins.fromJSON (builtins.readFile "${src}/package.json");
-      };
-      darkreader-declarative = pkgs.stdenv.mkDerivation {
-        inherit src;
-        name = "darkreader-declarative";
-        nativeBuildInputs = [ pkgs.nodejs_24 ];
-        buildPhase = ''
-          mkdir -p node_modules
-          cp -r ${npmDeps}/node_modules/* node_modules/
-          npm run build:firefox
-        '';
-        installPhase = ''
-          dst="$out/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
-          mkdir -p $dst
-          cp build/release/darkreader-firefox.xpi $dst/addon@darkreader.org.xpi
-        '';
-      };
-    in
     {
       programs.firefox.profiles.nix = {
         extensions.packages = [
-          darkreader-declarative
+          inputs'.firefox-extensions-declarative.packages.darkreader-declarative
         ];
       };
       programs.firefox.policies = {
