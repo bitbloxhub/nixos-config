@@ -464,9 +464,6 @@ require("lze").load({
 			-- enables treesitter based folds
 			vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 
-			-- enables treesitter based indentation
-			vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-
 			return true
 		end
 
