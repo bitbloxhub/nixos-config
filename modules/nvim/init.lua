@@ -436,6 +436,9 @@ require("lze").load({
 	},
 })
 
+-- TODO: remove when https://github.com/NixOS/nixpkgs/pull/480516 makes it into nixos-unstable
+vim.opt.rtp:prepend(nixCats.extra.nvim_treesitter_runtime)
+
 require("lze").load({
 	"nvim-treesitter",
 	event = "DeferredUIEnter",

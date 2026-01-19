@@ -111,6 +111,8 @@ inputs.not-denix.lib.module {
             };
             extra = {
               tree_sitter_orgmode_path = "${pkgs.luajitPackages.tree-sitter-orgmode}";
+              # TODO: remove when https://github.com/NixOS/nixpkgs/pull/480516 makes it into nixos-unstable
+              nvim_treesitter_runtime = "${pkgs.vimPlugins.nvim-treesitter}/runtime";
             };
           };
         };
