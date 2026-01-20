@@ -101,6 +101,13 @@ inputs.not-denix.lib.module {
           };
         };
 
+        policies.Permissions.Notifications = {
+          Allow = [
+            "https://mail.google.com"
+            "https://chat.google.com"
+          ];
+        };
+
         profiles.nix = {
           id = 0;
           isDefault = true;
