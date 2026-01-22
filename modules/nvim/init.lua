@@ -353,7 +353,7 @@ require("lze").load({
 		end,
 	},
 	{
-		"harper_ls",
+		"codebook",
 		---@type vim.lsp.ClientConfig
 		lsp = {},
 	},
