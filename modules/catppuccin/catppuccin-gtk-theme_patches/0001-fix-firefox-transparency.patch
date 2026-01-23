@@ -1,0 +1,27 @@
+From 7ac9d504b37addb2024c09e2074bb7a36c40c830 Mon Sep 17 00:00:00 2001
+From: bitbloxhub <45184892+bitbloxhub@users.noreply.github.com>
+Date: Fri, 23 Jan 2026 19:35:22 +0000
+Subject: [PATCH] fix: firefox transparency
+
+---
+ themes/src/sass/gtk/_common-3.0.scss | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/themes/src/sass/gtk/_common-3.0.scss b/themes/src/sass/gtk/_common-3.0.scss
+index 4148a1b40..79471b02d 100644
+--- a/themes/src/sass/gtk/_common-3.0.scss
++++ b/themes/src/sass/gtk/_common-3.0.scss
+@@ -4602,7 +4602,9 @@ decoration {
+ 			.background.csd & {
+ 				border: 1px solid highlight($background);
+ 				background-clip: border-box;
+-				background-color: $background;
++				/* firefox transparency fix */
++				/* background-color: $background; */
++				background-color: transparent;
+ 			}
+ 		}
+ 	}
+-- 
+2.52.0
+

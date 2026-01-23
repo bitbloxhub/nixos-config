@@ -128,7 +128,17 @@ inputs.not-denix.lib.module {
       gtk = {
         enable = true;
         theme = {
-          package = pkgs.magnetic-catppuccin-gtk;
+          package = pkgs.magnetic-catppuccin-gtk.overrideAttrs (old: {
+            size = "compact";
+            accent = [ config.my.themes.catppuccin.accent ];
+            tweaks = [ config.my.themes.catppuccin.flavor ];
+            patches =
+              (old.patches or [ ])
+              ++ (builtins.map (x: ./catppuccin-gtk-theme_patches/${x}) (
+                builtins.attrNames (builtins.readDir ./catppuccin-gtk-theme_patches)
+              ));
+
+          });
           name = "Catppuccin-GTK-Dark";
         };
 
