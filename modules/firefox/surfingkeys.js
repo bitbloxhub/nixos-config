@@ -474,6 +474,10 @@ api.unmap("s") // Search Selected With
 api.unmap("Z") // Surfingkeys session management
 api.unmap("A") // LLM Chat
 api.unmap("o") // Omnibar
+// Remap omnibar for vim-like marks
+api.mapkey("om", "Omnibar for vim-like marks", () => {
+	api.Front.openOmnibar({ type: "VIMarks" })
+})
 api.unmap("b") // Bookmarks omnibar
 api.unmap("go") // Open a URL in current tab
 api.unmap("t") // Open a URL
