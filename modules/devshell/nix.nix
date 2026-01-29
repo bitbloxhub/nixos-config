@@ -7,7 +7,7 @@
     {
       make-shells.default = {
         packages = [
-          pkgs.nixfmt-rfc-style
+          pkgs.nixfmt
           pkgs.deadnix
           pkgs.statix
         ];
