@@ -1,0 +1,17 @@
+[default.extend-words]
+# https://github.com/Aylur/ags
+ags = "ags"
+# https://github.com/nix-community/nixos-facter
+facter = "facter"
+# Neovim keymap descriptions
+# TODO: only apply to lua modules/nvim
+eferences = "eferences"
+ymbols = "ymbols"
+efinition = "efinition"
+ist = "ist"
+# https://en.wikipedia.org/wiki/Intel_High_Definition_Audio
+# TODO: only apply to facter.json
+hda = "hda"
+
+[files]
+extend-exclude = ["**/*.patch"]

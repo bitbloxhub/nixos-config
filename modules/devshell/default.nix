@@ -26,6 +26,8 @@
           pkgs.npins
           pkgs.nixos-facter
           inputs'.flint.packages.default
+          # Spell check
+          pkgs.typos
         ];
       };
     };

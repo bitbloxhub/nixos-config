@@ -21,6 +21,7 @@
       treefmt = {
         projectRootFile = "flake.lock";
 
+        programs.typos.enable = true;
         programs.nixfmt.enable = true;
         programs.deadnix.enable = true;
         programs.statix.enable = true;
@@ -60,6 +61,9 @@
         settings.global.excludes = [
           "*/npins/*"
           "**/pnpm-lock.yaml"
+          # Git submodules
+          "modules/wezterm/resurrect.wezterm"
+          "modules/wezterm/wezterm-types"
         ];
       };
     };

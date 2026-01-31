@@ -43,7 +43,7 @@ inputs.not-denix.lib.module {
             styleSystemControls = true;
             darkColorScheme = "default";
             lightColorScheme = "default";
-            immedateModify = false;
+            immediateModify = false;
           };
           disabledFor = (lib.importJSON self'.packages.catppuccin-userstyles-domains) ++ [
             "github.com"

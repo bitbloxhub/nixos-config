@@ -350,10 +350,12 @@ require("lze").load({
 					end, { desc = "Format current buffer with LSP" })
 				end,
 			})
+			-- Always enable typos_lsp
+			vim.lsp.enable("typos_lsp")
 		end,
 	},
 	{
-		"codebook",
+		"typos_lsp",
 		---@type vim.lsp.ClientConfig
 		lsp = {},
 	},

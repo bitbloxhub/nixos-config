@@ -36,7 +36,7 @@ inputs.not-denix.lib.module {
             lspsAndRuntimeDeps = {
               general = with pkgs; [
                 pkgs.python3Packages.jupytext
-                codebook
+                typos-lsp
                 basedpyright
                 ruff
                 lua-language-server
