@@ -288,11 +288,6 @@ require("lze").load({
 	end,
 })
 
--- https://github.com/BirdeeHub/lzextras/issues/94#issuecomment-3836938297
-require("lze").h.lsp.set_ft_fallback(function(name)
-	return name and ((vim.lsp.config[name] or {}).filetypes or nil) or nil
-end)
-
 require("lze").load({
 	{
 		"nvim-lspconfig",

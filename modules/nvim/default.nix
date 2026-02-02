@@ -64,13 +64,13 @@ inputs.not-denix.lib.module {
             startupPlugins = {
               general = with pkgs.vimPlugins; [
                 lze
-                # https://github.com/BirdeeHub/lzextras/issues/94, remove when update
+                # https://github.com/BirdeeHub/lzextras/issues/94, remove when nixpkgs updates it
                 (lzextras.overrideAttrs {
                   src = pkgs.fetchFromGitHub {
                     owner = "BirdeeHub";
                     repo = "lzextras";
-                    rev = "4d5b4760f967ab79dc1b54989ea75f19b91cca64";
-                    hash = "sha256-qBfvQn+uLm1BHNtXdKgv63CnS9PntgBWesih7n/h0Yc=";
+                    rev = "20bfe66fdfb1ee1a23994acec043191aa6d54e6e";
+                    hash = "sha256-hWIN/wuDpSu8xwqPmdjQREKMbnPeo/nUybu3Z2q/emY=";
                   };
                 })
                 mini-nvim
