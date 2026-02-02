@@ -47,6 +47,7 @@ inputs.not-denix.lib.module {
                 deno
                 rust-analyzer
                 ts_query_ls
+                gopls
               ];
             };
             python3.libraries = {

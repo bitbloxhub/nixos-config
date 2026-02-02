@@ -439,6 +439,11 @@ require("lze").load({
 			},
 		},
 	},
+	{
+		"gopls",
+		---@type vim.lsp.ClientConfig
+		lsp = {},
+	},
 })
 
 require("lze").load({
