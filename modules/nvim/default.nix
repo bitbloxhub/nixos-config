@@ -63,7 +63,15 @@ inputs.not-denix.lib.module {
             startupPlugins = {
               general = with pkgs.vimPlugins; [
                 lze
-                lzextras
+                # https://github.com/BirdeeHub/lzextras/issues/94, remove when update
+                (lzextras.overrideAttrs {
+                  src = pkgs.fetchFromGitHub {
+                    owner = "BirdeeHub";
+                    repo = "lzextras";
+                    rev = "4d5b4760f967ab79dc1b54989ea75f19b91cca64";
+                    hash = "sha256-qBfvQn+uLm1BHNtXdKgv63CnS9PntgBWesih7n/h0Yc=";
+                  };
+                })
                 mini-nvim
                 catppuccin-nvim
                 fidget-nvim
