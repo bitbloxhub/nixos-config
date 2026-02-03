@@ -67,6 +67,19 @@ inputs.not-denix.lib.module {
       };
     };
 
+  systemManager.ifEnabled =
+    {
+      config,
+      ...
+    }:
+    {
+      systemd.tmpfiles.rules = [
+        "L+ /usr/share/wayland-sessions/niri.desktop - - - - ${(niriPkgsForSystem config.my.hardware.platform).niri-unstable}/share/wayland-sessions/niri.desktop"
+        "L+ /etc/systemd/user/niri.service - - - - ${(niriPkgsForSystem config.my.hardware.platform).niri-unstable}/share/systemd/user/niri.service"
+        "L+ /etc/systemd/user/niri-shutdown.target - - - - ${(niriPkgsForSystem config.my.hardware.platform).niri-unstable}/share/systemd/user/niri-shutdown.target"
+      ];
+    };
+
   homeManager.ifEnabled =
     {
       config,
