@@ -443,7 +443,7 @@ require("lze").load({
 
 require("lze").load({
 	"nvim-treesitter",
-	event = "DeferredUIEnter",
+	lazy = false,
 	after = function()
 		vim.filetype.add({
 			extension = {
