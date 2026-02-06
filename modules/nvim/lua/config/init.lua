@@ -162,6 +162,7 @@ require("lze").load({
 	{ import = "config.plugins.resession" },
 	{ import = "config.plugins.textobjects" },
 	{ import = "config.plugins.tree-sitter" },
+	{ import = "config.plugins.typst-preview" },
 	{ import = "config.plugins.visual-whitespace" },
 	{ import = "config.plugins.which-key" },
 	{ import = "config.plugins.yazi" },

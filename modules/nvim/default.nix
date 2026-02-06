@@ -84,6 +84,7 @@ inputs.not-denix.lib.module {
           colorful-winsep-nvim
           codediff-nvim
           yazi-nvim
+          typst-preview-nvim
         ];
       };
       extraPackages = with pkgs; [
@@ -99,6 +100,8 @@ inputs.not-denix.lib.module {
         rust-analyzer
         ts_query_ls
         gopls
+        tinymist
+        websocat
       ];
       settings = {
         tree_sitter_orgmode_path = "${pkgs.luajitPackages.tree-sitter-orgmode}";

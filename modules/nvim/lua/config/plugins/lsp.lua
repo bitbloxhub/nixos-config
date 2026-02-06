@@ -225,4 +225,14 @@ return {
 		---@type vim.lsp.ClientConfig
 		lsp = {},
 	},
+	{
+		"tinymist",
+		---@type vim.lsp.ClientConfig
+		lsp = {
+			init_options = {
+				formatterMode = "typstyle",
+				exportPdf = "onSave",
+			},
+		},
+	},
 }
