@@ -5,6 +5,9 @@
 		"path": ["lua/?.lua", "lua/?/init.lua"]
 	},
 	"workspace": {
-		"library": ["$VIMRUNTIME", "$NIXCATS_PACK_DIR", "${3rd}/luv/library"]
+		"library": ["$VIMRUNTIME", "$NVIM_PACK_DIR", "${3rd}/luv/library"]
+	},
+	"diagnostics": {
+		"disable": ["missing-fields"]
 	}
 }

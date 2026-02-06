@@ -182,7 +182,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:soupglasses/nix-system-graphics";
     };
-    nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    nix-wrapper-modules = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:BirdeeHub/nix-wrapper-modules";
+    };
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     not-denix = {
