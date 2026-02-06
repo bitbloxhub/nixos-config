@@ -201,7 +201,10 @@
       url = "github:bitbloxhub/not-denix";
     };
     system-manager = {
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        userborn.inputs.flake-parts.follows = "flake-parts";
+      };
       url = "github:numtide/system-manager";
     };
     systems.url = "github:nix-systems/default";

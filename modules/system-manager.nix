@@ -6,7 +6,10 @@
 {
   config.flake-file.inputs.system-manager = {
     url = "github:numtide/system-manager";
-    inputs.nixpkgs.follows = "nixpkgs";
+    inputs = {
+      nixpkgs.follows = "nixpkgs";
+      userborn.inputs.flake-parts.follows = "flake-parts";
+    };
   };
 
   options.flake = flake-parts-lib.mkSubmoduleOptions {
