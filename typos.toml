@@ -3,6 +3,8 @@
 ags = "ags"
 # https://github.com/nix-community/nixos-facter
 facter = "facter"
+# https://github.com/folke/noice.nvim
+noice = "noice"
 # Neovim keymap descriptions
 # TODO: only apply to lua modules/nvim
 eferences = "eferences"

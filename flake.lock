@@ -675,18 +675,23 @@
         "type": "github"
       }
     },
-    "nixCats": {
+    "nix-wrapper-modules": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1769578476,
-        "narHash": "sha256-4+KbiBcC6hQ3sh0UbPXjy6TOfLh9yhskRlfPzyZ2FH4=",
+        "lastModified": 1770280092,
+        "narHash": "sha256-4u0qZ1/lq6KRmX2gi1ToqUKiDwj1jSL2gALnbSsTjqQ=",
         "owner": "BirdeeHub",
-        "repo": "nixCats-nvim",
-        "rev": "48f8be4bdafccfa19ceaaf08071a15eca36fdb1d",
+        "repo": "nix-wrapper-modules",
+        "rev": "bf3ecf70c00c1260e19bab6b13ca41a83d80c56f",
         "type": "github"
       },
       "original": {
         "owner": "BirdeeHub",
-        "repo": "nixCats-nvim",
+        "repo": "nix-wrapper-modules",
         "type": "github"
       }
     },
@@ -825,7 +830,7 @@
         "nix-auto-ci": "nix-auto-ci",
         "nix-bwrapper": "nix-bwrapper",
         "nix-system-graphics": "nix-system-graphics",
-        "nixCats": "nixCats",
+        "nix-wrapper-modules": "nix-wrapper-modules",
         "nixos-facter-modules": "nixos-facter-modules",
         "nixpkgs": "nixpkgs",
         "not-denix": "not-denix",
