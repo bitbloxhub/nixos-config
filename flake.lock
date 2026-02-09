@@ -49,6 +49,34 @@
         "type": "github"
       }
     },
+    "angrr": {
+      "inputs": {
+        "flake-compat": [],
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nix-darwin": [],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1770395915,
+        "narHash": "sha256-TEZVaPse17RzzdPtPyzDheFLgoXOAw89AdADDB5hnLU=",
+        "owner": "linyinfeng",
+        "repo": "angrr",
+        "rev": "efe8e391524bceda8820ad0e5607688eda4f3fc6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "linyinfeng",
+        "repo": "angrr",
+        "type": "github"
+      }
+    },
     "astal": {
       "inputs": {
         "nixpkgs": [
@@ -805,6 +833,7 @@
       "inputs": {
         "actions-nix": "actions-nix",
         "ags": "ags",
+        "angrr": "angrr",
         "astal": "astal",
         "betterfox-nix": "betterfox-nix",
         "catppuccin": "catppuccin",

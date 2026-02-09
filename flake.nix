@@ -43,6 +43,16 @@
       };
       url = "github:aylur/ags";
     };
+    angrr = {
+      inputs = {
+        flake-compat.follows = "";
+        flake-parts.follows = "flake-parts";
+        nix-darwin.follows = "";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+      url = "github:linyinfeng/angrr";
+    };
     astal = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:aylur/astal";
