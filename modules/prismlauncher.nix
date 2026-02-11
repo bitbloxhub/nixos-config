@@ -1,42 +1,41 @@
 {
   inputs,
-  self,
   ...
 }:
-inputs.not-denix.lib.module {
-  name = "programs.gaming.prismlauncher";
-
-  options.programs.gaming.prismlauncher = {
-    enable = self.lib.mkDisableOption "PrismLauncher";
-  };
-
-  homeManager.ifEnabled =
+{
+  flake.aspects.gaming =
+    { aspect, ... }:
     {
-      pkgs,
-      ...
-    }:
-    {
-      home.packages = [
-        (inputs.nix-bwrapper.lib.${pkgs.stdenv.hostPlatform.system}.bwrapperEval (_: {
-          app = {
-            package = pkgs.prismlauncher.override {
-              additionalPrograms = [
-                pkgs.ffmpeg
-                pkgs.vlc
+      includes = [ aspect._.prismlauncher ];
+      _.prismlauncher.homeManager =
+        {
+          pkgs,
+          ...
+        }:
+        {
+
+          home.packages = [
+            (inputs.nix-bwrapper.lib.${pkgs.stdenv.hostPlatform.system}.bwrapperEval (_: {
+              app = {
+                package = pkgs.prismlauncher.override {
+                  additionalPrograms = [
+                    pkgs.ffmpeg
+                    pkgs.vlc
+                  ];
+                  additionalLibs = [ pkgs.libvlc ];
+                };
+                addPkgs = [
+                  pkgs.kdePackages.qtstyleplugin-kvantum
+                  pkgs.fira-code
+                ];
+              };
+              mounts.read = [
+                "/run/systemd"
+                "/sys/kernel/mm/hugepages"
+                "/sys/kernel/mm/transparent_hugepage"
               ];
-              additionalLibs = [ pkgs.libvlc ];
-            };
-            addPkgs = [
-              pkgs.kdePackages.qtstyleplugin-kvantum
-              pkgs.fira-code
-            ];
-          };
-          mounts.read = [
-            "/run/systemd"
-            "/sys/kernel/mm/hugepages"
-            "/sys/kernel/mm/transparent_hugepage"
+            })).config.build.package
           ];
-        })).config.build.package
-      ];
+        };
     };
 }

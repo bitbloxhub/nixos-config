@@ -5,6 +5,7 @@
 {
   imports = [
     inputs.flake-file.flakeModules.default
+    inputs.flake-aspects.flakeModule
   ];
 
   flake-file.inputs = {
@@ -13,6 +14,7 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
     flake-file.url = "github:vic/flake-file";
+    flake-aspects.url = "github:vic/flake-aspects";
     import-tree.url = "github:vic/import-tree";
 
     flint = {
@@ -46,23 +48,9 @@
       };
     };
 
-    not-denix = {
-      url = "github:bitbloxhub/not-denix";
-      inputs = {
-        actions-nix.follows = "actions-nix";
-        flake-file.follows = "flake-file";
-        flake-parts.follows = "flake-parts";
-        flint.follows = "flint";
-        git-hooks.follows = "git-hooks";
-        import-tree.follows = "import-tree";
-        make-shell.follows = "make-shell";
-        nix-auto-ci.follows = "nix-auto-ci";
-        nixpkgs.follows = "nixpkgs";
-        treefmt-nix.follows = "treefmt-nix";
-      };
-    };
-
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";

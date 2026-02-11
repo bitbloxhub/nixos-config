@@ -1,36 +1,32 @@
 {
-  inputs,
-  self,
-  ...
-}:
-inputs.not-denix.lib.module {
-  name = "programs.nushell";
-
-  options.programs.nushell = {
-    enable = self.lib.mkDisableOption "Nushell";
-  };
-
-  nixos.ifEnabled =
+  flake.aspects.cli =
+    { aspect, ... }:
     {
-      pkgs,
-      ...
-    }:
-    {
-      users.defaultUserShell = pkgs.nushell;
-    };
+      includes = [ aspect._.nushell ];
+      _.nushell = {
+        nixos =
+          {
+            pkgs,
+            ...
+          }:
+          {
+            users.defaultUserShell = pkgs.nushell;
+          };
 
-  homeManager.ifEnabled = {
-    programs.nushell.enable = true;
-    programs.nushell.settings = {
-      show_banner = false;
-    };
-    programs.nushell.extraConfig = "source ${./wezterm.nu}";
+        homeManager = {
+          programs.nushell.enable = true;
+          programs.nushell.settings = {
+            show_banner = false;
+          };
+          programs.nushell.extraConfig = "source ${./wezterm.nu}";
 
-    programs.nushell.environmentVariables = {
-      CARAPACE_BRIDGES = "zsh,fish,bash,inshellisense";
-    };
+          programs.nushell.environmentVariables = {
+            CARAPACE_BRIDGES = "zsh,fish,bash,inshellisense";
+          };
 
-    programs.carapace.enable = true;
-    programs.carapace.enableNushellIntegration = true;
-  };
+          programs.carapace.enable = true;
+          programs.carapace.enableNushellIntegration = true;
+        };
+      };
+    };
 }

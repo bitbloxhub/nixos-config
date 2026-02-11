@@ -1,39 +1,35 @@
 {
-  inputs,
-  self,
-  ...
-}:
-inputs.not-denix.lib.module {
-  name = "fonts";
+  flake.aspects.gui =
+    { aspect, ... }:
+    {
+      includes = [ aspect._.fonts ];
+      _.fonts = {
+        nixos =
+          {
+            pkgs,
+            ...
+          }:
+          {
+            fonts.packages = [
+              pkgs.fira-code
+              pkgs.nerd-fonts.symbols-only
+            ];
+          };
 
-  options.fonts = {
-    enable = self.lib.mkDisableOption "fonts";
-  };
-
-  nixos.ifEnabled =
-    {
-      pkgs,
-      ...
-    }:
-    {
-      fonts.packages = [
-        pkgs.fira-code
-        pkgs.nerd-fonts.symbols-only
-      ];
-    };
-
-  homeManager.ifEnabled =
-    {
-      pkgs,
-      ...
-    }:
-    {
-      gtk = {
-        enable = true;
-        font = {
-          package = pkgs.fira-code;
-          name = "Fira Code";
-        };
+        homeManager =
+          {
+            pkgs,
+            ...
+          }:
+          {
+            gtk = {
+              enable = true;
+              font = {
+                package = pkgs.fira-code;
+                name = "Fira Code";
+              };
+            };
+          };
       };
     };
 }

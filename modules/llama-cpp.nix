@@ -1,26 +1,30 @@
 {
-  inputs,
-  self,
-  ...
-}:
-inputs.not-denix.lib.module {
-  name = "programs.llama-cpp";
+  flake.aspects = {
+    cli =
+      { aspect, ... }:
+      {
+        includes = [ aspect._.llama-cpp ];
+        _.llama-cpp.homeManager =
+          {
+            pkgs,
+            ...
+          }:
+          {
+            home.packages = [
+              pkgs.llama-cpp
+            ];
+          };
+      };
 
-  options.programs.llama-cpp = {
-    enable = self.lib.mkDisableOption "llama.cpp";
-  };
-
-  homeManager.ifEnabled =
-    {
-      config,
-      pkgs,
-      ...
-    }:
-    {
-      home.packages = [
-        (pkgs.llama-cpp.override {
-          cudaSupport = config.my.hardware.isNvidia;
+    # Nicest way i could think of to do this
+    nvidia.homeManager = {
+      nixpkgs.overlays = [
+        (_final: prev: {
+          llama-cpp = prev.llama-cpp.override {
+            cudaSupport = true;
+          };
         })
       ];
     };
+  };
 }

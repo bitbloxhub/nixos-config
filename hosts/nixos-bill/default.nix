@@ -1,19 +1,42 @@
 {
-  hosts."nixos-bill" = {
-    classes = [ "nixos" ];
-    config = {
-      my.user.username = "jonahgam";
-      my.hostname = "nixos-bill";
-      my.hardware.platform = "x86_64-linux";
-      my.hardware.facter-report = ./facter.json;
-    };
+  inputs,
+  self,
+  ...
+}:
+{
+  flake.nixosConfigurations."nixos-bill" = self.lib.configs.nixos "x86_64-linux" "host_nixos-bill";
+
+  flake.deploy.nodes.nixos-bill = {
+    sshUser = "jonahgam";
+    interactiveSudo = true;
   };
 
-  flake.modules.nixos.host_nixos-bill = {
-    imports = [
-      ./hardware-configuration.nix
-    ];
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
-  };
+  flake.aspects =
+    { aspects, ... }:
+    {
+      host_nixos-bill = {
+        nixos = {
+          imports = [
+            ./hardware-configuration.nix
+            inputs.nixos-facter-modules.nixosModules.facter
+          ];
+          boot.loader.systemd-boot.enable = true;
+          boot.loader.efi.canTouchEfiVariables = true;
+
+          facter.reportPath = ./facter.json;
+        };
+        homeManager = { };
+        includes = with aspects; [
+          system
+          (system._.hostname "nixos-bill")
+          (system._.user {
+            username = "jonahgam";
+            aspect = "host_nixos-bill";
+          })
+          cli
+          gui
+          (rices._.catppuccin { })
+        ];
+      };
+    };
 }

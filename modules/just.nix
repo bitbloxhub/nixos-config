@@ -1,11 +1,4 @@
 {
-  inputs,
-  self,
-  ...
-}:
-inputs.not-denix.lib.module {
-  name = "programs.just";
-
   perSystem =
     {
       pkgs,
@@ -19,20 +12,21 @@ inputs.not-denix.lib.module {
       };
     };
 
-  options.programs.just = {
-    enable = self.lib.mkDisableOption "just";
-  };
-
-  homeManager.ifEnabled =
+  flake.aspects.cli =
+    { aspect, ... }:
     {
-      pkgs,
-      ...
-    }:
-    {
-      config.home.packages = [
-        (pkgs.writeShellScriptBin "sjust" ''
-          ${pkgs.just}/bin/just --justfile ${../Justfile} --working-directory ~/nixos-config/
-        '')
-      ];
+      includes = [ aspect._.just ];
+      _.just.homeManager =
+        {
+          pkgs,
+          ...
+        }:
+        {
+          config.home.packages = [
+            (pkgs.writeShellScriptBin "sjust" ''
+              ${pkgs.just}/bin/just --justfile ${../Justfile} --working-directory ~/nixos-config/
+            '')
+          ];
+        };
     };
 }

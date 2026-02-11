@@ -1,23 +1,17 @@
 {
-  inputs,
-  self,
-  ...
-}:
-inputs.not-denix.lib.module {
-  name = "programs.delta";
-
-  options.programs.delta = {
-    enable = self.lib.mkDisableOption "delta";
-  };
-
-  homeManager.ifEnabled =
+  flake.aspects.cli =
+    { aspect, ... }:
     {
-      pkgs,
-      ...
-    }:
-    {
-      home.packages = [
-        pkgs.delta
-      ];
+      includes = [ aspect._.delta ];
+      _.delta.homeManager =
+        {
+          pkgs,
+          ...
+        }:
+        {
+          home.packages = [
+            pkgs.delta
+          ];
+        };
     };
 }

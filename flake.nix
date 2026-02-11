@@ -8,7 +8,7 @@
     extra-substituters = [
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
-      "https://cuda-maintainers.cachix.org"
+      "https://cache.nixos-cuda.org"
       "https://catppuccin.cachix.org"
       "https://cache.lix.systems"
       "https://niri.cachix.org"
@@ -19,7 +19,7 @@
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
       "catppuccin.cachix.org-1:noG/4HkbhJb+lUAdKrph6LaozJvAeEEZj4N732IysmU="
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
       "ags.cachix.org-1:naAvMrz0CuYqeyGNyLgE010iUiuf/qx6kYrUv3NwAJ8="
@@ -114,6 +114,7 @@
       };
       url = "github:firefox-extensions-declarative/firefox-extensions-declarative";
     };
+    flake-aspects.url = "github:vic/flake-aspects";
     flake-file.url = "github:vic/flake-file";
     flake-firefox-nightly = {
       inputs = {
@@ -198,21 +199,6 @@
     };
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    not-denix = {
-      inputs = {
-        actions-nix.follows = "actions-nix";
-        flake-file.follows = "flake-file";
-        flake-parts.follows = "flake-parts";
-        flint.follows = "flint";
-        git-hooks.follows = "git-hooks";
-        import-tree.follows = "import-tree";
-        make-shell.follows = "make-shell";
-        nix-auto-ci.follows = "nix-auto-ci";
-        nixpkgs.follows = "nixpkgs";
-        treefmt-nix.follows = "treefmt-nix";
-      };
-      url = "github:bitbloxhub/not-denix";
-    };
     system-manager = {
       inputs = {
         nixpkgs.follows = "nixpkgs";
