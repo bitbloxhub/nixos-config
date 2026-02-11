@@ -1,16 +1,10 @@
 {
-  inputs,
-  self,
-  ...
-}:
-inputs.not-denix.lib.module {
-  name = "programs.ripgrep";
-
-  options.programs.ripgrep = {
-    enable = self.lib.mkDisableOption "ripgrep";
-  };
-
-  homeManager.ifEnabled = {
-    programs.ripgrep.enable = true;
-  };
+  flake.aspects.cli =
+    { aspect, ... }:
+    {
+      includes = [ aspect._.ripgrep ];
+      _.ripgrep.homeManager = {
+        programs.ripgrep.enable = true;
+      };
+    };
 }

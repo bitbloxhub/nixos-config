@@ -1,11 +1,23 @@
 {
   inputs,
-  self,
   ...
 }:
-inputs.not-denix.lib.module {
-  name = "programs.astal";
-
+let
+  agsExtraPackagesForPkgs =
+    pkgs: with inputs.ags.packages.${pkgs.stdenv.hostPlatform.system}; [
+      io
+      astal4
+      apps
+      battery
+      mpris
+      notifd
+      tray
+      wireplumber
+      cava
+      pkgs.libadwaita
+    ];
+in
+{
   flake-file.inputs = {
     astal = {
       url = "github:aylur/astal";
@@ -20,47 +32,48 @@ inputs.not-denix.lib.module {
     };
   };
 
-  options.programs.astal = {
-    enable = self.lib.mkDisableOption "Astal shell";
-  };
-
-  homeManager.ifEnabled =
+  flake.aspects.gui =
+    { aspect, ... }:
     {
-      config,
-      pkgs,
-      inputs',
-      self',
-      ...
-    }:
-    {
-      home.packages = [
-        (inputs'.ags.packages.ags.override {
-          extraPackages = self.lib.agsExtraPackagesForPkgs pkgs;
-        })
-        self'.packages.astal-shell
-      ];
-
-      home.file."${config.xdg.dataHome}/astal-shell/icons/" = {
-        source = ./icons;
-        recursive = true;
-      };
-
-      programs.niri.settings = {
-        spawn-at-startup = [
-          {
-            command = [
-              "astal-shell"
-            ];
-          }
-        ];
-        binds = {
-          "Mod+Return".action.spawn = [
-            "ags"
-            "toggle"
-            "launcher"
+      includes = [ aspect._.astal-shell ];
+      _.astal-shell.homeManager =
+        {
+          config,
+          pkgs,
+          inputs',
+          self',
+          ...
+        }:
+        {
+          home.packages = [
+            (inputs'.ags.packages.ags.override {
+              extraPackages = agsExtraPackagesForPkgs pkgs;
+            })
+            self'.packages.astal-shell
           ];
+
+          home.file."${config.xdg.dataHome}/astal-shell/icons/" = {
+            source = ./icons;
+            recursive = true;
+          };
+
+          programs.niri.settings = {
+            spawn-at-startup = [
+              {
+                command = [
+                  "astal-shell"
+                ];
+              }
+            ];
+            binds = {
+              "Mod+Return".action.spawn = [
+                "ags"
+                "toggle"
+                "launcher"
+              ];
+            };
+          };
         };
-      };
     };
 
   perSystem =
@@ -91,7 +104,7 @@ inputs.not-denix.lib.module {
       make-shells.default = {
         packages = [
           (inputs'.ags.packages.ags.override {
-            extraPackages = self.lib.agsExtraPackagesForPkgs pkgs;
+            extraPackages = agsExtraPackagesForPkgs pkgs;
           })
         ];
       };
@@ -114,7 +127,7 @@ inputs.not-denix.lib.module {
           pkgs.glib
           pkgs.gjs
         ]
-        ++ (self.lib.agsExtraPackagesForPkgs pkgs);
+        ++ (agsExtraPackagesForPkgs pkgs);
 
         installPhase = ''
           mv style.css style.old.css

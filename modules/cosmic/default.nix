@@ -1,11 +1,8 @@
 {
   inputs,
-  self,
   ...
 }:
-inputs.not-denix.lib.module {
-  name = "desktops.cosmic";
-
+{
   flake-file.inputs.cosmic-manager = {
     url = "github:HeitorAugustoLN/cosmic-manager";
     inputs = {
@@ -15,15 +12,16 @@ inputs.not-denix.lib.module {
     };
   };
 
-  options.desktops.cosmic = {
-    enable = self.lib.mkDisableOption "COSMIC";
-  };
+  flake.aspects.gui =
+    { aspect, ... }:
+    {
+      includes = [ aspect._.cosmic ];
+      _.cosmic.homeManager = {
+        imports = [
+          inputs.cosmic-manager.homeManagerModules.cosmic-manager
+        ];
 
-  homeManager.ifEnabled = {
-    imports = [
-      inputs.cosmic-manager.homeManagerModules.cosmic-manager
-    ];
-
-    wayland.desktopManager.cosmic.enable = true;
-  };
+        wayland.desktopManager.cosmic.enable = true;
+      };
+    };
 }

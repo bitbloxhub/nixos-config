@@ -3,16 +3,10 @@
   self,
   ...
 }:
-inputs.not-denix.lib.module {
-  name = "programs.nvim";
-
+{
   flake-file.inputs.nix-wrapper-modules = {
     url = "github:BirdeeHub/nix-wrapper-modules";
     inputs.nixpkgs.follows = "nixpkgs";
-  };
-
-  options.programs.nvim = {
-    enable = self.lib.mkDisableOption "Neovim";
   };
 
   flake.modules.wrappers.nvim =
@@ -120,14 +114,19 @@ inputs.not-denix.lib.module {
       ];
     };
 
-  homeManager.ifEnabled =
+  flake.aspects.editors =
+    { aspect, ... }:
     {
-      self',
-      ...
-    }:
-    {
-      home.packages = [
-        self'.packages.nvim
-      ];
+      includes = [ aspect._.nvim ];
+      _.nvim.homeManager =
+        {
+          self',
+          ...
+        }:
+        {
+          home.packages = [
+            self'.packages.nvim
+          ];
+        };
     };
 }
