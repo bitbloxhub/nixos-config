@@ -88,6 +88,10 @@ in
               inputs.niri-flake.homeModules.niri
             ];
 
+            home.packages = [
+              pkgs.hyprpicker
+            ];
+
             programs.niri = {
               enable = true;
               package = (niriPkgsForSystem pkgs.stdenv.hostPlatform.system).niri-unstable;
@@ -156,6 +160,11 @@ in
 
                   "Mod+T".action.spawn = "wezterm";
                   "Mod+B".action.spawn = [ "firefox-nightly" ];
+
+                  "Mod+P".action.spawn = [
+                    "hyprpicker"
+                    "-an"
+                  ]; # Color Picker
 
                   "XF86AudioRaiseVolume" = {
                     allow-when-locked = true;
