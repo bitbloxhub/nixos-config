@@ -306,5 +306,7 @@ if os.getenv("XDG_CURRENT_DESKTOP") == "GNOME" then
 	config.enable_wayland = false
 end
 
+config.enable_kitty_keyboard = true
+
 -- and finally, return the configuration to wezterm
 return config
