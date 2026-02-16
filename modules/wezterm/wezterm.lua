@@ -260,6 +260,17 @@ config.keys = {
 			end)
 		end),
 	},
+	-- kitty delete fix for neovim https://github.com/wezterm/wezterm/discussions/3758#discussioncomment-12096192
+	{
+		key = "Delete",
+		mods = "NONE",
+		action = wezterm.action.SendString("\x1b[3~"),
+	},
+	{
+		key = "Escape",
+		mods = "NONE",
+		action = wezterm.action.SendString("\x1b[27u"),
+	},
 }
 config.mouse_bindings = {
 	{
