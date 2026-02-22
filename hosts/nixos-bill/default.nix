@@ -35,6 +35,7 @@
           })
           cli
           gui
+          editors
           (rices._.catppuccin { })
         ];
       };
