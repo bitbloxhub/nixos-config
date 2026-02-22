@@ -36,8 +36,8 @@
               env=TERMFILECHOOSER=1
               env=TERMCMD=wezterm start --always-new-process --class wezterm.termfilechooser --workspace termfilechooser
               default_dir=$HOME
-              open_mode=suggested
-              save_mode=last
+              open_mode=default
+              save_mode=default
             '';
 
           programs.niri.settings.window-rules = [
