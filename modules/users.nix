@@ -11,6 +11,8 @@
       {
         username,
         home ? "/home/${username}",
+        # Needs to be mounted before impermanence sets up
+        hashedPasswordFile ? "/persistent/${home}/.config/passwordfile",
         aspect,
       }:
       {
@@ -29,9 +31,7 @@
             users.users.${username} = {
               isNormalUser = true;
               extraGroups = [ "wheel" ];
-              # Needs to be mounted before impermanence sets up
-              hashedPasswordFile = "/persistent/${home}/.config/passwordfile";
-              inherit home;
+              inherit hashedPasswordFile home;
             };
 
             environment.persistence."/persistent".users.${username} = {
