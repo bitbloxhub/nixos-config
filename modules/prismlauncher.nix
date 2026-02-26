@@ -15,7 +15,7 @@
         {
 
           home.packages = [
-            (inputs.nix-bwrapper.lib.${pkgs.stdenv.hostPlatform.system}.bwrapperEval (_: {
+            ((inputs.nix-bwrapper.lib.mkNixBwrapper pkgs).bwrapperEval (_: {
               app = {
                 package = pkgs.prismlauncher.override {
                   additionalPrograms = [
