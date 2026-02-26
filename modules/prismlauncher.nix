@@ -15,7 +15,7 @@
         {
 
           home.packages = [
-            ((inputs.nix-bwrapper.lib.mkNixBwrapper pkgs).bwrapperEval (_: {
+            ((inputs.nix-bwrapper.lib.mkNixBwrapper pkgs).bwrapperEval {
               app = {
                 package = pkgs.prismlauncher.override {
                   additionalPrograms = [
@@ -34,7 +34,7 @@
                 "/sys/kernel/mm/hugepages"
                 "/sys/kernel/mm/transparent_hugepage"
               ];
-            })).config.build.package
+            }).config.build.package
           ];
         };
     };

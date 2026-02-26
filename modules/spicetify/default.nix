@@ -76,21 +76,19 @@
         }).config.build.package;
     };
 
-  flake.aspects = _: {
-    gui =
-      { aspect, ... }:
-      {
-        includes = [ aspect._.spicetify ];
-        _.spicetify = {
-          homeManager =
-            {
-              self',
-              ...
-            }:
-            {
-              home.packages = [ self'.packages.spicetify ];
-            };
-        };
+  flake.aspects.gui =
+    { aspect, ... }:
+    {
+      includes = [ aspect._.spicetify ];
+      _.spicetify = {
+        homeManager =
+          {
+            self',
+            ...
+          }:
+          {
+            home.packages = [ self'.packages.spicetify ];
+          };
       };
-  };
+    };
 }

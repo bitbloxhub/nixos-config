@@ -45,7 +45,7 @@
         programs.home-manager.enable = true;
       };
 
-    systemManager = _: {
+    systemManager = {
       system-manager.allowAnyDistro = true;
     };
   };
