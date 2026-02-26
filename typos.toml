@@ -16,4 +16,4 @@ ist = "ist"
 hda = "hda"
 
 [files]
-extend-exclude = ["**/*.patch"]
+extend-exclude = ["**/secrets/**/*.yaml", "**/*.patch"]

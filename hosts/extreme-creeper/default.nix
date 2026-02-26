@@ -57,7 +57,23 @@ in
             extraPackages = [ pkgs.mesa ];
           };
         };
-        homeManager = { };
+        homeManager =
+          {
+            config,
+            ...
+          }:
+          {
+            sops = {
+              defaultSopsFile = ./secrets/jonahgam.yaml;
+              # TODO: configure ssh to use these
+              secrets."ssh_keys/tangled/private" = {
+                path = "${config.home.homeDirectory}/.ssh/id_ed25519_tangled";
+              };
+              secrets."ssh_keys/tangled/public" = {
+                path = "${config.home.homeDirectory}/.ssh/id_ed25519_tangled.pub";
+              };
+            };
+          };
         includes = with aspects; [
           system
           (system._.user {
