@@ -11,13 +11,12 @@
       {
         username,
         home ? "/home/${username}",
-        # Needs to be mounted before impermanence sets up
-        hashedPasswordFile ? "/persistent/${home}/.config/passwordfile",
         aspect,
       }:
       {
         nixos =
           {
+            config,
             pkgs,
             ...
           }:
@@ -26,12 +25,15 @@
               inputs.home-manager.nixosModules.home-manager
             ];
 
+            sops.secrets."users/${username}/password".neededForUsers = true;
+
             users.mutableUsers = false;
             users.users.root.hashedPassword = "!";
             users.users.${username} = {
               isNormalUser = true;
               extraGroups = [ "wheel" ];
-              inherit hashedPasswordFile home;
+              hashedPasswordFile = config.sops.secrets."users/${username}/password".path;
+              inherit home;
             };
 
             environment.persistence."/persistent".users.${username} = {

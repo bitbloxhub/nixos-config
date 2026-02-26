@@ -206,6 +206,10 @@
     };
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    sops-nix = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:Mic92/sops-nix/pull/779/merge";
+    };
     system-manager = {
       inputs = {
         nixpkgs.follows = "nixpkgs";

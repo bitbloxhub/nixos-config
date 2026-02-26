@@ -855,6 +855,7 @@
         "nix-wrapper-modules": "nix-wrapper-modules",
         "nixos-facter-modules": "nixos-facter-modules",
         "nixpkgs": "nixpkgs",
+        "sops-nix": "sops-nix",
         "system-manager": "system-manager",
         "systems": "systems_2",
         "treefmt-nix": "treefmt-nix",
@@ -879,6 +880,27 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772048523,
+        "narHash": "sha256-qP8YWjL//KTV9Fj1QcLhFmNf2+dV4vME/D3hW8OTGDg=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "432eedefa8522d24c841bf7fecaf58e03f58b5a3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "ref": "pull/779/merge",
+        "repo": "sops-nix",
         "type": "github"
       }
     },

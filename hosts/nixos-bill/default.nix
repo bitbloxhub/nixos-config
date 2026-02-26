@@ -24,6 +24,10 @@
           boot.loader.efi.canTouchEfiVariables = true;
 
           facter.reportPath = ./facter.json;
+
+          sops = {
+            defaultSopsFile = ./secrets/machine.yaml;
+          };
         };
         homeManager = { };
         includes = with aspects; [
