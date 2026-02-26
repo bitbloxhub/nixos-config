@@ -210,6 +210,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:Mic92/sops-nix/pull/779/merge";
     };
+    spicetify-nix = {
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+      };
+      url = "github:Gerg-L/spicetify-nix";
+    };
     system-manager = {
       inputs = {
         nixpkgs.follows = "nixpkgs";

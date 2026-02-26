@@ -1,0 +1,29 @@
+:root {
+	/* TODO: make next/previous/etc buttons look normal */
+	--font-family:
+		"Fira Code", "Jetbrains Mono", "Free Mono", monospace !important;
+	--font-size: 16px;
+	--font-weight: 400; /* 200 : 900 */
+	--line-height: 1.2;
+
+	--font-size-lyrics: 16px;
+
+	--font-family-header:
+		"Fira Code", "Jetbrains Mono", "Free Mono", monospace !important;
+	--font-size-multiplier-header: 1;
+
+	--display-card-image: block; /* none | block */
+	--display-coverart-image: block; /* none | block */
+	--display-header-image: block; /* none | block */
+	--display-sidebar-image: block; /* none | block */
+	--display-tracklist-image: block; /* none | block */
+	--display-spicetify-banner-ascii: none; /* none | block */
+	--display-music-banner-ascii: none; /* none | block */
+
+	--border-radius: 0px;
+	--border-width: 1px;
+	--border-style: solid; /* dotted | dashed | solid | double | groove | ridge | inset | outset */
+	--border-transition: 0.2s ease; /* 'none' to disable  */
+
+	--global-nav-margin-top: 0px; /* set to '0px' if you disabled window controls */
+}
