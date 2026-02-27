@@ -89,6 +89,7 @@ in
             ];
 
             home.packages = [
+              pkgs.wl-clipboard
               pkgs.hyprpicker
             ];
 
