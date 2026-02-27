@@ -12,6 +12,7 @@
             warn_timeout = 0;
           };
         };
+        home.persistence."/persistent".directories = [ ".local/share/direnv" ];
       };
     };
 }

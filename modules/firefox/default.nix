@@ -75,6 +75,8 @@
                 inputs.betterfox-nix.homeModules.betterfox
               ];
 
+              home.persistence."/persistent".directories = [ ".mozilla" ];
+
               catppuccin.firefox.profiles.nix.enable = false;
 
               home.file.".mozilla/firefox/nix/chrome" = {

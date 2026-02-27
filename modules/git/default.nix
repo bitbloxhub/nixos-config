@@ -39,6 +39,8 @@
             doCheck = false;
             doInstallCheck = false;
           });
+
+          home.persistence."/persistent".files = [ ".gitconfig" ];
         };
     };
 }

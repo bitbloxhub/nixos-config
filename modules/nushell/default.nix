@@ -26,6 +26,8 @@
 
           programs.carapace.enable = true;
           programs.carapace.enableNushellIntegration = true;
+
+          home.persistence."/persistent".files = [ ".config/nushell/history.txt" ];
         };
       };
     };

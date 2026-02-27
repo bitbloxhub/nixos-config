@@ -127,6 +127,8 @@
           home.packages = [
             self'.packages.nvim
           ];
+
+          home.persistence."/persistent".directories = [ ".local/share/nvim" ];
         };
     };
 }
