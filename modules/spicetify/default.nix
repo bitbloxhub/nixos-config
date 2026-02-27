@@ -31,7 +31,6 @@
         enabledCustomApps = with inputs'.spicetify-nix.legacyPackages.apps; [
           ncsVisualizer
           localFiles
-          betterLibrary
           {
             src = pkgs.fetchzip {
               # https://github.com/harbassan/spicetify-apps/releases
