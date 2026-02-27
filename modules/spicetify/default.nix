@@ -61,6 +61,7 @@
             package = self'.packages.spicetify-unwrapped;
             addPkgs = [
               pkgs.fira-code
+              pkgs.noto-fonts-cjk-sans
               pkgs.dejavu_fonts
             ];
           };
