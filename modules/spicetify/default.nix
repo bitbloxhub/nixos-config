@@ -62,8 +62,7 @@
             package = self'.packages.spicetify-unwrapped;
             addPkgs = [
               pkgs.fira-code
-              pkgs.jetbrains-mono
-              pkgs.freefont_ttf
+              pkgs.dejavu_fonts
             ];
           };
           flatpak.manifestFile = pkgs.fetchurl {
