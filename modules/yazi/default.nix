@@ -17,6 +17,7 @@
       includes = [ aspect._.yazi ];
       _.yazi.homeManager =
         {
+          config,
           pkgs,
           inputs',
           ...
@@ -31,6 +32,8 @@
             # Markdown preview
             pkgs.glow
           ];
+
+          catppuccin.yazi.enable = false;
 
           programs.yazi = {
             enable = true;
@@ -47,6 +50,14 @@
               parent-arrow = ./plugins/parent-arrow.yazi;
             };
             initLua = ./init.lua;
+            theme = lib.mkMerge [
+              # Restore IFD from https://github.com/catppuccin/nix/commit/8eada392fd6571a747e1c5fc358dd61c14c8704e to change the background color
+              (lib.importTOML "${config.catppuccin.sources.yazi}/${config.catppuccin.flavor}/catppuccin-${config.catppuccin.flavor}-${config.catppuccin.accent}.toml")
+              {
+                app.overall.bg = lib.mkForce "reset";
+                mgr.symlink_target.bg = lib.mkForce "reset";
+              }
+            ];
             settings = {
               mgr.show_hidden = true;
               plugin.prepend_fetchers = [
