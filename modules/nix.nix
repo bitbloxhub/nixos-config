@@ -47,6 +47,10 @@ in
                 "nix-command"
                 "flakes"
               ];
+              trusted-users = [
+                "root"
+                "@wheel"
+              ];
               inherit extra-substituters extra-trusted-public-keys;
             };
           };
