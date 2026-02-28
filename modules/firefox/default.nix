@@ -140,6 +140,24 @@
                       definedAliases = [ "!nix" ];
                     };
 
+                    nixos-options = {
+                      icon = "https://search.nixos.org/favicon-96x96.png";
+                      urls = [ { template = "https://search.nixos.org/options?channel=unstable&query={searchTerms}"; } ];
+                      definedAliases = [ "!nixos" ];
+                    };
+
+                    nixos-wiki = {
+                      icon = "https://search.nixos.org/favicon-96x96.png";
+                      urls = [ { template = "https://nixos.wiki/index.php?title=Special:Search&search={searchTerms}"; } ];
+                      definedAliases = [ "!nixosw" ];
+                    };
+
+                    nixos-discourse = {
+                      icon = "https://search.nixos.org/favicon-96x96.png";
+                      urls = [ { template = "https://discourse.nixos.org/search?q={searchTerms}"; } ];
+                      definedAliases = [ "!nixosd" ];
+                    };
+
                     home-manager-options = {
                       icon = "https://home-manager-options.extranix.com/images/favicon.png";
                       name = "Home Manager Options";
