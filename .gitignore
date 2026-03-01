@@ -1,3 +1,4 @@
-passwordfile
 .direnv
+result-*
+result
 .tree-sitter-xml
