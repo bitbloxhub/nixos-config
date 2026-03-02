@@ -3,33 +3,6 @@
   inputs,
   ...
 }:
-let
-  niriPkgsForSystem =
-    system:
-    (lib.makeExtensible (_final: inputs.niri-flake.packages.${system})).extend (
-      _final: prev: {
-        niri-unstable = prev.niri-unstable.overrideAttrs (
-          _final: _prev: {
-            patches = [
-              #(inputs.nixpkgs.legacyPackages.${system}.fetchpatch {
-              #  name = "niri-support-shm.patch";
-              #  url = "https://github.com/YaLTeR/niri/compare/1911cf3...wrvsrx:d9cc496.patch";
-              #  hash = "sha256-Of+WA05jHnuV8rnz4ZjjQNzI8CcLLT8zoSnUg5n1APU=";
-              #})
-            ];
-            # work around bug in firefox opaque region setting by just disabling all
-            # opaque_region requests
-            postPatch = ''
-              pushd /build/cargo-vendor-dir/smithay-0.7.0
-              patch -Np1 < ${./disable_smithay_opaque_regions.patch}
-              popd
-            '';
-            doCheck = false;
-          }
-        );
-      }
-    );
-in
 {
   flake-file.inputs = {
     niri-flake = {
@@ -50,7 +23,7 @@ in
       _.niri = {
         nixos =
           {
-            pkgs,
+            inputs',
             ...
           }:
           {
@@ -61,26 +34,27 @@ in
             niri-flake.cache.enable = false; # I enable this in ./nix.nix.
             programs.niri = {
               enable = true;
-              package = (niriPkgsForSystem pkgs.stdenv.hostPlatform.system).niri-unstable;
+              package = inputs'.niri-flake.packages.niri-unstable;
             };
           };
 
         systemManager =
           {
-            pkgs,
+            inputs',
             ...
           }:
           {
             systemd.tmpfiles.rules = [
-              "L+ /usr/share/wayland-sessions/niri.desktop - - - - ${(niriPkgsForSystem pkgs.stdenv.hostPlatform.system).niri-unstable}/share/wayland-sessions/niri.desktop"
-              "L+ /etc/systemd/user/niri.service - - - - ${(niriPkgsForSystem pkgs.stdenv.hostPlatform.system).niri-unstable}/share/systemd/user/niri.service"
-              "L+ /etc/systemd/user/niri-shutdown.target - - - - ${(niriPkgsForSystem pkgs.stdenv.hostPlatform.system).niri-unstable}/share/systemd/user/niri-shutdown.target"
+              "L+ /usr/share/wayland-sessions/niri.desktop - - - - ${inputs'.niri-flake.packages.niri-unstable}/share/wayland-sessions/niri.desktop"
+              "L+ /etc/systemd/user/niri.service - - - - ${inputs'.niri-flake.packages.niri-unstable}/share/systemd/user/niri.service"
+              "L+ /etc/systemd/user/niri-shutdown.target - - - - ${inputs'.niri-flake.packages.niri-unstable}/share/systemd/user/niri-shutdown.target"
             ];
           };
 
         homeManager =
           {
             pkgs,
+            inputs',
             ...
           }:
           {
@@ -95,12 +69,12 @@ in
 
             programs.niri = {
               enable = true;
-              package = (niriPkgsForSystem pkgs.stdenv.hostPlatform.system).niri-unstable;
+              package = inputs'.niri-flake.packages.niri-unstable;
               settings = {
                 prefer-no-csd = true;
                 xwayland-satellite = {
                   enable = true;
-                  path = lib.getExe (niriPkgsForSystem pkgs.stdenv.hostPlatform.system).xwayland-satellite-unstable;
+                  path = lib.getExe inputs'.niri-flake.packages.xwayland-satellite-unstable;
                 };
                 screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
                 layout = {

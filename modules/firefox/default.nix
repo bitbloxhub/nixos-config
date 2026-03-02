@@ -191,8 +191,7 @@
                     "browser.urlbar.trimHttps" = lib.mkForce false;
                     "browser.urlbar.trimURLs" = false;
                     "browser.tabs.allow_transparent_browser" = true;
-                    # See https://bugzilla.mozilla.org/show_bug.cgi?id=2010733
-                    # "widget.wayland.opaque-region.enabled" = false;
+                    "widget.wayland.opaque-region.enabled" = false;
                     "privacy.resistFingerprinting.block_mozAddonManager" = true;
                     "extensions.webextensions.restrictedDomains" = "";
                     "userChromeJS.firstRunShown" = true;
