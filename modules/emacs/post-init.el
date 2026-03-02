@@ -515,7 +515,29 @@
    ("README\\.md\\'" . gfm-mode))
   :bind (:map markdown-mode-map ("C-c C-e" . markdown-do)))
 
-(use-package nix-ts-mode :ensure nil :mode "\\.nix\\'")
+(use-package
+  nix-ts-mode
+  :ensure nil
+  :mode "\\.nix\\'"
+  :hook
+  ((nix-ts-mode
+    .
+    ;; https://github.com/aciceri/emacs/blob/2e64c11/init.el#L467-L480
+    (lambda ()
+      (setq-local treesit-font-lock-settings
+                  (append
+                   treesit-font-lock-settings
+                   (treesit-font-lock-rules
+                    :language 'nix
+                    :feature 'function
+                    :override
+                    t
+                    `((formal) @font-lock-type-face)
+
+                    :language 'nix
+                    :feature
+                    'function
+                    `((attrpath) @font-lock-function-name-face))))))))
 
 ;; Tree-sitter in Emacs is an incremental parsing system introduced in Emacs 29
 ;; that provides precise, high-performance syntax highlighting. It supports a
