@@ -41,7 +41,6 @@
                 stripspace
                 undo-fu
                 undo-fu-session
-                easysession
                 org
                 ox-json
                 markdown-mode
