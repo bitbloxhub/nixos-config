@@ -39,6 +39,7 @@
             enable = true;
             enableNushellIntegration = true;
             package = inputs'.yazi.packages.default;
+            shellWrapperName = "y";
             plugins = {
               inherit (npins) relative-motions;
               types = "${npins.yazi-plugins}/types.yazi";
