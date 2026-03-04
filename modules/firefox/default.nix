@@ -191,7 +191,7 @@
                     "browser.urlbar.trimHttps" = lib.mkForce false;
                     "browser.urlbar.trimURLs" = false;
                     "browser.tabs.allow_transparent_browser" = true;
-                    "widget.wayland.opaque-region.enabled" = false;
+                    "widget.wayland.opaque-region.enabled" = false; # WHY DOES THIS NOT WORK
                     "privacy.resistFingerprinting.block_mozAddonManager" = true;
                     "extensions.webextensions.restrictedDomains" = "";
                     "userChromeJS.firstRunShown" = true;
