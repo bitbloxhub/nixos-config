@@ -26,29 +26,6 @@
         "type": "github"
       }
     },
-    "ags": {
-      "inputs": {
-        "astal": [
-          "astal"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1764289441,
-        "narHash": "sha256-ak+lgFiYE5PHByN1/BRkO5JP498hno6Ix24C1Qf/vec=",
-        "owner": "aylur",
-        "repo": "ags",
-        "rev": "e169694390548dfd38ff40f1ef2163d6c3ffe3ea",
-        "type": "github"
-      },
-      "original": {
-        "owner": "aylur",
-        "repo": "ags",
-        "type": "github"
-      }
-    },
     "angrr": {
       "inputs": {
         "flake-compat": [],
@@ -74,26 +51,6 @@
       "original": {
         "owner": "linyinfeng",
         "repo": "angrr",
-        "type": "github"
-      }
-    },
-    "astal": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1769774308,
-        "narHash": "sha256-8Ve6VdUpcYbl8bS5oyDwVnnNobyPxdPmUHGgSDyOazQ=",
-        "owner": "aylur",
-        "repo": "astal",
-        "rev": "eb235f8813bdea2a4a38ac228f2efc4e2a8a90af",
-        "type": "github"
-      },
-      "original": {
-        "owner": "aylur",
-        "repo": "astal",
         "type": "github"
       }
     },
@@ -792,6 +749,49 @@
         "type": "github"
       }
     },
+    "noctalia": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "noctalia-qs": [
+          "noctalia-qs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772585512,
+        "narHash": "sha256-xsgMWOodDN89RIAGu7IbfZbPJx35YoLxRkjDGVulAtk=",
+        "owner": "noctalia-dev",
+        "repo": "noctalia-shell",
+        "rev": "7ff84f78c6ff4625447ac4c6d8c65880cae5a09b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "noctalia-shell",
+        "type": "github"
+      }
+    },
+    "noctalia-qs": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772556237,
+        "narHash": "sha256-SRB80oNiuV2WC63iSWlanc+Dl3SMhs+46Af9wdCMf8o=",
+        "owner": "noctalia-dev",
+        "repo": "noctalia-qs",
+        "rev": "3455d5f266a95c5414da3fcd6dabcf266d1f9487",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "noctalia-qs",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks-nix": {
       "inputs": {
         "flake-compat": [
@@ -823,9 +823,7 @@
     "root": {
       "inputs": {
         "actions-nix": "actions-nix",
-        "ags": "ags",
         "angrr": "angrr",
-        "astal": "astal",
         "betterfox-nix": "betterfox-nix",
         "catppuccin": "catppuccin",
         "catppuccin-cosmic": "catppuccin-cosmic",
@@ -855,11 +853,15 @@
         "nix-wrapper-modules": "nix-wrapper-modules",
         "nixos-facter-modules": "nixos-facter-modules",
         "nixpkgs": "nixpkgs",
+        "noctalia": "noctalia",
+        "noctalia-qs": "noctalia-qs",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
         "system-manager": "system-manager",
         "systems": "systems_2",
         "treefmt-nix": "treefmt-nix",
+        "vicinae": "vicinae",
+        "vicinae-extensions": "vicinae-extensions",
         "yazi": "yazi"
       }
     },
@@ -1024,6 +1026,55 @@
         "owner": "jfroche",
         "ref": "system-manager",
         "repo": "userborn",
+        "type": "github"
+      }
+    },
+    "vicinae": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772571231,
+        "narHash": "sha256-+UCTvy8cxoe88/S904DlPDUB55b1+FCuv2lsBWcpYX0=",
+        "owner": "vicinaehq",
+        "repo": "vicinae",
+        "rev": "69729d2a0f06818f897b78395581dc16c968453e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vicinaehq",
+        "repo": "vicinae",
+        "type": "github"
+      }
+    },
+    "vicinae-extensions": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ],
+        "vicinae": [
+          "vicinae"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772621016,
+        "narHash": "sha256-XwYTdsSBv3/ipe8Nsn/JwdQ+3P52vDXz4/bkHdLWyZw=",
+        "owner": "vicinaehq",
+        "repo": "extensions",
+        "rev": "09eb29ed953c3ae0fe7f782d56819f75b588e358",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vicinaehq",
+        "repo": "extensions",
         "type": "github"
       }
     },

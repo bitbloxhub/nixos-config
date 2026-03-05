@@ -167,66 +167,6 @@ in
                     "-an"
                   ]; # Color Picker
 
-                  "XF86AudioRaiseVolume" = {
-                    allow-when-locked = true;
-                    action.spawn = [
-                      "wpctl"
-                      "set-volume"
-                      "@DEFAULT_AUDIO_SINK@"
-                      "0.05+"
-                    ];
-                  };
-                  "XF86AudioLowerVolume" = {
-                    allow-when-locked = true;
-                    action.spawn = [
-                      "wpctl"
-                      "set-volume"
-                      "@DEFAULT_AUDIO_SINK@"
-                      "0.05-"
-                    ];
-                  };
-                  "XF86AudioMute" = {
-                    allow-when-locked = true;
-                    action.spawn = [
-                      "wpctl"
-                      "set-mute"
-                      "@DEFAULT_AUDIO_SINK@"
-                      "toggle"
-                    ];
-                  };
-                  "XF86AudioMicMute" = {
-                    allow-when-locked = true;
-                    action.spawn = [
-                      "wpctl"
-                      "set-mute"
-                      "@DEFAULT_AUDIO_SOURCE@"
-                      "toggle"
-                    ];
-                  };
-
-                  "XF86MonBrightnessUp" = {
-                    allow-when-locked = true;
-                    action.spawn = [
-                      "brightnessctl"
-                      "--class=backlight"
-                      "set"
-                      "+5%"
-                      "--min-value"
-                      "5%"
-                    ];
-                  };
-                  "XF86MonBrightnessDown" = {
-                    allow-when-locked = true;
-                    action.spawn = [
-                      "brightnessctl"
-                      "--class=backlight"
-                      "set"
-                      "5%-"
-                      "--min-value"
-                      "5%"
-                    ];
-                  };
-
                   "Mod+O".action.toggle-overview = { };
                   "Mod+Q".action.close-window = { };
 

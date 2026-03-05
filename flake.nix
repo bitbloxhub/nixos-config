@@ -12,8 +12,8 @@
       "https://catppuccin.cachix.org"
       "https://cache.lix.systems"
       "https://niri.cachix.org"
-      "https://ags.cachix.org"
       "https://yazi.cachix.org"
+      "https://vicinae.cachix.org"
     ];
     extra-trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -22,8 +22,8 @@
       "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
       "catppuccin.cachix.org-1:noG/4HkbhJb+lUAdKrph6LaozJvAeEEZj4N732IysmU="
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
-      "ags.cachix.org-1:naAvMrz0CuYqeyGNyLgE010iUiuf/qx6kYrUv3NwAJ8="
       "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k="
+      "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
     ];
   };
 
@@ -36,13 +36,6 @@
       };
       url = "github:nialov/actions.nix";
     };
-    ags = {
-      inputs = {
-        astal.follows = "astal";
-        nixpkgs.follows = "nixpkgs";
-      };
-      url = "github:aylur/ags";
-    };
     angrr = {
       inputs = {
         flake-compat.follows = "";
@@ -52,10 +45,6 @@
         treefmt-nix.follows = "treefmt-nix";
       };
       url = "github:linyinfeng/angrr";
-    };
-    astal = {
-      inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:aylur/astal";
     };
     betterfox-nix = {
       inputs = {
@@ -206,6 +195,17 @@
     };
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    noctalia = {
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        noctalia-qs.follows = "noctalia-qs";
+      };
+      url = "github:noctalia-dev/noctalia-shell";
+    };
+    noctalia-qs = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:noctalia-dev/noctalia-qs";
+    };
     sops-nix = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:Mic92/sops-nix/pull/779/merge";
@@ -228,6 +228,21 @@
     treefmt-nix = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/treefmt-nix";
+    };
+    vicinae = {
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+      };
+      url = "github:vicinaehq/vicinae";
+    };
+    vicinae-extensions = {
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+        vicinae.follows = "vicinae";
+      };
+      url = "github:vicinaehq/extensions";
     };
     yazi = {
       inputs = {

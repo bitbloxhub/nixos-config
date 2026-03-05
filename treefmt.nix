@@ -39,24 +39,21 @@
           '';
         };
         programs.rustfmt.enable = true;
-        settings.formatter."ast-grep" = {
-          command = pkgs.bash;
-          options = [
-            "-euc"
-            ''
-              ln -sfT ${pkgs.vimPlugins.nvim-treesitter-parsers.xml} ./.tree-sitter-xml
-              for f in "$@"; do
-                ${pkgs.ast-grep}/bin/ast-grep scan -U "$f"
-              done
-            ''
-            "--"
-          ];
-          # TODO: generate this from ./sg_rules
-          includes = [
-            "modules/astal/**/*.tsx"
-            "modules/astal/**/*-symbolic.svg"
-          ];
-        };
+        # settings.formatter."ast-grep" = {
+        #   command = pkgs.bash;
+        #   options = [
+        #     "-euc"
+        #     ''
+        #       ln -sfT ${pkgs.vimPlugins.nvim-treesitter-parsers.xml} ./.tree-sitter-xml
+        #       for f in "$@"; do
+        #         ${pkgs.ast-grep}/bin/ast-grep scan -U "$f"
+        #       done
+        #     ''
+        #     "--"
+        #   ];
+        #   # TODO: generate this from ./sg_rules
+        #   includes = [ ];
+        # };
 
         settings.global.excludes = [
           "*/npins/*"
