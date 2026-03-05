@@ -1,0 +1,19 @@
+{
+	"id": "local-clock",
+	"name": "Local Clock",
+	"version": "1.0.0",
+	"minNoctaliaVersion": "4.6.1",
+	"author": "bitbloxhub",
+	"license": "ISC",
+	"repository": "https://github.com/bitbloxhub/nixos-config",
+	"description": "Local clock bar widget",
+	"entryPoints": {
+		"barWidget": "BarWidget.qml"
+	},
+	"dependencies": {
+		"plugins": []
+	},
+	"metadata": {
+		"defaultSettings": {}
+	}
+}

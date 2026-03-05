@@ -56,6 +56,13 @@ in
                 };
             extraPackages = [ pkgs.mesa ];
           };
+
+          # PAM fix, see https://github.com/Rishabh5321/dotfiles/blob/d71f52b/system-manager/home/README.md?plain=1#L91-L92 and
+          # https://github.com/nix-community/home-manager/issues/7027
+          systemd.tmpfiles.rules = [
+            "d    /run/wrappers/bin        0755 root root -   -"
+            "L+   /run/wrappers/bin/unix_chkpwd -    -    -   -   /usr/sbin/unix_chkpwd"
+          ];
         };
         homeManager =
           {
