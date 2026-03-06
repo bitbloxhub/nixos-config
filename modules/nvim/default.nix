@@ -22,15 +22,7 @@
       specs.general = {
         data = with pkgs.vimPlugins; [
           lze
-          # https://github.com/BirdeeHub/lzextras/issues/94, remove when nixpkgs updates it
-          (lzextras.overrideAttrs {
-            src = pkgs.fetchFromGitHub {
-              owner = "BirdeeHub";
-              repo = "lzextras";
-              rev = "20bfe66fdfb1ee1a23994acec043191aa6d54e6e";
-              hash = "sha256-hWIN/wuDpSu8xwqPmdjQREKMbnPeo/nUybu3Z2q/emY=";
-            };
-          })
+          lzextras
           nui-nvim
           mini-nvim
           catppuccin-nvim
@@ -53,15 +45,7 @@
           which-key-nvim
           nvim-bqf
           quicker-nvim
-          # TODO: replace once https://github.com/NixOS/nixpkgs/pull/487456 makes it into nixos-unstable
-          (config.nvim-lib.mkPlugin "qfctl" (
-            pkgs.fetchFromGitHub {
-              owner = "marcelbeumer";
-              repo = "qfctl.nvim";
-              rev = "c7779de59f61c2474f594a6e11ddbbff338d9e3f";
-              hash = "sha256-uNToBV6iYuRrWsd7Rs2Q/4VZ/mgmg7PipIVO2YVMqBE=";
-            }
-          ))
+          qfctl-nvim
           resession-nvim
           noice-nvim
           nvim-spider
