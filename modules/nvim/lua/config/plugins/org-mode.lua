@@ -1,3 +1,5 @@
+local key2spec = require("lzextras").key2spec
+
 return {
 	{
 		"orgmode",
@@ -19,6 +21,19 @@ return {
 			require("org-roam").setup({
 				directory = "~/notes/",
 			})
+		end,
+	},
+	{
+		"org-notebook",
+		ft = "org",
+		keys = {
+			key2spec({ "n", "v" }, "<leader><CR>", "<cmd>OrgNotebook run_cell<cr>", {
+				desc = "Run org-notebook cell",
+				ft = "org",
+			}),
+		},
+		after = function()
+			require("org-notebook").setup({})
 		end,
 	},
 }

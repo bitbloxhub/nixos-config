@@ -12,7 +12,6 @@
   flake.modules.wrappers.nvim =
     {
       wlib,
-      config,
       pkgs,
       ...
     }:
@@ -24,6 +23,7 @@
           lze
           lzextras
           nui-nvim
+          jupyter-api-nvim
           mini-nvim
           catppuccin-nvim
           fidget-nvim
@@ -39,6 +39,7 @@
           hardtime-nvim
           orgmode
           org-roam-nvim
+          org-notebook-nvim
           codecompanion-nvim
           tiny-inline-diagnostic-nvim
           visual-whitespace-nvim
