@@ -57,6 +57,7 @@
                   {
                     id = "ActiveWindow";
                     maxWidth = 300;
+                    useFixedWidth = true;
                   }
                 ];
                 center = [
@@ -67,6 +68,7 @@
                   {
                     id = "MediaMini";
                     maxWidth = 300;
+                    useFixedWidth = true;
                     showVisualizer = true;
                     visualizerType = "mirrored";
                   }
