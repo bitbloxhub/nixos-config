@@ -1,6 +1,8 @@
+# @ts: { lib: Lib; stdenv: Stdenv; [key: string]: any }
 {
   inputs,
   self,
+  lib,
   ...
 }:
 {
@@ -9,12 +11,23 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  flake-file.inputs.typenix = {
+    url = "github:ryanrasti/typenix";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   flake.modules.wrappers.nvim =
+    # @ts: { lib: Lib; stdenv: Stdenv; pkgs: ByNamePackages; [key: string]: any }
     {
       wlib,
       pkgs,
+      inputs',
       ...
     }:
+    let
+      a = pkgs.emacs;
+      b = a.system;
+    in
     {
       imports = [ wlib.wrapperModules.neovim ];
       settings.config_directory = ./.;
@@ -79,6 +92,7 @@
         rust-analyzer
         ts_query_ls
         gopls
+        inputs'.typenix.packages.default
         tinymist
         websocat
       ];
@@ -90,11 +104,13 @@
   perSystem =
     {
       pkgs,
+      inputs',
       ...
     }:
     {
       packages.nvim = inputs.nix-wrapper-modules.lib.evalPackage [
         { inherit pkgs; }
+        { _module.args.inputs' = inputs'; }
         self.modules.wrappers.nvim
       ];
     };

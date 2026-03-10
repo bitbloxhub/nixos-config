@@ -253,6 +253,10 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    typenix = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:ryanrasti/typenix";
+    };
     vicinae = {
       url = "github:vicinaehq/vicinae";
       inputs = {

@@ -235,4 +235,9 @@ return {
 			},
 		},
 	},
+	{
+		"typenix",
+		---@type vim.lsp.ClientConfig
+		lsp = {},
+	},
 }
