@@ -1,0 +1,4 @@
+{
+	"include": ["**/*.nix", "../nixpkgs/pkgs/top-level/all-packages.nix"],
+	"exclude": ["modules/yazi/npins/default.nix"]
+}

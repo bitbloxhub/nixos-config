@@ -6,8 +6,12 @@ return {
 			extension = {
 				mdx = "mdx",
 			},
+			pattern = {
+				[".*/*.nix.d.ts"] = "nixts",
+			},
 		})
 		vim.treesitter.language.register("markdown", { "mdx" })
+		vim.treesitter.language.register("typescript", { "nixts" })
 
 		-- From https://github.com/BirdeeHub/nixCats-nvim/blob/742da08/templates/example/lua/myLuaConf/plugins/treesitter.lua#L5-L44
 		---@param buf integer

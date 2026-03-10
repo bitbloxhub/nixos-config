@@ -860,6 +860,7 @@
         "system-manager": "system-manager",
         "systems": "systems_2",
         "treefmt-nix": "treefmt-nix",
+        "typenix": "typenix",
         "vicinae": "vicinae",
         "vicinae-extensions": "vicinae-extensions",
         "yazi": "yazi"
@@ -981,6 +982,22 @@
         "type": "github"
       }
     },
+    "tree-sitter-nix": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1764782150,
+        "narHash": "sha256-cSiBd0XkSR8l1CF2vkThWUtMxqATwuxCNO5oy2kyOZY=",
+        "owner": "nix-community",
+        "repo": "tree-sitter-nix",
+        "rev": "eabf96807ea4ab6d6c7f09b671a88cd483542840",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "tree-sitter-nix",
+        "type": "github"
+      }
+    },
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
@@ -998,6 +1015,27 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "typenix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "tree-sitter-nix": "tree-sitter-nix"
+      },
+      "locked": {
+        "lastModified": 1773158397,
+        "narHash": "sha256-hKTbyCf8aKTcF9ZA7OObNsuRoisjhP+YNrzT3q/LMXI=",
+        "owner": "ryanrasti",
+        "repo": "typenix",
+        "rev": "bfa63e3e77cdc154fd4fb60935c465ecbf885163",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ryanrasti",
+        "repo": "typenix",
         "type": "github"
       }
     },
