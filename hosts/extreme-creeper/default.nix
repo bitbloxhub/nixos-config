@@ -91,6 +91,7 @@ in
           gui
           editors
           gaming
+          daw
           nvidia
           (rices._.catppuccin { })
         ];
