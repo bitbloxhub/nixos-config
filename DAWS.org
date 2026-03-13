@@ -1,0 +1,15 @@
+* Reaper
+- PIN REAPACK (IMPORTANT)
+- Add the following ReaPack repos
+  #+BEGIN_SRC text
+  https://raw.githubusercontent.com/JoepVanlier/JSFX/master/index.xml
+  https://raw.githubusercontent.com/Bird-Bird/ReaScript_Testing/refs/heads/main/index.xml
+  https://raw.githubusercontent.com/joepvanlier/Hackey-Machines/master/index.xml
+  https://raw.githubusercontent.com/joepvanlier/Hackey-Trackey/master/index.xml
+  #+END_SRC
+- Add everything with BirdBird or Joep Vanlier in it, as well as MK Slicer.
+* Renoise
+- Install https://github.com/catppuccin/renoise
+- https://renoise.unlessgames.com/
+- https://github.com/ryrun/com.dufte.SimplePianoroll.xrnx
+- https://github.com/esaruoho/paketti/releases
