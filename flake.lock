@@ -360,6 +360,24 @@
         "type": "github"
       }
     },
+    "flake-parts_2": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib"
+      },
+      "locked": {
+        "lastModified": 1772408722,
+        "narHash": "sha256-rHuJtdcOjK7rAHpHphUb1iCvgkU3GpfvicLMwwnfMT0=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "f20dc5d9b8027381c474144ecabc9034d6a839a3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": [
@@ -566,6 +584,29 @@
         "type": "github"
       }
     },
+    "margesimpson": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1761455199,
+        "narHash": "sha256-TgK8dtUxZVQOustuADarhV/ZMKpFifGq1ClBMPcYQIU=",
+        "owner": "mrtnvgr",
+        "repo": "margesimpson",
+        "rev": "f7ffb2c0ea925c28e7341479ba8e3c8615a55559",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mrtnvgr",
+        "repo": "margesimpson",
+        "type": "github"
+      }
+    },
     "minimal-emacs": {
       "flake": false,
       "locked": {
@@ -579,6 +620,27 @@
       "original": {
         "owner": "jamescherti",
         "repo": "minimal-emacs.d",
+        "type": "github"
+      }
+    },
+    "mrtnvgr": {
+      "inputs": {
+        "flake-parts": "flake-parts_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772428005,
+        "narHash": "sha256-JP9lHBmeJ+MuumQ6z6Gr5ThHI9ZiF1C4QiJLzKrvbjc=",
+        "owner": "mrtnvgr",
+        "repo": "nurpkgs",
+        "rev": "81e75a11e68dfc2ab7c526a23bcde549e571e10c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mrtnvgr",
+        "repo": "nurpkgs",
         "type": "github"
       }
     },
@@ -749,6 +811,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-lib": {
+      "locked": {
+        "lastModified": 1772328832,
+        "narHash": "sha256-e+/T/pmEkLP6BHhYjx6GmwP5ivonQQn0bJdH9YrRB+Q=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "c185c7a5e5dd8f9add5b2f8ebeff00888b070742",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
     "noctalia": {
       "inputs": {
         "nixpkgs": [
@@ -820,6 +897,36 @@
         "type": "github"
       }
     },
+    "reanix": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "margesimpson": [
+          "margesimpson"
+        ],
+        "mrtnvgr": [
+          "mrtnvgr"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1773350320,
+        "narHash": "sha256-VBgQdPDEXW1tIMPQemistokXtsnu5ydUx1mrtjI47o4=",
+        "owner": "bitbloxhub",
+        "repo": "reanix",
+        "rev": "37975e32d93026ce275d07870c4e2cc4d088736f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bitbloxhub",
+        "ref": "reaper-kb",
+        "repo": "reanix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "actions-nix": "actions-nix",
@@ -845,7 +952,9 @@
         "import-tree": "import-tree",
         "lib-aggregate": "lib-aggregate",
         "make-shell": "make-shell",
+        "margesimpson": "margesimpson",
         "minimal-emacs": "minimal-emacs",
+        "mrtnvgr": "mrtnvgr",
         "niri-flake": "niri-flake",
         "nix-auto-ci": "nix-auto-ci",
         "nix-bwrapper": "nix-bwrapper",
@@ -855,6 +964,7 @@
         "nixpkgs": "nixpkgs",
         "noctalia": "noctalia",
         "noctalia-qs": "noctalia-qs",
+        "reanix": "reanix",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
         "system-manager": "system-manager",

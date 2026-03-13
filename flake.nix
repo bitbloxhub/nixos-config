@@ -155,9 +155,20 @@
       inputs.flake-compat.follows = "";
       url = "github:nicknovitski/make-shell";
     };
+    margesimpson = {
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+      };
+      url = "github:mrtnvgr/margesimpson";
+    };
     minimal-emacs = {
       flake = false;
       url = "github:jamescherti/minimal-emacs.d";
+    };
+    mrtnvgr = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:mrtnvgr/nurpkgs";
     };
     niri-flake = {
       inputs = {
@@ -205,6 +216,15 @@
     noctalia-qs = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:noctalia-dev/noctalia-qs";
+    };
+    reanix = {
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        margesimpson.follows = "margesimpson";
+        mrtnvgr.follows = "mrtnvgr";
+        nixpkgs.follows = "nixpkgs";
+      };
+      url = "github:bitbloxhub/reanix/reaper-kb";
     };
     sops-nix = {
       inputs.nixpkgs.follows = "nixpkgs";
