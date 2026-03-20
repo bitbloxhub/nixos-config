@@ -36,19 +36,6 @@ Define flake inputs right next to the module/aspect that requires them:
 }
 ```
 
-### Typed Output Schemas
-
-Define what your flake outputs should look like using Nix types:
-
-```nix
-# In your configuration
-{
-  flake-file.outputs = {
-    nixosConfigurations = nixpkgs.lib.types.attrsOf nixpkgs.lib.types.unspecified;
-  };
-}
-```
-
 ## Workflow Pattern
 
 1. **Define**: Add `flake-file` module options in your relevant aspect definition files (keep it close to the code that uses the inputs).
