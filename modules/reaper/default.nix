@@ -42,7 +42,6 @@
               {
                 config,
                 pkgs,
-                inputs',
                 ...
               }:
               {

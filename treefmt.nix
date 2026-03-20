@@ -58,6 +58,7 @@
         settings.global.excludes = [
           "*/npins/*"
           "**/pnpm-lock.yaml"
+          "skills-lock.json"
           # Git submodules
           "modules/wezterm/resurrect.wezterm"
           "modules/wezterm/wezterm-types"
