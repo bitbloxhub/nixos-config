@@ -6,8 +6,7 @@
 {
   flake-file.inputs = {
     reanix = {
-      # Don't overwrite reaper-kb
-      url = "github:bitbloxhub/reanix/reaper-kb";
+      url = "github:mrtnvgr/reanix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
       inputs.margesimpson.follows = "margesimpson"; # following flake-parts
@@ -59,13 +58,17 @@
                     # Trying to do this with Nix is painful, sadly
                     reapack.enable = true;
                   };
-                  options = {
+                  config = {
                     continuous_scrolling = true;
 
                     # https://github.com/mrtnvgr/reanix/issues/3
                     paths = {
                       renders = "Renders";
                     };
+
+                    # I have to set these because unalias is broken, https://github.com/mrtnvgr/reanix/issues/5
+                    zoom.horizontal = "Edit cursor or play cursor";
+                    default_track_height = "medium";
                   };
                   extraConfig = {
                     "reaper.ini" =
@@ -99,12 +102,7 @@
                 # Theming
                 xdg.configFile."REAPER/libSwell-user.colortheme".source = ./libSwell-user.colortheme;
 
-                xdg.configFile."REAPER/ColorThemes/Reapertips.ReaperThemeZip".source =
-                  inputs'.mrtnvgr.legacyPackages.reapertips-dark.override
-                    {
-                      undimmed = true;
-                      colored_track_names = true;
-                    };
+                programs.reanix.themes.reapertips.enable = true;
 
                 # Reaper MIDI notes colormap
                 xdg.configFile."REAPER/Data/color_maps/default.png".source = pkgs.fetchurl {
@@ -112,30 +110,9 @@
                   hash = "sha256-FSANQn2V4TjYUvNr4UV1qUhOSeUkT+gsd1pPj4214GY=";
                 };
 
-                # TODO: needs more work, possibly upstream to nixpkgs
-                # home.packages = [
-                #   # Maintained YSFX fork
-                #   (pkgs.ysfx.overrideAttrs (old: {
-                #     src = pkgs.fetchFromGitHub {
-                #       owner = "JoepVanlier";
-                #       repo = "ysfx";
-                #       rev = "370c91915b0f26f5051705620b0712d06753bd41";
-                #       hash = "sha256-9PFBDUOvLCQcZvL8TsG8MVZYzdHsaKK/Pb7S5A1dJBE=";
-                #     };
-                #
-                #     prePatch = old.prePatch + ''
-                #       rmdir thirdparty/clap-juce-extensions
-                #       ln -s ${
-                #         pkgs.fetchFromGitHub {
-                #           owner = "free-audio";
-                #           repo = "clap-juce-extensions";
-                #           rev = "24e70f7f7cde2842528bb66ff50260b1dc0f4dae";
-                #           hash = "sha256-ckfEE6g+Za0sdZgKxYuHkA+Z8joZWbriVsjzebKEMA0=";
-                #         }
-                #       } thirdparty/clap-juce-extensions
-                #     '';
-                #   }))
-                # ];
+                home.packages = [
+                  pkgs.ysfx
+                ];
 
                 home.persistence."/persistent".directories = [ ".config/REAPER" ];
               };

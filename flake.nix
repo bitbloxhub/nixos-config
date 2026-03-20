@@ -1,7 +1,6 @@
 # DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
 # Use `nix run .#write-flake` to regenerate it.
 {
-
   outputs = inputs: import ./outputs.nix inputs;
 
   nixConfig = {
@@ -29,14 +28,15 @@
 
   inputs = {
     actions-nix = {
+      url = "github:nialov/actions.nix";
       inputs = {
         flake-parts.follows = "flake-parts";
         git-hooks.follows = "git-hooks";
         nixpkgs.follows = "nixpkgs";
       };
-      url = "github:nialov/actions.nix";
     };
     angrr = {
+      url = "github:linyinfeng/angrr";
       inputs = {
         flake-compat.follows = "";
         flake-parts.follows = "flake-parts";
@@ -44,51 +44,51 @@
         nixpkgs.follows = "nixpkgs";
         treefmt-nix.follows = "treefmt-nix";
       };
-      url = "github:linyinfeng/angrr";
     };
     betterfox-nix = {
+      url = "github:HeitorAugustoLN/betterfox-nix";
       inputs = {
         flake-parts.follows = "flake-parts";
         import-tree.follows = "import-tree";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems";
       };
-      url = "github:HeitorAugustoLN/betterfox-nix";
     };
     catppuccin = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:catppuccin/nix/main";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     catppuccin-cosmic = {
-      flake = false;
       url = "github:catppuccin/cosmic-desktop";
+      flake = false;
     };
     catppuccin-userstyles = {
-      flake = false;
       url = "github:catppuccin/userstyles";
+      flake = false;
     };
     cosmic-manager = {
+      url = "github:HeitorAugustoLN/cosmic-manager";
       inputs = {
         flake-parts.follows = "flake-parts";
         home-manager.follows = "home-manager";
         nixpkgs.follows = "nixpkgs";
       };
-      url = "github:HeitorAugustoLN/cosmic-manager";
     };
     crane.url = "github:ipetkov/crane";
     deploy-rs = {
+      url = "github:serokell/deploy-rs";
       inputs = {
         flake-compat.follows = "";
         nixpkgs.follows = "nixpkgs";
         utils.follows = "flake-utils";
       };
-      url = "github:serokell/deploy-rs";
     };
     firefox-addons = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     firefox-extensions-declarative = {
+      url = "github:firefox-extensions-declarative/firefox-extensions-declarative";
       inputs = {
         actions-nix.follows = "actions-nix";
         flake-file.follows = "flake-file";
@@ -101,176 +101,179 @@
         nixpkgs.follows = "nixpkgs";
         treefmt-nix.follows = "treefmt-nix";
       };
-      url = "github:firefox-extensions-declarative/firefox-extensions-declarative";
     };
     flake-aspects.url = "github:vic/flake-aspects";
     flake-file.url = "github:vic/flake-file";
     flake-firefox-nightly = {
+      url = "github:nix-community/flake-firefox-nightly";
       inputs = {
         flake-compat.follows = "";
         lib-aggregate.follows = "lib-aggregate";
         nixpkgs.follows = "nixpkgs";
       };
-      url = "github:nix-community/flake-firefox-nightly";
     };
     flake-parts = {
-      inputs.nixpkgs-lib.follows = "nixpkgs";
       url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
     };
     flake-utils = {
-      inputs.systems.follows = "systems";
       url = "github:numtide/flake-utils";
+      inputs.systems.follows = "systems";
     };
     flint = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:NotAShelf/flint";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     git-hooks = {
+      url = "github:cachix/git-hooks.nix";
       inputs = {
         flake-compat.follows = "";
         nixpkgs.follows = "nixpkgs";
       };
-      url = "github:cachix/git-hooks.nix";
     };
     home-manager = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     impermanence = {
+      url = "github:nix-community/impermanence";
       inputs = {
         home-manager.follows = "home-manager";
         nixpkgs.follows = "nixpkgs";
       };
-      url = "github:nix-community/impermanence";
     };
     import-tree.url = "github:vic/import-tree";
     lib-aggregate = {
+      url = "github:nix-community/lib-aggregate";
       inputs = {
         flake-utils.follows = "flake-utils";
         nixpkgs-lib.follows = "nixpkgs";
       };
-      url = "github:nix-community/lib-aggregate";
     };
     make-shell = {
-      inputs.flake-compat.follows = "";
       url = "github:nicknovitski/make-shell";
+      inputs.flake-compat.follows = "";
     };
     margesimpson = {
+      url = "github:mrtnvgr/margesimpson";
       inputs = {
         flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
       };
-      url = "github:mrtnvgr/margesimpson";
     };
     minimal-emacs = {
-      flake = false;
       url = "github:jamescherti/minimal-emacs.d";
+      flake = false;
     };
     mrtnvgr = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:mrtnvgr/nurpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     niri-flake = {
+      url = "github:sodiboo/niri-flake";
       inputs = {
         niri-stable.follows = "";
         nixpkgs.follows = "nixpkgs";
         nixpkgs-stable.follows = "nixpkgs";
         xwayland-satellite-stable.follows = "";
       };
-      url = "github:sodiboo/niri-flake";
     };
     nix-auto-ci = {
+      url = "github:aigis-llm/nix-auto-ci";
       inputs = {
         actions-nix.follows = "actions-nix";
         flake-parts.follows = "flake-parts";
         git-hooks.follows = "git-hooks";
         nixpkgs.follows = "nixpkgs";
       };
-      url = "github:aigis-llm/nix-auto-ci";
     };
     nix-bwrapper = {
+      url = "github:Naxdy/nix-bwrapper";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         nuschtosSearch.follows = "";
         treefmt-nix.follows = "treefmt-nix";
       };
-      url = "github:Naxdy/nix-bwrapper";
     };
     nix-system-graphics = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:soupglasses/nix-system-graphics";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-wrapper-modules = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:BirdeeHub/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         noctalia-qs.follows = "noctalia-qs";
       };
-      url = "github:noctalia-dev/noctalia-shell";
     };
     noctalia-qs = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:noctalia-dev/noctalia-qs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+        treefmt-nix.follows = "treefmt-nix";
+      };
     };
     reanix = {
+      url = "github:mrtnvgr/reanix";
       inputs = {
         flake-parts.follows = "flake-parts";
         margesimpson.follows = "margesimpson";
         mrtnvgr.follows = "mrtnvgr";
         nixpkgs.follows = "nixpkgs";
       };
-      url = "github:bitbloxhub/reanix/reaper-kb";
     };
     sops-nix = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:Mic92/sops-nix/pull/779/merge";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems";
       };
-      url = "github:Gerg-L/spicetify-nix";
     };
     system-manager = {
+      url = "github:numtide/system-manager";
       inputs = {
+        flake-compat.follows = "";
         nixpkgs.follows = "nixpkgs";
         userborn.inputs.flake-parts.follows = "flake-parts";
       };
-      url = "github:numtide/system-manager";
     };
     systems.url = "github:nix-systems/default";
     treefmt-nix = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     vicinae = {
+      url = "github:vicinaehq/vicinae";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems";
       };
-      url = "github:vicinaehq/vicinae";
     };
     vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems";
         vicinae.follows = "vicinae";
       };
-      url = "github:vicinaehq/extensions";
     };
     yazi = {
+      url = "github:sxyazi/yazi";
       inputs = {
         flake-utils.follows = "flake-utils";
         nixpkgs.follows = "nixpkgs";
       };
-      url = "github:sxyazi/yazi";
     };
   };
-
 }

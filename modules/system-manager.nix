@@ -8,6 +8,7 @@
     url = "github:numtide/system-manager";
     inputs = {
       nixpkgs.follows = "nixpkgs";
+      flake-compat.follows = "";
       userborn.inputs.flake-parts.follows = "flake-parts";
     };
   };
