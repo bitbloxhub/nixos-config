@@ -687,15 +687,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1773853709,
-        "narHash": "sha256-I2tIqiM4axPFjvEj7lx9dyMq44TcRj9oKoW+uLPzup0=",
+        "lastModified": 1774054177,
+        "narHash": "sha256-5VbU12hJ7PzFfXynPdPa54EP6Wu/h4lZ4zQ2AslMd3E=",
         "owner": "aigis-llm",
         "repo": "nix-auto-ci",
-        "rev": "d1a2413770c4184990eafdd9ed896b72d4e6ca9f",
+        "rev": "c176ae3015e56a0d0870b82a4c2532ed3b0164bc",
         "type": "github"
       },
       "original": {
         "owner": "aigis-llm",
+        "ref": "try",
         "repo": "nix-auto-ci",
         "type": "github"
       }

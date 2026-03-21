@@ -21,7 +21,7 @@
       };
     };
     nix-auto-ci = {
-      url = "github:aigis-llm/nix-auto-ci";
+      url = "github:aigis-llm/nix-auto-ci/try";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";
