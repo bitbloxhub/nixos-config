@@ -15,8 +15,8 @@
                 src = pkgs.fetchFromGitHub {
                   owner = "bitbloxhub";
                   repo = "git-branchless";
-                  rev = "c63070c675242d413ab88969bad5e235b0cc5658";
-                  hash = "sha256-KzQOXRiboscpzrupi2JlcnBBm4b8+m5fr8NDnEug7CY=";
+                  rev = "ef584f371064d591718f00b51eac8334e110599a";
+                  hash = "sha256-3HBVwbchDOj04EU3tHmJj6vupcI1XHcAHwcts50e0WI=";
                 };
               in
               {
