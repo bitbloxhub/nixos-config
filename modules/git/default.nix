@@ -113,8 +113,6 @@
               }
             ];
           };
-
-          home.persistence."/persistent".files = [ ".gitconfig" ];
         };
     };
 }
