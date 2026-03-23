@@ -72,7 +72,12 @@ in
           {
             sops = {
               defaultSopsFile = ./secrets/jonahgam.yaml;
-              # TODO: configure ssh to use these
+              secrets."ssh_keys/github/private" = {
+                path = "${config.home.homeDirectory}/.ssh/id_ed25519_github";
+              };
+              secrets."ssh_keys/github/public" = {
+                path = "${config.home.homeDirectory}/.ssh/id_ed25519_github.pub";
+              };
               secrets."ssh_keys/tangled/private" = {
                 path = "${config.home.homeDirectory}/.ssh/id_ed25519_tangled";
               };
