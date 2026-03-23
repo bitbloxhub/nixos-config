@@ -24,6 +24,15 @@
               container_name_default = "arch";
             };
           };
+
+          # Used by things in the distrobox, not ideal to have them globally,
+          # but changing the distrobox home dir stops it from using other dotfiles I want.
+          home.persistence."/persistent".directories = [
+            ".local/bin"
+            ".local/lib"
+            ".pi"
+            ".agent-browser"
+          ];
         };
     };
 }

@@ -67,6 +67,7 @@
               }
               ".local/share/nix"
               ".local/state"
+              ".cache"
               ".bwrapper"
             ];
           };
