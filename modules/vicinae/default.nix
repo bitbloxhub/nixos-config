@@ -43,6 +43,9 @@
               pop_to_root_on_close = true;
               favicon_service = "twenty";
               search_files_in_root = false;
+              telemetry = {
+                system_info = false;
+              };
               font = {
                 normal = {
                   size = 12;
