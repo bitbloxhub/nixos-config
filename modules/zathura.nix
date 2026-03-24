@@ -8,6 +8,7 @@
           enable = true;
           options = {
             recolor = false;
+            selection-clipboard = "clipboard";
           };
         };
       };
