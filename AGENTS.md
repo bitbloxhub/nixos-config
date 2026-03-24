@@ -10,6 +10,8 @@ This repository contains multi-host NixOS configurations managed with `flake-par
 - **Flake Inputs**: Modularize flake inputs. Define `flake-file.inputs` inside the module or aspect file that utilizes them.
 - **Flake Generation**: Do NOT edit `flake.nix` manually. Make changes to inputs or modules, then run `nix run .#write-flake` to regenerate.
 - **Commit Style**: Use conventional commits (e.g., `feat:`, `fix:`, `chore:`, `docs:`).
+- **Nix Formatting Style**: In `flake.aspects` declarations, keep flake-aspect function arguments on one line (for example, `{ aspect, ... }:`). For NixOS, system-manager, and home-manager module functions, keep arguments split across multiple lines.
+- **Nix Spacing Style**: Preserve intentional blank lines between logical sections, but do not insert an extra blank line after `includes = ...;` before the next attribute in an aspect attrset.
 
 ## Available Skills
 
