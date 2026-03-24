@@ -1,0 +1,82 @@
+# Catppuccin Mocha
+# text: #cdd6f4
+# base: #1e1e2e
+# mantle: #181825
+# crust: #11111b
+# mauve: #cba6f7
+# blue: #89b4fa
+# teal: #94e2d5
+# red: #f38ba8
+# overlay0: #6c7086
+
+[general]
+modes=tile,bisect
+cancellation_status_code=0
+
+[mode_tile]
+# text for labels
+# base for selected label text
+# crust for dimmed background
+# mauve for selectable tile fill/border
+label_color=#cdd6f4
+label_select_color=#1e1e2e
+unselectable_bg_color=#11111ba8
+selectable_bg_color=#cba6f733
+selectable_border_color=#cba6f7cc
+label_font_family=Fira Code
+label_font_size=8 50% 100
+label_symbols=abcdefghijklmnopqrstuvwxyz
+
+[mode_floating]
+# stdin source only; detect mode intentionally not used
+# text for labels
+# base for selected label text
+# crust for dimmed background
+# blue for selectable floating targets
+source=stdin
+label_color=#cdd6f4
+label_select_color=#1e1e2e
+unselectable_bg_color=#11111ba8
+selectable_bg_color=#89b4fa33
+selectable_border_color=#89b4facc
+label_font_family=Fira Code
+label_font_size=12 50% 100
+label_symbols=abcdefghijklmnopqrstuvwxyz
+
+[mode_bisect]
+# text for labels
+# red for the pointer marker
+# crust for dimmed background
+# blue for even areas
+# teal for odd areas
+# overlay0 for history borders
+label_color=#cdd6f4
+label_font_size=20
+label_font_family=Fira Code
+label_padding=12
+pointer_size=20
+pointer_color=#f38ba8dd
+unselectable_bg_color=#11111ba8
+even_area_bg_color=#89b4fa33
+even_area_border_color=#89b4fa99
+odd_area_bg_color=#94e2d533
+odd_area_border_color=#94e2d599
+history_border_color=#6c7086cc
+
+[mode_split]
+# red for the pointer marker
+# crust for the global overlay background
+# base for the active area backdrop
+# blue for vertical splits
+# teal for horizontal splits
+# overlay0 for history borders
+pointer_size=20
+pointer_color=#f38ba8dd
+bg_color=#11111ba8
+area_bg_color=#1e1e2ecc
+vertical_color=#89b4facc
+horizontal_color=#94e2d5cc
+history_border_color=#6c7086cc
+
+[mode_click]
+button=left

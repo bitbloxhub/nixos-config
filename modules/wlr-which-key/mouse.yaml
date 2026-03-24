@@ -1,0 +1,124 @@
+# Theming
+# Catppuccin Mocha
+# base: #1e1e2e
+# text: #cdd6f4
+# mauve: #cba6f7
+font: Fira Code 12
+background: "#1e1e2ed0" # base
+color: "#cdd6f4" # text
+border: "#cba6f7" # mauve
+separator: " ➜ "
+border_width: 2
+corner_r: 10
+padding: 15 # Defaults to corner_r
+rows_per_column: 8 # No limit by default
+column_padding: 25 # Defaults to padding
+
+# Anchor and margin
+anchor: bottom-right # One of center, left, right, top, bottom, bottom-left, top-left, etc.
+# Only relevant when anchor is not center
+margin_right: 5
+margin_bottom: 5
+margin_left: 0
+margin_top: 0
+
+# Permits key bindings that conflict with compositor key bindings.
+# Default is `false`.
+inhibit_compositor_keyboard_shortcuts: false
+
+menu:
+    - key: "h"
+      desc: Move Left
+      keep_open: true
+      cmd: echo "mousemove -10 0" | dotoolc
+    - key: "j"
+      desc: Move Down
+      keep_open: true
+      cmd: echo "mousemove 0 10" | dotoolc
+    - key: "k"
+      desc: Move Up
+      keep_open: true
+      cmd: echo "mousemove 0 -10" | dotoolc
+    - key: "l"
+      desc: Move Right
+      keep_open: true
+      cmd: echo "mousemove 10 0" | dotoolc
+
+    - key: "H"
+      desc: Move Left Fast
+      keep_open: true
+      cmd: echo "mousemove -40 0" | dotoolc
+    - key: "J"
+      desc: Move Down Fast
+      keep_open: true
+      cmd: echo "mousemove 0 40" | dotoolc
+    - key: "K"
+      desc: Move Up Fast
+      keep_open: true
+      cmd: echo "mousemove 0 -40" | dotoolc
+    - key: "L"
+      desc: Move Right Fast
+      keep_open: true
+      cmd: echo "mousemove 40 0" | dotoolc
+
+    - key: "s"
+      desc: Left Click
+      keep_open: true
+      cmd: echo "click left" | dotoolc
+    - key: "d"
+      desc: Middle Click
+      keep_open: true
+      cmd: echo "click middle" | dotoolc
+    - key: "f"
+      desc: Right Click
+      keep_open: true
+      cmd: echo "click right" | dotoolc
+
+    - key: "a"
+      desc: Left Toggle
+      keep_open: true
+      cmd: 'sh -c ''state="${XDG_RUNTIME_DIR:-/tmp}/wlr-which-key-left-button"; if [ -e "$state" ]; then echo "buttonup left" | dotoolc; rm -f "$state"; else echo "buttondown left" | dotoolc; touch "$state"; fi'''
+    - key: "m"
+      desc: Middle Toggle
+      keep_open: true
+      cmd: 'sh -c ''state="${XDG_RUNTIME_DIR:-/tmp}/wlr-which-key-middle-button"; if [ -e "$state" ]; then echo "buttonup middle" | dotoolc; rm -f "$state"; else echo "buttondown middle" | dotoolc; touch "$state"; fi'''
+    - key: "r"
+      desc: Right Toggle
+      keep_open: true
+      cmd: 'sh -c ''state="${XDG_RUNTIME_DIR:-/tmp}/wlr-which-key-right-button"; if [ -e "$state" ]; then echo "buttonup right" | dotoolc; rm -f "$state"; else echo "buttondown right" | dotoolc; touch "$state"; fi'''
+
+    - key: "u"
+      desc: Scroll Up
+      keep_open: true
+      cmd: echo "wheel 1" | dotoolc
+    - key: "n"
+      desc: Scroll Down
+      keep_open: true
+      cmd: echo "wheel -1" | dotoolc
+    - key: "y"
+      desc: Scroll Left
+      keep_open: true
+      cmd: echo "hwheel 1" | dotoolc
+    - key: "i"
+      desc: Scroll Right
+      keep_open: true
+      cmd: echo "hwheel -1" | dotoolc
+
+    - key: "t"
+      desc: Tile Select
+      cmd: sh -c 'wl-kbptr -o modes=tile; wlr-which-key mouse'
+    - key: "b"
+      desc: Bisect Select
+      cmd: sh -c 'wl-kbptr -o modes=bisect; wlr-which-key mouse'
+    - key: "p"
+      desc: Split Select
+      cmd: sh -c 'wl-kbptr -o modes=split; wlr-which-key mouse'
+    - key: "c"
+      desc: Tile Left Click
+      cmd: sh -c 'wl-kbptr -o modes=tile,click -o mode_click.button=left; wlr-which-key mouse'
+    - key: "v"
+      desc: Tile Right Click
+      cmd: sh -c 'wl-kbptr -o modes=tile,click -o mode_click.button=right; wlr-which-key mouse'
+    - key: "x"
+      desc: Tile Middle Click
+      cmd: sh -c 'wl-kbptr -o modes=tile,click -o mode_click.button=middle; wlr-which-key mouse'
