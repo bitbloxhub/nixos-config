@@ -11,6 +11,14 @@ return {
 				org_default_notes_file = "~/notes/refile.org",
 				org_startup_folded = "inherit",
 				org_todo_keywords = { "TODO", "STARTED", "|", "DONE", "CANCELED" },
+				org_adapt_indentation = false,
+				org_startup_indented = true,
+			})
+			vim.api.nvim_create_autocmd("Filetype", {
+				pattern = "org",
+				callback = function()
+					vim.opt.conceallevel = 2
+				end,
 			})
 		end,
 	},
