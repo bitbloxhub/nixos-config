@@ -500,6 +500,15 @@
   ;; (org-fontify-quote-and-verse-blocks t)
   (org-startup-truncated t))
 
+(use-package
+  org-roam
+  :custom (org-roam-directory "~/notes") (org-roam-completion-everywhere t)
+  :config
+  ;; If you're using a vertical completion framework, you might want a more informative completion interface
+  (setq org-roam-node-display-template
+        (concat "${title:*} " (propertize "${tags:100}" 'face 'org-tag)))
+  (org-roam-db-autosync-mode))
+
 (use-package ox-json :ensure nil)
 
 ;; The markdown-mode package provides a major mode for Emacs for syntax

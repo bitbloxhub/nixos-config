@@ -42,6 +42,7 @@
                 undo-fu
                 undo-fu-session
                 org
+                org-roam
                 ox-json
                 markdown-mode
                 nix-ts-mode
