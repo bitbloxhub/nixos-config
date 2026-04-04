@@ -63,6 +63,28 @@
               ./.
             ];
           };
+
+          # Floating emacs window config, mostly for note taking with org-mode/org-roam
+          programs.niri.settings = {
+            binds."Mod+E".action.spawn = [
+              "emacs"
+              "--title"
+              "Emacs Float"
+            ];
+            window-rules = [
+              {
+                matches = [ { title = "Emacs Float"; } ];
+                open-floating = true;
+                open-focused = true;
+                default-column-width = {
+                  fixed = 1440;
+                };
+                default-window-height = {
+                  fixed = 720;
+                };
+              }
+            ];
+          };
         };
     };
 }
