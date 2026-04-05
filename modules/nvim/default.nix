@@ -9,10 +9,20 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  flake-file.inputs.tix = {
+    url = "github:JRMurr/tix/context-improvements";
+    inputs.nixpkgs.follows = "nixpkgs";
+    inputs.flake-utils.follows = "flake-utils";
+    inputs.crane.follows = "crane";
+    inputs.flake-compat.follows = "";
+    inputs.home-manager.follows = "";
+  };
+
   flake.modules.wrappers.nvim =
     {
       wlib,
       pkgs,
+      inputs',
       ...
     }:
     {
@@ -79,6 +89,7 @@
         rust-analyzer
         ts_query_ls
         gopls
+        inputs'.tix.packages.default
         tinymist
         websocat
       ];
@@ -90,13 +101,23 @@
   perSystem =
     {
       pkgs,
+      inputs',
       ...
     }:
     {
       packages.nvim = inputs.nix-wrapper-modules.lib.evalPackage [
         { inherit pkgs; }
+        {
+          _module.args.inputs' = inputs';
+        }
         self.modules.wrappers.nvim
       ];
+
+      make-shells.default = {
+        packages = [
+          inputs'.tix.packages.default
+        ];
+      };
     };
 
   flake.aspects.editors =

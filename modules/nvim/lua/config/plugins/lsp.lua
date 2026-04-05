@@ -226,6 +226,11 @@ return {
 		lsp = {},
 	},
 	{
+		"tix",
+		---@type vim.lsp.ClientConfig
+		lsp = {},
+	},
+	{
 		"tinymist",
 		---@type vim.lsp.ClientConfig
 		lsp = {

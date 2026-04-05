@@ -1,0 +1,7 @@
+type FlakePartsConfig = {
+	aaa: string,
+};
+
+val config :: FlakePartsConfig;
+val lib :: Lib;
+val options :: { ... };

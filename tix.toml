@@ -1,0 +1,21 @@
+[context.flake-parts]
+includes = ["modules/**/*.nix", "hosts/**/default.nix", "flake-file.nix", "ci.nix", "treefmt.nix"]
+stubs = ["@flake-parts"]
+
+[stubs.generate]
+nixpkgs = { expr = "(builtins.getFlake (toString ./.)).inputs.nixpkgs" }
+home-manager = { expr = "(builtins.getFlake (toString ./.)).inputs.home-manager" }
+
+[stubs.generate.systems.flake-parts]
+# options_expr = '''
+#   ((builtins.getFlake (toString ./.)).inputs.flake-parts.lib.evalFlakeModule
+#     { self = (builtins.getFlake (toString ./.)).self; } { imports = [ ]; }).options
+# '''
+options_expr = '''
+  (builtins.getFlake (toString ./.)).aaa
+'''
+context_args = ["config", "lib"]
+
+[project]
+includes = ["ci.nix", "flake-file.nix", "flake.nix", "hosts/**/default.nix", "hosts/nixos-bill/hardware-configuration.nix", "modules/**/*.nix", "outputs.nix", "treefmt.nix"]
+excludes = ["result", ".direnv"]

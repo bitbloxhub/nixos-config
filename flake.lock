@@ -958,6 +958,7 @@
         "spicetify-nix": "spicetify-nix",
         "system-manager": "system-manager",
         "systems": "systems_2",
+        "tix": "tix",
         "treefmt-nix": "treefmt-nix",
         "vicinae": "vicinae",
         "vicinae-extensions": "vicinae-extensions",
@@ -965,6 +966,27 @@
       }
     },
     "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "tix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775099554,
+        "narHash": "sha256-3xBsGnGDLOFtnPZ1D3j2LU19wpAlYefRKTlkv648rU0=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "8d6387ed6d8e6e6672fd3ed4b61b59d44b124d99",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rust-overlay_2": {
       "inputs": {
         "nixpkgs": [
           "yazi",
@@ -1078,6 +1100,36 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tix": {
+      "inputs": {
+        "crane": [
+          "crane"
+        ],
+        "flake-compat": [],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "home-manager": [],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1775411666,
+        "narHash": "sha256-5O9HmdxT9lgFZxPMTtPhAhYS3Kx5gSL1CuhHw3AcXfo=",
+        "owner": "JRMurr",
+        "repo": "tix",
+        "rev": "5f20ade689c5d31f84a937bf8e31ff07293aa93f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "JRMurr",
+        "ref": "context-improvements",
+        "repo": "tix",
         "type": "github"
       }
     },
@@ -1205,7 +1257,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "rust-overlay": "rust-overlay"
+        "rust-overlay": "rust-overlay_2"
       },
       "locked": {
         "lastModified": 1773992826,

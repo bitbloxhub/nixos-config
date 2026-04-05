@@ -249,6 +249,16 @@
       };
     };
     systems.url = "github:nix-systems/default";
+    tix = {
+      url = "github:JRMurr/tix/context-improvements";
+      inputs = {
+        crane.follows = "crane";
+        flake-compat.follows = "";
+        flake-utils.follows = "flake-utils";
+        home-manager.follows = "";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";

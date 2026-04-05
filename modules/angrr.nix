@@ -1,6 +1,7 @@
 {
   lib,
   inputs,
+  options,
   ...
 }:
 let
@@ -51,6 +52,8 @@ in
       flake-compat.follows = "";
     };
   };
+
+  flake.aaa = options;
 
   flake.aspects.system =
     { aspect, ... }:
