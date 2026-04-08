@@ -18,11 +18,17 @@
             };
           };
         };
-        homeManager = {
-          home.persistence."/persistent".directories = [
-            ".local/share/containers/storage"
-          ];
-        };
+        homeManager =
+          {
+            pkgs,
+            ...
+          }:
+          {
+            home.packages = [ pkgs.podman ];
+            home.persistence."/persistent".directories = [
+              ".local/share/containers/storage"
+            ];
+          };
       };
     };
 }
