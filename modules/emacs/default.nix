@@ -56,6 +56,7 @@
                 centaur-tabs
               ];
           };
+          services.emacs.enable = true;
           xdg.configFile."emacs".source = pkgs.symlinkJoin {
             name = "emacs-config";
             paths = [
@@ -67,9 +68,10 @@
           # Floating emacs window config, mostly for note taking with org-mode/org-roam
           programs.niri.settings = {
             binds."Mod+E".action.spawn = [
-              "emacs"
-              "--title"
-              "Emacs Float"
+              "emacsclient"
+              "-c"
+              "-F"
+              "((name . \"Emacs Float\"))"
             ];
             window-rules = [
               {
