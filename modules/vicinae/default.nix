@@ -101,6 +101,10 @@
                 "vicinae"
                 "toggle"
               ];
+              "Mod+Space".action.spawn = [
+                "vicinae"
+                "vicinae://extensions/vicinae/wm/switch-windows"
+              ];
             };
           };
         };
