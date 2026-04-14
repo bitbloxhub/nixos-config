@@ -92,6 +92,7 @@ in
             username = "jonahgam";
             aspect = " host_extreme-creeper";
           })
+          system._.presets._.gitsyncer._.notes
           cli
           gui
           editors
