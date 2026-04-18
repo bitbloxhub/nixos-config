@@ -114,6 +114,11 @@
 
 (use-package nerd-icons :ensure nil)
 
+(define-prefix-command 'my/notes-prefix-map)
+(defun my/notes-prefix ()
+  (interactive)
+  (set-transient-map my/notes-prefix-map nil nil "Notes: %k"))
+
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
   (meow-motion-define-key
@@ -130,6 +135,8 @@
    '("8" . meow-digit-argument)
    '("9" . meow-digit-argument)
    '("0" . meow-digit-argument)
+   ;; Notes prefix bridge: SPC n ... -> same map as C-c n ...
+   '("n" . my/notes-prefix)
    '("/" . meow-keypad-describe-key)
    '("?" . meow-cheatsheet))
   (meow-normal-define-key
@@ -489,33 +496,75 @@
   :ensure nil
   :commands (org-mode org-version)
   :mode ("\\.org\\'" . org-mode)
+  :preface
+  (defun my/org-journal-goto-rfc3339-day ()
+    (goto-char (point-min))
+    (let* ((day (format-time-string "%Y-%m-%d"))
+           (org-date (format-time-string "<%Y-%m-%d %a>"))
+           (heading (format "* %s %s" day org-date)))
+      (if (re-search-forward (format "^%s$" (regexp-quote heading)) nil t)
+          (beginning-of-line)
+        (goto-char (point-min))
+        (insert heading "\n")
+        (beginning-of-line))
+      (org-id-get-create)
+      (forward-line 1)))
+
+  (defun my/org-id-get-create-and-sync ()
+    (interactive)
+    (unless (org-at-heading-p)
+      (user-error "Not on an Org heading"))
+    (org-id-get-create)
+    (when (fboundp 'org-roam-db-update-file)
+      (org-roam-db-update-file)))
+
+  (defun my/org-journal-open-today ()
+    (interactive)
+    (find-file "~/notes/journal.org")
+    (my/org-journal-goto-rfc3339-day))
+  :bind (:map org-mode-map
+         ("C-c I" . my/org-id-get-create-and-sync)
+         ("C-c C-i" . my/org-id-get-create-and-sync)
+         ("C-c <tab>" . my/org-id-get-create-and-sync)
+         ("C-c n" . my/notes-prefix-map)
+         ("C-c C-n" . my/notes-prefix))
   :custom
   (org-hide-leading-stars t)
   (org-startup-indented t)
   (org-adapt-indentation nil)
   (org-edit-src-content-indentation 0)
-  ;; (org-fontify-done-headline t)
-  ;; (org-fontify-todo-headline t)
-  ;; (org-fontify-whole-heading-line t)
-  ;; (org-fontify-quote-and-verse-blocks t)
-  (org-startup-truncated t))
+  (org-startup-truncated t)
+  (org-agenda-files '("~/notes"))
+  (org-refile-use-outline-path 'file)
+  (org-outline-path-complete-in-steps nil)
+  (org-refile-targets
+   '((org-agenda-files :maxlevel . 3)
+     (org-roam-directory :maxlevel . 3))))
 
 (use-package
   org-roam
-  :custom (org-roam-directory "~/notes") (org-roam-completion-everywhere t)
-  :bind
-  (("C-c n l" . org-roam-buffer-toggle)
-   ("C-c n f" . org-roam-node-find)
-   ("C-c n g" . org-roam-graph)
-   ("C-c n i" . org-roam-node-insert)
-   ("C-c n c" . org-roam-capture)
-   ;; Dailies
-   ("C-c n j" . org-roam-dailies-capture-today))
+  :preface
+  (defun my/org-roam-db-update-current-file ()
+    (when (fboundp 'org-roam-db-update-file)
+      (org-roam-db-update-file)))
+  :custom
+  (org-roam-directory "~/notes")
+  (org-roam-completion-everywhere t)
+  :init
+  (global-set-key (kbd "C-c n") #'my/notes-prefix-map)
+  (global-set-key (kbd "C-c C-n") #'my/notes-prefix)
+  (define-key my/notes-prefix-map (kbd "l") #'org-roam-buffer-toggle)
+  (define-key my/notes-prefix-map (kbd "f") #'org-roam-node-find)
+  (define-key my/notes-prefix-map (kbd "g") #'org-roam-graph)
+  (define-key my/notes-prefix-map (kbd "i") #'org-roam-node-insert)
+  (define-key my/notes-prefix-map (kbd "c") #'org-roam-capture)
+  (define-key my/notes-prefix-map (kbd "j") #'my/org-journal-open-today)
   :config
   ;; If you're using a vertical completion framework, you might want a more informative completion interface
   (setq org-roam-node-display-template
         (concat "${title:*} " (propertize "${tags:100}" 'face 'org-tag)))
   (org-roam-db-autosync-mode)
+  (add-hook 'org-after-refile-insert-hook #'my/org-roam-db-update-current-file)
   (add-to-list
    'display-buffer-alist '("\\*Org Select\\*" (display-buffer-below-selected)))
   (add-to-list 'display-buffer-alist '("CAPTURE*" (display-buffer-same-window))))
