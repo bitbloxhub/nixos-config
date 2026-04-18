@@ -14,6 +14,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
       inputs.vicinae.follows = "vicinae";
+      inputs.flake-compat.follows = "";
     };
   };
 
@@ -65,11 +66,12 @@
               fallbacks = [ ];
               favorites = [
                 "wm:switch-windows"
+                "@yalishanda/kaomoji-search:index"
+                "core:search-emojis"
+                "@sovereign/vicinae-extension-awww-switcher-0:wpgrid"
                 "applications:firefox-nightly"
                 "applications:org.wezfurlong.wezterm"
                 "applications:com.spotify.Client"
-                "core:search-emojis"
-                "@sovereign/vicinae-extension-awww-switcher-0:wpgrid"
               ];
               providers = {
                 "files".enabled = false;
@@ -92,6 +94,11 @@
             };
             extensions = [
               inputs'.vicinae-extensions.packages.awww-switcher
+              (inputs'.vicinae.packages.mkRayCastExtension {
+                name = "kaomoji-search";
+                rev = "870667fc671801a467deb7c4c7fc72992efe3820";
+                hash = "sha256-hPpoVU/Bo2dS9A8tp2gDUBAhVqPZ+ZqCn1hyZQ45Wv0=";
+              })
             ];
           };
 
@@ -104,6 +111,14 @@
               "Mod+Space".action.spawn = [
                 "vicinae"
                 "vicinae://extensions/vicinae/wm/switch-windows"
+              ];
+              "Mod+Shift+Space".action.spawn = [
+                "vicinae"
+                "vicinae://launch/@yalishanda/kaomoji-search/index"
+              ];
+              "Mod+Ctrl+Space".action.spawn = [
+                "vicinae"
+                "vicinae://launch/core/search-emojis"
               ];
             };
           };

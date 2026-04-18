@@ -263,6 +263,7 @@
     vicinae-extensions = {
       url = "github:vicinaehq/extensions";
       inputs = {
+        flake-compat.follows = "";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems";
         vicinae.follows = "vicinae";
