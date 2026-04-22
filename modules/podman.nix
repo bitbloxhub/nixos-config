@@ -11,11 +11,11 @@
               enable = true;
               dockerCompat = true;
             };
-            environment.persistence."/persistent" = {
-              directories = [
-                "/var/lib/containers/storage"
-              ];
-            };
+          };
+          environment.persistence."/persistent" = {
+            directories = [
+              "/var/lib/containers/storage"
+            ];
           };
         };
         homeManager =
