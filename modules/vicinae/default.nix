@@ -74,7 +74,10 @@
                 "applications:com.spotify.Client"
               ];
               providers = {
-                "files".enabled = false;
+                "files" = {
+                  enabled = false;
+                  preferences.autoIndexing = false;
+                };
                 "developer".enabled = false;
                 "clipboard" = {
                   enabled = false;
