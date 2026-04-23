@@ -1,4 +1,15 @@
 {
+  inputs,
+  ...
+}:
+{
+  flake-file.inputs.git-branchless = {
+    # My fork with many changes. See https://github.com/bitbloxhub/git-branchless/tree/megamerge for more info.
+    url = "github:bitbloxhub/git-branchless";
+    # Don't use the flake, it's broken.
+    flake = false;
+  };
+
   flake.aspects.cli =
     { aspect, ... }:
     {
@@ -25,25 +36,15 @@
         in
         {
           home.packages = [
-            (pkgs.git-branchless.overrideAttrs (
-              let
-                src = pkgs.fetchFromGitHub {
-                  owner = "bitbloxhub";
-                  repo = "git-branchless";
-                  rev = "ef584f371064d591718f00b51eac8334e110599a";
-                  hash = "sha256-3HBVwbchDOj04EU3tHmJj6vupcI1XHcAHwcts50e0WI=";
-                };
-              in
-              {
-                inherit src;
-                cargoDeps = pkgs.rustPlatform.importCargoLock {
-                  lockFile = "${src}/Cargo.lock";
-                };
-                # Current master branch works without patches, see
-                # https://github.com/arxanas/git-branchless/issues/1585#issuecomment-3467473525
-                postPatch = "";
-              }
-            ))
+            (pkgs.git-branchless.overrideAttrs {
+              src = inputs.git-branchless;
+              cargoDeps = pkgs.rustPlatform.importCargoLock {
+                lockFile = "${inputs.git-branchless}/Cargo.lock";
+              };
+              # Current master branch works without patches, see
+              # https://github.com/arxanas/git-branchless/issues/1585#issuecomment-3467473525
+              postPatch = "";
+            })
           ];
 
           programs.delta = {

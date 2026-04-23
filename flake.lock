@@ -402,6 +402,22 @@
         "type": "github"
       }
     },
+    "git-branchless": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1776967544,
+        "narHash": "sha256-bkKYdMdS1/qu7XQrNkBoZEp8gJT0ZBJfF2jkgxqEFf4=",
+        "owner": "bitbloxhub",
+        "repo": "git-branchless",
+        "rev": "9f8818c453b3fb96b2f48b93d06d33366994304c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bitbloxhub",
+        "repo": "git-branchless",
+        "type": "github"
+      }
+    },
     "git-hooks": {
       "inputs": {
         "flake-compat": [],
@@ -935,6 +951,7 @@
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "flint": "flint",
+        "git-branchless": "git-branchless",
         "git-hooks": "git-hooks",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
