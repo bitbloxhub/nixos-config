@@ -83,7 +83,12 @@
 
               alias.pf = "push --force-with-lease --force-if-includes";
 
-              merge.conflictstyle = "diff3";
+              rerere = {
+                enabled = true;
+                autoupdate = true;
+              };
+
+              merge.conflictstyle = "zdiff3";
 
               url = {
                 "ssh://git@github.com/" = {
