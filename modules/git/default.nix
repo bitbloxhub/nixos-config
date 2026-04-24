@@ -1,8 +1,4 @@
 {
-  inputs,
-  ...
-}:
-{
   flake-file.inputs.git-branchless = {
     # My fork with many changes. See https://github.com/bitbloxhub/git-branchless/tree/megamerge for more info.
     url = "github:bitbloxhub/git-branchless";
