@@ -126,7 +126,7 @@
     };
     git-branchless = {
       url = "github:bitbloxhub/git-branchless";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     git-hooks = {
       url = "github:cachix/git-hooks.nix";

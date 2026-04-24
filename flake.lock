@@ -403,13 +403,17 @@
       }
     },
     "git-branchless": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1776991310,
-        "narHash": "sha256-sLN4ZgPpYnhews2naECTgkGgZ1p7Sof/EhwBkRvjers=",
+        "lastModified": 1776996026,
+        "narHash": "sha256-NKwyCEv+FnI/U0dkfbVhtR6RYnNjmRvIi/rJ+dUXYdI=",
         "owner": "bitbloxhub",
         "repo": "git-branchless",
-        "rev": "250b4609c1f691d7e8e81acf700b1929064bf81a",
+        "rev": "c7a143ce163adc6678f280cef69cc68b639be0be",
         "type": "github"
       },
       "original": {
