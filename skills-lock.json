@@ -2,17 +2,17 @@
   "version": 1,
   "skills": {
     "flake-aspects": {
-      "source": "bitbloxhub/agents",
+      "source": "bitbloxhub/skills",
       "sourceType": "github",
       "computedHash": "0123ed4d35cd13dd11a0bb694138e59f6feb637ad4f65f1597e986cf97f4c274"
     },
     "flake-file": {
-      "source": "bitbloxhub/agents",
+      "source": "bitbloxhub/skills",
       "sourceType": "github",
       "computedHash": "5a03a02455bbbb4e2d2c737f5490f8dec271ae3c0df1650f63eaecc2693847e8"
     },
     "import-tree": {
-      "source": "bitbloxhub/agents",
+      "source": "bitbloxhub/skills",
       "sourceType": "github",
       "computedHash": "c2b6cca14b6d4f49522b019223a86a337f0a9e880b3469f81136d62753df2d1b"
     }
