@@ -54,6 +54,12 @@
               runHook postInstall
             '';
           };
+
+          piCatppuccin = pkgs.fetchzip {
+            url = "https://registry.npmjs.org/@sherif-fanous/pi-catppuccin/-/pi-catppuccin-0.2.0.tgz";
+            hash = "sha256-6+4aPGFds6S5VpdWdqfne0mZscHX9nKqNdDlvx+N7lc=";
+            stripRoot = false;
+          };
         in
         {
           home.packages = [
@@ -79,7 +85,7 @@
             steeringMode = "all";
             followUpMode = "all";
             enableInstallTelemetry = false;
-            theme = "dark";
+            theme = "catppuccin-mocha";
           };
 
           home.file.".pi/agent/extensions" = {
@@ -91,6 +97,9 @@
             source = piHashlineEdit;
             recursive = true;
           };
+
+          home.file.".pi/agent/themes/catppuccin-mocha.json".source =
+            piCatppuccin + "/package/themes/catppuccin-mocha.json";
 
           home.activation.installGlobalSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             set -euo pipefail
