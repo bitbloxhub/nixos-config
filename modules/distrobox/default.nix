@@ -30,8 +30,6 @@
           home.persistence."/persistent".directories = [
             ".local/bin"
             ".local/lib"
-            ".pi"
-            ".agent-browser"
           ];
         };
     };

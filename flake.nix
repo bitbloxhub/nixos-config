@@ -154,6 +154,16 @@
         nixpkgs-lib.follows = "nixpkgs";
       };
     };
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+      inputs = {
+        bun2nix.inputs.import-tree.follows = "import-tree";
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     make-shell = {
       url = "github:nicknovitski/make-shell";
       inputs.flake-compat.follows = "";

@@ -1,0 +1,10 @@
+{
+	"name": "pi-hashline-edit-runtime-deps",
+	"version": "0.0.0",
+	"private": true,
+	"dependencies": {
+		"diff": "8.0.2",
+		"file-type": "21.3.0",
+		"xxhashjs": "0.2.2"
+	}
+}
