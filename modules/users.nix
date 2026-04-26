@@ -18,6 +18,7 @@
           home ? "/home/${username}",
           aspect,
           isTrustedUser ? true,
+          password ? null,
         }:
         {
           nixos =
@@ -39,14 +40,21 @@
                 inputs.home-manager.nixosModules.home-manager
               ];
 
-              sops.secrets."users/${username}/password".neededForUsers = true;
-
               users.users.${username} = {
                 isNormalUser = true;
                 extraGroups = if isTrustedUser then [ "wheel" ] ++ normalGroups else normalGroups;
-                hashedPasswordFile = config.sops.secrets."users/${username}/password".path;
                 inherit home;
-              };
+              }
+              // (
+                if password == null then
+                  {
+                    hashedPasswordFile = config.sops.secrets."users/${username}/password".path;
+                  }
+                else
+                  {
+                    initialPassword = password;
+                  }
+              );
 
               home-manager.extraSpecialArgs = withSystem pkgs.stdenv.hostPlatform.system (
                 { inputs', self', ... }:
@@ -61,6 +69,9 @@
                   self.modules.homeManager.${aspect}
                 ];
               };
+            }
+            // lib.optionalAttrs (password == null) {
+              sops.secrets."users/${username}/password".neededForUsers = true;
             };
 
           homeManager = {
