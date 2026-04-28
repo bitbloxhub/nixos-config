@@ -32,6 +32,7 @@
           blink-cmp
           direnv-vim
           neo-tree-nvim
+          neorepl-nvim
           fzf-lua
           render-markdown-nvim
           image-nvim

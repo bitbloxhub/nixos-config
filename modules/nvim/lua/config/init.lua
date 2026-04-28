@@ -154,6 +154,7 @@ require("lze").load({
 	{ import = "config.plugins.lsp" },
 	{ import = "config.plugins.mini" },
 	{ import = "config.plugins.neo-tree" },
+	{ import = "config.plugins.neorepl" },
 	{ import = "config.plugins.noice" },
 	{ import = "config.plugins.org-mode" },
 	{ import = "config.plugins.quickfix" },
