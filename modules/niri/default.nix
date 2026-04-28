@@ -31,6 +31,15 @@ let
     );
 in
 {
+  perSystem =
+    {
+      pkgs,
+      ...
+    }:
+    {
+      packages.niri-unstable-patched = (niriPkgsForSystem pkgs.stdenv.hostPlatform.system).niri-unstable;
+    };
+
   flake-file.inputs = {
     niri-flake = {
       url = "github:sodiboo/niri-flake";
@@ -42,7 +51,6 @@ in
       };
     };
   };
-
   flake.aspects.gui =
     { aspect, ... }:
     {
@@ -50,7 +58,7 @@ in
       _.niri = {
         nixos =
           {
-            pkgs,
+            self',
             ...
           }:
           {
@@ -61,26 +69,25 @@ in
             niri-flake.cache.enable = false; # I enable this in ./nix.nix.
             programs.niri = {
               enable = true;
-              package = (niriPkgsForSystem pkgs.stdenv.hostPlatform.system).niri-unstable;
+              package = self'.packages.niri-unstable-patched;
             };
           };
-
         systemManager =
           {
-            pkgs,
+            self',
             ...
           }:
           {
             systemd.tmpfiles.rules = [
-              "L+ /usr/share/wayland-sessions/niri.desktop - - - - ${(niriPkgsForSystem pkgs.stdenv.hostPlatform.system).niri-unstable}/share/wayland-sessions/niri.desktop"
-              "L+ /etc/systemd/user/niri.service - - - - ${(niriPkgsForSystem pkgs.stdenv.hostPlatform.system).niri-unstable}/share/systemd/user/niri.service"
-              "L+ /etc/systemd/user/niri-shutdown.target - - - - ${(niriPkgsForSystem pkgs.stdenv.hostPlatform.system).niri-unstable}/share/systemd/user/niri-shutdown.target"
+              "L+ /usr/share/wayland-sessions/niri.desktop - - - - ${self'.packages.niri-unstable-patched}/share/wayland-sessions/niri.desktop"
+              "L+ /etc/systemd/user/niri.service - - - - ${self'.packages.niri-unstable-patched}/share/systemd/user/niri.service"
+              "L+ /etc/systemd/user/niri-shutdown.target - - - - ${self'.packages.niri-unstable-patched}/share/systemd/user/niri-shutdown.target"
             ];
           };
-
         homeManager =
           {
             pkgs,
+            self',
             ...
           }:
           {
@@ -95,12 +102,14 @@ in
 
             programs.niri = {
               enable = true;
-              package = (niriPkgsForSystem pkgs.stdenv.hostPlatform.system).niri-unstable;
+              package = self'.packages.niri-unstable-patched;
               settings = {
                 prefer-no-csd = true;
                 xwayland-satellite = {
                   enable = true;
-                  path = lib.getExe (niriPkgsForSystem pkgs.stdenv.hostPlatform.system).xwayland-satellite-unstable;
+                  path = lib.getExe (
+                    inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable
+                  );
                 };
                 screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
                 layout = {
