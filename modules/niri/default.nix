@@ -3,20 +3,16 @@
   inputs,
   ...
 }:
-let
-  niriPkgsForSystem =
-    system:
-    (lib.makeExtensible (_final: inputs.niri-flake.packages.${system})).extend (
-      _final: prev: {
-        niri-unstable = prev.niri-unstable.overrideAttrs (
-          _final: _prev: {
-            patches = [
-              #(inputs.nixpkgs.legacyPackages.${system}.fetchpatch {
-              #  name = "niri-support-shm.patch";
-              #  url = "https://github.com/YaLTeR/niri/compare/1911cf3...wrvsrx:d9cc496.patch";
-              #  hash = "sha256-Of+WA05jHnuV8rnz4ZjjQNzI8CcLLT8zoSnUg5n1APU=";
-              #})
-            ];
+{
+  perSystem =
+    {
+      pkgs,
+      ...
+    }:
+    {
+      packages.niri-unstable-patched =
+        inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable.overrideAttrs
+          {
             # work around bug in firefox opaque region setting by just disabling all
             # opaque_region requests
             postPatch = ''
@@ -25,19 +21,7 @@ let
               popd
             '';
             doCheck = false;
-          }
-        );
-      }
-    );
-in
-{
-  perSystem =
-    {
-      pkgs,
-      ...
-    }:
-    {
-      packages.niri-unstable-patched = (niriPkgsForSystem pkgs.stdenv.hostPlatform.system).niri-unstable;
+          };
     };
 
   flake-file.inputs = {
@@ -87,6 +71,7 @@ in
         homeManager =
           {
             pkgs,
+            inputs',
             self',
             ...
           }:
@@ -107,9 +92,7 @@ in
                 prefer-no-csd = true;
                 xwayland-satellite = {
                   enable = true;
-                  path = lib.getExe (
-                    inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable
-                  );
+                  path = lib.getExe inputs'.niri-flake.packages.xwayland-satellite-unstable;
                 };
                 screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
                 layout = {
