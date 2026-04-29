@@ -1,4 +1,4 @@
-ruleDirs: ["./sg_rules/"]
+ruleDirs: ["./sg-rules/"]
 customLanguages:
     xml:
         libraryPath: ./.tree-sitter-xml/parser/xml.so

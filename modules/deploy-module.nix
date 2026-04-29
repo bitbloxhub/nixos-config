@@ -118,7 +118,7 @@ in
     type = rootModule;
   };
   config = {
-    perSystem = _: {
+    perSystem = {
       # TODO: For some reason this fails, fix it.
       # checks = lib.mkIf (deploy-rs.lib ? ${system}) (deploy-rs.lib.${system}.deployChecks cfg);
     };

@@ -1,0 +1,8 @@
+id: no-underscore-lambda
+language: nix
+rule:
+    pattern: "_: $BODY"
+fix: "$BODY"
+message: Do not use `_` lambda arg. Remove lambda if arg unused.
+note: "deadnix can remove unused module arguments and leave `_: ...`; in that case the lambda argument is unnecessary, so simplify to just the body expression."
+severity: error
