@@ -3,7 +3,7 @@
   ...
 }:
 let
-  extra-substituters = [
+  substituters = [
     "https://cache.nixos.org"
     "https://nix-community.cachix.org"
     "https://cache.nixos-cuda.org"
@@ -13,7 +13,7 @@ let
     "https://yazi.cachix.org"
     "https://vicinae.cachix.org"
   ];
-  extra-trusted-public-keys = [
+  trusted-public-keys = [
     "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
     "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
     "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -26,7 +26,7 @@ let
 in
 {
   flake-file.nixConfig = {
-    inherit extra-substituters extra-trusted-public-keys;
+    inherit substituters trusted-public-keys;
   };
 
   flake.aspects.system =
@@ -51,7 +51,7 @@ in
                 "root"
                 "@wheel"
               ];
-              inherit extra-substituters extra-trusted-public-keys;
+              inherit substituters trusted-public-keys;
             };
           };
         };
