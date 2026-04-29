@@ -45,7 +45,16 @@
 (set-frame-parameter nil 'alpha-background 90) ; For current frame
 (add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
 
-(set-face-attribute 'default nil :font "Fira Code" :height 113)
+(set-frame-font "FiraCode Nerd Font" nil t)
+(set-face-attribute 'default nil :font "FiraCode Nerd Font" :height 113)
+(add-hook
+ 'after-make-frame-functions
+ (lambda (frame)
+   (with-selected-frame frame
+     (set-frame-font "FiraCode Nerd Font" nil t)
+     (set-face-attribute 'default frame
+                         :font "FiraCode Nerd Font"
+                         :height 113))))
 
 (use-package
   ligature
@@ -203,6 +212,15 @@
    '("<escape>" . ignore)))
 
 (use-package meow :ensure nil :config (meow-setup) (meow-global-mode 1))
+
+(use-package
+  ghostel
+  :ensure nil
+  :commands (ghostel ghostel-project ghostel-other)
+  :custom
+  (ghostel-module-auto-install nil)
+  (ghostel-shell "nu"))
+
 
 (use-package
   elisp-autofmt
@@ -522,12 +540,14 @@
     (interactive)
     (find-file "~/notes/journal.org")
     (my/org-journal-goto-rfc3339-day))
-  :bind (:map org-mode-map
-         ("C-c I" . my/org-id-get-create-and-sync)
-         ("C-c C-i" . my/org-id-get-create-and-sync)
-         ("C-c <tab>" . my/org-id-get-create-and-sync)
-         ("C-c n" . my/notes-prefix-map)
-         ("C-c C-n" . my/notes-prefix))
+  :bind
+  (:map
+   org-mode-map
+   ("C-c I" . my/org-id-get-create-and-sync)
+   ("C-c C-i" . my/org-id-get-create-and-sync)
+   ("C-c <tab>" . my/org-id-get-create-and-sync)
+   ("C-c n" . my/notes-prefix-map)
+   ("C-c C-n" . my/notes-prefix))
   :custom
   (org-hide-leading-stars t)
   (org-startup-indented t)
@@ -538,8 +558,7 @@
   (org-refile-use-outline-path 'file)
   (org-outline-path-complete-in-steps nil)
   (org-refile-targets
-   '((org-agenda-files :maxlevel . 3)
-     (org-roam-directory :maxlevel . 3))))
+   '((org-agenda-files :maxlevel . 3) (org-roam-directory :maxlevel . 3))))
 
 (use-package
   org-roam

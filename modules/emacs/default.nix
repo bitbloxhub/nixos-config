@@ -24,6 +24,39 @@
             package = pkgs.emacs-pgtk;
             extraPackages =
               epkgs: with epkgs; [
+                (
+                  let
+                    pname = "ghostel";
+                    version = "0.20.1";
+                    src = pkgs.fetchFromGitHub {
+                      owner = "dakra";
+                      repo = "ghostel";
+                      rev = "v${version}";
+                      hash = "sha256-UZ/AGuuvdhjTqx4IBIp4w/NuqklAvecl6bkpSEs3izY=";
+                    };
+                    libExt = pkgs.stdenv.hostPlatform.extensions.sharedLibrary;
+                    module = pkgs.fetchurl {
+                      url = "https://github.com/dakra/ghostel/releases/download/v0.20.1/ghostel-module-x86_64-linux.so";
+                      hash = "sha256-R/m5mFHLAy7MhdE0t93e8AJJ4wPRmMnCWI//LilXXd4=";
+                    };
+                    rpath = pkgs.lib.makeLibraryPath [
+                      pkgs.stdenv.cc.cc.lib
+                      pkgs.glibc
+                    ];
+                  in
+                  melpaBuild {
+                    inherit pname version src;
+                    files = ''
+                      (:defaults "etc" "ghostel-module${libExt}")
+                    '';
+                    nativeBuildInputs = [ pkgs.patchelf ];
+                    preBuild = ''
+                      install ${module} ghostel-module${libExt}
+                      patchelf --set-rpath "${rpath}" ghostel-module${libExt}
+                    '';
+                    packageRequires = [ ];
+                  }
+                )
                 compile-angel
                 catppuccin-theme
                 ligature
@@ -56,6 +89,10 @@
                 centaur-tabs
               ];
           };
+          home.packages = [
+            pkgs.nerd-fonts.fira-code
+          ];
+
           services.emacs.enable = true;
           xdg.configFile."emacs".source = pkgs.symlinkJoin {
             name = "emacs-config";
