@@ -61,7 +61,7 @@
                 email = defaultEmail;
               };
 
-              credential.helper = "store";
+              credential.helper = "cache --timeout=3600";
               core.editor = "nvim";
               init.defaultBranch = "main";
               branchless.core.mainBranch = "main";
