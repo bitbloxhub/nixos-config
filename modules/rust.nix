@@ -13,5 +13,9 @@
           pkgs.rust-analyzer
         ];
       };
+
+      treefmt = {
+        programs.rustfmt.enable = true;
+      };
     };
 }

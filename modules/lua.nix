@@ -7,11 +7,13 @@
     {
       make-shells.default = {
         packages = [
-          pkgs.typescript-language-server
-          pkgs.nodejs_25
-          pkgs.pnpm_10
-          pkgs.prettier
+          pkgs.stylua
+          pkgs.lua-language-server
         ];
+      };
+
+      treefmt = {
+        programs.stylua.enable = true;
       };
     };
 }

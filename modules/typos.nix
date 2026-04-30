@@ -7,10 +7,12 @@
     {
       make-shells.default = {
         packages = [
-          pkgs.nixfmt
-          pkgs.deadnix
-          pkgs.statix
+          pkgs.typos
         ];
+      };
+
+      treefmt = {
+        programs.typos.enable = true;
       };
     };
 }

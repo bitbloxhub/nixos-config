@@ -20,9 +20,6 @@ flake-parts.lib.mkFlake
     imports = [
       flake-parts.flakeModules.modules
       home-manager.flakeModules.home-manager
-      ./ci.nix
-      ./treefmt.nix
-      ./flake-file.nix
       ((import-tree.filterNot (nixpkgs.lib.hasSuffix "npins/default.nix")) ./modules)
       ((import-tree.filter (nixpkgs.lib.hasSuffix "default.nix")) ./hosts)
     ];

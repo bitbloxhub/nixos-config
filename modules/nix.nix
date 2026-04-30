@@ -29,6 +29,27 @@ in
     inherit substituters trusted-public-keys;
   };
 
+  perSystem =
+    {
+      pkgs,
+      ...
+    }:
+    {
+      make-shells.default = {
+        packages = [
+          pkgs.nixfmt
+          pkgs.deadnix
+          pkgs.statix
+        ];
+      };
+
+      treefmt = {
+        programs.nixfmt.enable = true;
+        programs.deadnix.enable = true;
+        programs.statix.enable = true;
+      };
+    };
+
   flake.aspects.system =
     { aspect, ... }:
     {
