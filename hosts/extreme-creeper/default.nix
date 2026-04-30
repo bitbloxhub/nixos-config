@@ -90,7 +90,7 @@ in
           system
           (system._.user {
             username = "jonahgam";
-            aspect = " host_extreme-creeper";
+            aspect = "host_extreme-creeper";
           })
           system._.presets._.gitsyncer._.notes
           cli
