@@ -17,7 +17,7 @@
             ];
           }
 
-          (lib.mkIf (lib.attrByPath [ "programs" "niri" "settings" ] null config != null) {
+          (lib.mkIf (lib.attrByPath [ "programs" "niri" "enable" ] false config) {
             programs.niri.settings = {
               spawn-at-startup = [
                 {

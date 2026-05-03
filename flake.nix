@@ -1,7 +1,11 @@
 # DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
 # Use `nix run .#write-flake` to regenerate it.
 {
-  outputs = inputs: import ./outputs.nix inputs;
+  outputs =
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+      (inputs.import-tree.filterNot (inputs.nixpkgs.lib.hasSuffix "npins/default.nix")) ./nix
+    );
 
   nixConfig = {
     substituters = [

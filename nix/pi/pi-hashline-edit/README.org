@@ -12,19 +12,19 @@ This directory stores reproducible npm metadata for packaging
 
 ** Wired from
 
-- ~modules/pi/default.nix~
+- ~nix/pi/default.nix~
   - fetches source from GitHub tag
   - copies this directory's ~package.json~ + ~package-lock.json~ in ~postPatch~
   - pins ~npmDepsHash~
 
 ** Bump flow
 
-1. Update version + source hash in ~modules/pi/default.nix~.
+1. Update version + source hash in ~nix/pi/default.nix~.
 2. If runtime deps changed, update ~package.json~ here.
 3. Regenerate lockfile from this directory:
 
 #+begin_src bash
-cd modules/pi/pi-hashline-edit
+cd nix/pi/pi-hashline-edit
 npm install --package-lock-only --ignore-scripts
 #+end_src
 

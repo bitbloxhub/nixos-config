@@ -106,7 +106,7 @@
             };
           }
 
-          (lib.mkIf (lib.attrByPath [ "programs" "niri" "settings" ] null config != null) {
+          (lib.mkIf (lib.attrByPath [ "programs" "niri" "enable" ] false config) {
             # Floating emacs window config, mostly for note taking with org-mode/org-roam
             programs.niri.settings = {
               binds."Mod+E".action.spawn = [

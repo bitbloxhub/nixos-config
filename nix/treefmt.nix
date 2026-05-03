@@ -20,8 +20,8 @@
       "**/pnpm-lock.yaml"
       "skills-lock.json"
       # Git submodules
-      "modules/wezterm/resurrect.wezterm"
-      "modules/wezterm/wezterm-types"
+      "nix/wezterm/resurrect.wezterm"
+      "nix/wezterm/wezterm-types"
     ];
   };
 }

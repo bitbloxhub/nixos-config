@@ -6,6 +6,10 @@
   ...
 }:
 {
+  imports = [
+    inputs.home-manager.flakeModules.home-manager
+  ];
+
   flake.aspects = {
     system = {
       nixos = {

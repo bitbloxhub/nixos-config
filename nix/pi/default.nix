@@ -12,7 +12,7 @@
 
   perSystem = {
     treefmt.settings.global.excludes = [
-      "modules/pi/pi-hashline-edit/package-lock.json"
+      "nix/pi/pi-hashline-edit/package-lock.json"
     ];
   };
 
