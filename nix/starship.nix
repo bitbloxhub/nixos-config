@@ -119,7 +119,7 @@
           python = {
             symbol = "";
             style = "bg:green";
-            format = "[[ $symbol( $version)(\(#$virtualenv\)) ](fg:crust bg:green)]($style)";
+            format = "[[ $symbol( $version)(#$virtualenv) ](fg:crust bg:green)]($style)";
             detect_extensions = [ ];
           };
 
