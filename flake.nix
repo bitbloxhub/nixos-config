@@ -87,6 +87,14 @@
         utils.follows = "flake-utils";
       };
     };
+    ewwii = {
+      url = "github:Ewwii-sh/ewwii/0.7.0";
+      inputs = {
+        flake-compat.follows = "";
+        nixpkgs.follows = "nixpkgs";
+        rust-overlay.follows = "rust-overlay";
+      };
+    };
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -247,6 +255,10 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix/pull/779/merge";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -292,7 +304,12 @@
       inputs = {
         flake-utils.follows = "flake-utils";
         nixpkgs.follows = "nixpkgs";
+        rust-overlay.follows = "rust-overlay";
       };
+    };
+    yucky-ewwii = {
+      url = "github:Ewwii-sh/yucky-ewwii";
+      flake = false;
     };
   };
 }

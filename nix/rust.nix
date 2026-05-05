@@ -1,4 +1,10 @@
 {
+  # We don't use this, but other flakes do
+  flake-file.inputs.rust-overlay = {
+    url = "github:oxalica/rust-overlay";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   perSystem =
     {
       pkgs,
