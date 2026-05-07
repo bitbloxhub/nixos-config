@@ -1,0 +1,13 @@
+[package]
+name = "bitbloxhub-shell"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+gtk4 = { version = "0.11.3", features = ["gnome_49"] }
+reactive_graph = { version = "0.2.14", features = ["effects"] }
+reactive_stores = "0.4.3"
+gtk4-layer-shell = "0.8.0"
+any_spawner = { version = "0.3.0", features = ["glib"] }
+tokio = { version = "1.48.0", features = ["rt-multi-thread", "macros", "time"] }
+reqwest = { version = "0.12.24", default-features = false, features = ["rustls-tls"] }

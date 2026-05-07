@@ -79,6 +79,15 @@
       };
     };
     crane.url = "github:ipetkov/crane";
+    crate2nix = {
+      url = "github:jrobsonchase/crate2nix";
+      inputs = {
+        cachix.follows = "";
+        flake-compat.follows = "";
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     deploy-rs = {
       url = "github:serokell/deploy-rs";
       inputs = {
@@ -86,6 +95,10 @@
         nixpkgs.follows = "nixpkgs";
         utils.follows = "flake-utils";
       };
+    };
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";

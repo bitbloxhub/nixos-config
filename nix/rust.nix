@@ -1,15 +1,31 @@
 {
+  flake-file.inputs = {
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    crane.url = "github:ipetkov/crane";
+
+    crate2nix = {
+      url = "github:jrobsonchase/crate2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.cachix.follows = "";
+    };
+  };
+
   perSystem =
     {
       pkgs,
+      inputs',
       ...
     }:
     {
       make-shells.default = {
         packages = [
-          pkgs.cargo
-          pkgs.rustc
-          pkgs.rustfmt
+          inputs'.fenix.packages.default.toolchain
           pkgs.rust-analyzer
         ];
       };
