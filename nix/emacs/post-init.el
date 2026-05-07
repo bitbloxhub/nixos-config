@@ -554,6 +554,7 @@
   (org-adapt-indentation nil)
   (org-edit-src-content-indentation 0)
   (org-startup-truncated t)
+  (org-todo-keywords '((sequence "TODO" "STARTED" "|" "DONE" "CANCELED")))
   (org-agenda-files '("~/notes"))
   (org-refile-use-outline-path 'file)
   (org-outline-path-complete-in-steps nil)
