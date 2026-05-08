@@ -29,6 +29,7 @@
       _.noctalia.homeManager =
         {
           lib,
+          pkgs,
           config,
           ...
         }:
@@ -38,12 +39,25 @@
             {
               programs.noctalia-shell = {
                 enable = true;
+                package = inputs.noctalia.packages.${pkgs.system}.default.overrideAttrs (old: {
+                  patches = (old.patches or [ ]) ++ [
+                    (pkgs.fetchpatch {
+                      url = "https://github.com/noctalia-dev/noctalia-shell/commit/47123356323a096190f907f23870ce286c62c3f8.patch";
+                      hash = "sha256-OjN+qsfm4suKTMDHxhbto3eJxsZwqvf+q9OhYqC34ns=";
+                    })
+                  ];
+                });
                 settings = {
                   ui = {
                     fontDefault = "Fira Code";
                     fontFixed = "Fira Code";
                   };
-                  wallpaper.enabled = false; # use swww
+                  wallpaper = {
+                    enabled = false; # use swww
+                    enableLockScreenWallpaper = true;
+                    lockScreenWallpaperLight = "${../wallpapers/niri-pool.png}";
+                    lockScreenWallpaperDark = "${../wallpapers/niri-pool.png}";
+                  };
                   network = {
                     disableDiscoverability = true;
                     bluetoothAutoConnect = false;

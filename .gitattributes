@@ -1,1 +1,2 @@
 nix/wallpapers/*.jpg filter=lfs diff=lfs merge=lfs -text
+nix/wallpapers/*.png filter=lfs diff=lfs merge=lfs -text

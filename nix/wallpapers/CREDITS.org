@@ -4,3 +4,5 @@
   Cant find it on alphacoders.
 * [[./miku-v.jpg]]
   [[https://wall.alphacoders.com/big.php?i=1312170]]
+* [[./niri-pool.png]]
+  [[https://github.com/niri-wm/artwork/blob/main/wallpapers/Niri%20pool.png]]
