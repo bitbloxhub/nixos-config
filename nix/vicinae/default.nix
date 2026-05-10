@@ -103,8 +103,8 @@
                   inputs'.vicinae-extensions.packages.awww-switcher
                   (inputs'.vicinae.packages.mkRayCastExtension {
                     name = "kaomoji-search";
-                    rev = "870667fc671801a467deb7c4c7fc72992efe3820";
-                    hash = "sha256-hPpoVU/Bo2dS9A8tp2gDUBAhVqPZ+ZqCn1hyZQ45Wv0=";
+                    rev = "f198acd24a916bfe35e6986135ee1ae0ae62eaaf";
+                    hash = "sha256-hCkM2qWN5ye/1jbGJAHC4tjpEFlW8FhZOrQB/aK7ltY=";
                   })
                 ];
               };
