@@ -39,7 +39,7 @@
             {
               programs.noctalia-shell = {
                 enable = true;
-                package = inputs.noctalia.packages.${pkgs.system}.default.overrideAttrs (old: {
+                package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
                   patches = (old.patches or [ ]) ++ [
                     (pkgs.fetchpatch {
                       url = "https://github.com/noctalia-dev/noctalia-shell/commit/47123356323a096190f907f23870ce286c62c3f8.patch";
