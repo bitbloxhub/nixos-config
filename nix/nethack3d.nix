@@ -13,8 +13,9 @@
       version = "1.3.2";
 
       src = pkgs.fetchurl {
-        url = "https://github.com/JamesIV4/nethack-3d/releases/download/${version}/NetHack.3D.${version}.AppImage";
-        hash = "sha256-BAy+B5sNypSioCUIU9AVrofQt7sFZwS6pfhp8l324Oc=";
+        # url = "https://github.com/JamesIV4/nethack-3d/releases/download/${version}/NetHack.3D.${version}.AppImage";
+        url = "https://github.com/bitbloxhub/nethack-3d/releases/download/wizard-mode-fix-v1/NetHack.3D.1.3.3.AppImage";
+        hash = "sha256-4f6n/aMT5x/7DLstsGP9+fJzcQdGXOkQ8c4kNzQH6Eo=";
       };
 
       appimageContents = pkgs.appimageTools.extractType2 {
