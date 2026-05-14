@@ -3,7 +3,8 @@
 ;; Reducing clutter in ~/.emacs.d by redirecting files to ~/.emacs.d/var/
 ;; IMPORTANT: This part should be in the pre-early-init.el file
 (setq minimal-emacs-var-dir "~/.var/emacs/")
-(setq package-user-dir (expand-file-name "elpa" minimal-emacs-var-dir))
+(setq package-user-dir
+      (expand-file-name "elpa" minimal-emacs-var-dir))
 (setq user-emacs-directory minimal-emacs-var-dir)
 
 (defun display-startup-time ()
