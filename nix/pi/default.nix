@@ -1,20 +1,66 @@
 {
-  flake-file.inputs.llm-agents = {
-    url = "github:numtide/llm-agents.nix";
-    inputs = {
-      nixpkgs.follows = "nixpkgs";
-      systems.follows = "systems";
-      treefmt-nix.follows = "treefmt-nix";
-      flake-parts.follows = "flake-parts";
-      bun2nix.inputs.import-tree.follows = "import-tree";
+  inputs,
+  ...
+}:
+{
+  flake-file.inputs = {
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+        treefmt-nix.follows = "treefmt-nix";
+        flake-parts.follows = "flake-parts";
+      };
+    };
+
+    agent-roam = {
+      url = "github:bitbloxhub/agent-roam";
+      flake = false;
     };
   };
 
-  perSystem = {
-    treefmt.settings.global.excludes = [
-      "nix/pi/pi-hashline-edit/package-lock.json"
-    ];
-  };
+  perSystem =
+    {
+      pkgs,
+      ...
+    }:
+    {
+      treefmt.settings.global.excludes = [
+        "nix/pi/pi-hashline-edit/package-lock.json"
+      ];
+
+      packages.agent-roam-pi-extension = pkgs.stdenv.mkDerivation {
+        pname = "agent-roam-pi-extension";
+        version = inputs.agent-roam.rev;
+        src = inputs.agent-roam;
+
+        nativeBuildInputs = [
+          pkgs.nodejs
+          pkgs.pnpmConfigHook
+          pkgs.pnpm_10
+        ];
+
+        pnpm_config_manage_package_manager_versions = "false";
+        pnpm_config_auto_install_peers = "false";
+        pnpmWorkspaces = [ "agent-roam-pi" ];
+        pnpmDeps = pkgs.fetchPnpmDeps {
+          pname = "agent-roam-extension";
+          version = inputs.agent-roam.rev;
+          src = inputs.agent-roam;
+          pnpmWorkspaces = [ "agent-roam-pi" ];
+          pnpm = pkgs.pnpm_10;
+          fetcherVersion = 3;
+          hash = "sha256-MipjP9qQT/zMJd8Y6/GVJP+5QR4+9eznDr5h30MNqZM=";
+        };
+
+        buildPhase = ''
+          runHook preBuild
+          pnpm --config.auto-install-peers=false --config.strict-peer-dependencies=false --filter=agent-roam-pi deploy --legacy --prod --offline $out
+          runHook postBuild
+        '';
+      };
+    };
 
   flake.aspects.cli =
     { aspect, ... }:
@@ -25,6 +71,7 @@
           lib,
           pkgs,
           inputs',
+          self',
           ...
         }:
         let
@@ -98,6 +145,11 @@
             recursive = true;
           };
 
+          home.file.".pi/agent/extensions/agent-roam" = {
+            source = self'.packages.agent-roam-pi-extension;
+            recursive = true;
+          };
+
           home.file.".pi/agent/themes/catppuccin-mocha.json".source =
             piCatppuccin + "/package/themes/catppuccin-mocha.json";
 
@@ -134,6 +186,7 @@
             install_skill "juliusbrussee/caveman@caveman"
             install_skill "vercel-labs/skills@find-skills"
             install_skill "steipete/clawdis@tmux"
+            install_skill "bitbloxhub/agent-roam@agent-roam"
           '';
 
           home.persistence."/persistent".directories = [

@@ -39,6 +39,10 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    agent-roam = {
+      url = "github:bitbloxhub/agent-roam";
+      flake = false;
+    };
     angrr = {
       url = "github:linyinfeng/angrr";
       inputs = {
@@ -161,7 +165,6 @@
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
       inputs = {
-        bun2nix.inputs.import-tree.follows = "import-tree";
         flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems";

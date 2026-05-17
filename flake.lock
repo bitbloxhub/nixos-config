@@ -26,6 +26,22 @@
         "type": "github"
       }
     },
+    "agent-roam": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778976331,
+        "narHash": "sha256-1Cr9yfc0b74Aey6F8064A9RLKhxv125Bveor2kZgUR8=",
+        "owner": "bitbloxhub",
+        "repo": "agent-roam",
+        "rev": "a7c22253ec39991ba80fa35a7ad563c8c6dc3fcf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bitbloxhub",
+        "repo": "agent-roam",
+        "type": "github"
+      }
+    },
     "angrr": {
       "inputs": {
         "flake-compat": [],
@@ -114,9 +130,6 @@
           "llm-agents",
           "flake-parts"
         ],
-        "import-tree": [
-          "import-tree"
-        ],
         "nixpkgs": [
           "llm-agents",
           "nixpkgs"
@@ -131,11 +144,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776192490,
-        "narHash": "sha256-5gYQNEs0/vDkHhg63aHS5g0IwG/8HNvU1Vr00cElofk=",
+        "lastModified": 1778445566,
+        "narHash": "sha256-oQvcadh2BCkrog+SGrG6YffKJrveYpjj3TdQJWaKhaM=",
         "owner": "nix-community",
         "repo": "bun2nix",
-        "rev": "6ef9f144616eedea90b364bb408ef2e1de7b310a",
+        "rev": "2499dedd70744dba1815875b854818a3019e9e4c",
         "type": "github"
       },
       "original": {
@@ -650,11 +663,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777093284,
-        "narHash": "sha256-tBvsFPJy0/2gocc6QGYFXJF44TvJ8PC726NsdTpFJ44=",
+        "lastModified": 1778966732,
+        "narHash": "sha256-ni6+NtRv7bNpqKeGwPaeufdUrjG2uBEutDuRTu7od8k=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "6b4673fddbbe1f2656b3fa8d2a32666570aafbfa",
+        "rev": "a7ad64dd500337232a35b5db16527475e8eec9a2",
         "type": "github"
       },
       "original": {
@@ -1032,6 +1045,7 @@
     "root": {
       "inputs": {
         "actions-nix": "actions-nix",
+        "agent-roam": "agent-roam",
         "angrr": "angrr",
         "betterfox-nix": "betterfox-nix",
         "catppuccin": "catppuccin",
