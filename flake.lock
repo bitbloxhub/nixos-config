@@ -29,11 +29,11 @@
     "agent-roam": {
       "flake": false,
       "locked": {
-        "lastModified": 1778976331,
-        "narHash": "sha256-1Cr9yfc0b74Aey6F8064A9RLKhxv125Bveor2kZgUR8=",
+        "lastModified": 1779053554,
+        "narHash": "sha256-QOcYqCIWWGLkRtgXv9Lh8Nj8x3Y9f3KtF4q8YRNl5rE=",
         "owner": "bitbloxhub",
         "repo": "agent-roam",
-        "rev": "a7c22253ec39991ba80fa35a7ad563c8c6dc3fcf",
+        "rev": "5e1fe5de9922251a7c0291a6f780fd3124d0326b",
         "type": "github"
       },
       "original": {
