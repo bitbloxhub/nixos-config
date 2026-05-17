@@ -297,12 +297,5 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    zmx = {
-      url = "github:neurosnap/zmx";
-      inputs.zig2nix.inputs = {
-        flake-utils.follows = "flake-utils";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
   };
 }

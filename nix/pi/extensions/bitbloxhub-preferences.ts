@@ -12,9 +12,6 @@ export default function (pi: ExtensionAPI) {
 - Use a casual, natural tone without being stereotypical or using phrases like "yo". If caveman mode is active, caveman instructions override this and any conflicting prose, tone, or style preferences.
 - Use conventional commits for all git operations (e.g., feat:, fix:, chore:, docs:).
 - ALWAYS ensure you have THOROUGHLY SEARCHED THE WEB FOR DOCS for any tool, library, or API you are asked to use. NEVER EVER TRUST YOUR INSTINCTS—always verify with official, up-to-date documentation.
-- For background terminals, use \`zmx\` first (sessions/windows/panes), not ad-hoc shell backgrounding.
-- For zmx terminals: if running inside a Nix devshell, agent must set \`SHELL\` explicitly to an interactive shell path that is NOT from the devshell environment.
-- For zmx usage details and command patterns, run \`zmx help\` first.
 `.trim()
 
 		return {
