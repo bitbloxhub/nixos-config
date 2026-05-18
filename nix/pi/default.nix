@@ -56,7 +56,15 @@
 
         buildPhase = ''
           runHook preBuild
-          pnpm --config.auto-install-peers=false --config.strict-peer-dependencies=false --filter=agent-roam-pi deploy --legacy --prod --offline $out
+          tmp="$TMPDIR/agent-roam-pi-extension-out"
+          rm -rf "$tmp"
+          mkdir -p "$tmp"
+
+          pnpm --config.auto-install-peers=false --config.strict-peer-dependencies=false --filter=agent-roam-pi deploy --legacy --prod --offline "$tmp"
+
+          # Copy to $out with symlink dereference to avoid /build/source/* workspace links.
+          cp -aL "$tmp"/. "$out"/
+
           runHook postBuild
         '';
       };
