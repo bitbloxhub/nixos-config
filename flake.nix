@@ -140,8 +140,13 @@
       url = "github:cachix/git-hooks.nix";
       inputs = {
         flake-compat.follows = "";
+        gitignore.follows = "gitignore";
         nixpkgs.follows = "nixpkgs";
       };
+    };
+    gitignore = {
+      url = "github:hercules-ci/gitignore.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -188,7 +193,10 @@
     };
     mrtnvgr = {
       url = "github:mrtnvgr/nurpkgs";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+      };
     };
     niri-flake = {
       url = "github:sodiboo/niri-flake";
@@ -266,7 +274,15 @@
       inputs = {
         flake-compat.follows = "";
         nixpkgs.follows = "nixpkgs";
-        userborn.inputs.flake-parts.follows = "flake-parts";
+        userborn.inputs = {
+          flake-parts.follows = "flake-parts";
+          nixpkgs.follows = "nixpkgs";
+          pre-commit-hooks-nix.inputs = {
+            gitignore.follows = "gitignore";
+            nixpkgs.follows = "nixpkgs";
+          };
+          systems.follows = "systems";
+        };
       };
     };
     systems.url = "github:nix-systems/default";

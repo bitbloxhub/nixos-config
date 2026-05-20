@@ -9,7 +9,17 @@
     inputs = {
       nixpkgs.follows = "nixpkgs";
       flake-compat.follows = "";
-      userborn.inputs.flake-parts.follows = "flake-parts";
+      userborn = {
+        inputs = {
+          nixpkgs.follows = "nixpkgs";
+          flake-parts.follows = "flake-parts";
+          systems.follows = "systems";
+          pre-commit-hooks-nix.inputs = {
+            gitignore.follows = "gitignore";
+            nixpkgs.follows = "nixpkgs";
+          };
+        };
+      };
     };
   };
 

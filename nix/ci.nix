@@ -5,11 +5,17 @@
 }:
 {
   flake-file.inputs = {
+    gitignore = {
+      url = "github:hercules-ci/gitignore.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-compat.follows = "";
+        gitignore.follows = "gitignore";
       };
     };
     actions-nix = {

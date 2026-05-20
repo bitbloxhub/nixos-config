@@ -15,7 +15,10 @@
     # See https://github.com/mrtnvgr/reanix/issues/4
     mrtnvgr = {
       url = "github:mrtnvgr/nurpkgs";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
     };
     # following flake-parts
     margesimpson = {
