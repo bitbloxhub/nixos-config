@@ -83,6 +83,19 @@
       };
     };
     crane.url = "github:ipetkov/crane";
+    crate2nix = {
+      url = "github:nix-community/crate2nix";
+      inputs = {
+        cachix.follows = "";
+        flake-compat.follows = "";
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+        pre-commit-hooks.inputs = {
+          gitignore.follows = "gitignore";
+          nixpkgs.follows = "nixpkgs";
+        };
+      };
+    };
     deploy-rs = {
       url = "github:serokell/deploy-rs";
       inputs = {
@@ -90,6 +103,10 @@
         nixpkgs.follows = "nixpkgs";
         utils.follows = "flake-utils";
       };
+    };
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
@@ -256,6 +273,20 @@
         margesimpson.follows = "margesimpson";
         mrtnvgr.follows = "mrtnvgr";
         nixpkgs.follows = "nixpkgs";
+      };
+    };
+    skills-flake = {
+      url = "github:bitbloxhub/skills-flake";
+      inputs = {
+        crate2nix.follows = "crate2nix";
+        fenix.follows = "fenix";
+        flake-file.follows = "flake-file";
+        flake-parts.follows = "flake-parts";
+        flint.follows = "flint";
+        import-tree.follows = "import-tree";
+        make-shell.follows = "make-shell";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
       };
     };
     sops-nix = {

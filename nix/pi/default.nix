@@ -14,6 +14,21 @@
       };
     };
 
+    skills-flake = {
+      url = "github:bitbloxhub/skills-flake";
+      inputs = {
+        flake-file.follows = "flake-file";
+        treefmt-nix.follows = "treefmt-nix";
+        flake-parts.follows = "flake-parts";
+        import-tree.follows = "import-tree";
+        nixpkgs.follows = "nixpkgs";
+        flint.follows = "flint";
+        make-shell.follows = "make-shell";
+        crate2nix.follows = "crate2nix";
+        fenix.follows = "fenix";
+      };
+    };
+
     agent-roam = {
       url = "github:bitbloxhub/agent-roam";
       flake = false;
@@ -76,7 +91,6 @@
       includes = [ aspect._.pi ];
       _.pi.homeManager =
         {
-          lib,
           pkgs,
           inputs',
           self',
@@ -117,6 +131,8 @@
           };
         in
         {
+          imports = [ inputs.skills-flake.homeModules.default ];
+
           home.packages = [
             inputs'.llm-agents.packages.pi
             inputs'.llm-agents.packages.agent-browser
@@ -161,41 +177,16 @@
           home.file.".pi/agent/themes/catppuccin-mocha.json".source =
             piCatppuccin + "/package/themes/catppuccin-mocha.json";
 
-          home.activation.installGlobalSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-            set -euo pipefail
-
-            export PATH=${
-              lib.makeBinPath [
-                pkgs.git
-                pkgs.openssh
-              ]
-            }:$PATH
-            export GIT_TERMINAL_PROMPT=0
-            export GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh"
-
-            install_skill() {
-              local skill="$1"
-              local skill_name="''${skill##*@}"
-              local skill_path="$HOME/.agents/skills/$skill_name/SKILL.md"
-              local output
-
-              if [ -e "$skill_path" ]; then
-                return 0
-              fi
-
-              if ! output="$(${inputs'.llm-agents.packages.skills}/bin/skills add "$skill" -g -y 2>&1)"; then
-                echo "installGlobalSkills: warning: failed to install $skill" >&2
-                echo "$output" >&2
-                return 0
-              fi
-            }
-
-            install_skill "vercel-labs/agent-browser@agent-browser"
-            install_skill "juliusbrussee/caveman@caveman"
-            install_skill "vercel-labs/skills@find-skills"
-            install_skill "steipete/clawdis@tmux"
-            install_skill "bitbloxhub/agent-roam@agent-roam"
-          '';
+          home.skillsFlake = {
+            enable = true;
+            agents.pi.enable = true;
+            skills = {
+              inherit (inputs'.skills-flake.packages.skills.github.vercel-labs.agent-browser) agent-browser;
+              inherit (inputs'.skills-flake.packages.skills.github.juliusbrussee.caveman) caveman;
+              inherit (inputs'.skills-flake.packages.skills.github.openclaw.openclaw) tmux;
+              agent-roam = inputs.agent-roam + "/skills/agent-roam";
+            };
+          };
 
           home.persistence."/persistent".directories = [
             ".pi"
