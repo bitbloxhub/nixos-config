@@ -146,6 +146,7 @@
               systemd.services.nix-storage-plugin-registry = {
                 description = "nix-storage-plugin registry adapter";
                 wantedBy = [ "multi-user.target" ];
+                path = [ pkgs.lix ];
                 serviceConfig = {
                   Type = "simple";
                   ExecStart = "${inputs'.nix-storage-plugin.packages.default}/bin/nix-storage-plugin serve-image --bind 127.0.0.1:${toString port}";
