@@ -241,6 +241,21 @@
         treefmt-nix.follows = "treefmt-nix";
       };
     };
+    nix-storage-plugin = {
+      url = "github:bitbloxhub/nix-storage-plugin";
+      inputs = {
+        crate2nix.follows = "crate2nix";
+        fenix.follows = "fenix";
+        flake-file.follows = "flake-file";
+        flake-parts.follows = "flake-parts";
+        flint.follows = "flint";
+        hegel.follows = "";
+        import-tree.follows = "import-tree";
+        make-shell.follows = "make-shell";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     nix-system-graphics = {
       url = "github:soupglasses/nix-system-graphics";
       inputs.nixpkgs.follows = "nixpkgs";

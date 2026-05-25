@@ -14,6 +14,8 @@ ist = "ist"
 # https://en.wikipedia.org/wiki/Intel_High_Definition_Audio
 # TODO: only apply to facter.json
 hda = "hda"
+# nix-storage-plugin Additional Layer Store service name
+als = "als"
 
 [files]
 extend-exclude = ["**/secrets/**/*.yaml", "**/*.patch"]

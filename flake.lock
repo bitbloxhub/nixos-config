@@ -882,6 +882,51 @@
         "type": "github"
       }
     },
+    "nix-storage-plugin": {
+      "inputs": {
+        "crate2nix": [
+          "crate2nix"
+        ],
+        "fenix": [
+          "fenix"
+        ],
+        "flake-file": [
+          "flake-file"
+        ],
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "flint": [
+          "flint"
+        ],
+        "hegel": [],
+        "import-tree": [
+          "import-tree"
+        ],
+        "make-shell": [
+          "make-shell"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1779727853,
+        "narHash": "sha256-xnr5q89PvRjFrXo+UAj+p9j7Z34HQ5JnJuwgUlh1TtA=",
+        "owner": "bitbloxhub",
+        "repo": "nix-storage-plugin",
+        "rev": "4c36ffe7d17e0c19a6e3753401499f7063668e68",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bitbloxhub",
+        "repo": "nix-storage-plugin",
+        "type": "github"
+      }
+    },
     "nix-system-graphics": {
       "inputs": {
         "nixpkgs": [
@@ -1139,6 +1184,7 @@
         "niri-flake": "niri-flake",
         "nix-auto-ci": "nix-auto-ci",
         "nix-bwrapper": "nix-bwrapper",
+        "nix-storage-plugin": "nix-storage-plugin",
         "nix-system-graphics": "nix-system-graphics",
         "nix-wrapper-modules": "nix-wrapper-modules",
         "nixos-facter-modules": "nixos-facter-modules",
