@@ -914,11 +914,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779727853,
-        "narHash": "sha256-xnr5q89PvRjFrXo+UAj+p9j7Z34HQ5JnJuwgUlh1TtA=",
+        "lastModified": 1780073052,
+        "narHash": "sha256-6WtoDc/Y4qfQ0s5bdbdVL6KciBpjCxLyMIgswsKHTKk=",
         "owner": "bitbloxhub",
         "repo": "nix-storage-plugin",
-        "rev": "4c36ffe7d17e0c19a6e3753401499f7063668e68",
+        "rev": "6892d1fadb6a12f0111df793dc6b18c8fd6bac77",
         "type": "github"
       },
       "original": {
