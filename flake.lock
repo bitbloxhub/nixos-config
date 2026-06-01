@@ -593,6 +593,26 @@
         "type": "github"
       }
     },
+    "helium-browser": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780054154,
+        "narHash": "sha256-VbHwck8XGyZ77uHfY9adqE0qrilRshWUdFwB6etEIt4=",
+        "owner": "oxcl",
+        "repo": "nix-flake-helium-browser",
+        "rev": "47e435ce0b81c012683bd2b1a4101285e1f46183",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxcl",
+        "repo": "nix-flake-helium-browser",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -1172,6 +1192,7 @@
         "git-branchless": "git-branchless",
         "git-hooks": "git-hooks",
         "gitignore": "gitignore",
+        "helium-browser": "helium-browser",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "import-tree": "import-tree",
