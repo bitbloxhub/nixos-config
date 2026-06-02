@@ -62,36 +62,20 @@
                   };
                   config = {
                     continuous_scrolling = true;
-
-                    # https://github.com/mrtnvgr/reanix/issues/3
-                    paths = {
-                      renders = "Renders";
-                    };
-
-                    # I have to set these because unalias is broken, https://github.com/mrtnvgr/reanix/issues/5
-                    zoom.horizontal = "Edit cursor or play cursor";
-                    default_track_height = "medium";
                   };
                   extraConfig = {
-                    "reaper.ini" =
-                      # dosini
-                      ''
-                        ; PulseAudio
-                        [reaper]
-                        linux_audio_mode = 3
+                    "reaper.ini" = {
+                      # PulseAudio
+                      reaper.linux_audio_mode = 3;
 
-                        ; Selected theme
-                        [reaper]
-                        lastthemefn5=${config.xdg.configHome}/REAPER/ColorThemes/Reapertips.ReaperTheme
-                      '';
+                      # Selected themes
+                      reaper.lastthemefn5 = "${config.xdg.configHome}/REAPER/ColorThemes/Reapertips.ReaperTheme";
+                    };
 
-                    "reaper-themeconfig.ini" =
-                      # dosini
-                      ''
-                        ; Darken the theme
-                        [Reapertips]
-                        __coloradjust=1.00000000 -25 -25 51 256 192
-                      '';
+                    "reaper-themeconfig.ini" = {
+                      # Darken the theme
+                      Reapertips.__coloradjust = "1.00000000 -25 -25 51 256 192";
+                    };
                   };
                 };
 
