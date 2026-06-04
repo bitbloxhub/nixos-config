@@ -141,7 +141,7 @@
 
           home.file.".pi/agent/settings.json".text = builtins.toJSON {
             defaultProvider = "openai-codex";
-            defaultModel = "gpt-5.3-codex";
+            defaultModel = "gpt-5.4";
             hideThinkingBlock = false;
             defaultThinkingLevel = "medium";
             enabledModels = [
@@ -150,8 +150,8 @@
               "openrouter/minimax/minimax-m2.7"
               "openrouter/openai/gpt-oss-120b"
               "openrouter/mistralai/mistral-small-2603"
-              "openai-codex/gpt-5.3-codex"
               "openai-codex/gpt-5.4"
+              "openai-codex/gpt-5.5"
             ];
             steeringMode = "all";
             followUpMode = "all";
