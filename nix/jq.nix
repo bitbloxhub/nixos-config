@@ -3,8 +3,14 @@
     { aspect, ... }:
     {
       includes = [ aspect._.jq ];
-      _.jq.homeManager = {
-        programs.jq.enable = true;
-      };
+      _.jq.homeManager =
+        {
+          pkgs,
+          ...
+        }:
+        {
+          home.packages = [ pkgs.yq-go ];
+          programs.jq.enable = true;
+        };
     };
 }
