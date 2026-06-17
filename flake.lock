@@ -1218,6 +1218,7 @@
         "spicetify-nix": "spicetify-nix",
         "system-manager": "system-manager",
         "systems": "systems",
+        "tree-sitter-manager-flake": "tree-sitter-manager-flake",
         "treefmt-nix": "treefmt-nix",
         "vicinae": "vicinae",
         "vicinae-extensions": "vicinae-extensions",
@@ -1384,6 +1385,44 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tree-sitter-manager-flake": {
+      "inputs": {
+        "flake-file": [
+          "flake-file"
+        ],
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "flint": [
+          "flint"
+        ],
+        "import-tree": [
+          "import-tree"
+        ],
+        "make-shell": [
+          "make-shell"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781720087,
+        "narHash": "sha256-cD834Aw8J0uTqz3/O0i5ma8oPQH96/17E74ZgEmBbmc=",
+        "owner": "bitbloxhub",
+        "repo": "tree-sitter-manager-flake",
+        "rev": "a57b42f8b7cb566163a2412d587d6510ef538df7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bitbloxhub",
+        "repo": "tree-sitter-manager-flake",
         "type": "github"
       }
     },

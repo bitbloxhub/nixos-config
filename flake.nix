@@ -336,6 +336,18 @@
       };
     };
     systems.url = "github:nix-systems/default";
+    tree-sitter-manager-flake = {
+      url = "github:bitbloxhub/tree-sitter-manager-flake";
+      inputs = {
+        flake-file.follows = "flake-file";
+        flake-parts.follows = "flake-parts";
+        flint.follows = "flint";
+        import-tree.follows = "import-tree";
+        make-shell.follows = "make-shell";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";

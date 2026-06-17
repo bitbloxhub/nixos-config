@@ -1,5 +1,5 @@
 return {
-	"nvim-treesitter",
+	"tree-sitter-manager-nvim",
 	lazy = false,
 	after = function()
 		vim.filetype.add({
@@ -26,7 +26,6 @@ return {
 			return true
 		end
 
-		local installable_parsers = require("nvim-treesitter").get_available()
 		vim.api.nvim_create_autocmd("FileType", {
 			callback = function(args)
 				local buf, filetype = args.buf, args.match
@@ -35,15 +34,12 @@ return {
 					return
 				end
 
-				if not treesitter_try_attach(buf, language) then
-					if vim.tbl_contains(installable_parsers, language) then
-						-- not already installed, so try to install them via nvim-treesitter if possible
-						require("nvim-treesitter").install(language):await(function()
-							treesitter_try_attach(buf, language)
-						end)
-					end
-				end
+				treesitter_try_attach(buf, language)
 			end,
+		})
+
+		require("tree-sitter-manager").setup({
+			highlight = false, -- We do this ourselves
 		})
 	end,
 }

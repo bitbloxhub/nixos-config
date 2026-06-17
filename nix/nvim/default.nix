@@ -4,15 +4,29 @@
   ...
 }:
 {
-  flake-file.inputs.nix-wrapper-modules = {
-    url = "github:BirdeeHub/nix-wrapper-modules";
-    inputs.nixpkgs.follows = "nixpkgs";
+  flake-file.inputs = {
+    nix-wrapper-modules = {
+      url = "github:BirdeeHub/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    tree-sitter-manager-flake = {
+      url = "github:bitbloxhub/tree-sitter-manager-flake";
+      inputs.flake-file.follows = "flake-file";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.flint.follows = "flint";
+      inputs.import-tree.follows = "import-tree";
+      inputs.make-shell.follows = "make-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
   };
 
   flake.modules.wrappers.nvim =
     {
       wlib,
       pkgs,
+      inputs',
       ...
     }:
     {
@@ -28,7 +42,7 @@
           catppuccin-nvim
           fidget-nvim
           nvim-lspconfig
-          nvim-treesitter.withAllGrammars
+          inputs'.tree-sitter-manager-flake.packages.default.withAllGrammars
           blink-cmp
           direnv-vim
           neo-tree-nvim
@@ -91,11 +105,17 @@
   perSystem =
     {
       pkgs,
+      inputs',
+      self',
       ...
     }:
     {
       packages.nvim = inputs.nix-wrapper-modules.lib.evalPackage [
-        { inherit pkgs; }
+        {
+          inherit pkgs;
+          _module.args.inputs' = inputs';
+          _module.args.self' = self';
+        }
         self.modules.wrappers.nvim
       ];
     };
