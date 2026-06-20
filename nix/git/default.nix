@@ -38,6 +38,7 @@
           programs.delta = {
             enable = true;
             enableGitIntegration = true;
+            enableJujutsuIntegration = true;
             options = {
               navigate = true;
               dark = true;
@@ -106,6 +107,20 @@
                 contents.user = identities.tangled;
               }
             ];
+          };
+
+          # Have to keep this in here at least until https://github.com/jj-vcs/jj/issues/4048 is implemented
+          programs.jujutsu = {
+            enable = true;
+            settings = {
+              # Just use github as default, have to manually set per-repo for tangled due to https://github.com/jj-vcs/jj/issues/6028
+              user = {
+                name = defaultName;
+                email = defaultEmail;
+              };
+
+              ui.editor = "nvim";
+            };
           };
         };
     };
