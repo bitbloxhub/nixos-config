@@ -934,11 +934,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780073052,
-        "narHash": "sha256-6WtoDc/Y4qfQ0s5bdbdVL6KciBpjCxLyMIgswsKHTKk=",
+        "lastModified": 1782241193,
+        "narHash": "sha256-DbnuVYpKUKYJGB2yFcTUu3GoMgtsJxOhYhTTafF/wOo=",
         "owner": "bitbloxhub",
         "repo": "nix-storage-plugin",
-        "rev": "6892d1fadb6a12f0111df793dc6b18c8fd6bac77",
+        "rev": "b17ee64877c6eb4e2452e1794a6a7e7008f8b69c",
         "type": "github"
       },
       "original": {
