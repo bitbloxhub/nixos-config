@@ -202,6 +202,9 @@
                         widget-overflow-fixed-list = [ ];
                         unified-extensions-area = [
                           "surfingkeys_brookhong_github_io-browser-action"
+                          "sponsorblocker_ajay_app-browser-action"
+                          "dearrow_ajay_app-browser-action"
+                          "_34daeb50-c2d2-4f14-886a-7160b24d66a4_-browser-action"
                         ];
                         nav-bar = [
                           "firefox-view-button"

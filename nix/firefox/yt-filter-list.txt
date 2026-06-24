@@ -1,0 +1,299 @@
+! Title: Remove YouTube Distraction
+! Description: Hide shorts, ads, comments, infinite scroll, and other distractions from YouTube.
+! Last modified: 2026-04-20
+! Homepage: https://github.com/Trazer09/Remove-YouTube-Distraction
+! License: https://github.com/Trazer09/Remove-YouTube-Distraction/blob/main/LICENSE
+
+
+! --------------------------------------------------
+! Ads (Desktop)
+! --------------------------------------------------
+
+www.youtube.com##ytd-mealbar-promo-renderer
+www.youtube.com##ytd-carousel-ad-renderer
+www.youtube.com##ytd-ad-slot-renderer
+www.youtube.com##ytd-action-companion-ad-renderer
+www.youtube.com##.ytd-display-ad-renderer
+www.youtube.com###masthead-ad
+
+
+! --------------------------------------------------
+! Ads (Mobile)
+! --------------------------------------------------
+
+m.youtube.com##ytm-companion-ad-renderer
+m.youtube.com##ytm-promoted-sparkles-web-renderer
+
+
+! --------------------------------------------------
+! Shorts — Core (Future-proof)
+! --------------------------------------------------
+
+! Kill Shorts everywhere via internal attributes
+www.youtube.com##*[is_short]
+www.youtube.com##ytd-video-renderer[is_short="true"]
+www.youtube.com##ytd-rich-item-renderer[is_short="true"]
+www.youtube.com##ytd-grid-video-renderer[is_short]
+
+! Legacy overlay fallback (still used in some feeds)
+www.youtube.com##ytd-video-renderer:has([overlay-style="SHORTS"])
+www.youtube.com##ytd-rich-item-renderer:has([overlay-style="SHORTS"])
+www.youtube.com##ytd-grid-video-renderer:has([overlay-style="SHORTS"])
+
+
+! --------------------------------------------------
+! Shorts — Shelves / Sections
+! --------------------------------------------------
+
+www.youtube.com##ytd-reel-shelf-renderer
+www.youtube.com##grid-shelf-view-model.ytGridShelfViewModelHost
+www.youtube.com##ytd-rich-section-renderer:has-text(/Shorts/i)
+
+! Remove empty gaps left by Shorts removal
+www.youtube.com##ytd-rich-grid-row,#contents.ytd-rich-grid-row:style(display: contents !important)
+
+
+! --------------------------------------------------
+! Shorts — Navigation / UI
+! --------------------------------------------------
+
+! Sidebar / guide
+www.youtube.com##ytd-guide-entry-renderer:has-text(/^Shorts$/i)
+www.youtube.com##ytd-mini-guide-entry-renderer:has-text(/^Shorts$/i)
+
+! Channel tabs
+www.youtube.com##yt-tab-shape:has-text(/^Shorts$/i)
+
+! Chips / filters
+www.youtube.com##yt-chip-cloud-chip-renderer:has-text(/^Shorts$/i)
+
+
+! --------------------------------------------------
+! Shorts (Mobile)
+! --------------------------------------------------
+
+m.youtube.com##ytm-reel-shelf-renderer
+m.youtube.com##ytm-search ytd-video-renderer[is_short="true"]
+m.youtube.com##ytm-search ytm-video-with-context-renderer[is_short="true"]
+m.youtube.com##ytm-search ytm-reel-shelf-renderer
+
+
+! --------------------------------------------------
+! Thumbnails & Hover Effects
+! --------------------------------------------------
+
+! Disable autoplay-on-hover previews
+www.youtube.com###video-preview
+www.youtube.com##ytd-thumbnail-overlay-loading-preview-renderer[is-preview-loading]
+www.youtube.com###mouseover-overlay
+
+! Uncomment if you want NO thumbnails at all
+! www.youtube.com##ytd-thumbnail
+
+
+! --------------------------------------------------
+! Homepage
+! --------------------------------------------------
+
+! Remove homepage entirely
+www.youtube.com##ytd-browse[page-subtype="home"]
+
+! If homepage is enabled, keep it minimal
+www.youtube.com##ytd-browse[page-subtype="home"] ytd-rich-grid-renderer > div#header
+www.youtube.com##ytd-browse[page-subtype="home"] ytd-rich-grid-renderer > #contents > ytd-rich-grid-row:nth-child(n+2)
+www.youtube.com##ytd-browse[page-subtype="home"] ytd-rich-grid-renderer > #contents > ytd-continuation-item-renderer
+www.youtube.com##ytd-browse[page-subtype="home"] ytd-rich-grid-renderer > #contents > ytd-rich-grid-row + ytd-rich-section-renderer
+
+
+! --------------------------------------------------
+! Sidebar / Related Videos
+! --------------------------------------------------
+
+! Kill entire right sidebar
+www.youtube.com###secondary
+www.youtube.com###related
+
+! Left navigation drawer
+www.youtube.com##tp-yt-app-drawer#guide
+www.youtube.com##ytd-mini-guide-renderer[role="navigation"]
+www.youtube.com##yt-icon-button#guide-button
+
+
+! --------------------------------------------------
+! Left Bar — Links
+! --------------------------------------------------
+
+www.youtube.com##a:not(#logo)[href="/"]
+www.youtube.com##a[href="/feed/trending"]
+www.youtube.com##a[href="/feed/explore"]
+www.youtube.com##a[title="Shorts"]
+www.youtube.com##ytd-mini-guide-entry-renderer[aria-label="Shorts"]
+www.youtube.com##a[href="/feed/subscriptions"]
+
+
+! --------------------------------------------------
+! Left Bar — Sections
+! --------------------------------------------------
+
+www.youtube.com##ytd-guide-section-renderer.style-scope:nth-of-type(2)
+www.youtube.com##ytd-guide-section-renderer.style-scope:nth-of-type(3)
+www.youtube.com##ytd-guide-section-renderer.style-scope:nth-of-type(4)
+www.youtube.com##ytd-guide-section-renderer.style-scope:nth-of-type(5)
+www.youtube.com##ytd-guide-section-renderer.style-scope:nth-of-type(6)
+www.youtube.com###guide-renderer > div#footer
+
+
+! --------------------------------------------------
+! Video Player — Endscreen & Overlays
+! --------------------------------------------------
+
+www.youtube.com##.html5-endscreen
+www.youtube.com##.ytp-fullscreen-grid-stills-container
+www.youtube.com##div.ytp-pause-overlay
+www.youtube.com##.ytp-ce-element
+www.youtube.com##.ytp-cards-teaser
+www.youtube.com##button.ytp-button.ytp-cards-button
+
+
+! --------------------------------------------------
+! Video Player — Controls & Metadata
+! --------------------------------------------------
+
+www.youtube.com##a.ytp-next-button
+www.youtube.com###menu-container
+www.youtube.com###actions
+www.youtube.com##button[scissor_button]
+www.youtube.com##like-button-view-model .yt-spec-button-shape-next__button-text-content
+www.youtube.com###owner-sub-count
+www.youtube.com##yt-chip-cloud-chip-renderer[hide-chip]
+www.youtube.com###chat
+
+
+! --------------------------------------------------
+! Comments
+! --------------------------------------------------
+
+! www.youtube.com###comments
+! www.youtube.com###comment-teaser
+! www.youtube.com##ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-comments-section"]
+! www.youtube.com##ytd-comment-thread-renderer:not([timestamp_comment])
+! www.youtube.com###author-text
+! www.youtube.com###author-thumbnail
+! www.youtube.com###replies.ytd-comment-thread-renderer
+! www.youtube.com###vote-count-middle.ytd-comment-action-buttons-renderer
+
+
+! --------------------------------------------------
+! Search Results
+! --------------------------------------------------
+
+! Block search suggestion requests (credit: https://github.com/probecat)
+||suggestqueries*.youtube.com^
+
+! Hide YouTube search suggestions ( PC )
+youtube.com##.ytSearchboxComponentSuggestionsContainer
+
+
+! Promoted results
+www.youtube.com###container.ytd-search ytd-search-pyv-renderer
+
+! Shorts in search
+www.youtube.com###container.ytd-search ytd-video-renderer[is_short="true"]
+www.youtube.com###container.ytd-search ytd-reel-shelf-renderer
+www.youtube.com###container.ytd-search grid-shelf-view-model.ytGridShelfViewModelHost
+
+! Extra shelves & infinite scroll
+www.youtube.com###container.ytd-search ytd-shelf-renderer
+www.youtube.com##.ytd-search #contents > ytd-continuation-item-renderer
+
+
+! --------------------------------------------------
+! Channel Page
+! --------------------------------------------------
+
+www.youtube.com##*[is-channel-for-you-section]
+
+
+! --------------------------------------------------
+! Subscriptions
+! --------------------------------------------------
+
+! Grid view
+www.youtube.com##ytd-grid-video-renderer[is_sub_short]
+www.youtube.com##ytd-grid-video-renderer[badge-text]
+
+! Rich view
+www.youtube.com##ytd-rich-item-renderer[is_sub_short]
+www.youtube.com##ytd-rich-item-renderer[badge-text]
+
+
+! --------------------------------------------------
+! Other
+! --------------------------------------------------
+
+www.youtube.com##ytd-notification-topbar-button-renderer
+www.youtube.com##ytd-item-section-renderer[is-playlist-suggestions]
+www.youtube.com##ytd-info-panel-container-renderer
+
+! People also search for
+www.youtube.com##ytd-horizontal-card-list-renderer.ytd-item-section-renderer.style-scope
+
+! Ai-generated description
+www.youtube.com###video-summary > .ytd-structured-description-content-renderer.style-scope
+
+! Social links in description
+www.youtube.com###social-links
+
+! Transcript - description
+www.youtube.com##ytd-video-description-transcript-section-renderer.ytd-structured-description-content-renderer.style-scope
+! Channel link in description
+www.youtube.com##ytd-video-description-infocards-section-renderer.ytd-structured-description-content-renderer.style-scope
+
+! Live chat carousel
+www.youtube.com##.ytVideoMetadataCarouselViewModelHost
+
+! remove search suggestions for Tablet layout 
+www.youtube.com##ytd-item-section-renderer.ytd-watch-next-secondary-results-renderer.style-scope > .ytd-item-section-renderer.style-scope
+www.youtube.com###scroll-container > .yt-chip-cloud-renderer.style-scope
+
+
+! --------------------------------------------------
+! Full window mode ( Theater Mode But Better ) 
+! Credits: https://www.reddit.com/r/uBlockOrigin/comments/1qwr4cx/youtube_make_theater_mode_fullwindow_fullscreen/
+! --------------------------------------------------
+
+! hide banner & recover space
+www.youtube.com##ytd-app[is-watch-page]:has(ytd-watch-flexy[theater]) #masthead-container
+www.youtube.com##ytd-app[is-watch-page] ytd-page-manager:has(ytd-watch-flexy[theater]):style( margin-top: 0 !important; )
+
+! occupy viewport
+www.youtube.com##ytd-watch-flexy[theater] #full-bleed-container:style( min-height: 100vh !important; height: 100vh !important; )
+www.youtube.com##ytd-watch-flexy[theater] video:style( top: unset !important; left: unset !important; height: 100vh !important; width: 100vw !important; object-fit: contain !important; )
+
+! hide video when ended
+www.youtube.com##ytd-watch-flexy[theater] video[style*=" top: -"]
+
+! change how the thumbnail image fits the screen:
+!  (note: smaller images will not fill the screen if these filter are used)
+! www.youtube.com##ytd-watch-flexy[theater] .ytp-cued-thumbnail-overlay-image:style( background-size: contain; )
+! www.youtube.com##ytd-watch-flexy[theater] .ytp-cued-thumbnail-overlay-image:style( background-size: cover; )
+
+! hide the vertical scrollbar (scrolling still possible)
+www.youtube.com##body:has(ytd-watch-flexy[theater])::-webkit-scrollbar:style( display: none !important; )
+! hide the vertical scrollbar - Firefox specific if needed.
+www.youtube.com##:is(body,html):has(ytd-watch-flexy[theater]):style( scrollbar-width: none !important; )
+
+! How this was made in description
+www.youtube.com##.ytwHowThisWasMadeSectionViewModelHost
+
+! YouTube Logo
+www.youtube.com###logo
+
+! Your logo on header and upload
+www.youtube.com###end > .ytd-masthead.style-scope
+
+! Mic search
+www.youtube.com###voice-search-button > .ytd-masthead.style-scope > yt-button-shape
+
+! search results time and views data
+www.youtube.com###metadata

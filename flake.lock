@@ -402,11 +402,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779471829,
-        "narHash": "sha256-lbxLTiMBQosyHJA96G1xIk15lh+Yk87F/0YVp3pPgOU=",
+        "lastModified": 1782331472,
+        "narHash": "sha256-k/Wam+6PTfzZ7TWGDvBEQCr27hypqMjBUQBOtzjLaL8=",
         "owner": "firefox-extensions-declarative",
         "repo": "firefox-extensions-declarative",
-        "rev": "376eb5cb59edb30d5e7ad6a697579af7d73598d6",
+        "rev": "a2c10f5134d666a2f83e374db1d4788257fdb8dc",
         "type": "github"
       },
       "original": {
