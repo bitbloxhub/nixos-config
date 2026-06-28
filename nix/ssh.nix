@@ -17,13 +17,13 @@
             programs.ssh = {
               enable = true;
               enableDefaultConfig = false;
-              matchBlocks."*" = {
+              settings."*" = {
                 controlMaster = "no";
               };
-              matchBlocks."github.com" = {
+              settings."github.com" = {
                 identityFile = "~/.ssh/id_ed25519_github";
               };
-              matchBlocks."tangled.sh" = {
+              settings."tangled.sh" = {
                 identityFile = "~/.ssh/id_ed25519_tangled";
               };
             };

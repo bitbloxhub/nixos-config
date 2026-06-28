@@ -20,9 +20,15 @@
     nvidia.homeManager = {
       nixpkgs.overlays = [
         (_final: prev: {
-          llama-cpp = prev.llama-cpp.override {
-            cudaSupport = true;
-          };
+          llama-cpp =
+            (prev.llama-cpp.override {
+              cudaSupport = true;
+            }).overrideAttrs
+              (old: {
+                cmakeFlags = (old.cmakeFlags or [ ]) ++ [
+                  "-DGGML_CPU_ALL_VARIANTS:BOOL=FALSE"
+                ];
+              });
         })
       ];
     };

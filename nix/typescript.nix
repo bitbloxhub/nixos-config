@@ -8,7 +8,7 @@
       make-shells.default = {
         packages = [
           pkgs.typescript-language-server
-          pkgs.nodejs_25
+          pkgs.nodejs_latest
           pkgs.pnpm_10
           pkgs.prettier
         ];

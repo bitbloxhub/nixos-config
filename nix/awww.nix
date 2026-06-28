@@ -2,8 +2,8 @@
   flake.aspects.gui =
     { aspect, ... }:
     {
-      includes = [ aspect._.swww ];
-      _.swww.homeManager =
+      includes = [ aspect._.awww ];
+      _.awww.homeManager =
         {
           lib,
           config,
@@ -13,7 +13,7 @@
         lib.mkMerge [
           {
             home.packages = [
-              pkgs.swww
+              pkgs.awww
             ];
           }
 
@@ -22,12 +22,12 @@
               spawn-at-startup = [
                 {
                   command = [
-                    "swww-daemon"
+                    "awww-daemon"
                   ];
                 }
                 {
                   command = [
-                    "swww"
+                    "awww"
                     "img"
                     "${./wallpapers/miku-v.jpg}"
                   ];

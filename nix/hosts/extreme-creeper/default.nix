@@ -52,17 +52,30 @@ in
               }).override
                 {
                   libsOnly = true;
-                  kernel = null;
                 };
             extraPackages = [ pkgs.mesa ];
           };
 
           # PAM fix, see https://github.com/Rishabh5321/dotfiles/blob/d71f52b/system-manager/home/README.md?plain=1#L91-L92 and
           # https://github.com/nix-community/home-manager/issues/7027
-          systemd.tmpfiles.rules = [
-            "d    /run/wrappers/bin        0755 root root -   -"
-            "L+   /run/wrappers/bin/unix_chkpwd -    -    -   -   /usr/sbin/unix_chkpwd"
-          ];
+          systemd.paths.pam-unix-chkpwd-wrapper = {
+            wantedBy = [ "multi-user.target" ];
+
+            pathConfig = {
+              PathChanged = "/run/wrappers";
+              PathExists = "/run/wrappers/bin";
+              Unit = "pam-unix-chkpwd-wrapper.service";
+            };
+          };
+
+          systemd.services.pam-unix-chkpwd-wrapper = {
+            description = "Link host unix_chkpwd into Nix wrapper path";
+
+            serviceConfig = {
+              Type = "oneshot";
+              ExecStart = "/bin/sh -c 'ln -sfn /usr/sbin/unix_chkpwd /run/wrappers/bin/unix_chkpwd'";
+            };
+          };
         };
         homeManager =
           {
@@ -70,6 +83,11 @@ in
             ...
           }:
           {
+            nixpkgs.config = {
+              cudaCapabilities = [ "7.5" ];
+              cudaForwardCompat = false;
+            };
+
             sops = {
               defaultSopsFile = ./secrets/jonahgam.yaml;
               secrets."ssh_keys/github/private" = {

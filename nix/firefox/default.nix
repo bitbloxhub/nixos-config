@@ -96,6 +96,7 @@
                     "${fx-autoconfig}/program/config.js"
                   ];
                 };
+                configPath = ".mozilla/firefox";
 
                 betterfox = {
                   enable = true;

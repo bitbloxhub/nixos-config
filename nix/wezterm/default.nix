@@ -26,6 +26,7 @@
           };
         in
         {
+          catppuccin.wezterm.enable = false;
           programs.wezterm.enable = true;
           home.file."./.config/wezterm/resurrect" = {
             source = resurrect + "/plugin/resurrect";

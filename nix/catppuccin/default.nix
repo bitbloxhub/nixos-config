@@ -64,6 +64,7 @@
 
           catppuccin = {
             enable = true;
+            autoEnable = true;
             inherit flavor accent;
             cursors = {
               enable = enableCursors;
@@ -97,6 +98,8 @@
               package = lib.mkForce pkgs.cosmic-icons;
               name = lib.mkForce "Cosmic";
             };
+
+            gtk4.theme = config.gtk.theme;
           };
 
           programs.vivid = {

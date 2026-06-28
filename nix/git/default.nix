@@ -1,9 +1,9 @@
 {
-  flake-file.inputs.git-branchless = {
-    # My fork with many changes. See https://github.com/bitbloxhub/git-branchless/tree/megamerge for more info.
-    url = "github:bitbloxhub/git-branchless";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  # flake-file.inputs.git-branchless = {
+  #   # My fork with many changes. See https://github.com/bitbloxhub/git-branchless/tree/megamerge for more info.
+  #   url = "github:bitbloxhub/git-branchless";
+  #   inputs.nixpkgs.follows = "nixpkgs";
+  # };
 
   flake.aspects.cli =
     { aspect, ... }:
@@ -12,7 +12,6 @@
       _.git.homeManager =
         {
           pkgs,
-          inputs',
           ...
         }:
         let
@@ -32,7 +31,8 @@
         in
         {
           home.packages = [
-            inputs'.git-branchless.packages.default
+            # inputs'.git-branchless.packages.default
+            pkgs.git-branchless
           ];
 
           programs.delta = {
@@ -49,13 +49,15 @@
           programs.git = {
             enable = true;
             lfs.enable = true;
-            package = pkgs.git.overrideAttrs (old: {
-              patches =
-                (old.patches or [ ])
-                ++ (builtins.map (x: ./git_patches/${x}) (builtins.attrNames (builtins.readDir ./git_patches)));
-              doCheck = false;
-              doInstallCheck = false;
-            });
+            # Need to rebase these, but use jujutsu now for new projects and try to adopt it on old ones,
+            # so does not really matter, plus my git-branchless fork does not have that much changeid integration either.
+            # package = pkgs.git.overrideAttrs (old: {
+            #   patches =
+            #     (old.patches or [ ])
+            #     ++ (builtins.map (x: ./git_patches/${x}) (builtins.attrNames (builtins.readDir ./git_patches)));
+            #   doCheck = false;
+            #   doInstallCheck = false;
+            # });
             settings = {
               user = {
                 name = defaultName;

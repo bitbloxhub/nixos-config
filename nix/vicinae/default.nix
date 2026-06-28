@@ -26,6 +26,7 @@
         {
           lib,
           config,
+          pkgs,
           inputs',
           ...
         }:
@@ -33,7 +34,9 @@
           imports = [ inputs.vicinae.homeManagerModules.default ];
           config = lib.mkMerge [
             {
-              services.vicinae = {
+              catppuccin.vicinae.enable = false;
+
+              programs.vicinae = {
                 enable = true;
                 systemd = {
                   enable = true;
@@ -101,7 +104,7 @@
                 };
                 extensions = [
                   inputs'.vicinae-extensions.packages.awww-switcher
-                  (inputs'.vicinae.packages.mkRayCastExtension {
+                  (inputs.vicinae.lib.${pkgs.stdenv.hostPlatform.system}.mkRayCastExtension {
                     name = "kaomoji-search";
                     rev = "f198acd24a916bfe35e6986135ee1ae0ae62eaaf";
                     hash = "sha256-hCkM2qWN5ye/1jbGJAHC4tjpEFlW8FhZOrQB/aK7ltY=";

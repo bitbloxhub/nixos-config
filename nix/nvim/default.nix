@@ -81,7 +81,7 @@
           typst-preview-nvim
         ];
       };
-      extraPackages = with pkgs; [
+      runtimePkgs = with pkgs; [
         typos-lsp
         basedpyright
         ruff
