@@ -56,7 +56,13 @@
         wayland = true;
       };
       packages.spicetify =
-        ((inputs.nix-bwrapper.lib.mkNixBwrapper pkgs').bwrapperEval {
+        let
+          bw = inputs.nix-bwrapper.lib.mkNixBwrapper pkgs';
+        in
+        (bw.bwrapperEval {
+          imports = [
+            bw.bwrapperPresets.desktop
+          ];
           app = {
             package = self'.packages.spicetify-unwrapped;
             addPkgs = [
@@ -66,12 +72,9 @@
             ];
           };
           flatpak.manifestFile = pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/flathub/com.spotify.Client/8c3793dd065365a052841ea844a0518910b9a94c/com.spotify.Client.json";
-            hash = "sha256-rbuv459l5lfH6yo5a0dLjRDZkufD4z3xFCy5/2ksZBU=";
+            url = "https://raw.githubusercontent.com/flathub/com.spotify.Client/07d9eba89258069210ef58dfe7a6c16ecb75349f/com.spotify.Client.json";
+            hash = "sha256-Pq5dcIdipDvG1AetLGFZRDmsmQVy/H/rquWaKTZ7d5g=";
           };
-          mounts.read = [
-            "/run/systemd/resolve/stub-resolv.conf"
-          ];
         }).config.build.package;
     };
 
