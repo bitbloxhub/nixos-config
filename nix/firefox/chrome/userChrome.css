@@ -28,7 +28,7 @@ vbox#titlebar {
 	}
 }
 
-#sidebar-main,
+#sidebar-container,
 #sb2-main {
 	background-color: var(--tinted-background-color) !important;
 }
@@ -40,7 +40,12 @@ vbox#titlebar {
 #sidebar-splitter,
 #sidebar-launcher-splitter,
 #sb2-splitter-pinned {
-	background-color: var(--tinted-background-color) !important;
+	appearance: none !important;
+	-moz-default-appearance: none !important;
+
+	background: var(--tinted-background-color) !important;
+	border-inline-start: 1px solid var(--tinted-background-color) !important;
+	border-inline-end: 0 !important;
 }
 
 #browser {
@@ -114,7 +119,7 @@ html[taskbartab] {
 
 /* userchrome toggles */
 :root[titlepreface*="\180E"] {
-	#sidebar-main,
+	#sidebar-container,
 	#sidebar-launcher-splitter {
 		display: none !important;
 	}
