@@ -127,7 +127,7 @@
                   {
                     matches = [
                       {
-                        namespace = "^swww-daemon$";
+                        namespace = "^awww-daemon$";
                       }
                     ];
                     place-within-backdrop = true;

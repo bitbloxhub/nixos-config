@@ -48,12 +48,15 @@
                   ];
                 });
                 settings = {
+                  general = {
+                    enableBlurBehind = false;
+                  };
                   ui = {
                     fontDefault = "Fira Code";
                     fontFixed = "Fira Code";
                   };
                   wallpaper = {
-                    enabled = false; # use swww
+                    enabled = false; # use awww
                     enableLockScreenWallpaper = true;
                     lockScreenWallpaperLight = "${../wallpapers/niri-pool.png}";
                     lockScreenWallpaperDark = "${../wallpapers/niri-pool.png}";
