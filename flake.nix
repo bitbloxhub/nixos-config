@@ -149,10 +149,6 @@
       url = "github:NotAShelf/flint";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    git-branchless = {
-      url = "github:bitbloxhub/git-branchless";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs = {
