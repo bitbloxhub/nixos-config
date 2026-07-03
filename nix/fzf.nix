@@ -4,7 +4,10 @@
     {
       includes = [ aspect._.fzf ];
       _.fzf.homeManager = {
-        programs.fzf.enable = true;
+        programs.fzf = {
+          enable = true;
+          historyWidget.command = "";
+        };
       };
     };
 }
