@@ -1,4 +1,8 @@
 {
+  lib,
+  ...
+}:
+{
   flake.aspects.cli =
     { aspect, ... }:
     {
@@ -7,6 +11,7 @@
         programs.fzf = {
           enable = true;
           historyWidget.command = "";
+          colors.bg = lib.mkForce "";
         };
       };
     };
