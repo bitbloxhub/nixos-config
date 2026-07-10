@@ -1275,6 +1275,7 @@
         "treefmt-nix": "treefmt-nix",
         "vicinae": "vicinae",
         "vicinae-extensions": "vicinae-extensions",
+        "xcompose": "xcompose",
         "yazi": "yazi"
       }
     },
@@ -1581,6 +1582,22 @@
       "original": {
         "owner": "vicinaehq",
         "repo": "extensions",
+        "type": "github"
+      }
+    },
+    "xcompose": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1783082479,
+        "narHash": "sha256-UGdXlZC+x5ljnBVxUOnBI57KKutPeUAi0Gv4jg6qTCE=",
+        "owner": "Udzu",
+        "repo": "xcompose",
+        "rev": "49ba3af6da0a58db1770c590462fc09d1b558983",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Udzu",
+        "repo": "xcompose",
         "type": "github"
       }
     },

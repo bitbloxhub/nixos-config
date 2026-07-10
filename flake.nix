@@ -364,6 +364,10 @@
         vicinae.follows = "vicinae";
       };
     };
+    xcompose = {
+      url = "github:Udzu/xcompose";
+      flake = false;
+    };
     yazi = {
       url = "github:sxyazi/yazi";
       inputs = {

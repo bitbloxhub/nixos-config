@@ -34,7 +34,12 @@
         xwayland-satellite-stable.follows = "";
       };
     };
+    xcompose = {
+      url = "github:Udzu/xcompose";
+      flake = false;
+    };
   };
+
   flake.aspects.gui =
     { aspect, ... }:
     {
@@ -83,7 +88,72 @@
             home.packages = [
               pkgs.wl-clipboard
               pkgs.hyprpicker
+              pkgs.xcompose
             ];
+
+            xdg.configFile."XCompose".source =
+              pkgs.runCommand "XCompose"
+                {
+                  nativeBuildInputs = [ pkgs.perl ];
+                }
+                ''
+                  while IFS= read -r line; do
+                    case "$line" in
+                      'include "HangulSyllables"')
+                        cat ${inputs.xcompose}/HangulSyllables
+                        ;;
+                      'include "Logograms"')
+                        cat ${inputs.xcompose}/Logograms
+                        ;;
+                      *)
+                        printf '%s\n' "$line"
+                        ;;
+                    esac
+                  done < ${inputs.xcompose}/Compose > "$out"
+
+                  # Compose permits a quoted string plus at most one keysym. The string
+                  # already contains every codepoint, so remove invalid multi-keysym suffixes.
+                  perl -i -pe \
+                    's{(:\s*"(?:\\.|[^"])*")\s+U[0-9A-Fa-f]+(?:\s+U[0-9A-Fa-f]+)+(?=\s*(?:#|$))}{$1}' \
+                    "$out"
+                '';
+
+            i18n.inputMethod = {
+              enable = true;
+              type = "fcitx5";
+
+              fcitx5 = {
+                settings = {
+                  globalOptions = {
+                    Behavior = {
+                      # false = put preedit in the Fcitx input panel instead of
+                      # embedding it inside the application.
+                      PreeditEnabledByDefault = false;
+                    };
+
+                    "Behavior/DisabledAddons"."0" = "notificationitem";
+                    "Behavior/DisabledAddons"."1" = "clipboard";
+                  };
+
+                  addons = {
+                    keyboard.globalSection = {
+                      # Makes Compose sequences expose their partial input as preedit.
+                      UseNewComposeBehavior = true;
+                    };
+
+                    classicui.globalSection = {
+                      Font = "Fira Code 12";
+                      MenuFont = "Fira Sans 11";
+
+                      "Vertical Candidate List" = true;
+                      WheelForPaging = true;
+                      EnableFractionalScale = true;
+                      ForceWaylandDPI = 0;
+                    };
+                  };
+                };
+              };
+            };
 
             programs.niri = {
               enable = true;
@@ -113,6 +183,7 @@
                     { proportion = 1.; }
                   ];
                 };
+                input.keyboard.xkb.options = "compose:ralt";
                 input.focus-follows-mouse = {
                   enable = true;
                   max-scroll-amount = "0%";
