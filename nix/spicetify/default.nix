@@ -1,4 +1,5 @@
 {
+  lib,
   inputs,
   ...
 }:
@@ -58,6 +59,10 @@
       packages.spicetify =
         let
           bw = inputs.nix-bwrapper.lib.mkNixBwrapper pkgs';
+
+          pulseClientConfig = pkgs.writeText "pulse-client.conf" ''
+            enable-shm=no
+          '';
         in
         (bw.bwrapperEval {
           imports = [
@@ -70,11 +75,25 @@
               pkgs.noto-fonts-cjk-sans
               pkgs.dejavu_fonts
             ];
+            env = {
+              PULSE_SERVER = "unix:/run/flatpak/pulse/native";
+              PULSE_CLIENTCONFIG = "/run/flatpak/pulse/config";
+            };
           };
           flatpak.manifestFile = pkgs.fetchurl {
             url = "https://raw.githubusercontent.com/flathub/com.spotify.Client/07d9eba89258069210ef58dfe7a6c16ecb75349f/com.spotify.Client.json";
             hash = "sha256-Pq5dcIdipDvG1AetLGFZRDmsmQVy/H/rquWaKTZ7d5g=";
           };
+
+          # FIX: workaround for https://github.com/Naxdy/nix-bwrapper/issues/50
+          sockets.pulseaudio = lib.mkForce false;
+          fhsenv.bwrap.additionalArgs = [
+            "--dir /run/flatpak"
+            "--dir /run/flatpak/pulse"
+            ''--ro-bind-try "$XDG_RUNTIME_DIR/pulse/native" /run/flatpak/pulse/native''
+            "--ro-bind ${pulseClientConfig} /run/flatpak/pulse/config"
+            ''--symlink ../../flatpak/pulse "$XDG_RUNTIME_DIR/pulse"''
+          ];
         }).config.build.package;
     };
 
