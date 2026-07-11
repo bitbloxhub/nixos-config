@@ -76,6 +76,54 @@ in
               ExecStart = "/bin/sh -c 'ln -sfn /usr/sbin/unix_chkpwd /run/wrappers/bin/unix_chkpwd'";
             };
           };
+
+          # initramfs patch for bind-mounting /nix
+          # Run `sudo update-initramfs -u -k all` after changing
+          environment.etc."initramfs-tools/scripts/local-bottom/mount-nix" = {
+            mode = "0755";
+            text =
+              # sh
+              ''
+                #!/bin/sh
+                set -eu
+
+                PREREQ=""
+
+                prereqs() {
+                  echo "$PREREQ"
+                }
+
+                case "''${1:-}" in
+                  prereqs)
+                    prereqs
+                    exit 0
+                    ;;
+                esac
+
+                . /scripts/functions
+
+                rootmnt="''${rootmnt:-/root}"
+
+                device="/dev/mapper/crypt-wd-blue-2tb"
+                backing="$rootmnt/mnt/wd-blue-2tb"
+                nix="$rootmnt/nix"
+
+                [ -b "$device" ] || panic "$device was not unlocked"
+
+                mkdir -p "$backing" "$nix"
+
+                mount -t ext4 \
+                  -o noatime,nosuid,nodev,errors=remount-ro \
+                  "$device" "$backing" \
+                  || panic "failed to mount $device"
+
+                mount -o bind "$backing/nix" "$nix" \
+                  || panic "failed to bind-mount /nix"
+
+                mount -o remount,bind,nosuid,nodev "$nix" \
+                  || panic "failed to apply /nix bind-mount flags"
+              '';
+          };
         };
         homeManager =
           {
