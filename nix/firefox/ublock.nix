@@ -45,9 +45,6 @@
                 "adguard-widgets"
                 "ublock-annoyances"
               ];
-              filters = [
-                (builtins.readFile ./yt-filter-list.txt)
-              ];
             };
           };
         };
