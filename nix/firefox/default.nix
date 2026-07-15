@@ -149,7 +149,7 @@
 
                     nixos-wiki = {
                       icon = "https://search.nixos.org/favicon-96x96.png";
-                      urls = [ { template = "https://nixos.wiki/index.php?title=Special:Search&search={searchTerms}"; } ];
+                      urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
                       definedAliases = [ "!nixosw" ];
                     };
 
