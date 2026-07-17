@@ -66,11 +66,13 @@
                   id = "git";
                   url = "*";
                   run = "git";
+                  group = "git";
                 }
                 {
                   id = "git";
                   url = "*/";
                   run = "git";
+                  group = "git";
                 }
               ];
               plugin.prepend_previewers = [

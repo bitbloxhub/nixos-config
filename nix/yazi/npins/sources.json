@@ -9,9 +9,9 @@
       },
       "branch": "transparent-bg",
       "submodules": false,
-      "revision": "e8a723b4af0a7824d08ffa2e992e885cbc452cb4",
-      "url": "https://github.com/bitbloxhub/relative-motions.yazi/archive/e8a723b4af0a7824d08ffa2e992e885cbc452cb4.tar.gz",
-      "hash": "04drcd2k4y5887nwdrwfyw2xp5r6p97m6y6fyc546qka4qjw8ijy"
+      "revision": "e4fc8274c3ef3c3b894675b8f2ca33ef0126ddb3",
+      "url": "https://github.com/bitbloxhub/relative-motions.yazi/archive/e4fc8274c3ef3c3b894675b8f2ca33ef0126ddb3.tar.gz",
+      "hash": "sha256-fqfs8bx+2f9imhSDmSHurFdPDlG7Y25BWiGBFDGq3/s="
     },
     "yazi-plugins": {
       "type": "Git",
@@ -22,10 +22,10 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "19dc890e33b8922eb1a3a165e685436ec4ac0a59",
-      "url": "https://github.com/yazi-rs/plugins/archive/19dc890e33b8922eb1a3a165e685436ec4ac0a59.tar.gz",
-      "hash": "06j1r6hiqma4ghlyyi2rpgj44kbzcggi9kj37l7d3sn69sgpns8y"
+      "revision": "bb758e2fd774738f14cd260642631ebbd568741a",
+      "url": "https://github.com/yazi-rs/plugins/archive/bb758e2fd774738f14cd260642631ebbd568741a.tar.gz",
+      "hash": "sha256-uV5KZE+4gT/o7hzer/hwAfU5lyDYgMnRlsQX+BkCRhM="
     }
   },
-  "version": 5
+  "version": 8
 }
