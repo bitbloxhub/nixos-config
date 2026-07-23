@@ -266,21 +266,6 @@
     };
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell/legacy-v4";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        noctalia-qs.follows = "noctalia-qs";
-      };
-    };
-    noctalia-qs = {
-      url = "github:noctalia-dev/noctalia-qs";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems";
-        treefmt-nix.follows = "treefmt-nix";
-      };
-    };
     reanix = {
       url = "github:mrtnvgr/reanix";
       inputs = {
@@ -367,6 +352,20 @@
     xcompose = {
       url = "github:Udzu/xcompose";
       flake = false;
+    };
+    yawsf = {
+      url = "github:bitbloxhub/yawsf";
+      inputs = {
+        crate2nix.follows = "crate2nix";
+        fenix.follows = "fenix";
+        flake-file.follows = "flake-file";
+        flake-parts.follows = "flake-parts";
+        flint.follows = "flint";
+        import-tree.follows = "import-tree";
+        make-shell.follows = "make-shell";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
     };
     yazi = {
       url = "github:sxyazi/yazi";

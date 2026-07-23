@@ -1,0 +1,7 @@
+@import "@fontsource-variable/fira-code/wght.css";
+@import "tailwindcss";
+@import "@catppuccin/tailwindcss/mocha.css";
+
+@theme {
+	--font-mono: "Fira Code Variable", monospace;
+}

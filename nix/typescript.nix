@@ -9,14 +9,8 @@
         packages = [
           pkgs.typescript-language-server
           pkgs.nodejs_latest
-          pkgs.pnpm_10
-          pkgs.prettier
+          pkgs.pnpm_11
         ];
-      };
-
-      treefmt = {
-        programs.prettier.enable = true;
-        programs.prettier.settings = builtins.fromJSON (builtins.readFile ../.prettierrc);
       };
     };
 }

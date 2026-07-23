@@ -1,0 +1,52 @@
+{
+	"name": "bitbloxhub-shell",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"start": "ORIGIN=http://127.0.0.1:12551 PORT=12551 HOST=127.0.0.1 node build",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write .",
+		"generate:web-api": "JITI_TSCONFIG_PATHS=tsconfig.json openapi-ts --file openapi-ts.web.config.ts && prettier --write src/lib/web-api",
+		"generate:yawsf-host-api": "openapi-ts --file openapi-ts.host.config.ts && prettier --write src/lib/server/yawsf-host"
+	},
+	"dependencies": {
+		"@elysia/openapi": "^1.4.15",
+		"@fontsource-variable/fira-code": "^5.2.7",
+		"@iconify/svelte": "^5.2.2",
+		"@jellybrick/dbus-next": "^0.11.1",
+		"@tanstack/query-core": "^5.101.2",
+		"@tanstack/svelte-query": "^6.1.36",
+		"animejs": "^4.5.0",
+		"bits-ui": "^2.18.1",
+		"elysia": "^1.4.29",
+		"zod": "^4.4.3"
+	},
+	"devDependencies": {
+		"@catppuccin/tailwindcss": "^1.0.0",
+		"@eslint/js": "^10.0.1",
+		"@hey-api/openapi-ts": "0.99.0",
+		"@sveltejs/adapter-node": "^5.5.7",
+		"@sveltejs/kit": "^2.63.0",
+		"@sveltejs/vite-plugin-svelte": "^7.1.2",
+		"@tailwindcss/vite": "^4.1.18",
+		"@types/node": "^24",
+		"eslint": "^10.4.1",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-svelte": "^3.19.0",
+		"globals": "^17.6.0",
+		"prettier": "^3.8.3",
+		"prettier-plugin-svelte": "^4.1.0",
+		"svelte": "^5.56.1",
+		"svelte-check": "^4.6.0",
+		"typescript": "^6.0.3",
+		"typescript-eslint": "^8.60.1",
+		"vite": "^8.0.16"
+	}
+}

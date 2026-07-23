@@ -1,5 +1,7 @@
 set shell := ["nu", "-c"]
 
+mod yawsf "./nix/yawsf/mod.just"
+
 hostname := `hostname`
 
 deploy +$hosts=hostname:

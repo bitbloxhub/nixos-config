@@ -1061,56 +1061,6 @@
         "type": "github"
       }
     },
-    "noctalia": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "noctalia-qs": [
-          "noctalia-qs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1780949817,
-        "narHash": "sha256-2oJuPyt+4dd+ZzO7TFqpmkSAAYpRg9SF4eV8kJGl6Tk=",
-        "owner": "noctalia-dev",
-        "repo": "noctalia-shell",
-        "rev": "f816591afc2f2f606d1f0cf70b51e95c04a7a8aa",
-        "type": "github"
-      },
-      "original": {
-        "owner": "noctalia-dev",
-        "ref": "legacy-v4",
-        "repo": "noctalia-shell",
-        "type": "github"
-      }
-    },
-    "noctalia-qs": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ],
-        "treefmt-nix": [
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1782009525,
-        "narHash": "sha256-VKFj+Lt3jTg93ONWFLKieH/QQnXstsqs4hwpQj0nqZ0=",
-        "owner": "noctalia-dev",
-        "repo": "noctalia-qs",
-        "rev": "fc1bdab9adccd3f67fad09e7f6094707eb8c2bfc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "noctalia-dev",
-        "repo": "noctalia-qs",
-        "type": "github"
-      }
-    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": [
@@ -1237,8 +1187,6 @@
         "nix-wrapper-modules": "nix-wrapper-modules",
         "nixos-facter-modules": "nixos-facter-modules",
         "nixpkgs": "nixpkgs",
-        "noctalia": "noctalia",
-        "noctalia-qs": "noctalia-qs",
         "reanix": "reanix",
         "skills-flake": "skills-flake",
         "sops-nix": "sops-nix",
@@ -1250,6 +1198,7 @@
         "vicinae": "vicinae",
         "vicinae-extensions": "vicinae-extensions",
         "xcompose": "xcompose",
+        "yawsf": "yawsf",
         "yazi": "yazi"
       }
     },
@@ -1588,6 +1537,50 @@
       "original": {
         "owner": "Supreeeme",
         "repo": "xwayland-satellite",
+        "type": "github"
+      }
+    },
+    "yawsf": {
+      "inputs": {
+        "crate2nix": [
+          "crate2nix"
+        ],
+        "fenix": [
+          "fenix"
+        ],
+        "flake-file": [
+          "flake-file"
+        ],
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "flint": [
+          "flint"
+        ],
+        "import-tree": [
+          "import-tree"
+        ],
+        "make-shell": [
+          "make-shell"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1784672472,
+        "narHash": "sha256-IQ6t+31btftYUHIZ7crbktfjxRLH6t9b52RsvoEMVsM=",
+        "owner": "bitbloxhub",
+        "repo": "yawsf",
+        "rev": "835e4594f2269c87840fdb06d692484d583746e7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bitbloxhub",
+        "repo": "yawsf",
         "type": "github"
       }
     },

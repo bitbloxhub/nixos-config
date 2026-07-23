@@ -224,7 +224,6 @@
 
                   "Mod+T".action.spawn = "wezterm";
                   "Mod+B".action.spawn = [ "firefox-nightly" ];
-
                   "Mod+P".action.spawn = [
                     "hyprpicker"
                     "-an"

@@ -1,0 +1,30 @@
+window#osd {
+	padding: 6px;
+	border-radius: 9999px;
+	background: #1e1e2e;
+}
+
+#container {
+	margin: 6px;
+}
+
+#container > image {
+	-gtk-icon-transform: scale(0.75);
+	color: #cdd6f4;
+}
+
+label {
+	color: #cdd6f4;
+}
+
+progressbar trough {
+	min-width: 140px;
+	min-height: 6px;
+	border-radius: 9999px;
+	background-color: #313244;
+}
+
+progressbar progress {
+	border-radius: 9999px;
+	background-color: #cba6f7;
+}

@@ -17,5 +17,14 @@ hda = "hda"
 # nix-storage-plugin Additional Layer Store service name
 als = "als"
 
+[default]
+extend-ignore-re = [
+  # Ignore lines containing: typos: ignore
+  ".*(?:#|--|//|/\\*)[^\\n]*typos:\\s*ignore(?:\\s[^\\n]*)?\\n",
+
+  # Ignore the line following: typos: ignore-next-line
+  ".*(?:#|--|//|/\\*)[^\\n]*typos:\\s*ignore-next-line[^\\n]*\\n[^\\n]*",
+]
+
 [files]
 extend-exclude = ["**/secrets/**/*.yaml", "**/*.patch"]
