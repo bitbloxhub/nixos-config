@@ -59,9 +59,19 @@
 				"bg-ctp-surface1 text-ctp-red border-transparent hover:bg-ctp-red/20 hover:border-ctp-red/40",
 		},
 	]
+	let pendingAction = $state<PowerAction | null>(null)
 
-	async function runAction(entry: PowerAction): Promise<void> {
-		if (entry.confirm && !window.confirm(entry.confirm)) return
+	function requestAction(entry: PowerAction): void {
+		if (entry.confirm) {
+			pendingAction = entry
+			return
+		}
+
+		void executeAction(entry)
+	}
+
+	async function executeAction(entry: PowerAction): Promise<void> {
+		pendingAction = null
 
 		const requests: Record<SystemAction, () => Promise<unknown>> = {
 			lock: () => lockSystem(),
@@ -70,6 +80,7 @@
 			logout: () => logoutSystem(),
 			shutdown: () => shutdownSystem(),
 		}
+
 		await requests[entry.action]()
 	}
 </script>
@@ -84,10 +95,45 @@
 				class={`grid size-14 place-items-center rounded-xl border ${entry.color} transition-colors`}
 				aria-label={entry.label}
 				title={entry.label}
-				onclick={() => void runAction(entry)}
+				onclick={() => requestAction(entry)}
 			>
 				<Icon icon={entry.icon} width="26" />
 			</Button.Root>
 		{/each}
 	</div>
 </section>
+
+{#if pendingAction}
+	<div
+		class="fixed inset-0 z-50 grid place-items-center bg-ctp-crust/70 p-4"
+		role="presentation"
+		onclick={() => (pendingAction = null)}
+	>
+		<div
+			class="w-full max-w-sm rounded-2xl border border-ctp-surface2 bg-ctp-base p-5 text-ctp-text shadow-2xl"
+			role="dialog"
+			aria-modal="true"
+			aria-labelledby="system-action-title"
+			tabindex="-1"
+			onclick={(event) => event.stopPropagation()}
+			onkeydown={(event) => event.stopPropagation()}
+		>
+			<h2 id="system-action-title" class="text-lg font-semibold">{pendingAction.label}</h2>
+			<p class="mt-2 text-sm text-ctp-subtext1">{pendingAction.confirm}</p>
+			<div class="mt-5 flex justify-end gap-2">
+				<Button.Root
+					class="rounded-lg bg-ctp-surface1 px-3 py-2 text-sm text-ctp-text hover:bg-ctp-surface2"
+					onclick={() => (pendingAction = null)}
+				>
+					Cancel
+				</Button.Root>
+				<Button.Root
+					class={`rounded-lg px-3 py-2 text-sm text-ctp-crust ${pendingAction.color}`}
+					onclick={() => void executeAction(pendingAction!)}
+				>
+					Confirm
+				</Button.Root>
+			</div>
+		</div>
+	</div>
+{/if}
