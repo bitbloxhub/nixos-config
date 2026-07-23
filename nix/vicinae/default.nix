@@ -122,7 +122,7 @@
                   ];
                   "Mod+Space".action.spawn = [
                     "vicinae"
-                    "vicinae://extensions/vicinae/wm/switch-windows"
+                    "vicinae://launch/wm/switch-windows"
                   ];
                   "Mod+Shift+Space".action.spawn = [
                     "vicinae"
