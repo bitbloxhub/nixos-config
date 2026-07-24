@@ -7,8 +7,8 @@
     url = "github:HeitorAugustoLN/cosmic-manager";
     inputs = {
       flake-parts.follows = "flake-parts";
-      nixpkgs.follows = "nixpkgs";
       home-manager.follows = "home-manager";
+      nixpkgs.follows = "nixpkgs";
     };
   };
 

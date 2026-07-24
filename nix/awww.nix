@@ -18,22 +18,20 @@
           }
 
           (lib.mkIf (lib.attrByPath [ "programs" "niri" "enable" ] false config) {
-            programs.niri.settings = {
-              spawn-at-startup = [
-                {
-                  command = [
-                    "awww-daemon"
-                  ];
-                }
-                {
-                  command = [
-                    "awww"
-                    "img"
-                    "${./wallpapers/miku-v.jpg}"
-                  ];
-                }
-              ];
-            };
+            programs.niri.settings.spawn-at-startup = [
+              {
+                command = [
+                  "awww-daemon"
+                ];
+              }
+              {
+                command = [
+                  "awww"
+                  "img"
+                  "${./wallpapers/miku-v.jpg}"
+                ];
+              }
+            ];
           })
         ];
     };

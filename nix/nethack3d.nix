@@ -9,19 +9,9 @@
       ...
     }:
     let
-      pname = "nethack3d";
-      version = "1.3.2";
-
-      src = pkgs.fetchurl {
-        # url = "https://github.com/JamesIV4/nethack-3d/releases/download/${version}/NetHack.3D.${version}.AppImage";
-        url = "https://github.com/bitbloxhub/nethack-3d/releases/download/wizard-mode-fix-v1/NetHack.3D.1.3.3.AppImage";
-        hash = "sha256-4f6n/aMT5x/7DLstsGP9+fJzcQdGXOkQ8c4kNzQH6Eo=";
-      };
-
       appimageContents = pkgs.appimageTools.extractType2 {
         inherit pname version src;
       };
-
       libs = [
         pkgs.glib
         pkgs.nss
@@ -51,12 +41,17 @@
         pkgs.gnutls
         pkgs.zlib
       ];
+      pname = "nethack3d";
+      src = pkgs.fetchurl {
+        hash = "sha256-4f6n/aMT5x/7DLstsGP9+fJzcQdGXOkQ8c4kNzQH6Eo=";
+        # url = "https://github.com/JamesIV4/nethack-3d/releases/download/${version}/NetHack.3D.${version}.AppImage";
+        url = "https://github.com/bitbloxhub/nethack-3d/releases/download/wizard-mode-fix-v1/NetHack.3D.1.3.3.AppImage";
+      };
+      version = "1.3.2";
     in
     {
       packages.nethack3d = pkgs.appimageTools.wrapType2 {
         inherit pname version src;
-        multiPkgs = null;
-        extraPkgs = p: (pkgs.appimageTools.defaultFhsEnvArgs.multiPkgs p) ++ libs;
         extraInstallCommands = ''
           install -m 444 -D ${appimageContents}/nethack3d.desktop -t $out/share/applications
           substituteInPlace $out/share/applications/nethack3d.desktop \
@@ -68,7 +63,7 @@
           wrapProgram $out/bin/${pname} \
             --add-flags '--no-sandbox'
         '';
-
+        extraPkgs = p: (pkgs.appimageTools.defaultFhsEnvArgs.multiPkgs p) ++ libs;
         meta = {
           description = "3D NetHack client powered by WebAssembly and Three.js";
           homepage = "https://github.com/JamesIV4/nethack-3d";
@@ -76,6 +71,7 @@
           mainProgram = "nethack3d";
           platforms = [ "x86_64-linux" ];
         };
+        multiPkgs = null;
       };
     };
 

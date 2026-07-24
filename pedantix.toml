@@ -1,0 +1,26 @@
+formatter = "nixfmt"
+top-level-blank-lines = 1
+
+[args]
+first = ["lib", "config", "pkgs", "inputs", "inputs'", "self", "self'"]
+last = ["<defaulted>", "..."]
+
+[lets]
+sort = true
+
+[attrs]
+first = ["flake-file", "imports", "perSystem", "flake.aspects"]
+flatten = true
+merge = true
+
+[[overrides]]
+path = "flake.aspects.**"
+attrs.first = ["includes", "_", "imports", "enable", "package", "settings"]
+
+[[overrides]]
+path = "**.flake-file.inputs.*"
+attrs.first = ["url", "inputs", "flake"]
+
+[[overrides]]
+path = "flake.aspects.**.homeManager"
+attrs.last = ["home.persistence"]

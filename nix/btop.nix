@@ -4,26 +4,22 @@
       { aspect, ... }:
       {
         includes = [ aspect._.btop ];
-        _.btop.homeManager = {
-          programs.btop = {
-            enable = true;
-            settings = {
-              vim_keys = true;
-              theme_background = false;
-              update_ms = 500;
-            };
+        _.btop.homeManager.programs.btop = {
+          enable = true;
+          settings = {
+            theme_background = false;
+            update_ms = 500;
+            vim_keys = true;
           };
         };
       };
 
-    nvidia.homeManager = {
-      nixpkgs.overlays = [
-        (_final: prev: {
-          btop = prev.btop.override {
-            cudaSupport = true;
-          };
-        })
-      ];
-    };
+    nvidia.homeManager.nixpkgs.overlays = [
+      (_final: prev: {
+        btop = prev.btop.override {
+          cudaSupport = true;
+        };
+      })
+    ];
   };
 }

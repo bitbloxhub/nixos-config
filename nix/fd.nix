@@ -3,8 +3,6 @@
     { aspect, ... }:
     {
       includes = [ aspect._.fd ];
-      _.fd.homeManager = {
-        programs.fd.enable = true;
-      };
+      _.fd.homeManager.programs.fd.enable = true;
     };
 }

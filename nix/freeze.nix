@@ -20,25 +20,22 @@
           ];
 
           xdg.configFile."freeze/user.json".text = builtins.toJSON {
-            theme = "catppuccin-mocha";
             background = "#1e1e2e";
-
-            window = false;
-            shadow = false;
+            font = {
+              family = "Fira Code";
+              size = 14;
+            };
+            line_height = 1;
+            margin = 0;
             padding = [
               20
               40
               20
               20
             ];
-            margin = 0;
-
-            font = {
-              family = "Fira Code";
-              size = 14;
-            };
-
-            line_height = 1;
+            shadow = false;
+            theme = "catppuccin-mocha";
+            window = false;
           };
         };
     };

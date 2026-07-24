@@ -18,11 +18,11 @@
             ((inputs.nix-bwrapper.lib.mkNixBwrapper pkgs).bwrapperEval {
               app = {
                 package = pkgs.prismlauncher.override {
+                  additionalLibs = [ pkgs.libvlc ];
                   additionalPrograms = [
                     pkgs.ffmpeg
                     pkgs.vlc
                   ];
-                  additionalLibs = [ pkgs.libvlc ];
                 };
                 addPkgs = [
                   pkgs.kdePackages.qtstyleplugin-kvantum

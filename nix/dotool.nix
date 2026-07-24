@@ -14,17 +14,15 @@
           ];
 
           systemd.user.services.dotool = {
-            Unit = {
-              Description = "dotool daemon for input automation";
-              After = [ "graphical-session.target" ];
-            };
-
+            Install.WantedBy = [ "graphical-session.target" ];
             Service = {
               ExecStart = "${pkgs.dotool}/bin/dotoold";
               Restart = "on-failure";
             };
-
-            Install.WantedBy = [ "graphical-session.target" ];
+            Unit = {
+              After = [ "graphical-session.target" ];
+              Description = "dotool daemon for input automation";
+            };
           };
         };
     };

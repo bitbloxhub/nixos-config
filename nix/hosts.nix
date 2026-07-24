@@ -7,18 +7,32 @@
 }:
 {
   flake.lib.configs = {
-    nixos =
+    homeManager =
       platform: aspect:
-      lib.nixosSystem {
-        specialArgs = withSystem platform (
+      inputs.home-manager.lib.homeManagerConfiguration {
+        extraSpecialArgs = withSystem platform (
           { inputs', self', ... }:
           {
             inherit inputs' self';
           }
         );
         modules = [
+          self.modules.homeManager.${aspect}
+        ];
+        pkgs = inputs.nixpkgs.legacyPackages.${platform};
+      };
+    nixos =
+      platform: aspect:
+      lib.nixosSystem {
+        modules = [
           self.modules.nixos.${aspect}
         ];
+        specialArgs = withSystem platform (
+          { inputs', self', ... }:
+          {
+            inherit inputs' self';
+          }
+        );
       };
     systemManager =
       platform: aspect:
@@ -31,20 +45,6 @@
         );
         modules = [
           self.modules.systemManager.${aspect}
-        ];
-      };
-    homeManager =
-      platform: aspect:
-      inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = inputs.nixpkgs.legacyPackages.${platform};
-        extraSpecialArgs = withSystem platform (
-          { inputs', self', ... }:
-          {
-            inherit inputs' self';
-          }
-        );
-        modules = [
-          self.modules.homeManager.${aspect}
         ];
       };
   };

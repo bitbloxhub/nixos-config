@@ -5,15 +5,17 @@
 {
   flake-file.inputs.yawsf = {
     url = "github:bitbloxhub/yawsf";
-    inputs.crate2nix.follows = "crate2nix";
-    inputs.fenix.follows = "fenix";
-    inputs.flake-file.follows = "flake-file";
-    inputs.flake-parts.follows = "flake-parts";
-    inputs.flint.follows = "flint";
-    inputs.import-tree.follows = "import-tree";
-    inputs.make-shell.follows = "make-shell";
-    inputs.nixpkgs.follows = "nixpkgs";
-    inputs.treefmt-nix.follows = "treefmt-nix";
+    inputs = {
+      flake-file.follows = "flake-file";
+      crate2nix.follows = "crate2nix";
+      fenix.follows = "fenix";
+      flake-parts.follows = "flake-parts";
+      flint.follows = "flint";
+      import-tree.follows = "import-tree";
+      make-shell.follows = "make-shell";
+      nixpkgs.follows = "nixpkgs";
+      treefmt-nix.follows = "treefmt-nix";
+    };
   };
 
   perSystem =
@@ -26,29 +28,6 @@
     in
     {
       packages.yawsf-webapp = pkgs.stdenv.mkDerivation (finalAttrs: {
-        pname = "yawsf-webapp";
-        version = "0.0.1";
-        src = ./.;
-
-        nativeBuildInputs = [
-          pkgs.makeWrapper
-          pkgs.nodejs
-          pkgs.pnpmConfigHook
-          pnpm
-        ];
-
-        env = {
-          CI = "true";
-          pnpm_config_manage_package_manager_versions = "false";
-        };
-
-        pnpmDeps = pkgs.fetchPnpmDeps {
-          inherit (finalAttrs) pname version src;
-          inherit pnpm;
-          fetcherVersion = 4;
-          hash = "sha256-xcCuDDV6mmUOXLbpR3KXBb5lUC+I57UTyi/1my5xBLg=";
-        };
-
         buildPhase = ''
           runHook preBuild
 
@@ -57,7 +36,10 @@
 
           runHook postBuild
         '';
-
+        env = {
+          CI = "true";
+          pnpm_config_manage_package_manager_versions = "false";
+        };
         installPhase = ''
           runHook preInstall
 
@@ -73,8 +55,22 @@
 
           runHook postInstall
         '';
-
         meta.mainProgram = "yawsf-webapp";
+        nativeBuildInputs = [
+          pkgs.makeWrapper
+          pkgs.nodejs
+          pkgs.pnpmConfigHook
+          pnpm
+        ];
+        pname = "yawsf-webapp";
+        pnpmDeps = pkgs.fetchPnpmDeps {
+          inherit (finalAttrs) pname version src;
+          inherit pnpm;
+          fetcherVersion = 4;
+          hash = "sha256-xcCuDDV6mmUOXLbpR3KXBb5lUC+I57UTyi/1my5xBLg=";
+        };
+        src = ./.;
+        version = "0.0.1";
       });
     };
 
@@ -85,8 +81,8 @@
       _.yawsf.homeManager =
         {
           config,
-          inputs',
           pkgs,
+          inputs',
           self',
           ...
         }:
@@ -113,19 +109,20 @@
           }
 
           (lib.mkIf (lib.attrByPath [ "programs" "niri" "enable" ] false config) {
-            programs.niri.settings.spawn-at-startup = [
-              {
-                command = [
-                  (lib.getExe inputs'.yawsf.packages.default)
-                  "--webapp-command"
-                  (lib.getExe self'.packages.yawsf-webapp)
-                ];
-              }
-            ];
-
-            programs.niri.settings.binds."Mod+Shift+B".action.spawn = [
-              (lib.getExe bentoToggle)
-            ];
+            programs.niri.settings = {
+              binds."Mod+Shift+B".action.spawn = [
+                (lib.getExe bentoToggle)
+              ];
+              spawn-at-startup = [
+                {
+                  command = [
+                    (lib.getExe inputs'.yawsf.packages.default)
+                    "--webapp-command"
+                    (lib.getExe self'.packages.yawsf-webapp)
+                  ];
+                }
+              ];
+            };
           })
         ];
     };

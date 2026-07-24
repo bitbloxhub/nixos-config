@@ -266,6 +266,15 @@
     };
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    pedantix = {
+      url = "github:Swarsel/pedantix";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        git-hooks-nix.follows = "git-hooks";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     reanix = {
       url = "github:mrtnvgr/reanix";
       inputs = {

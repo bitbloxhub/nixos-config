@@ -30,12 +30,6 @@
     {
       includes = [ aspect._.sops ];
       _.sops = {
-        nixos = {
-          imports = [ inputs.sops-nix.nixosModules.sops ];
-          sops = {
-            age.sshKeyFile = "/persistent/etc/ssh/ssh_host_ed25519_sops";
-          };
-        };
         homeManager =
           {
             config,
@@ -43,10 +37,12 @@
           }:
           {
             imports = [ inputs.sops-nix.homeManagerModules.sops ];
-            sops = {
-              age.sshKeyFile = "${config.home.homeDirectory}/.ssh/id_ed25519_sops";
-            };
+            sops.age.sshKeyFile = "${config.home.homeDirectory}/.ssh/id_ed25519_sops";
           };
+        nixos = {
+          imports = [ inputs.sops-nix.nixosModules.sops ];
+          sops.age.sshKeyFile = "/persistent/etc/ssh/ssh_host_ed25519_sops";
+        };
       };
     };
 }

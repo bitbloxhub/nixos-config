@@ -12,13 +12,11 @@
           home.packages = [
             pkgs.wlr-which-key
           ];
-
-          xdg.configFile."wlr-which-key/mouse.yaml".source = ./mouse.yaml;
-
           programs.niri.settings.binds."Mod+Semicolon".action.spawn = [
             "wlr-which-key"
             "mouse"
           ];
+          xdg.configFile."wlr-which-key/mouse.yaml".source = ./mouse.yaml;
         };
     };
 }

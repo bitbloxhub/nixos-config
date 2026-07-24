@@ -4,17 +4,15 @@
     { aspect, ... }:
     {
       includes = [ aspect._.keepassxc ];
-      _.keepassxc.homeManager = {
-        programs.keepassxc = {
-          enable = true;
-          settings = {
-            General.ConfigVersion = 2;
-            Browser = {
-              Enabled = true;
-              UpdateBinaryPath = false;
-            };
-            Security.IconDownloadFallback = true;
+      _.keepassxc.homeManager.programs.keepassxc = {
+        enable = true;
+        settings = {
+          Browser = {
+            Enabled = true;
+            UpdateBinaryPath = false;
           };
+          General.ConfigVersion = 2;
+          Security.IconDownloadFallback = true;
         };
       };
     };

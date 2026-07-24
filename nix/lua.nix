@@ -5,15 +5,11 @@
       ...
     }:
     {
-      make-shells.default = {
-        packages = [
-          pkgs.stylua
-          pkgs.lua-language-server
-        ];
-      };
+      make-shells.default.packages = [
+        pkgs.stylua
+        pkgs.lua-language-server
+      ];
 
-      treefmt = {
-        programs.stylua.enable = true;
-      };
+      treefmt.programs.stylua.enable = true;
     };
 }

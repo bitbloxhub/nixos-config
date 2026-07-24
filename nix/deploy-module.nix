@@ -7,58 +7,88 @@
 }:
 let
   inherit (lib) mkOption types;
-
   genericSettings = {
     options = {
-      sshUser = mkOption {
-        type = with types; nullOr str;
+      activationTimeout = mkOption {
         default = null;
-      };
-      user = mkOption {
-        type = with types; nullOr str;
-        default = null;
-      };
-      sshOpts = mkOption {
-        type = with types; listOf str;
-        default = [ ];
-      };
-      fastConnection = mkOption {
-        type = with types; nullOr bool;
-        default = null;
+        type = with types; nullOr int;
       };
       autoRollback = mkOption {
-        type = with types; nullOr bool;
         default = null;
+        type = with types; nullOr bool;
       };
       confirmTimeout = mkOption {
+        default = null;
         type = with types; nullOr int;
-        default = null;
       };
-      activationTimeout = mkOption {
-        type = with types; nullOr int;
+      fastConnection = mkOption {
         default = null;
-      };
-      tempPath = mkOption {
-        type = with types; nullOr str;
-        default = null;
-      };
-      magicRollback = mkOption {
         type = with types; nullOr bool;
-        default = null;
-      };
-      sudo = mkOption {
-        type = with types; nullOr str;
-        default = null;
-      };
-      remoteBuild = mkOption {
-        type = with types; nullOr bool;
-        default = null;
       };
       interactiveSudo = mkOption {
-        type = with types; nullOr bool;
         default = null;
+        type = with types; nullOr bool;
+      };
+      magicRollback = mkOption {
+        default = null;
+        type = with types; nullOr bool;
+      };
+      remoteBuild = mkOption {
+        default = null;
+        type = with types; nullOr bool;
+      };
+      sshOpts = mkOption {
+        default = [ ];
+        type = with types; listOf str;
+      };
+      sshUser = mkOption {
+        default = null;
+        type = with types; nullOr str;
+      };
+      sudo = mkOption {
+        default = null;
+        type = with types; nullOr str;
+      };
+      tempPath = mkOption {
+        default = null;
+        type = with types; nullOr str;
+      };
+      user = mkOption {
+        default = null;
+        type = with types; nullOr str;
       };
     };
+  };
+  nodeModule = types.submoduleWith {
+    modules = [
+      genericSettings
+      nodeSettings
+    ];
+  };
+  nodeSettings = {
+    options = {
+      hostname = mkOption {
+        type = types.str;
+      };
+      profiles = mkOption {
+        type = types.attrsOf profileModule;
+      };
+      profilesOrder = mkOption {
+        default = [ ];
+        type = with types; listOf str;
+      };
+    };
+  };
+  nodesSettings = {
+    options.nodes = mkOption {
+      type = types.attrsOf nodeModule;
+    };
+  };
+  profileModule = types.submoduleWith {
+    modules = [
+      genericSettings
+      profileSettings
+    ];
   };
   profileSettings = {
     options = {
@@ -66,46 +96,11 @@ let
         type = types.package;
       };
       profilePath = mkOption {
-        type = with types; nullOr str;
         default = null;
+        type = with types; nullOr str;
       };
     };
   };
-  nodeSettings = {
-    options = {
-      hostname = mkOption {
-        type = types.str;
-      };
-      profilesOrder = mkOption {
-        type = with types; listOf str;
-        default = [ ];
-      };
-      profiles = mkOption {
-        type = types.attrsOf profileModule;
-      };
-    };
-  };
-
-  nodesSettings = {
-    options.nodes = mkOption {
-      type = types.attrsOf nodeModule;
-    };
-  };
-
-  profileModule = types.submoduleWith {
-    modules = [
-      genericSettings
-      profileSettings
-    ];
-  };
-
-  nodeModule = types.submoduleWith {
-    modules = [
-      genericSettings
-      nodeSettings
-    ];
-  };
-
   rootModule = types.submoduleWith {
     modules = [
       genericSettings
@@ -114,13 +109,12 @@ let
   };
 in
 {
+  config.perSystem = {
+    # TODO: For some reason this fails, fix it.
+    # checks = lib.mkIf (deploy-rs.lib ? ${system}) (deploy-rs.lib.${system}.deployChecks cfg);
+  };
+
   options.flake.deploy = mkOption {
     type = rootModule;
-  };
-  config = {
-    perSystem = {
-      # TODO: For some reason this fails, fix it.
-      # checks = lib.mkIf (deploy-rs.lib ? ${system}) (deploy-rs.lib.${system}.deployChecks cfg);
-    };
   };
 }

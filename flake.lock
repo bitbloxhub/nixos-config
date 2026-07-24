@@ -1061,6 +1061,35 @@
         "type": "github"
       }
     },
+    "pedantix": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "git-hooks-nix": [
+          "git-hooks"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1784836877,
+        "narHash": "sha256-Cl3isSZw4YL/wIVLKV7/iUIVxtEEMPYCT4CWw+iPCP4=",
+        "owner": "Swarsel",
+        "repo": "pedantix",
+        "rev": "cfb564b6c4b41ce7c2b7cc17b9709e332ac81916",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Swarsel",
+        "repo": "pedantix",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": [
@@ -1187,6 +1216,7 @@
         "nix-wrapper-modules": "nix-wrapper-modules",
         "nixos-facter-modules": "nixos-facter-modules",
         "nixpkgs": "nixpkgs",
+        "pedantix": "pedantix",
         "reanix": "reanix",
         "skills-flake": "skills-flake",
         "sops-nix": "sops-nix",

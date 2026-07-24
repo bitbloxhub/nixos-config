@@ -5,14 +5,10 @@
       ...
     }:
     {
-      make-shells.default = {
-        packages = [
-          pkgs.typos
-        ];
-      };
+      make-shells.default.packages = [
+        pkgs.typos
+      ];
 
-      treefmt = {
-        programs.typos.enable = true;
-      };
+      treefmt.programs.typos.enable = true;
     };
 }

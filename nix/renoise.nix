@@ -18,31 +18,31 @@
                 ...
               }:
               {
-                home.packages = [
-                  (pkgs.writeShellScriptBin "renoise" ''
-                    exec ${pkgs.pipewire.jack}/bin/pw-jack ${pkgs.renoise}/bin/renoise "$@"
-                  '')
-                ];
-
+                home = {
+                  packages = [
+                    (pkgs.writeShellScriptBin "renoise" ''
+                      exec ${pkgs.pipewire.jack}/bin/pw-jack ${pkgs.renoise}/bin/renoise "$@"
+                    '')
+                  ];
+                  persistence."/persistent".directories = [ ".config/REAPER" ];
+                };
                 xdg.desktopEntries.renoise = {
-                  name = "Renoise";
-                  genericName = "Music Tracker";
-                  comment = "A music composition program";
                   categories = [
                     "AudioVideo"
                     "Audio"
                   ];
+                  comment = "A music composition program";
                   exec = "renoise %f";
-                  terminal = false;
-                  startupNotify = false;
+                  genericName = "Music Tracker";
                   icon = "${pkgs.renoise}/share/icons/hicolor/128x128/apps/renoise.png";
                   mimeType = [
                     "application/x-renoise-module"
                     "application/x-renoise-rns-module"
                   ];
+                  name = "Renoise";
+                  startupNotify = false;
+                  terminal = false;
                 };
-
-                home.persistence."/persistent".directories = [ ".config/REAPER" ];
               };
           };
         };

@@ -1,5 +1,6 @@
 {
   lib,
+  inputs,
   ...
 }:
 let
@@ -25,28 +26,47 @@ let
   ];
 in
 {
-  flake-file.nixConfig = {
-    inherit substituters trusted-public-keys;
+  flake-file = {
+    inputs.pedantix = {
+      url = "github:Swarsel/pedantix";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        git-hooks-nix.follows = "git-hooks";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
+    nixConfig = {
+      inherit substituters trusted-public-keys;
+    };
   };
+
+  imports = [
+    inputs.pedantix.flakeModules.default
+  ];
 
   perSystem =
     {
       pkgs,
+      inputs',
       ...
     }:
     {
-      make-shells.default = {
-        packages = [
-          pkgs.nixfmt
-          pkgs.deadnix
-          pkgs.statix
-        ];
-      };
+      make-shells.default.packages = [
+        pkgs.nixfmt
+        pkgs.deadnix
+        pkgs.statix
+        inputs'.pedantix.packages.pedantix
+      ];
 
-      treefmt = {
-        programs.nixfmt.enable = true;
-        programs.deadnix.enable = true;
-        programs.statix.enable = true;
+      treefmt.programs = {
+        deadnix.enable = true;
+        nixfmt.enable = true;
+        pedantix = {
+          enable = true;
+          excludes = [ "flake.nix" ];
+        };
+        statix.enable = true;
       };
     };
 
@@ -64,6 +84,7 @@ in
             enable = true;
             package = lib.mkDefault pkgs.lixPackageSets.latest.lix;
             settings = {
+              inherit substituters trusted-public-keys;
               experimental-features = [
                 "nix-command"
                 "flakes"
@@ -72,7 +93,6 @@ in
                 "root"
                 "@wheel"
               ];
-              inherit substituters trusted-public-keys;
             };
           };
         };

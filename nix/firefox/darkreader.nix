@@ -14,43 +14,43 @@
           ...
         }:
         {
-          programs.firefox.profiles.nix = {
-            extensions.packages = [
+          programs.firefox = {
+            policies = {
+              "3rdparty".Extensions."addon@darkreader.org" = {
+                disabledFor = (lib.importJSON self'.packages.catppuccin-userstyles-domains) ++ [
+                  "github.com"
+                  "en.wikipedia.org"
+                ];
+                enableForProtectedPages = true;
+                syncSettings = false;
+                theme = {
+                  brightness = 100;
+                  contrast = 100;
+                  darkColorScheme = "default";
+                  darkSchemeBackgroundColor = "#1e1e2e";
+                  darkSchemeTextColor = "#cdd6f4";
+                  engine = "dynamicTheme";
+                  fontFamily = "Fira Code";
+                  grayscale = 0;
+                  immediateModify = false;
+                  lightColorScheme = "default";
+                  lightSchemeBackgroundColor = "#1e1e2e";
+                  lightSchemeTextColor = "#cdd6f4";
+                  mode = 1;
+                  scrollbarColor = "";
+                  selectionColor = "#585b70";
+                  sepia = 0;
+                  styleSystemControls = true;
+                  stylesheet = "";
+                  textStroke = 0;
+                  useFont = false;
+                };
+              };
+              ExtensionSettings."addon@darkreader.org".private_browsing = true;
+            };
+            profiles.nix.extensions.packages = [
               inputs'.firefox-extensions-declarative.packages.darkreader-declarative
             ];
-          };
-          programs.firefox.policies = {
-            ExtensionSettings."addon@darkreader.org".private_browsing = true;
-            "3rdparty".Extensions."addon@darkreader.org" = {
-              syncSettings = false;
-              enableForProtectedPages = true;
-              theme = {
-                mode = 1;
-                brightness = 100;
-                contrast = 100;
-                grayscale = 0;
-                sepia = 0;
-                useFont = false;
-                fontFamily = "Fira Code";
-                textStroke = 0;
-                engine = "dynamicTheme";
-                stylesheet = "";
-                darkSchemeBackgroundColor = "#1e1e2e";
-                darkSchemeTextColor = "#cdd6f4";
-                lightSchemeBackgroundColor = "#1e1e2e";
-                lightSchemeTextColor = "#cdd6f4";
-                scrollbarColor = "";
-                selectionColor = "#585b70";
-                styleSystemControls = true;
-                darkColorScheme = "default";
-                lightColorScheme = "default";
-                immediateModify = false;
-              };
-              disabledFor = (lib.importJSON self'.packages.catppuccin-userstyles-domains) ++ [
-                "github.com"
-                "en.wikipedia.org"
-              ];
-            };
           };
         };
     };

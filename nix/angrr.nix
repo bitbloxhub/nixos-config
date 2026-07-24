@@ -5,6 +5,29 @@
 }:
 let
   angrrConfig = {
+    profile-policies = {
+      system = {
+        keep-booted-system = true;
+        keep-current-system = true;
+        keep-latest-n = 1;
+        profile-paths = [
+          "/nix/var/nix/profiles/system"
+        ];
+      };
+      system-manager = {
+        keep-latest-n = 1;
+        profile-paths = [
+          "/nix/var/nix/profiles/system-manager-profiles/system-manager"
+        ];
+      };
+      user = {
+        keep-latest-n = 1;
+        profile-paths = [
+          "~/.local/state/nix/profiles/profile"
+          "/nix/var/nix/profiles/per-user/root/profile"
+        ];
+      };
+    };
     temporary-root-policies = {
       direnv = {
         path-regex = "/\\.direnv/";
@@ -15,40 +38,17 @@ let
         period = "3d";
       };
     };
-    profile-policies = {
-      system = {
-        profile-paths = [
-          "/nix/var/nix/profiles/system"
-        ];
-        keep-latest-n = 1;
-        keep-booted-system = true;
-        keep-current-system = true;
-      };
-      system-manager = {
-        profile-paths = [
-          "/nix/var/nix/profiles/system-manager-profiles/system-manager"
-        ];
-        keep-latest-n = 1;
-      };
-      user = {
-        profile-paths = [
-          "~/.local/state/nix/profiles/profile"
-          "/nix/var/nix/profiles/per-user/root/profile"
-        ];
-        keep-latest-n = 1;
-      };
-    };
   };
 in
 {
   flake-file.inputs.angrr = {
     url = "github:linyinfeng/angrr";
     inputs = {
+      flake-compat.follows = "";
       flake-parts.follows = "flake-parts";
+      nix-darwin.follows = "";
       nixpkgs.follows = "nixpkgs";
       treefmt-nix.follows = "treefmt-nix";
-      nix-darwin.follows = "";
-      flake-compat.follows = "";
     };
   };
 
@@ -78,30 +78,25 @@ in
             ...
           }:
           {
-            environment.etc."angrr/config.toml".source =
-              (pkgs.formats.toml { }).generate "angrr/config.toml"
-                angrrConfig;
-
-            systemd.services.angrr = {
-              description = "Auto Nix GC Roots Retention";
-              script = ''
-                ${lib.getExe inputs'.angrr.packages.default} run \
-                  --log-level "info" \
-                  --no-prompt
-              '';
-              environment.ANGRR_LOG_STYLE = "systemd";
-              serviceConfig = {
-                Type = "oneshot";
-              };
+            environment = {
+              etc."angrr/config.toml".source = (pkgs.formats.toml { }).generate "angrr/config.toml" angrrConfig;
+              systemPackages = [ inputs'.angrr.packages.default ];
             };
-
-            environment.systemPackages = [ inputs'.angrr.packages.default ];
-
-            systemd.timers.angrr = {
-              timerConfig = {
-                OnCalendar = "*-*-* *:00:00";
+            systemd = {
+              services.angrr = {
+                description = "Auto Nix GC Roots Retention";
+                environment.ANGRR_LOG_STYLE = "systemd";
+                script = ''
+                  ${lib.getExe inputs'.angrr.packages.default} run \
+                    --log-level "info" \
+                    --no-prompt
+                '';
+                serviceConfig.Type = "oneshot";
               };
-              wantedBy = [ "timers.target" ];
+              timers.angrr = {
+                timerConfig.OnCalendar = "*-*-* *:00:00";
+                wantedBy = [ "timers.target" ];
+              };
             };
           };
       };

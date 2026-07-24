@@ -9,11 +9,12 @@
       includes = [ aspect._.stasis ];
       _.stasis.homeManager =
         {
-          pkgs,
           config,
+          pkgs,
           ...
         }:
         let
+          lockCommand = lib.getExe stasisLock;
           stasisLock = pkgs.writeShellApplication {
             name = "stasis-lock";
 
@@ -27,14 +28,18 @@
               exec hyprlock --immediate-render --no-fade-in
             '';
           };
-
-          lockCommand = lib.getExe stasisLock;
         in
         lib.mkIf (lib.attrByPath [ "programs" "niri" "enable" ] false config) {
           home.packages = [
             pkgs.stasis
           ];
-
+          programs.niri.settings.spawn-at-startup = [
+            {
+              command = [
+                "stasis"
+              ];
+            }
+          ];
           xdg.configFile."stasis/stasis.rune".text = ''
             default:
               enable_loginctl true
@@ -69,14 +74,6 @@
               end
             end
           '';
-
-          programs.niri.settings.spawn-at-startup = [
-            {
-              command = [
-                "stasis"
-              ];
-            }
-          ];
         };
     };
 }

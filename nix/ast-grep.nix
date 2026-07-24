@@ -17,6 +17,8 @@
 
       treefmt.settings.formatter."ast-grep" = {
         command = pkgs.bash;
+        # TODO: generate this from ./sg_rules
+        includes = [ "**/*.nix" ];
         options = [
           "-euc"
           ''
@@ -33,8 +35,6 @@
           ''
           "--"
         ];
-        # TODO: generate this from ./sg_rules
-        includes = [ "**/*.nix" ];
       };
     };
 }

@@ -4,38 +4,37 @@
   ...
 }:
 {
-  config.flake-file.inputs.system-manager = {
-    url = "github:numtide/system-manager";
-    inputs = {
-      nixpkgs.follows = "nixpkgs";
-      flake-compat.follows = "";
-      userborn = {
-        inputs = {
-          nixpkgs.follows = "nixpkgs";
+  config.flake-file.inputs = {
+    # TODO: move this somewhere else
+    nix-system-graphics = {
+      url = "github:soupglasses/nix-system-graphics";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs = {
+        flake-compat.follows = "";
+        nixpkgs.follows = "nixpkgs";
+        userborn.inputs = {
           flake-parts.follows = "flake-parts";
-          systems.follows = "systems";
+          nixpkgs.follows = "nixpkgs";
           pre-commit-hooks-nix.inputs = {
             gitignore.follows = "gitignore";
             nixpkgs.follows = "nixpkgs";
           };
+          systems.follows = "systems";
         };
       };
     };
   };
 
-  # TODO: move this somewhere else
-  config.flake-file.inputs.nix-system-graphics = {
-    url = "github:soupglasses/nix-system-graphics";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
   options.flake = flake-parts-lib.mkSubmoduleOptions {
     systemConfigs = lib.mkOption {
-      type = lib.types.lazyAttrsOf lib.types.raw;
       default = { };
       description = ''
         Instantiated system-manager configurations.
       '';
+      type = lib.types.lazyAttrsOf lib.types.raw;
     };
   };
 }

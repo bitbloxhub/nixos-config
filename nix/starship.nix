@@ -7,12 +7,43 @@
     { aspect, ... }:
     {
       includes = [ aspect._.starship ];
-      _.starship.homeManager = {
-        programs.starship.enable = true;
-        programs.starship.enableNushellIntegration = true;
-
-        programs.starship.settings = {
+      _.starship.homeManager.programs.starship = {
+        enable = true;
+        settings = {
           add_newline = false;
+          character = {
+            disabled = false;
+            error_symbol = "[❯](bold fg:red)";
+            success_symbol = "[❯](bold fg:green)";
+            vimcmd_replace_one_symbol = "[❮](bold fg:lavender)";
+            vimcmd_replace_symbol = "[❮](bold fg:lavender)";
+            vimcmd_symbol = "[❮](bold fg:green)";
+            vimcmd_visual_symbol = "[❮](bold fg:yellow)";
+          };
+          cmd_duration = {
+            disabled = false;
+            format = " in $duration ";
+            min_time = 0;
+            show_milliseconds = true;
+            show_notifications = false;
+            style = "bg:lavender";
+          };
+          deno = {
+            format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
+            style = "bg:green";
+            symbol = "";
+          };
+          directory = {
+            format = "[ $path ]($style)";
+            style = "bg:peach fg:crust";
+            truncation_length = 3;
+            truncation_symbol = "…/";
+          };
+          direnv = {
+            disabled = false;
+            format = "[$symbol$loaded/$allowed]($style)";
+            style = "fg:crust bg:green";
+          };
           format = lib.concatStrings [
             "[](fg:red)"
             "$os"
@@ -43,21 +74,25 @@
             "$line_break"
             "$character"
           ];
-
+          git_branch = {
+            format = "[[ $symbol $branch ](fg:crust bg:yellow)]($style)";
+            style = "bg:yellow";
+            symbol = "";
+          };
+          git_status = {
+            format = "[[($all_status$ahead_behind )](fg:crust bg:yellow)]($style)";
+            style = "bg:yellow";
+          };
+          hostname = {
+            disabled = false;
+            format = "[@$hostname]($style)";
+            ssh_only = false;
+            style = "bg:red fg:crust";
+          };
           os = {
             disabled = false;
             style = "bg:red fg:crust";
             symbols = {
-              Windows = " ";
-              Ubuntu = "󰕈 ";
-              SUSE = " ";
-              Raspbian = "󰐿 ";
-              Mint = "󰣭 ";
-              Macos = "󰀵 ";
-              Manjaro = " ";
-              Linux = "󰌽 ";
-              Gentoo = "󰣨 ";
-              Fedora = "󰣛 ";
               Alpine = " ";
               Amazon = " ";
               Android = " ";
@@ -65,96 +100,47 @@
               Artix = "󰣇 ";
               CentOS = " ";
               Debian = "󰣚 ";
-              Redhat = "󱄛 ";
-              RedHatEnterprise = "󱄛 ";
-              Pop = " ";
+              Fedora = "󰣛 ";
+              Gentoo = "󰣨 ";
+              Linux = "󰌽 ";
+              Macos = "󰀵 ";
+              Manjaro = " ";
+              Mint = "󰣭 ";
               NixOS = " ";
+              Pop = " ";
+              Raspbian = "󰐿 ";
+              RedHatEnterprise = "󱄛 ";
+              Redhat = "󱄛 ";
+              SUSE = " ";
+              Ubuntu = "󰕈 ";
+              Windows = " ";
             };
           };
-
-          username = {
-            show_always = true;
-            style_user = "bg:red fg:crust";
-            style_root = "bg:red fg:crust";
-            format = "[ $user]($style)";
-          };
-
-          hostname = {
-            disabled = false;
-            ssh_only = false;
-            style = "bg:red fg:crust";
-            format = "[@$hostname]($style)";
-          };
-
-          directory = {
-            style = "bg:peach fg:crust";
-            format = "[ $path ]($style)";
-            truncation_length = 3;
-            truncation_symbol = "…/";
-          };
-
-          git_branch = {
-            symbol = "";
-            style = "bg:yellow";
-            format = "[[ $symbol $branch ](fg:crust bg:yellow)]($style)";
-          };
-
-          git_status = {
-            style = "bg:yellow";
-            format = "[[($all_status$ahead_behind )](fg:crust bg:yellow)]($style)";
-          };
-
-          direnv = {
-            disabled = false;
-            style = "fg:crust bg:green";
-            format = "[$symbol$loaded/$allowed]($style)";
-          };
-
-          rust = {
-            symbol = "";
-            style = "bg:green";
-            format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
-          };
-
           python = {
-            symbol = "";
-            style = "bg:green";
-            format = "[[ $symbol( $version)(#$virtualenv) ](fg:crust bg:green)]($style)";
             detect_extensions = [ ];
-          };
-
-          deno = {
-            symbol = "";
+            format = "[[ $symbol( $version)(#$virtualenv) ](fg:crust bg:green)]($style)";
             style = "bg:green";
-            format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
+            symbol = "";
           };
-
+          rust = {
+            format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
+            style = "bg:green";
+            symbol = "";
+          };
           time = {
             disabled = false;
-            time_format = "%R";
-            style = "bg:lavender";
             format = "[[  $time ](fg:crust bg:lavender)]($style)";
-          };
-
-          character = {
-            disabled = false;
-            success_symbol = "[❯](bold fg:green)";
-            error_symbol = "[❯](bold fg:red)";
-            vimcmd_symbol = "[❮](bold fg:green)";
-            vimcmd_replace_one_symbol = "[❮](bold fg:lavender)";
-            vimcmd_replace_symbol = "[❮](bold fg:lavender)";
-            vimcmd_visual_symbol = "[❮](bold fg:yellow)";
-          };
-
-          cmd_duration = {
-            show_milliseconds = true;
-            format = " in $duration ";
             style = "bg:lavender";
-            disabled = false;
-            show_notifications = false;
-            min_time = 0;
+            time_format = "%R";
+          };
+          username = {
+            format = "[ $user]($style)";
+            show_always = true;
+            style_root = "bg:red fg:crust";
+            style_user = "bg:red fg:crust";
           };
         };
+        enableNushellIntegration = true;
       };
     };
 }

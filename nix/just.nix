@@ -5,11 +5,9 @@
       ...
     }:
     {
-      make-shells.default = {
-        packages = [
-          pkgs.just
-        ];
-      };
+      make-shells.default.packages = [
+        pkgs.just
+      ];
     };
 
   flake.aspects.cli =

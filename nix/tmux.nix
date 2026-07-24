@@ -17,10 +17,8 @@
           programs.tmux = {
             enable = true;
             mouse = true;
-            prefix = "C-a";
             plugins = with pkgs.tmuxPlugins; [
               {
-                plugin = sensible;
                 # Actually for catppuccin, tmux config ordering is stupid and home-manager is bad at it
                 extraConfig =
                   # tmux
@@ -38,11 +36,13 @@
                     # Popup transparency
                     set-option -wg popup-style bg=default
                   '';
+                plugin = sensible;
               }
               cpu
               battery
               tmux-fzf
             ];
+            prefix = "C-a";
           };
         };
     };

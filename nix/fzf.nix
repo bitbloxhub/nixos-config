@@ -7,12 +7,10 @@
     { aspect, ... }:
     {
       includes = [ aspect._.fzf ];
-      _.fzf.homeManager = {
-        programs.fzf = {
-          enable = true;
-          historyWidget.command = "";
-          colors.bg = lib.mkForce "";
-        };
+      _.fzf.homeManager.programs.fzf = {
+        enable = true;
+        colors.bg = lib.mkForce "";
+        historyWidget.command = "";
       };
     };
 }

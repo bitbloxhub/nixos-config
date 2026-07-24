@@ -12,16 +12,12 @@
     { aspect, ... }:
     {
       includes = [ aspect._.helium ];
-      _.helium = {
-        homeManager = {
-          imports = [
-            inputs.helium-browser.homeModules.default
-          ];
+      _.helium.homeManager = {
+        imports = [
+          inputs.helium-browser.homeModules.default
+        ];
 
-          programs.helium = {
-            enable = true;
-          };
-        };
+        programs.helium.enable = true;
       };
     };
 }

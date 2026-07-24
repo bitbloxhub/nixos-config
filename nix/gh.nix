@@ -3,8 +3,6 @@
     { aspect, ... }:
     {
       includes = [ aspect._.gh ];
-      _.gh.homeManager = {
-        programs.gh.enable = true;
-      };
+      _.gh.homeManager.programs.gh.enable = true;
     };
 }

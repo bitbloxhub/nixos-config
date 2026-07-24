@@ -25,17 +25,13 @@
       ...
     }:
     {
-      make-shells.default = {
-        packages = [
-          pkgs.cargo
-          pkgs.rustc
-          pkgs.rustfmt
-          pkgs.rust-analyzer
-        ];
-      };
+      make-shells.default.packages = [
+        pkgs.cargo
+        pkgs.rustc
+        pkgs.rustfmt
+        pkgs.rust-analyzer
+      ];
 
-      treefmt = {
-        programs.rustfmt.enable = true;
-      };
+      treefmt.programs.rustfmt.enable = true;
     };
 }

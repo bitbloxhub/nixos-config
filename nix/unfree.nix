@@ -8,31 +8,22 @@
       unfreeModule =
         { config, ... }:
         {
-          options.unfree = {
-            packages = lib.mkOption {
-              type = lib.types.listOf lib.types.str;
-              default = [ ];
-            };
-          };
           config.nixpkgs.config.allowUnfreePredicate =
             pkg: builtins.elem (lib.getName pkg) config.unfree.packages;
+          options.unfree.packages = lib.mkOption {
+            default = [ ];
+            type = lib.types.listOf lib.types.str;
+          };
         };
     in
     {
-      nixos = unfreeModule;
-      homeManager = unfreeModule;
-      systemManager = unfreeModule;
-
       _.unfree = unfreePackages: {
-        nixos = {
-          unfree.packages = unfreePackages;
-        };
-        homeManager = {
-          unfree.packages = unfreePackages;
-        };
-        systemManager = {
-          unfree.packages = unfreePackages;
-        };
+        homeManager.unfree.packages = unfreePackages;
+        nixos.unfree.packages = unfreePackages;
+        systemManager.unfree.packages = unfreePackages;
       };
+      homeManager = unfreeModule;
+      nixos = unfreeModule;
+      systemManager = unfreeModule;
     };
 }

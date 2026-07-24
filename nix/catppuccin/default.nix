@@ -9,35 +9,24 @@
       url = "github:catppuccin/nix/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    catppuccin-userstyles = {
-      url = "github:catppuccin/userstyles";
-      flake = false;
-    };
     catppuccin-cosmic = {
       url = "github:catppuccin/cosmic-desktop";
+      flake = false;
+    };
+    catppuccin-userstyles = {
+      url = "github:catppuccin/userstyles";
       flake = false;
     };
   };
 
   flake.aspects.rices._.catppuccin =
     {
-      flavor ? "mocha",
       accent ? "mauve",
-      enableCursors ? true,
       cursorAccent ? "dark",
+      enableCursors ? true,
+      flavor ? "mocha",
     }:
     {
-      nixos = {
-        imports = [
-          inputs.catppuccin.nixosModules.catppuccin
-        ];
-
-        catppuccin = {
-          enable = true;
-          inherit flavor accent;
-        };
-      };
-
       homeManager =
         {
           config,
@@ -61,65 +50,64 @@
           imports = [
             inputs.catppuccin.homeModules.catppuccin
           ];
-
           catppuccin = {
+            inherit flavor accent;
             enable = true;
             autoEnable = true;
-            inherit flavor accent;
             cursors = {
               enable = enableCursors;
               accent = cursorAccent;
             };
             glamour.enable = true;
           };
-
-          dconf.settings."org/gnome/desktop/interface" = {
-            color-scheme = "prefer-dark";
-          };
-
+          dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
           gtk = {
             enable = true;
+            gtk4.theme = config.gtk.theme;
+            iconTheme = {
+              package = lib.mkForce pkgs.cosmic-icons;
+              name = lib.mkForce "Cosmic";
+            };
             theme = {
               package = pkgs.magnetic-catppuccin-gtk.overrideAttrs (old: {
-                size = "compact";
                 accent = [ accent ];
-                tweaks = [ flavor ];
                 patches =
                   (old.patches or [ ])
                   ++ (builtins.map (x: ./catppuccin-gtk-theme_patches/${x}) (
                     builtins.attrNames (builtins.readDir ./catppuccin-gtk-theme_patches)
                   ));
+                size = "compact";
+                tweaks = [ flavor ];
 
               });
               name = "Catppuccin-GTK-Dark";
             };
-
-            iconTheme = {
-              package = lib.mkForce pkgs.cosmic-icons;
-              name = lib.mkForce "Cosmic";
+          };
+          programs = {
+            nushell.extraConfig = ''
+              $env.LS_COLORS = (${pkgs.vivid}/bin/vivid generate ${config.programs.vivid.activeTheme})
+            '';
+            vivid = {
+              enable = true;
+              activeTheme = "catppuccin-mocha";
             };
-
-            gtk4.theme = config.gtk.theme;
           };
-
-          programs.vivid = {
-            enable = true;
-            activeTheme = "catppuccin-mocha";
-          };
-
-          programs.nushell.extraConfig = ''
-            $env.LS_COLORS = (${pkgs.vivid}/bin/vivid generate ${config.programs.vivid.activeTheme})
-          '';
-
-          wayland.desktopManager.cosmic.appearance.theme.dark =
-            importRON "${inputs.catppuccin-cosmic}/themes/cosmic-settings/catppuccin-${flavor}-${accent}+round.ron";
-
-          wayland.desktopManager.cosmic.configFile = {
-            "com.system76.CosmicTheme.Mode" = {
-              version = 1;
+          wayland.desktopManager.cosmic = {
+            appearance.theme.dark = importRON "${inputs.catppuccin-cosmic}/themes/cosmic-settings/catppuccin-${flavor}-${accent}+round.ron";
+            configFile."com.system76.CosmicTheme.Mode" = {
               entries.is_dark = true;
+              version = 1;
             };
           };
         };
+      nixos = {
+        imports = [
+          inputs.catppuccin.nixosModules.catppuccin
+        ];
+        catppuccin = {
+          inherit flavor accent;
+          enable = true;
+        };
+      };
     };
 }

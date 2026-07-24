@@ -3,11 +3,11 @@
   ...
 }:
 {
-  flake-file.inputs = {
-    yazi = {
-      url = "github:sxyazi/yazi";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
+  flake-file.inputs.yazi = {
+    url = "github:sxyazi/yazi";
+    inputs = {
+      flake-utils.follows = "flake-utils";
+      nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -26,67 +26,48 @@
           npins = import ./npins;
         in
         {
+          catppuccin.yazi.enable = false;
           home.packages = [
             # For drag and drop
             pkgs.ripdrag
             # Markdown preview
             pkgs.glow
           ];
-
-          catppuccin.yazi.enable = false;
-
           programs.yazi = {
             enable = true;
-            enableNushellIntegration = true;
             package = inputs'.yazi.packages.default;
-            shellWrapperName = "y";
-            plugins = {
-              inherit (npins) relative-motions;
-              types = "${npins.yazi-plugins}/types.yazi";
-              smart-enter = "${npins.yazi-plugins}/smart-enter.yazi";
-              git = "${npins.yazi-plugins}/git.yazi";
-              vcs-files = "${npins.yazi-plugins}/vcs-files.yazi";
-              piper = "${npins.yazi-plugins}/piper.yazi";
-              chmod = "${npins.yazi-plugins}/chmod.yazi";
-              parent-arrow = ./plugins/parent-arrow.yazi;
-            };
-            initLua = ./init.lua;
-            theme = lib.mkMerge [
-              # Restore IFD from https://github.com/catppuccin/nix/commit/8eada392fd6571a747e1c5fc358dd61c14c8704e to change the background color
-              (lib.importTOML "${config.catppuccin.sources.yazi}/${config.catppuccin.flavor}/catppuccin-${config.catppuccin.flavor}-${config.catppuccin.accent}.toml")
-              {
-                app.overall.bg = lib.mkForce "reset";
-                mgr.symlink_target.bg = lib.mkForce "reset";
-              }
-            ];
             settings = {
               mgr.show_hidden = true;
-              plugin.prepend_fetchers = [
-                {
-                  id = "git";
-                  url = "*";
-                  run = "git";
-                  group = "git";
-                }
-                {
-                  id = "git";
-                  url = "*/";
-                  run = "git";
-                  group = "git";
-                }
-              ];
-              plugin.prepend_previewers = [
-                {
-                  url = "*.md";
-                  run = "piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark \"$1\"";
-                }
-              ];
+              plugin = {
+                prepend_fetchers = [
+                  {
+                    group = "git";
+                    id = "git";
+                    run = "git";
+                    url = "*";
+                  }
+                  {
+                    group = "git";
+                    id = "git";
+                    run = "git";
+                    url = "*/";
+                  }
+                ];
+                prepend_previewers = [
+                  {
+                    run = "piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark \"$1\"";
+                    url = "*.md";
+                  }
+                ];
+              };
             };
+            enableNushellIntegration = true;
+            initLua = ./init.lua;
             keymap.mgr.prepend_keymap = [
               {
+                desc = "Enter the child directory, or open the file";
                 on = "<Enter>";
                 run = "plugin smart-enter";
-                desc = "Enter the child directory, or open the file";
               }
               # https://yazi-rs.github.io/docs/tips#selected-files-to-clipboard
               {
@@ -98,12 +79,12 @@
               }
               # https://yazi-rs.github.io/docs/tips/#cd-to-git-root
               {
+                desc = "Go back to the root of the git repo";
                 on = [
                   "g"
                   "r"
                 ];
                 run = "shell -- ya emit cd \"$(git rev-parse --show-toplevel)\"";
-                desc = "Go back to the root of the git repo";
               }
               # https://github.com/sxyazi/yazi/discussions/327
               {
@@ -130,21 +111,21 @@
               }
               # vcs-files
               {
+                desc = "Show Git file changes";
                 on = [
                   "g"
                   "c"
                 ];
                 run = "plugin vcs-files";
-                desc = "Show Git file changes";
               }
               # chmod
               {
+                desc = "Chmod on selected files";
                 on = [
                   "c"
                   "m"
                 ];
                 run = "plugin chmod";
-                desc = "Chmod on selected files";
               }
             ]
             ++
@@ -155,11 +136,30 @@
                   step = toString stepInt;
                 in
                 {
+                  desc = "Move in relative steps";
                   on = step;
                   run = "plugin relative-motions" + (if step != "0" then " " + step else "");
-                  desc = "Move in relative steps";
                 }
               ) (lib.lists.range 0 9));
+            plugins = {
+              inherit (npins) relative-motions;
+              chmod = "${npins.yazi-plugins}/chmod.yazi";
+              git = "${npins.yazi-plugins}/git.yazi";
+              parent-arrow = ./plugins/parent-arrow.yazi;
+              piper = "${npins.yazi-plugins}/piper.yazi";
+              smart-enter = "${npins.yazi-plugins}/smart-enter.yazi";
+              types = "${npins.yazi-plugins}/types.yazi";
+              vcs-files = "${npins.yazi-plugins}/vcs-files.yazi";
+            };
+            shellWrapperName = "y";
+            theme = lib.mkMerge [
+              # Restore IFD from https://github.com/catppuccin/nix/commit/8eada392fd6571a747e1c5fc358dd61c14c8704e to change the background color
+              (lib.importTOML "${config.catppuccin.sources.yazi}/${config.catppuccin.flavor}/catppuccin-${config.catppuccin.flavor}-${config.catppuccin.accent}.toml")
+              {
+                app.overall.bg = lib.mkForce "reset";
+                mgr.symlink_target.bg = lib.mkForce "reset";
+              }
+            ];
           };
         };
     };
