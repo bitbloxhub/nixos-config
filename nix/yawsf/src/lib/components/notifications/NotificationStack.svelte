@@ -9,10 +9,8 @@
 		dismissNotification,
 		invokeNotificationAction,
 		resizeNotifications,
-		setNotificationPaused as updateNotificationPaused,
 		streamNotifications,
 	} from "$lib/web-api/sdk.gen"
-
 	import type { Notification } from "$lib/types"
 	import NotificationCard from "./NotificationCard.svelte"
 
@@ -22,7 +20,8 @@
 			initialValue: [],
 			refetchMode: "replace",
 			reducer: (_, chunk) => chunk,
-			streamFn: async ({ signal }) => (await streamNotifications({ signal })).stream,
+			streamFn: async ({ signal }) =>
+				(await streamNotifications({ query: { surface: "visual" }, signal })).stream,
 		}),
 		enabled: false,
 	}))
@@ -30,13 +29,8 @@
 	let reducedMotion = $state(false)
 	let stackElement = $state<HTMLElement | null>(null)
 	let hoveredNotificationId = $state<number | null>(null)
-	let visuallyExpired = $state<Record<number, number>>({})
-	let visibleNotifications = $derived(
-		notifications.filter(
-			(notification) => visuallyExpired[notification.id] !== notification.receivedAt,
-		),
-	)
-	let reportedHeight = -1
+	let visibleNotifications = $derived(notifications)
+	let reportedHeight = 0
 	let resizeFrame: number | null = null
 	let activeOutros = 0
 	let heightReportPending = false
@@ -107,24 +101,12 @@
 		await invokeNotificationAction({ path: { id, actionId } })
 	}
 
-	async function setNotificationPaused(id: number, paused: boolean): Promise<void> {
-		await updateNotificationPaused({ path: { id }, body: { paused } })
-	}
-
 	function setHoveredNotification(notification: Notification, hovered: boolean): void {
 		if (hovered) {
 			hoveredNotificationId = notification.id
 		} else if (hoveredNotificationId === notification.id) {
 			hoveredNotificationId = null
 		}
-
-		if (notification.expiresAt !== null) {
-			void setNotificationPaused(notification.id, hovered)
-		}
-	}
-
-	function expireVisually(notification: Notification): void {
-		visuallyExpired = { ...visuallyExpired, [notification.id]: notification.receivedAt }
 	}
 </script>
 
@@ -148,7 +130,7 @@
 				{reducedMotion}
 				paused={hoveredNotificationId === notification.id}
 				onHover={(hovered: boolean) => setHoveredNotification(notification, hovered)}
-				onVisualTimeout={() => expireVisually(notification)}
+				onVisualTimeout={() => undefined}
 				onDismiss={dismiss}
 				onInvokeAction={invokeAction}
 			/>

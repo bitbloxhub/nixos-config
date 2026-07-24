@@ -1,6 +1,8 @@
+import { execFile } from "node:child_process"
 import { existsSync, readFileSync, statSync } from "node:fs"
 import { extname } from "node:path"
 import { fileURLToPath } from "node:url"
+import { promisify } from "node:util"
 import { randomUUID } from "node:crypto"
 
 interface MediaAsset {
@@ -10,23 +12,46 @@ interface MediaAsset {
 
 const assets = new Map<string, MediaAsset>()
 const assetIds = new Map<string, string>()
-
+const iconLookupCache = new Map<string, Promise<string>>()
 export function mediaAssetUrl(source: string): string {
-	if (!source.startsWith("file:")) return source
+	if (!source || source.includes("/") || source.includes(":")) {
+		if (!source.startsWith("file:")) return source
 
+		try {
+			const path = fileURLToPath(source)
+			return registerAsset(path) ?? ""
+		} catch {
+			return ""
+		}
+	}
+
+	return source
+}
+
+export function resolveMediaAssetUrl(source: string): Promise<string> {
+	const immediateUrl = mediaAssetUrl(source)
+	if (immediateUrl !== source || !/^[A-Za-z0-9._-]+$/.test(source)) {
+		return Promise.resolve(immediateUrl)
+	}
+
+	const cached = iconLookupCache.get(source)
+	if (cached) return cached
+
+	const lookup = lookupThemeIcon(source)
+	iconLookupCache.set(source, lookup)
+	return lookup
+}
+
+const execFileAsync = promisify(execFile)
+async function lookupThemeIcon(source: string): Promise<string> {
 	try {
-		const path = fileURLToPath(source)
-		if (!existsSync(path) || !statSync(path).isFile()) return ""
-
-		const existingId = assetIds.get(path)
-		if (existingId) return `/api/media/${existingId}`
-
-		const id = randomUUID()
-		assets.set(id, { path, mimeType: mimeType(path) })
-		assetIds.set(path, id)
-		return `/api/media/${id}`
+		const { stdout } = await execFileAsync("yawsf-icon-lookup", [source], {
+			encoding: "utf8",
+			maxBuffer: 1024 * 1024,
+		})
+		return registerAsset(stdout.trim()) ?? source
 	} catch {
-		return ""
+		return source
 	}
 }
 
@@ -45,6 +70,22 @@ export function mediaAsset(id: string): Response {
 		assets.delete(id)
 		assetIds.delete(asset.path)
 		return new Response("Not found", { status: 404 })
+	}
+}
+
+function registerAsset(path: string): string | null {
+	try {
+		if (!existsSync(path) || !statSync(path).isFile()) return null
+
+		const existingId = assetIds.get(path)
+		if (existingId) return `/api/media/${existingId}`
+
+		const id = randomUUID()
+		assets.set(id, { path, mimeType: mimeType(path) })
+		assetIds.set(path, id)
+		return `/api/media/${id}`
+	} catch {
+		return null
 	}
 }
 

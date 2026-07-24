@@ -86,7 +86,6 @@ export const zListNotificationsResponse = z.array(
 		transient: z.boolean(),
 		receivedAt: z.int().gte(0).lte(9007199254740991),
 		expiresAt: z.int().gt(0).lte(9007199254740991).nullable(),
-		visualExpiresAt: z.int().gt(0).lte(9007199254740991).nullable(),
 	}),
 )
 
@@ -112,21 +111,6 @@ export const zDismissNotificationResponse = z.object({
 	ok: z.literal(true),
 })
 
-export const zSetNotificationPausedBody = z.object({
-	paused: z.boolean(),
-})
-
-export const zSetNotificationPausedPath = z.object({
-	id: z.int().gt(0).lte(9007199254740991),
-})
-
-/**
- * Response for status 200
- */
-export const zSetNotificationPausedResponse = z.object({
-	ok: z.literal(true),
-})
-
 export const zInvokeNotificationActionPath = z.object({
 	id: z.int().gt(0).lte(9007199254740991),
 	actionId: z.string().min(1),
@@ -137,6 +121,10 @@ export const zInvokeNotificationActionPath = z.object({
  */
 export const zInvokeNotificationActionResponse = z.object({
 	ok: z.literal(true),
+})
+
+export const zStreamNotificationsQuery = z.object({
+	surface: z.enum(["visual", "all"]).default("visual"),
 })
 
 /**
@@ -161,7 +149,6 @@ export const zStreamNotificationsResponse = z.array(
 		transient: z.boolean(),
 		receivedAt: z.int().gte(0).lte(9007199254740991),
 		expiresAt: z.int().gt(0).lte(9007199254740991).nullable(),
-		visualExpiresAt: z.int().gt(0).lte(9007199254740991).nullable(),
 	}),
 )
 

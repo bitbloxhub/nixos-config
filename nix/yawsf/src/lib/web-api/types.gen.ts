@@ -149,7 +149,6 @@ export type ListNotificationsResponses = {
 		transient: boolean
 		receivedAt: number
 		expiresAt: number | null
-		visualExpiresAt: number | null
 	}>
 }
 
@@ -219,43 +218,6 @@ export type DismissNotificationResponses = {
 export type DismissNotificationResponse =
 	DismissNotificationResponses[keyof DismissNotificationResponses]
 
-export type SetNotificationPausedData = {
-	body: {
-		paused: boolean
-	}
-	path: {
-		id: number
-	}
-	query?: never
-	url: "/api/notifications/{id}"
-}
-
-export type SetNotificationPausedErrors = {
-	/**
-	 * Response for status 404
-	 */
-	404: string
-	/**
-	 * Response for status 503
-	 */
-	503: string
-}
-
-export type SetNotificationPausedError =
-	SetNotificationPausedErrors[keyof SetNotificationPausedErrors]
-
-export type SetNotificationPausedResponses = {
-	/**
-	 * Response for status 200
-	 */
-	200: {
-		ok: true
-	}
-}
-
-export type SetNotificationPausedResponse =
-	SetNotificationPausedResponses[keyof SetNotificationPausedResponses]
-
 export type InvokeNotificationActionData = {
 	body?: never
 	path: {
@@ -295,7 +257,9 @@ export type InvokeNotificationActionResponse =
 export type StreamNotificationsData = {
 	body?: never
 	path?: never
-	query?: never
+	query: {
+		surface: "visual" | "all"
+	}
 	url: "/api/notifications/events"
 }
 
@@ -326,7 +290,6 @@ export type StreamNotificationsResponses = {
 		transient: boolean
 		receivedAt: number
 		expiresAt: number | null
-		visualExpiresAt: number | null
 	}>
 }
 

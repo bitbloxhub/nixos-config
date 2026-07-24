@@ -20,7 +20,8 @@
 			initialValue: [],
 			refetchMode: "replace",
 			reducer: (_, chunk) => chunk,
-			streamFn: async ({ signal }) => (await streamNotifications({ signal })).stream,
+			streamFn: async ({ signal }) =>
+				(await streamNotifications({ query: { surface: "all" }, signal })).stream,
 		}),
 		enabled: false,
 	}))

@@ -1,4 +1,4 @@
-import { mediaAssetUrl } from "$lib/server/media-assets"
+import { resolveMediaAssetUrl } from "$lib/server/media-assets"
 
 import * as dbus from "@jellybrick/dbus-next"
 import type { MessageBus, ProxyInterface, Variant } from "@jellybrick/dbus-next"
@@ -72,7 +72,7 @@ export async function startMpris(): Promise<MprisService> {
 			title: stringValue(title, ""),
 			artist: stringArrayValue(artists),
 			album: stringValue(album, ""),
-			artUrl: mediaAssetUrl(stringValue(metadata?.["mpris:artUrl"], "")),
+			artUrl: await resolveMediaAssetUrl(stringValue(metadata?.["mpris:artUrl"], "")),
 			position: numberValue(values.Position, 0),
 			length: numberValue(metadata?.["mpris:length"], 0),
 			canPlay: booleanValue(values.CanPlay),

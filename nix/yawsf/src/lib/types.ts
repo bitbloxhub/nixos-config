@@ -35,7 +35,6 @@ export const notificationSchema = z.object({
 	transient: z.boolean(),
 	receivedAt: z.number().int().nonnegative(),
 	expiresAt: z.number().int().positive().nullable(),
-	visualExpiresAt: z.number().int().positive().nullable(),
 })
 export const notificationsSchema = z.array(notificationSchema)
 export type NotificationAction = z.infer<typeof notificationActionSchema>

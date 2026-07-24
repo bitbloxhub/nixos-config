@@ -1,4 +1,4 @@
-import { mediaAssetUrl } from "$lib/server/media-assets"
+import { mediaAssetUrl, resolveMediaAssetUrl } from "$lib/server/media-assets"
 
 import * as dbus from "@jellybrick/dbus-next"
 import type { MessageBus, Variant } from "@jellybrick/dbus-next"
@@ -38,7 +38,7 @@ class NotificationDbusInterface extends Interface {
 	}
 
 	GetCapabilities(): string[] {
-		return ["actions", "body"]
+		return ["actions", "body", "body-markup", "body-hyperlinks", "body-images"]
 	}
 
 	Notify(
@@ -95,20 +95,21 @@ NotificationDbusInterface.configureMembers({
 
 export interface NotificationService {
 	notifications(): Notification[]
+	visualNotifications(): Notification[]
 	subscribe(listener: NotificationListener): () => void
+	subscribeVisual(listener: NotificationListener): () => void
 	dismiss(id: number): boolean
 	invokeAction(id: number, actionId: string): boolean
-	setPaused(id: number, paused: boolean): boolean
 	available(): boolean
 	stop(): Promise<void>
 }
 
 export async function startNotifications(): Promise<NotificationService> {
 	const listeners = new Set<NotificationListener>()
+	const visualListeners = new Set<NotificationListener>()
 	const entries = new Map<number, Notification>()
-	const expiredEntries = new Set<number>()
-	const timers = new Map<number, ReturnType<typeof setTimeout>>()
-	const pausedTimeouts = new Map<number, number>()
+	const visuallyExpired = new Set<number>()
+	const visualTimers = new Map<number, ReturnType<typeof setTimeout>>()
 	let bus: MessageBus | null = null
 	let dbusInterface: NotificationDbusInterface | null = null
 	let ownsName = false
@@ -124,15 +125,17 @@ export async function startNotifications(): Promise<NotificationService> {
 			}))
 
 	const snapshot = (): Notification[] =>
+		snapshotEntries([...entries].map(([, notification]) => notification))
+
+	const visualSnapshot = (): Notification[] =>
 		snapshotEntries(
 			[...entries]
-				.filter(([id]) => !expiredEntries.has(id))
+				.filter(([id]) => !visuallyExpired.has(id))
 				.map(([, notification]) => notification),
 		)
 
-	const notifyListeners = () => {
-		const current = snapshot()
-		for (const listener of listeners) {
+	const notify = (target: Set<NotificationListener>, current: Notification[]) => {
+		for (const listener of target) {
 			try {
 				listener(current)
 			} catch (error) {
@@ -141,30 +144,33 @@ export async function startNotifications(): Promise<NotificationService> {
 		}
 	}
 
-	const clearExpiration = (id: number) => {
-		const timer = timers.get(id)
+	const notifyListeners = () => notify(listeners, snapshot())
+	const notifyVisualListeners = () => notify(visualListeners, visualSnapshot())
+
+	const clearVisualTimer = (id: number) => {
+		const timer = visualTimers.get(id)
 		if (!timer) return
 		clearTimeout(timer)
-		timers.delete(id)
+		visualTimers.delete(id)
 	}
 
-	const scheduleExpiration = (id: number, timeout: number) => {
-		timers.set(
+	const scheduleVisualExpiration = (id: number, timeout: number) => {
+		if (timeout <= 0) return
+		visualTimers.set(
 			id,
 			setTimeout(() => {
 				if (!entries.has(id)) return
-				expiredEntries.add(id)
-				clearExpiration(id)
-				notifyListeners()
+				visuallyExpired.add(id)
+				clearVisualTimer(id)
+				notifyVisualListeners()
 			}, timeout),
 		)
 	}
 
 	const close = (id: number, reason: number): boolean => {
 		if (!entries.delete(id)) return false
-		expiredEntries.delete(id)
-		pausedTimeouts.delete(id)
-		clearExpiration(id)
+		clearVisualTimer(id)
+		visuallyExpired.delete(id)
 
 		try {
 			dbusInterface?.NotificationClosed(id, reason)
@@ -173,6 +179,7 @@ export async function startNotifications(): Promise<NotificationService> {
 		}
 
 		notifyListeners()
+		notifyVisualListeners()
 		return true
 	}
 
@@ -207,19 +214,16 @@ export async function startNotifications(): Promise<NotificationService> {
 		}
 
 		const id = replacesId > 0 && entries.has(replacesId) ? replacesId : nextNotificationId()
-		expiredEntries.delete(id)
-		clearExpiration(id)
-		pausedTimeouts.delete(id)
+		clearVisualTimer(id)
+		visuallyExpired.delete(id)
 		const receivedAt = Date.now()
-		const timeout = expireTimeout > 0 ? expireTimeout : 0
 		const visualTimeout =
-			expireTimeout === 0
-				? 0
-				: expireTimeout > 0
-					? expireTimeout
+			expireTimeout > 0
+				? expireTimeout
+				: expireTimeout === 0
+					? 0
 					: defaultVisualNotificationTimeout
-		const expiresAt = timeout > 0 ? receivedAt + timeout : null
-		const visualExpiresAt = visualTimeout > 0 ? receivedAt + visualTimeout : null
+		const expiresAt = visualTimeout > 0 ? receivedAt + visualTimeout : null
 		const notification: Notification = {
 			id,
 			appName,
@@ -233,46 +237,24 @@ export async function startNotifications(): Promise<NotificationService> {
 			transient: booleanValue(hints.transient),
 			receivedAt,
 			expiresAt,
-			visualExpiresAt,
 		}
 		entries.set(id, notification)
-		if (timeout > 0) scheduleExpiration(id, timeout)
+		scheduleVisualExpiration(id, visualTimeout)
 		notifyListeners()
-		return id
-	}
-
-	const setPaused = (id: number, paused: boolean): boolean => {
-		const notification = entries.get(id)
-		if (!notification || notification.expiresAt === null) return false
-
-		if (paused) {
-			if (pausedTimeouts.has(id)) return true
-
-			const remaining = Math.max(0, notification.expiresAt - Date.now())
-			if (remaining === 0) {
-				expiredEntries.add(id)
-				clearExpiration(id)
-				notifyListeners()
-				return false
-			}
-
-			clearExpiration(id)
-			pausedTimeouts.set(id, remaining)
-			const expiresAt = Date.now() + remaining
-			entries.set(id, { ...notification, expiresAt, visualExpiresAt: expiresAt })
+		notifyVisualListeners()
+		void resolveMediaAssetUrl(appIcon).then((resolvedAppIcon) => {
+			const current = entries.get(id)
+			if (
+				!current ||
+				current.receivedAt !== receivedAt ||
+				current.appIcon === resolvedAppIcon
+			)
+				return
+			entries.set(id, { ...current, appIcon: resolvedAppIcon })
 			notifyListeners()
-			return true
-		}
-
-		const remaining = pausedTimeouts.get(id)
-		if (remaining === undefined) return true
-
-		pausedTimeouts.delete(id)
-		const expiresAt = Date.now() + remaining
-		entries.set(id, { ...notification, expiresAt, visualExpiresAt: expiresAt })
-		scheduleExpiration(id, remaining)
-		notifyListeners()
-		return true
+			notifyVisualListeners()
+		})
+		return id
 	}
 
 	const closeFromDbus = (id: number) => {
@@ -323,23 +305,30 @@ export async function startNotifications(): Promise<NotificationService> {
 
 	return {
 		notifications: snapshot,
+		visualNotifications: visualSnapshot,
 		subscribe(listener) {
 			listeners.add(listener)
 			listener(snapshot())
 			return () => listeners.delete(listener)
 		},
+		subscribeVisual(listener) {
+			visualListeners.add(listener)
+			listener(visualSnapshot())
+			return () => visualListeners.delete(listener)
+		},
 		dismiss(id) {
 			return close(id, 2)
 		},
 		invokeAction,
-		setPaused,
 		available: () => ownsName,
 		async stop() {
 			if (stopped) return
 			stopped = true
-			for (const id of timers.keys()) clearExpiration(id)
-			pausedTimeouts.clear()
+			for (const timer of visualTimers.values()) clearTimeout(timer)
+			visualTimers.clear()
 			entries.clear()
+			listeners.clear()
+			visualListeners.clear()
 			listeners.clear()
 
 			if (bus) {

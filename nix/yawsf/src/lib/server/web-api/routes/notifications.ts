@@ -11,9 +11,11 @@ const notificationActionParamsSchema = z.object({
 	id: z.coerce.number().int().positive(),
 	actionId: z.string().min(1),
 })
-const notificationPauseSchema = z.object({ paused: z.boolean() })
 const commandResultSchema = z.object({ ok: z.literal(true) })
 const notificationResizeSchema = z.object({ height: z.number().finite().min(0).max(10000) })
+const notificationEventsQuerySchema = z.object({
+	surface: z.enum(["visual", "all"]).default("visual"),
+})
 
 export const notificationRoutes = (app: Elysia) =>
 	app
@@ -73,31 +75,19 @@ export const notificationRoutes = (app: Elysia) =>
 				response: { 200: commandResultSchema, 404: z.string(), 503: z.string() },
 			},
 		)
-		.patch(
-			"/notifications/:id",
-			({ params, body, status }) => {
-				const notifications = services()?.notifications
-				if (!notifications?.available()) return status(503, "Notifications unavailable")
-				if (notifications.setPaused(params.id, body.paused)) return { ok: true as const }
-				return status(404, "Notification not found")
-			},
-			{
-				params: notificationIdParamsSchema,
-				body: notificationPauseSchema,
-				detail: { operationId: "setNotificationPaused", tags: ["notifications"] },
-				response: { 200: commandResultSchema, 404: z.string(), 503: z.string() },
-			},
-		)
 		.get(
 			"/notifications/events",
-			({ request, status }) => {
+			({ request, query, status }) => {
 				const notifications = services()?.notifications
 				if (!notifications?.available()) return status(503, "Notifications unavailable")
 				return eventStream(request, "notifications", (emit) =>
-					notifications.subscribe(emit),
+					query.surface === "visual"
+						? notifications.subscribeVisual(emit)
+						: notifications.subscribe(emit),
 				)
 			},
 			{
+				query: notificationEventsQuerySchema,
 				detail: {
 					operationId: "streamNotifications",
 					responses: {

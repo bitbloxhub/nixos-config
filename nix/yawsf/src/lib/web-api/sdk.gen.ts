@@ -48,9 +48,6 @@ import type {
 	ResizeNotificationsData,
 	ResizeNotificationsErrors,
 	ResizeNotificationsResponses,
-	SetNotificationPausedData,
-	SetNotificationPausedErrors,
-	SetNotificationPausedResponses,
 	ShutdownSystemData,
 	ShutdownSystemResponses,
 	StreamCavaData,
@@ -95,13 +92,11 @@ import {
 	zRebootSystemResponse,
 	zResizeNotificationsBody,
 	zResizeNotificationsResponse,
-	zSetNotificationPausedBody,
-	zSetNotificationPausedPath,
-	zSetNotificationPausedResponse,
 	zShutdownSystemResponse,
 	zStreamCavaResponse,
 	zStreamMprisPlayersResponse,
 	zStreamNiriEventsResponse,
+	zStreamNotificationsQuery,
 	zStreamNotificationsResponse,
 	zSuspendSystemResponse,
 } from "./zod.gen"
@@ -270,31 +265,6 @@ export const dismissNotification = <ThrowOnError extends boolean = false>(
 		...options,
 	})
 
-export const setNotificationPaused = <ThrowOnError extends boolean = false>(
-	options: Options<SetNotificationPausedData, ThrowOnError>,
-): RequestResult<SetNotificationPausedResponses, SetNotificationPausedErrors, ThrowOnError> =>
-	(options.client ?? client).patch<
-		SetNotificationPausedResponses,
-		SetNotificationPausedErrors,
-		ThrowOnError
-	>({
-		requestValidator: async (data) =>
-			await z
-				.object({
-					body: zSetNotificationPausedBody,
-					path: zSetNotificationPausedPath,
-					query: z.never().optional(),
-				})
-				.parseAsync(data),
-		responseValidator: async (data) => await zSetNotificationPausedResponse.parseAsync(data),
-		url: "/api/notifications/{id}",
-		...options,
-		headers: {
-			"Content-Type": "application/json",
-			...options.headers,
-		},
-	})
-
 export const invokeNotificationAction = <ThrowOnError extends boolean = false>(
 	options: Options<InvokeNotificationActionData, ThrowOnError>,
 ): RequestResult<InvokeNotificationActionResponses, InvokeNotificationActionErrors, ThrowOnError> =>
@@ -317,9 +287,9 @@ export const invokeNotificationAction = <ThrowOnError extends boolean = false>(
 	})
 
 export const streamNotifications = <ThrowOnError extends boolean = false>(
-	options?: Options<StreamNotificationsData, ThrowOnError, StreamNotificationsResponse>,
+	options: Options<StreamNotificationsData, ThrowOnError, StreamNotificationsResponse>,
 ): Promise<ServerSentEventsResult<StreamNotificationsResponses>> =>
-	(options?.client ?? client).sse.get<
+	(options.client ?? client).sse.get<
 		StreamNotificationsResponses,
 		StreamNotificationsErrors,
 		ThrowOnError
@@ -329,7 +299,7 @@ export const streamNotifications = <ThrowOnError extends boolean = false>(
 				.object({
 					body: z.never().optional(),
 					path: z.never().optional(),
-					query: z.never().optional(),
+					query: zStreamNotificationsQuery,
 				})
 				.parseAsync(data),
 		responseValidator: async (data) => await zStreamNotificationsResponse.parseAsync(data),

@@ -20,7 +20,6 @@ import {
 	type Options,
 	rebootSystem,
 	resizeNotifications,
-	setNotificationPaused,
 	shutdownSystem,
 	suspendSystem,
 } from "../sdk.gen"
@@ -61,9 +60,6 @@ import type {
 	ResizeNotificationsData,
 	ResizeNotificationsError,
 	ResizeNotificationsResponse,
-	SetNotificationPausedData,
-	SetNotificationPausedError,
-	SetNotificationPausedResponse,
 	ShutdownSystemData,
 	ShutdownSystemResponse,
 	SuspendSystemData,
@@ -232,30 +228,6 @@ export const dismissNotificationMutation = (
 	> = {
 		mutationFn: async (fnOptions) => {
 			const { data } = await dismissNotification({
-				...options,
-				...fnOptions,
-				throwOnError: true,
-			})
-			return data
-		},
-	}
-	return mutationOptions
-}
-
-export const setNotificationPausedMutation = (
-	options?: Partial<Options<SetNotificationPausedData>>,
-): MutationOptions<
-	SetNotificationPausedResponse,
-	SetNotificationPausedError,
-	Options<SetNotificationPausedData>
-> => {
-	const mutationOptions: MutationOptions<
-		SetNotificationPausedResponse,
-		SetNotificationPausedError,
-		Options<SetNotificationPausedData>
-	> = {
-		mutationFn: async (fnOptions) => {
-			const { data } = await setNotificationPaused({
 				...options,
 				...fnOptions,
 				throwOnError: true,

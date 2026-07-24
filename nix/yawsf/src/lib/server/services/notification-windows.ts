@@ -74,7 +74,7 @@ export function startNotificationWindows(
 			})
 	}
 
-	const unsubscribeNotifications = notifications.subscribe(enqueueReconciliation)
+	const unsubscribeNotifications = notifications.subscribeVisual(enqueueReconciliation)
 	const unsubscribeNiri = niri.subscribe(enqueueReconciliation)
 	enqueueReconciliation()
 
@@ -110,7 +110,7 @@ export function startNotificationWindows(
 	async function reconcile(): Promise<void> {
 		if (stopped) return
 
-		const hasNotifications = notifications.notifications().length > 0
+		const hasNotifications = notifications.visualNotifications().length > 0
 		if (!hasNotifications) {
 			scheduleClose()
 			return

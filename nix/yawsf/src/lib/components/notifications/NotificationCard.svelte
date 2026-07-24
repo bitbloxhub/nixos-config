@@ -34,7 +34,7 @@
 		showTimeoutBar = true,
 	}: Props = $props()
 	let contentImage = $state(false)
-	let hasNotificationTimeout = $derived(notification.visualExpiresAt !== null)
+	let hasNotificationTimeout = $derived(notification.expiresAt !== null)
 
 	function hasImageSource(icon: string): boolean {
 		return (
@@ -95,7 +95,7 @@
 		timeoutNotification: Notification,
 		onComplete: () => void,
 	) {
-		const expiresAt = timeoutNotification.visualExpiresAt ?? Date.now()
+		const expiresAt = timeoutNotification.expiresAt ?? Date.now()
 		const duration = Math.max(0, expiresAt - timeoutNotification.receivedAt)
 		const remaining = Math.max(0, expiresAt - Date.now())
 		const progress = duration === 0 ? 0 : remaining / duration
