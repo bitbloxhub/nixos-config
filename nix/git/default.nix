@@ -32,6 +32,8 @@
           home.packages = [
             # inputs'.git-branchless.packages.default
             pkgs.git-branchless
+            # For continuous JJ snapshotting
+            pkgs.watchman
           ];
           programs = {
             delta = {
@@ -102,6 +104,10 @@
             jujutsu = {
               enable = true;
               settings = {
+                fsmonitor = {
+                  backend = "watchman";
+                  watchman.register-snapshot-trigger = true;
+                };
                 ui.editor = "nvim";
                 # Just use github as default, have to manually set per-repo for tangled due to https://github.com/jj-vcs/jj/issues/6028
                 user = {
