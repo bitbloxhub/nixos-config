@@ -93,6 +93,7 @@ in
                 "root"
                 "@wheel"
               ];
+              auto-optimize-store = true;
             };
           };
         };
