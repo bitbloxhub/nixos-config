@@ -1,11 +1,14 @@
 import { spawn } from "node:child_process"
 import { readdir, readFile } from "node:fs/promises"
-import { env } from "node:process"
 
 import { Elysia } from "elysia"
 import { z } from "zod"
 
 import { systemStatusSchema, timezoneSchema } from "$lib/types"
+import { services } from "$lib/server/services"
+import { eventStream } from "$lib/server/web-api/event-stream"
+import { toOpenApiSchema } from "$lib/server/web-api/openapi"
+import { readTimezone } from "$lib/server/services/timezone"
 
 const powerSupplyPath = "/sys/class/power_supply"
 
@@ -64,16 +67,34 @@ export const systemRoutes = (app: Elysia) =>
 			"/timezone",
 			async ({ set }) => {
 				set.headers["cache-control"] = "no-store"
-				const configHome = env.XDG_CONFIG_HOME ?? `${env.HOME}/.config`
-				const timezone = await readFile(`${configHome}/localtimezone`, "utf8").catch(
-					() => "UTC",
-				)
-
-				return { timezone: timezone.trim() || "UTC" }
+				return readTimezone()
 			},
 			{
 				detail: { operationId: "getConfiguredTimezone", tags: ["system"] },
 				response: timezoneSchema,
+			},
+		)
+		.get(
+			"/timezone/events",
+			({ request, status }) => {
+				const timezone = services()?.timezone
+				if (!timezone) return status(503, "Timezone service unavailable")
+				return eventStream(request, "timezone", (emit) => timezone.subscribe(emit))
+			},
+			{
+				detail: {
+					operationId: "streamTimezone",
+					responses: {
+						200: {
+							content: {
+								"text/event-stream": { schema: toOpenApiSchema(timezoneSchema) },
+							},
+							description: "Timezone updates",
+						},
+						503: { description: "Timezone service unavailable" },
+					},
+					tags: ["system"],
+				},
 			},
 		)
 

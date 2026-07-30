@@ -10,6 +10,7 @@ import { startNotifications, type NotificationService } from "./services/notific
 import { startTopbars } from "./services/topbars"
 import { startBentoWindows, type BentoWindowsService } from "./services/bento-windows"
 import { startCava, type CavaService } from "./services/cava"
+import { startTimezone, type TimezoneService } from "./services/timezone"
 
 export interface StartInfo {
 	protocol: "yawsf-v1"
@@ -24,6 +25,7 @@ export interface Services {
 	notificationWindows: NotificationWindowsService
 	bentoWindows: BentoWindowsService
 	cava: CavaService
+	timezone: TimezoneService
 	stop(): Promise<void>
 }
 
@@ -61,10 +63,11 @@ export function services(): Services | null {
 }
 
 async function startServices(info: StartInfo, shellUrl: string): Promise<Services> {
-	const [mpris, niri, notifications] = await Promise.all([
+	const [mpris, niri, notifications, timezone] = await Promise.all([
 		startMpris(),
 		startNiri(),
 		startNotifications(),
+		startTimezone(),
 	])
 	const topbars = startTopbars(info, shellUrl, niri)
 	const notificationWindows = startNotificationWindows(info, shellUrl, niri, notifications)
@@ -78,9 +81,16 @@ async function startServices(info: StartInfo, shellUrl: string): Promise<Service
 		notificationWindows,
 		bentoWindows,
 		cava,
+		timezone,
 		async stop() {
 			await Promise.all([notificationWindows.stop(), bentoWindows.stop(), topbars.stop()])
-			await Promise.all([mpris.stop(), niri.stop(), notifications.stop(), cava.stop()])
+			await Promise.all([
+				mpris.stop(),
+				niri.stop(),
+				notifications.stop(),
+				cava.stop(),
+				timezone.stop(),
+			])
 		},
 	}
 }

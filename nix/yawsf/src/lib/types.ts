@@ -66,5 +66,6 @@ export type SystemStatus = z.infer<typeof systemStatusSchema>
 
 export const timezoneSchema = z.object({
 	timezone: z.string(),
+	systemTimezone: z.string(),
 })
 export type Timezone = z.infer<typeof timezoneSchema>

@@ -66,6 +66,10 @@ import type {
 	StreamNotificationsErrors,
 	StreamNotificationsResponse,
 	StreamNotificationsResponses,
+	StreamTimezoneData,
+	StreamTimezoneErrors,
+	StreamTimezoneResponse,
+	StreamTimezoneResponses,
 	SuspendSystemData,
 	SuspendSystemResponses,
 } from "./types.gen"
@@ -98,6 +102,7 @@ import {
 	zStreamNiriEventsResponse,
 	zStreamNotificationsQuery,
 	zStreamNotificationsResponse,
+	zStreamTimezoneResponse,
 	zSuspendSystemResponse,
 } from "./zod.gen"
 
@@ -524,5 +529,26 @@ export const getConfiguredTimezone = <ThrowOnError extends boolean = false>(
 				.parseAsync(data),
 		responseValidator: async (data) => await zGetConfiguredTimezoneResponse.parseAsync(data),
 		url: "/api/timezone",
+		...options,
+	})
+
+export const streamTimezone = <ThrowOnError extends boolean = false>(
+	options?: Options<StreamTimezoneData, ThrowOnError, StreamTimezoneResponse>,
+): Promise<ServerSentEventsResult<StreamTimezoneResponses>> =>
+	(options?.client ?? client).sse.get<
+		StreamTimezoneResponses,
+		StreamTimezoneErrors,
+		ThrowOnError
+	>({
+		requestValidator: async (data) =>
+			await z
+				.object({
+					body: z.never().optional(),
+					path: z.never().optional(),
+					query: z.never().optional(),
+				})
+				.parseAsync(data),
+		responseValidator: async (data) => await zStreamTimezoneResponse.parseAsync(data),
+		url: "/api/timezone/events",
 		...options,
 	})

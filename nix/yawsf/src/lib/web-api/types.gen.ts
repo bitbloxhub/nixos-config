@@ -553,8 +553,35 @@ export type GetConfiguredTimezoneResponses = {
 	 */
 	200: {
 		timezone: string
+		systemTimezone: string
 	}
 }
 
 export type GetConfiguredTimezoneResponse =
 	GetConfiguredTimezoneResponses[keyof GetConfiguredTimezoneResponses]
+
+export type StreamTimezoneData = {
+	body?: never
+	path?: never
+	query?: never
+	url: "/api/timezone/events"
+}
+
+export type StreamTimezoneErrors = {
+	/**
+	 * Timezone service unavailable
+	 */
+	503: unknown
+}
+
+export type StreamTimezoneResponses = {
+	/**
+	 * Timezone updates
+	 */
+	200: {
+		timezone: string
+		systemTimezone: string
+	}
+}
+
+export type StreamTimezoneResponse = StreamTimezoneResponses[keyof StreamTimezoneResponses]

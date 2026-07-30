@@ -1,31 +1,32 @@
 <script lang="ts">
-	import { onMount } from "svelte"
+	import { experimental_streamedQuery } from "@tanstack/query-core"
 	import { createQuery } from "@tanstack/svelte-query"
-	import { getConfiguredTimezoneOptions } from "$lib/web-api/@tanstack/svelte-query.gen"
+	import { onMount } from "svelte"
+	import { streamTimezone } from "$lib/web-api/sdk.gen"
+	import type { StreamTimezoneResponse } from "$lib/web-api/types.gen"
 
 	let { configured = false }: { configured?: boolean } = $props()
 	let now = $state(new Date())
-	const configuredTimezone = createQuery(() => ({
-		...getConfiguredTimezoneOptions(),
+	const timezoneQuery = createQuery(() => ({
+		queryKey: ["timezone-stream"],
+		queryFn: experimental_streamedQuery<StreamTimezoneResponse, StreamTimezoneResponse>({
+			initialValue: { timezone: "UTC", systemTimezone: "UTC" },
+			refetchMode: "replace",
+			reducer: (_, chunk) => chunk,
+			streamFn: async ({ signal }) => (await streamTimezone({ signal })).stream,
+		}),
 		enabled: false,
 	}))
-	let currentTime = $derived(formatTime(now, configuredTimezone.data?.timezone))
+	let currentTime = $derived(
+		formatTime(now, timezoneQuery.data?.[configured ? "timezone" : "systemTimezone"]),
+	)
 
 	onMount(() => {
 		const timer = window.setInterval(() => {
 			now = new Date()
 		}, 500)
-		let timezoneTimer: number | undefined
-
-		if (configured) {
-			void configuredTimezone.refetch()
-			timezoneTimer = window.setInterval(() => void configuredTimezone.refetch(), 1_000)
-		}
-
-		return () => {
-			window.clearInterval(timer)
-			if (timezoneTimer !== undefined) window.clearInterval(timezoneTimer)
-		}
+		void timezoneQuery.refetch()
+		return () => window.clearInterval(timer)
 	})
 
 	function formatTime(date: Date, timeZone?: string): string {

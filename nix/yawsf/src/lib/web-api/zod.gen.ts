@@ -250,4 +250,13 @@ export const zGetSystemStatusResponse = z.object({
  */
 export const zGetConfiguredTimezoneResponse = z.object({
 	timezone: z.string(),
+	systemTimezone: z.string(),
+})
+
+/**
+ * Timezone updates
+ */
+export const zStreamTimezoneResponse = z.object({
+	timezone: z.string(),
+	systemTimezone: z.string(),
 })

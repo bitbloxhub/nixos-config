@@ -22,6 +22,7 @@ export {
 	streamMprisPlayers,
 	streamNiriEvents,
 	streamNotifications,
+	streamTimezone,
 	suspendSystem,
 } from "./sdk.gen"
 export type {
@@ -102,6 +103,10 @@ export type {
 	StreamNotificationsErrors,
 	StreamNotificationsResponse,
 	StreamNotificationsResponses,
+	StreamTimezoneData,
+	StreamTimezoneErrors,
+	StreamTimezoneResponse,
+	StreamTimezoneResponses,
 	SuspendSystemData,
 	SuspendSystemResponse,
 	SuspendSystemResponses,
