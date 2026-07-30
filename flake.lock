@@ -1601,11 +1601,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784672472,
-        "narHash": "sha256-IQ6t+31btftYUHIZ7crbktfjxRLH6t9b52RsvoEMVsM=",
+        "lastModified": 1785353857,
+        "narHash": "sha256-9V1M2ITrNdN/BC/uJw0z2GMnIMhZWVP+0IsmZ2Oc6JI=",
         "owner": "bitbloxhub",
         "repo": "yawsf",
-        "rev": "835e4594f2269c87840fdb06d692484d583746e7",
+        "rev": "bc11f9a3ab11e164f48cd90336dab4e093e9cc64",
         "type": "github"
       },
       "original": {
