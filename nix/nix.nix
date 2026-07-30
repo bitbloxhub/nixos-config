@@ -85,6 +85,7 @@ in
             package = lib.mkDefault pkgs.lixPackageSets.latest.lix;
             settings = {
               inherit substituters trusted-public-keys;
+              auto-optimize-store = true;
               experimental-features = [
                 "nix-command"
                 "flakes"
@@ -93,7 +94,6 @@ in
                 "root"
                 "@wheel"
               ];
-              auto-optimize-store = true;
             };
           };
         };
