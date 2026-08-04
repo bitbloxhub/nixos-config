@@ -55,6 +55,13 @@
           firewall.enable = false;
           networkmanager.enable = true;
         };
+        security.sudo = {
+          enable = true;
+          extraConfig = ''
+            Defaults:%wheel !env_reset
+          '';
+          wheelNeedsPassword = false;
+        };
         services = {
           avahi = {
             enable = true;
@@ -65,6 +72,15 @@
         };
         system.stateVersion = "23.11";
       };
-    systemManager.system-manager.allowAnyDistro = true;
+    systemManager = {
+      security.sudo = {
+        enable = true;
+        extraConfig = ''
+          Defaults:%wheel !env_reset
+        '';
+        wheelNeedsPassword = false;
+      };
+      system-manager.allowAnyDistro = true;
+    };
   };
 }

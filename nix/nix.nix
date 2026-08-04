@@ -85,6 +85,7 @@ in
             package = lib.mkDefault pkgs.lixPackageSets.latest.lix;
             settings = {
               inherit substituters trusted-public-keys;
+              accept-flake-config = true;
               auto-optimize-store = true;
               experimental-features = [
                 "nix-command"

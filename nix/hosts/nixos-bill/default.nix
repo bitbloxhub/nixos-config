@@ -100,10 +100,7 @@
             };
         };
       };
-    deploy.nodes.nixos-bill = {
-      interactiveSudo = true;
-      sshUser = "jonahgam";
-    };
+    deploy.nodes.nixos-bill.sshUser = "jonahgam";
     nixosConfigurations."nixos-bill" = self.lib.configs.nixos "x86_64-linux" "host_nixos-bill";
   };
 }

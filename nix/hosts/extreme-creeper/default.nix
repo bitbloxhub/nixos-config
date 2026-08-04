@@ -144,8 +144,6 @@ in
       };
     deploy.nodes.extreme-creeper = {
       hostname = "extreme-creeper";
-      interactiveSudo = true;
-      profiles.home-manager-jonahgam.interactiveSudo = false;
       profilesOrder = [
         "system-manager"
         "home-manager-jonahgam"
