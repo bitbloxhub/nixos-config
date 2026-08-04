@@ -14,7 +14,7 @@
       "https://cache.nixos-cuda.org"
       "https://catppuccin.cachix.org"
       "https://cache.lix.systems"
-      "https://niri.cachix.org"
+      "https://niri-epireyn.cachix.org"
       "https://yazi.cachix.org"
       "https://vicinae.cachix.org"
     ];
@@ -24,7 +24,7 @@
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
       "catppuccin.cachix.org-1:noG/4HkbhJb+lUAdKrph6LaozJvAeEEZj4N732IysmU="
-      "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+      "niri-epireyn.cachix.org-1:tlVyFN7CtsDT+ZcLPS+ekFWeT1X6X4OqvWqbBMyIzFA="
       "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k="
       "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
     ];
@@ -202,7 +202,7 @@
       flake = false;
     };
     niri-flake = {
-      url = "github:sodiboo/niri-flake";
+      url = "github:epireyn/niri-flake";
       inputs = {
         niri-stable.follows = "";
         nixpkgs.follows = "nixpkgs";
