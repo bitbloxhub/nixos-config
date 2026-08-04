@@ -771,29 +771,6 @@
         "type": "github"
       }
     },
-    "margesimpson": {
-      "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1761455199,
-        "narHash": "sha256-TgK8dtUxZVQOustuADarhV/ZMKpFifGq1ClBMPcYQIU=",
-        "owner": "mrtnvgr",
-        "repo": "margesimpson",
-        "rev": "f7ffb2c0ea925c28e7341479ba8e3c8615a55559",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mrtnvgr",
-        "repo": "margesimpson",
-        "type": "github"
-      }
-    },
     "minimal-emacs": {
       "flake": false,
       "locked": {
@@ -807,29 +784,6 @@
       "original": {
         "owner": "jamescherti",
         "repo": "minimal-emacs.d",
-        "type": "github"
-      }
-    },
-    "mrtnvgr": {
-      "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1782390481,
-        "narHash": "sha256-Heh2QJStHE4g3/Z8u83jOi4lm76Kz/r0zsneU8PEW3U=",
-        "owner": "mrtnvgr",
-        "repo": "nurpkgs",
-        "rev": "7c28cc199da83b02b3b9a66746443fa58e34c3a6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mrtnvgr",
-        "repo": "nurpkgs",
         "type": "github"
       }
     },
@@ -1145,32 +1099,26 @@
         "type": "github"
       }
     },
-    "reanix": {
+    "reaper-flake": {
       "inputs": {
         "flake-parts": [
           "flake-parts"
-        ],
-        "margesimpson": [
-          "margesimpson"
-        ],
-        "mrtnvgr": [
-          "mrtnvgr"
         ],
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1780402942,
-        "narHash": "sha256-SOdJK9OdX25QShXf7OsWuArDwSHkx1iOnpKCoC/6Mrc=",
-        "owner": "mrtnvgr",
-        "repo": "reanix",
-        "rev": "041a171691ab98cc4a6c3a6306177c5d1c06912a",
+        "lastModified": 1785858933,
+        "narHash": "sha256-BEOMteQZ9HlHLhdG+v08tXpdPKVpOhB3Zi0BckqyUCo=",
+        "owner": "9Prestidigitator",
+        "repo": "reaper-flake",
+        "rev": "8aa1c0570096872112a8e56bba84e1495ef2d124",
         "type": "github"
       },
       "original": {
-        "owner": "mrtnvgr",
-        "repo": "reanix",
+        "owner": "9Prestidigitator",
+        "repo": "reaper-flake",
         "type": "github"
       }
     },
@@ -1205,9 +1153,7 @@
         "lib-aggregate": "lib-aggregate",
         "llm-agents": "llm-agents",
         "make-shell": "make-shell",
-        "margesimpson": "margesimpson",
         "minimal-emacs": "minimal-emacs",
-        "mrtnvgr": "mrtnvgr",
         "niri-flake": "niri-flake",
         "nix-auto-ci": "nix-auto-ci",
         "nix-bwrapper": "nix-bwrapper",
@@ -1217,7 +1163,7 @@
         "nixos-facter-modules": "nixos-facter-modules",
         "nixpkgs": "nixpkgs",
         "pedantix": "pedantix",
-        "reanix": "reanix",
+        "reaper-flake": "reaper-flake",
         "skills-flake": "skills-flake",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",

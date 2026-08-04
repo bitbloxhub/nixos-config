@@ -197,23 +197,9 @@
       url = "github:nicknovitski/make-shell";
       inputs.flake-compat.follows = "";
     };
-    margesimpson = {
-      url = "github:mrtnvgr/margesimpson";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
     minimal-emacs = {
       url = "github:jamescherti/minimal-emacs.d";
       flake = false;
-    };
-    mrtnvgr = {
-      url = "github:mrtnvgr/nurpkgs";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-      };
     };
     niri-flake = {
       url = "github:sodiboo/niri-flake";
@@ -275,12 +261,10 @@
         treefmt-nix.follows = "treefmt-nix";
       };
     };
-    reanix = {
-      url = "github:mrtnvgr/reanix";
+    reaper-flake = {
+      url = "github:9Prestidigitator/reaper-flake";
       inputs = {
         flake-parts.follows = "flake-parts";
-        margesimpson.follows = "margesimpson";
-        mrtnvgr.follows = "mrtnvgr";
         nixpkgs.follows = "nixpkgs";
       };
     };
