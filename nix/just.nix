@@ -22,7 +22,8 @@
         {
           config.home.packages = [
             (pkgs.writeShellScriptBin "sjust" ''
-              ${pkgs.just}/bin/just --justfile ${../Justfile} --working-directory ~/nixos-config/
+              cd "$HOME/nixos-config"
+              exec ${pkgs.just}/bin/just "$@"
             '')
           ];
         };
