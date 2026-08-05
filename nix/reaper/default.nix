@@ -73,7 +73,6 @@
             programs.reaper = {
               enable = true;
               configPath = "${config.xdg.configHome}/REAPER";
-              experimental.swell-wayland.enable = true;
               extensions = {
                 reapack = {
                   enable = true;
