@@ -23,47 +23,11 @@
         ];
         homeManager =
           {
-            lib,
             config,
             pkgs,
             inputs',
             ...
           }:
-          let
-            swsColors = [
-              "F5E0E6" # rosewater
-              "F2CDCD" # flamingo
-              "F5C2E7" # pink
-              "CBA6F7" # mauve
-              "F38BA8" # red; typos: ignore
-              "EBA0AC" # maroon
-              "FAB387" # peach
-              "F9E2AF" # yellow
-              "A6E3A1" # green
-              "94E2D5" # teal
-              "89DCEB" # sky
-              "74C7EC" # sapphire
-              "89B4FA" # blue
-              "B4BEFE" # lavender
-              "CDD6F4" # text
-              "BAC2DE" # subtext1
-            ];
-            swsCustomColors = pkgs.writeText "reaper-sws-custom-colors.lua" ''
-              local colors = {
-                ${lib.concatMapStringsSep ",\n                " (color: "0x${color}") swsColors}
-              }
-              local function apply()
-                if not reaper.APIExists("CF_SetCustomColor") then
-                  reaper.defer(apply)
-                  return
-                end
-                for index, color in ipairs(colors) do
-                  reaper.CF_SetCustomColor(index - 1, color)
-                end
-              end
-              apply()
-            '';
-          in
           {
             imports = [ inputs.reaper-flake.homeModules.reaper ];
             home = {
@@ -474,7 +438,27 @@
                   ];
                   synchronizeOnActivation = true;
                 };
-                sws.enable = true;
+                sws = {
+                  enable = true;
+                  colors = [
+                    "#F5E0E6" # rosewater
+                    "#F2CDCD" # flamingo
+                    "#F5C2E7" # pink
+                    "#CBA6F7" # mauve
+                    "#F38BA8" # red; typos: ignore
+                    "#EBA0AC" # maroon
+                    "#FAB387" # peach
+                    "#F9E2AF" # yellow
+                    "#A6E3A1" # green
+                    "#94E2D5" # teal
+                    "#89DCEB" # sky
+                    "#74C7EC" # sapphire
+                    "#89B4FA" # blue
+                    "#B4BEFE" # lavender
+                    "#CDD6F4" # text
+                    "#BAC2DE" # subtext1
+                  ];
+                };
               };
               ini = {
                 files."reaper-themeconfig.ini"."Reapertips Theme" = {
@@ -487,9 +471,6 @@
                   linux_audio_mode = 3;
                 };
               };
-              lineFiles.files."Scripts/__startup.lua" = [
-                ''dofile(reaper.GetResourcePath() .. "/Scripts/reaper-nix/sws-custom-colors.lua")''
-              ];
               packages = with pkgs; [
                 cairo
                 fontconfig
@@ -509,12 +490,9 @@
                 packages = [ inputs'.reaper-flake.packages.reapertips-theme ];
               };
             };
-            xdg.configFile = {
-              "REAPER/Data/color_maps/default.png".source = pkgs.fetchurl {
-                hash = "sha256-FSANQn2V4TjYUvNr4UV1qUhOSeUkT+gsd1pPj4214GY=";
-                url = "https://i.imgur.com/Ca0JhRF.png";
-              };
-              "REAPER/Scripts/reaper-nix/sws-custom-colors.lua".source = swsCustomColors;
+            xdg.configFile."REAPER/Data/color_maps/default.png".source = pkgs.fetchurl {
+              hash = "sha256-FSANQn2V4TjYUvNr4UV1qUhOSeUkT+gsd1pPj4214GY=";
+              url = "https://i.imgur.com/Ca0JhRF.png";
             };
           };
       };
