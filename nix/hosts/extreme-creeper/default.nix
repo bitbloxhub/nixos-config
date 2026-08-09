@@ -1,4 +1,5 @@
 {
+  lib,
   inputs,
   self,
   ...
@@ -119,26 +120,47 @@ in
                   };
               extraPackages = [ pkgs.mesa ];
             };
-            systemd = {
-              # PAM fix, see https://github.com/Rishabh5321/dotfiles/blob/d71f52b/system-manager/home/README.md?plain=1#L91-L92 and
-              # https://github.com/nix-community/home-manager/issues/7027
-              paths.pam-unix-chkpwd-wrapper = {
-                pathConfig = {
-                  PathChanged = "/run/wrappers";
-                  PathExists = "/run/wrappers/bin";
-                  Unit = "pam-unix-chkpwd-wrapper.service";
+            systemd = lib.mkMerge [
+              {
+                # PAM fix, see https://github.com/Rishabh5321/dotfiles/blob/d71f52b/system-manager/home/README.md?plain=1#L91-L92 and
+                # https://github.com/nix-community/home-manager/issues/7027
+                paths.pam-unix-chkpwd-wrapper = {
+                  pathConfig = {
+                    PathChanged = "/run/wrappers";
+                    PathExists = "/run/wrappers/bin";
+                    Unit = "pam-unix-chkpwd-wrapper.service";
+                  };
+                  wantedBy = [ "multi-user.target" ];
                 };
-                wantedBy = [ "multi-user.target" ];
-              };
-              services.pam-unix-chkpwd-wrapper = {
-                description = "Link host unix_chkpwd into Nix wrapper path";
+                services.pam-unix-chkpwd-wrapper = {
+                  description = "Link host unix_chkpwd into Nix wrapper path";
 
-                serviceConfig = {
-                  ExecStart = "/bin/sh -c 'ln -sfn /usr/sbin/unix_chkpwd /run/wrappers/bin/unix_chkpwd'";
-                  Type = "oneshot";
+                  serviceConfig = {
+                    ExecStart = "/bin/sh -c 'ln -sfn /usr/sbin/unix_chkpwd /run/wrappers/bin/unix_chkpwd'";
+                    Type = "oneshot";
+                  };
                 };
-              };
-            };
+              }
+              {
+                # Similar fix for polkit agents
+                paths.polkit-agent-helper-wrapper = {
+                  pathConfig = {
+                    PathChanged = "/run/wrappers";
+                    PathExists = "/run/wrappers/bin";
+                    Unit = "polkit-agent-helper-wrapper.service";
+                  };
+                  wantedBy = [ "multi-user.target" ];
+                };
+                services.polkit-agent-helper-wrapper = {
+                  description = "Link host polkit-agent-helper-1 into Nix wrapper path";
+
+                  serviceConfig = {
+                    ExecStart = "/bin/sh -c 'ln -sfn /usr/lib/polkit-1/polkit-agent-helper-1 /run/wrappers/bin/polkit-agent-helper-1'";
+                    Type = "oneshot";
+                  };
+                };
+              }
+            ];
           };
         };
       };

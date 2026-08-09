@@ -52,6 +52,17 @@
             self',
             ...
           }:
+          let
+            soteria' = pkgs.soteria.overrideAttrs (old: {
+              patches = (old.patches or [ ]) ++ [
+                (pkgs.fetchpatch {
+                  hash = "sha256-o2+TZKCV1oqMKoESdmg+PA/ws6piPSLLHYVj2oM8AbA=";
+                  # https://github.com/jacobmichels/soteria/tree/pam-conversation-completeness
+                  url = "https://github.com/jacobmichels/soteria/compare/b1521b4...b0d9f6e.patch";
+                })
+              ];
+            });
+          in
           {
             imports = [
               inputs.niri-flake.homeModules.niri
@@ -60,6 +71,7 @@
               pkgs.wl-clipboard
               pkgs.hyprpicker
               pkgs.xcompose
+              soteria'
             ];
             i18n.inputMethod = {
               enable = true;
@@ -245,6 +257,18 @@
                   enable = true;
                   path = lib.getExe inputs'.niri-flake.packages.xwayland-satellite-unstable;
                 };
+              };
+            };
+            systemd.user.services.soteria = {
+              Install.WantedBy = [ "graphical-session.target" ];
+              Service = {
+                ExecStart = lib.getExe soteria';
+                Restart = "on-failure";
+              };
+              Unit = {
+                After = [ "graphical-session.target" ];
+                Description = "Soteria Polkit authentication agent";
+                PartOf = [ "graphical-session.target" ];
               };
             };
             xdg.configFile."XCompose".source =
