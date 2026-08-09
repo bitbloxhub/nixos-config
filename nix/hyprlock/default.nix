@@ -18,7 +18,10 @@
             hyprlock = {
               enable = true;
               settings = {
-                auth.pam.module = "login";
+                auth = {
+                  fingerprint.enabled = true;
+                  pam.module = "login";
+                };
                 background = [
                   {
                     monitor = "";
