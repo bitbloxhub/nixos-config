@@ -1,9 +1,14 @@
 {
-  flake.aspects.cli =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.direnv ];
-      _.direnv.homeManager = {
+  lib,
+  self,
+  ...
+}:
+{
+  flake.grove = {
+    types.user.options.direnv.enable = self.lib.mkDisableOption "direnv";
+    projectors.user.homeManager =
+      user:
+      lib.mkIf user.config.direnv.enable {
         home.persistence."/persistent".directories = [ ".local/share/direnv" ];
         programs.direnv = {
           enable = true;
@@ -14,5 +19,5 @@
           enableNushellIntegration = true;
         };
       };
-    };
+  };
 }

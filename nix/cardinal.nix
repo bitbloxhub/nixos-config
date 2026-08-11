@@ -1,15 +1,19 @@
 {
-  flake.aspects.daw =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.cardinal ];
-      _.cardinal.homeManager =
-        {
-          pkgs,
-          ...
-        }:
-        {
-          home.packages = [ pkgs.cardinal ];
-        };
-    };
+  lib,
+  self,
+  ...
+}:
+{
+  flake.grove = {
+    types.user.options.cardinal.enable = self.lib.mkDisableOption "Cardinal";
+    projectors.user.homeManager =
+      user:
+      {
+        pkgs,
+        ...
+      }:
+      lib.mkIf user.config.cardinal.enable {
+        home.packages = [ pkgs.cardinal ];
+      };
+  };
 }

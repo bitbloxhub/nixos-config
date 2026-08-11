@@ -1,14 +1,22 @@
 {
-  flake.aspects =
-    { aspects, ... }:
+  lib,
+  ...
+}:
+{
+  flake.grove.types.host =
     {
-      nvidia.includes = [
-        (aspects.system._.unfree [
+      config,
+      ...
+    }:
+    {
+      config = lib.mkIf config.nvidia.enable {
+        unfree.packages = [
           "cuda_cccl"
           "cuda_cudart"
           "libcublas"
           "cuda_nvcc"
-        ])
-      ];
+        ];
+      };
+      options.nvidia.enable = lib.mkEnableOption "NVIDIA";
     };
 }

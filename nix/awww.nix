@@ -1,28 +1,26 @@
 {
-  flake.aspects.gui =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.awww ];
-      _.awww.homeManager =
-        {
-          lib,
-          config,
-          pkgs,
-          ...
-        }:
+  lib,
+  self,
+  ...
+}:
+{
+  flake.grove = {
+    types.user.options.awww.enable = self.lib.mkDisableOption "awww";
+    projectors.user.homeManager =
+      user:
+      {
+        pkgs,
+        ...
+      }:
+      lib.mkIf user.config.awww.enable (
         lib.mkMerge [
           {
-            home.packages = [
-              pkgs.awww
-            ];
+            home.packages = [ pkgs.awww ];
           }
-
-          (lib.mkIf (lib.attrByPath [ "programs" "niri" "enable" ] false config) {
+          (lib.mkIf user.config.niri.enable {
             programs.niri.settings.spawn-at-startup = [
               {
-                command = [
-                  "awww-daemon"
-                ];
+                command = [ "awww-daemon" ];
               }
               {
                 command = [
@@ -33,6 +31,7 @@
               }
             ];
           })
-        ];
-    };
+        ]
+      );
+  };
 }

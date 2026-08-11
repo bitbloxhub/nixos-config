@@ -1,15 +1,19 @@
 {
-  flake.aspects.daw =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.surge-xt ];
-      _.surge-xt.homeManager =
-        {
-          pkgs,
-          ...
-        }:
-        {
-          home.packages = [ pkgs.surge-xt ];
-        };
-    };
+  lib,
+  self,
+  ...
+}:
+{
+  flake.grove = {
+    types.user.options.surge-xt.enable = self.lib.mkDisableOption "Surge XT";
+    projectors.user.homeManager =
+      user:
+      {
+        pkgs,
+        ...
+      }:
+      lib.mkIf user.config.surge-xt.enable {
+        home.packages = [ pkgs.surge-xt ];
+      };
+  };
 }

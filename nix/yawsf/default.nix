@@ -1,5 +1,6 @@
 {
   lib,
+  self,
   ...
 }:
 {
@@ -96,30 +97,29 @@
       };
     };
 
-  flake.aspects.gui =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.yawsf ];
-      _.yawsf.homeManager =
-        {
-          config,
-          pkgs,
-          inputs',
-          self',
-          ...
-        }:
-        let
-          bentoToggle = pkgs.writeShellApplication {
-            name = "yawsf-bento-toggle";
-            runtimeInputs = [ pkgs.curl ];
-            text = ''
-              curl --fail --silent --show-error --request POST \
-                http://127.0.0.1:12551/api/bento \
-                --header 'content-type: application/json' \
-                --data '{"action":"toggle"}'
-            '';
-          };
-        in
+  flake.grove = {
+    types.user.options.yawsf.enable = self.lib.mkDisableOption "YAWSF";
+    projectors.user.homeManager =
+      user:
+      {
+        pkgs,
+        inputs',
+        self',
+        ...
+      }:
+      let
+        bentoToggle = pkgs.writeShellApplication {
+          name = "yawsf-bento-toggle";
+          runtimeInputs = [ pkgs.curl ];
+          text = ''
+            curl --fail --silent --show-error --request POST \
+              http://127.0.0.1:12551/api/bento \
+              --header 'content-type: application/json' \
+              --data '{"action":"toggle"}'
+          '';
+        };
+      in
+      lib.mkIf user.config.yawsf.enable (
         lib.mkMerge [
           {
             home.packages = [
@@ -131,7 +131,7 @@
             ];
           }
 
-          (lib.mkIf (lib.attrByPath [ "programs" "niri" "enable" ] false config) {
+          (lib.mkIf user.config.niri.enable {
             programs.niri.settings = {
               binds."Mod+Shift+B".action.spawn = [
                 (lib.getExe bentoToggle)
@@ -147,6 +147,7 @@
               ];
             };
           })
-        ];
-    };
+        ]
+      );
+  };
 }

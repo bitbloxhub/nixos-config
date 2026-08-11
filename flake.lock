@@ -438,21 +438,6 @@
         "type": "github"
       }
     },
-    "flake-aspects": {
-      "locked": {
-        "lastModified": 1773552804,
-        "narHash": "sha256-a0kjpCZGnD5lt7yW6C3hzPhSf5KjnTyvX6XZ2NuhGs4=",
-        "owner": "vic",
-        "repo": "flake-aspects",
-        "rev": "56fa8d4d4772d58eb7f9d66c28c1cd2762b60423",
-        "type": "github"
-      },
-      "original": {
-        "owner": "vic",
-        "repo": "flake-aspects",
-        "type": "github"
-      }
-    },
     "flake-file": {
       "locked": {
         "lastModified": 1781217157,
@@ -883,6 +868,22 @@
         "type": "github"
       }
     },
+    "nix-grove": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786224404,
+        "narHash": "sha256-As72c0/TLDjBmbn4y64x8cOIbWEt0y2VRJiIOK825kI=",
+        "owner": "bitbloxhub",
+        "repo": "nix-grove",
+        "rev": "3d1eb9e4ddf0d3b03b56af6cdc1f3a302eba25c0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bitbloxhub",
+        "repo": "nix-grove",
+        "type": "github"
+      }
+    },
     "nix-storage-plugin": {
       "inputs": {
         "crate2nix": [
@@ -1138,7 +1139,6 @@
         "fenix": "fenix",
         "firefox-addons": "firefox-addons",
         "firefox-extensions-declarative": "firefox-extensions-declarative",
-        "flake-aspects": "flake-aspects",
         "flake-file": "flake-file",
         "flake-firefox-nightly": "flake-firefox-nightly",
         "flake-parts": "flake-parts",
@@ -1157,6 +1157,7 @@
         "niri-flake": "niri-flake",
         "nix-auto-ci": "nix-auto-ci",
         "nix-bwrapper": "nix-bwrapper",
+        "nix-grove": "nix-grove",
         "nix-storage-plugin": "nix-storage-plugin",
         "nix-system-graphics": "nix-system-graphics",
         "nix-wrapper-modules": "nix-wrapper-modules",

@@ -1,4 +1,9 @@
 {
+  lib,
+  self,
+  ...
+}:
+{
   perSystem =
     {
       pkgs,
@@ -10,22 +15,21 @@
       ];
     };
 
-  flake.aspects.cli =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.just ];
-      _.just.homeManager =
-        {
-          pkgs,
-          ...
-        }:
-        {
-          config.home.packages = [
-            (pkgs.writeShellScriptBin "sjust" ''
-              cd "$HOME/nixos-config"
-              exec ${pkgs.just}/bin/just "$@"
-            '')
-          ];
-        };
-    };
+  flake.grove = {
+    types.user.options.just.enable = self.lib.mkDisableOption "just";
+    projectors.user.homeManager =
+      user:
+      {
+        pkgs,
+        ...
+      }:
+      lib.mkIf user.config.just.enable {
+        home.packages = [
+          (pkgs.writeShellScriptBin "sjust" ''
+            cd "$HOME/nixos-config"
+            exec ${pkgs.just}/bin/just "$@"
+          '')
+        ];
+      };
+  };
 }

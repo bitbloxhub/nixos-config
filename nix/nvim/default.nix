@@ -1,4 +1,5 @@
 {
+  lib,
   inputs,
   self,
   ...
@@ -40,36 +41,35 @@
             inherit self';
           };
         }
-        self.modules.wrappers.nvim
+        self.nixWrapper
       ];
     };
 
   flake = {
-    aspects.editors =
-      { aspect, ... }:
-      {
-        includes = [ aspect._.nvim ];
-        _.nvim.homeManager =
-          {
-            self',
-            ...
-          }:
-          {
-            home = {
-              packages = [
-                self'.packages.nvim
-              ];
-              persistence."/persistent".directories = [ ".local/share/nvim" ];
-            };
-            programs.git.settings = {
-              diff.tool = "codediff";
-              difftool.codediff.cmd = ''nvim "$LOCAL" "$REMOTE" +"CodeDiff file $LOCAL $REMOTE"'';
-              merge.tool = "codediff";
-              mergetool.codediff.cmd = ''nvim "$MERGED" -c "CodeDiff merge \"$MERGED\""'';
-            };
+    grove = {
+      types.user.options.nvim.enable = self.lib.mkDisableOption "Neovim";
+      projectors.user.homeManager =
+        user:
+        {
+          self',
+          ...
+        }:
+        lib.mkIf user.config.nvim.enable {
+          home = {
+            packages = [
+              self'.packages.nvim
+            ];
+            persistence."/persistent".directories = [ ".local/share/nvim" ];
           };
-      };
-    modules.wrappers.nvim =
+          programs.git.settings = {
+            diff.tool = "codediff";
+            difftool.codediff.cmd = ''nvim "$LOCAL" "$REMOTE" +"CodeDiff file $LOCAL $REMOTE"'';
+            merge.tool = "codediff";
+            mergetool.codediff.cmd = ''nvim "$MERGED" -c "CodeDiff merge \"$MERGED\""'';
+          };
+        };
+    };
+    nixWrapper =
       {
         pkgs,
         inputs',

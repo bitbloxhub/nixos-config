@@ -1,17 +1,19 @@
 {
-  flake.aspects.cli =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.ouch ];
-      _.ouch.homeManager =
-        {
-          pkgs,
-          ...
-        }:
-        {
-          home.packages = [
-            pkgs.ouch
-          ];
-        };
-    };
+  lib,
+  self,
+  ...
+}:
+{
+  flake.grove = {
+    types.user.options.ouch.enable = self.lib.mkDisableOption "ouch";
+    projectors.user.homeManager =
+      user:
+      {
+        pkgs,
+        ...
+      }:
+      lib.mkIf user.config.ouch.enable {
+        home.packages = [ pkgs.ouch ];
+      };
+  };
 }

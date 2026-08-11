@@ -1,5 +1,7 @@
 {
+  lib,
   inputs,
+  self,
   ...
 }:
 {
@@ -40,17 +42,15 @@
     };
 
   # even though emacs is technically an OS, it goes under the editors aspect.
-  flake.aspects.editors =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.emacs ];
-      _.emacs.homeManager =
-        {
-          lib,
-          config,
-          pkgs,
-          ...
-        }:
+  flake.grove = {
+    types.user.options.emacs.enable = self.lib.mkDisableOption "Emacs";
+    projectors.user.homeManager =
+      user:
+      {
+        pkgs,
+        ...
+      }:
+      lib.mkIf user.config.emacs.enable (
         lib.mkMerge [
           {
             home.packages = [
@@ -136,7 +136,7 @@
             };
           }
 
-          (lib.mkIf (lib.attrByPath [ "programs" "niri" "enable" ] false config) {
+          (lib.mkIf user.config.niri.enable {
             # Floating emacs window config, mostly for note taking with org-mode/org-roam
             programs.niri.settings = {
               binds."Mod+E".action.spawn = [
@@ -156,6 +156,7 @@
               ];
             };
           })
-        ];
-    };
+        ]
+      );
+  };
 }

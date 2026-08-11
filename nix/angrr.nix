@@ -52,53 +52,48 @@ in
     };
   };
 
-  flake.aspects.system =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.angrr ];
-      _.angrr = {
-        nixos = {
-          imports = [
-            inputs.angrr.nixosModules.angrr
-          ];
-
-          services.angrr = {
-            enable = true;
-            settings = angrrConfig;
-            timer = {
-              enable = true;
-              dates = "*-*-* *:00:00";
-            };
-          };
+  flake.grove.projectors.host = {
+    nixos = _host: {
+      imports = [
+        inputs.angrr.nixosModules.angrr
+      ];
+      services.angrr = {
+        enable = true;
+        settings = angrrConfig;
+        timer = {
+          enable = true;
+          dates = "*-*-* *:00:00";
         };
-        systemManager =
-          {
-            pkgs,
-            inputs',
-            ...
-          }:
-          {
-            environment = {
-              etc."angrr/config.toml".source = (pkgs.formats.toml { }).generate "angrr/config.toml" angrrConfig;
-              systemPackages = [ inputs'.angrr.packages.default ];
-            };
-            systemd = {
-              services.angrr = {
-                description = "Auto Nix GC Roots Retention";
-                environment.ANGRR_LOG_STYLE = "systemd";
-                script = ''
-                  ${lib.getExe inputs'.angrr.packages.default} run \
-                    --log-level "info" \
-                    --no-prompt
-                '';
-                serviceConfig.Type = "oneshot";
-              };
-              timers.angrr = {
-                timerConfig.OnCalendar = "*-*-* *:00:00";
-                wantedBy = [ "timers.target" ];
-              };
-            };
-          };
       };
     };
+    systemManager =
+      _host:
+      {
+        pkgs,
+        inputs',
+        ...
+      }:
+      {
+        environment = {
+          etc."angrr/config.toml".source = (pkgs.formats.toml { }).generate "angrr/config.toml" angrrConfig;
+          systemPackages = [ inputs'.angrr.packages.default ];
+        };
+        systemd = {
+          services.angrr = {
+            description = "Auto Nix GC Roots Retention";
+            environment.ANGRR_LOG_STYLE = "systemd";
+            script = ''
+              ${lib.getExe inputs'.angrr.packages.default} run \
+                --log-level "info" \
+                --no-prompt
+            '';
+            serviceConfig.Type = "oneshot";
+          };
+          timers.angrr = {
+            timerConfig.OnCalendar = "*-*-* *:00:00";
+            wantedBy = [ "timers.target" ];
+          };
+        };
+      };
+  };
 }

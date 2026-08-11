@@ -1,8 +1,15 @@
 {
-  flake.aspects.cli =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.ripgrep ];
-      _.ripgrep.homeManager.programs.ripgrep.enable = true;
-    };
+  lib,
+  self,
+  ...
+}:
+{
+  flake.grove = {
+    types.user.options.ripgrep.enable = self.lib.mkDisableOption "ripgrep";
+    projectors.user.homeManager =
+      user:
+      lib.mkIf user.config.ripgrep.enable {
+        programs.ripgrep.enable = true;
+      };
+  };
 }

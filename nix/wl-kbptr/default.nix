@@ -1,19 +1,21 @@
 {
-  flake.aspects.gui =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.wl-kbptr ];
-      _.wl-kbptr.homeManager =
-        {
-          pkgs,
-          ...
-        }:
-        {
-          home.packages = [
-            pkgs.wl-kbptr
-          ];
+  lib,
+  self,
+  ...
+}:
+{
+  flake.grove = {
+    types.user.options.wl-kbptr.enable = self.lib.mkDisableOption "wl-kbptr";
+    projectors.user.homeManager =
+      user:
+      {
+        pkgs,
+        ...
+      }:
+      lib.mkIf user.config.wl-kbptr.enable {
+        home.packages = [ pkgs.wl-kbptr ];
 
-          xdg.configFile."wl-kbptr/config".source = ./config;
-        };
-    };
+        xdg.configFile."wl-kbptr/config".source = ./config;
+      };
+  };
 }

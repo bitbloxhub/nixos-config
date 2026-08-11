@@ -19,21 +19,41 @@
     };
   };
 
-  flake.aspects.rices._.catppuccin =
-    {
-      accent ? "mauve",
-      cursorAccent ? "dark",
-      enableCursors ? true,
-      flavor ? "mocha",
-    }:
-    {
+  flake.grove = {
+    types.user.options.catppuccin = {
+      accent = lib.mkOption {
+        default = "mauve";
+        type = lib.types.str;
+      };
+      cursorAccent = lib.mkOption {
+        default = "dark";
+        type = lib.types.str;
+      };
+      enable = lib.mkEnableOption "Catppuccin";
+      enableCursors = lib.mkOption {
+        default = true;
+        type = lib.types.bool;
+      };
+      flavor = lib.mkOption {
+        default = "mocha";
+        type = lib.types.str;
+      };
+    };
+    projectors.user = {
       homeManager =
+        user:
         {
           config,
           pkgs,
           ...
         }:
         let
+          inherit (user.config.catppuccin)
+            accent
+            cursorAccent
+            enableCursors
+            flavor
+            ;
           # TODO: get rid of this hack when https://github.com/NixOS/nixpkgs/pull/440544 is merged
           inherit
             (
@@ -47,9 +67,7 @@
             ;
         in
         {
-          imports = [
-            inputs.catppuccin.homeModules.catppuccin
-          ];
+          imports = [ inputs.catppuccin.homeModules.catppuccin ];
           catppuccin = {
             inherit flavor accent;
             enable = true;
@@ -100,14 +118,15 @@
             };
           };
         };
-      nixos = {
+      nixos = user: {
         imports = [
           inputs.catppuccin.nixosModules.catppuccin
         ];
         catppuccin = {
-          inherit flavor accent;
+          inherit (user.config.catppuccin) flavor accent;
           enable = true;
         };
       };
     };
+  };
 }
