@@ -1,5 +1,6 @@
 {
   inputs,
+  self,
   ...
 }:
 {
@@ -22,21 +23,20 @@
     };
   };
 
-  flake.aspects.gui =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.vicinae ];
-      _.vicinae.homeManager =
-        {
-          lib,
-          config,
-          pkgs,
-          inputs',
-          ...
-        }:
-        {
-          imports = [ inputs.vicinae.homeManagerModules.default ];
-          config = lib.mkMerge [
+  flake.grove = {
+    types.user.options.vicinae.enable = self.lib.mkDisableOption "Vicinae";
+    projectors.user.homeManager =
+      user:
+      {
+        lib,
+        pkgs,
+        inputs',
+        ...
+      }:
+      {
+        imports = [ inputs.vicinae.homeManagerModules.default ];
+        config = lib.mkIf user.config.vicinae.enable (
+          lib.mkMerge [
             {
               catppuccin.vicinae.enable = false;
 
@@ -103,7 +103,7 @@
               };
             }
 
-            (lib.mkIf (lib.attrByPath [ "programs" "niri" "enable" ] false config) {
+            (lib.mkIf user.config.niri.enable {
               programs.niri.settings.binds = {
                 "Mod+Ctrl+Space".action.spawn = [
                   "vicinae"
@@ -123,7 +123,8 @@
                 ];
               };
             })
-          ];
-        };
-    };
+          ]
+        );
+      };
+  };
 }

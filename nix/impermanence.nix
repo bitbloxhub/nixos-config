@@ -1,4 +1,5 @@
 {
+  lib,
   inputs,
   ...
 }:
@@ -11,15 +12,18 @@
     };
   };
 
-  flake.aspects.system =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.impermanence ];
-      _.impermanence = {
-        homeManager = {
+  flake.grove = {
+    types.user.options.impermanence.enable = lib.mkEnableOption "impermanence";
+    projectors.user = {
+      homeManager =
+        _user:
+        {
+          ...
+        }:
+        {
           imports = [ (import "${inputs.impermanence}/home-manager.nix") ];
           home = {
-            _nixosModuleImported = true; # impermanence needs this
+            _nixosModuleImported = true;
             persistence."/persistent".directories = [
               "Downloads"
               "Music"
@@ -47,8 +51,9 @@
             ];
           };
         };
-        nixos = {
-          imports = [ inputs.impermanence.nixosModules.impermanence ];
+      nixos = user: {
+        imports = [ inputs.impermanence.nixosModules.impermanence ];
+        config = lib.mkIf user.config.impermanence.enable {
           environment.persistence."/persistent" = {
             enable = true;
             directories = [
@@ -75,4 +80,5 @@
         };
       };
     };
+  };
 }

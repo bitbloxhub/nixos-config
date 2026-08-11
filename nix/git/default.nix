@@ -1,19 +1,24 @@
 {
+  lib,
+  self,
+  ...
+}:
+{
   # flake-file.inputs.git-branchless = {
   #   # My fork with many changes. See https://github.com/bitbloxhub/git-branchless/tree/megamerge for more info.
   #   url = "github:bitbloxhub/git-branchless";
   #   inputs.nixpkgs.follows = "nixpkgs";
   # };
 
-  flake.aspects.cli =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.git ];
-      _.git.homeManager =
-        {
-          pkgs,
-          ...
-        }:
+  flake.grove = {
+    types.user.options.git.enable = self.lib.mkDisableOption "Git";
+    projectors.user.homeManager =
+      user:
+      {
+        pkgs,
+        ...
+      }:
+      lib.mkIf user.config.git.enable (
         let
           defaultEmail = "45184892+bitbloxhub@users.noreply.github.com";
           defaultName = "bitbloxhub";
@@ -47,28 +52,6 @@
               };
             };
             git = {
-              includes = [
-                # github (ssh)
-                {
-                  condition = "hasconfig:remote.*.url:git@github.com:*/**";
-                  contents.user = identities.github;
-                }
-                # github (https)
-                {
-                  condition = "hasconfig:remote.*.url:https://github.com/**";
-                  contents.user = identities.github;
-                }
-                # tangled (ssh)
-                {
-                  condition = "hasconfig:remote.*.url:git@tangled.sh:*/**";
-                  contents.user = identities.tangled;
-                }
-                # tangled (https)
-                {
-                  condition = "hasconfig:remote.*.url:https://tangled.sh/**";
-                  contents.user = identities.tangled;
-                }
-              ];
               enable = true;
               # Need to rebase these, but use jujutsu now for new projects and try to adopt it on old ones,
               # so does not really matter, plus my git-branchless fork does not have that much changeid integration either.
@@ -98,6 +81,28 @@
                   name = defaultName;
                 };
               };
+              includes = [
+                # github (ssh)
+                {
+                  condition = "hasconfig:remote.*.url:git@github.com:*/**";
+                  contents.user = identities.github;
+                }
+                # github (https)
+                {
+                  condition = "hasconfig:remote.*.url:https://github.com/**";
+                  contents.user = identities.github;
+                }
+                # tangled (ssh)
+                {
+                  condition = "hasconfig:remote.*.url:git@tangled.sh:*/**";
+                  contents.user = identities.tangled;
+                }
+                # tangled (https)
+                {
+                  condition = "hasconfig:remote.*.url:https://tangled.sh/**";
+                  contents.user = identities.tangled;
+                }
+              ];
               lfs.enable = true;
             };
             # Have to keep this in here at least until https://github.com/jj-vcs/jj/issues/4048 is implemented
@@ -117,6 +122,7 @@
               };
             };
           };
-        };
-    };
+        }
+      );
+  };
 }

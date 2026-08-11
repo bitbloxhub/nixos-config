@@ -4,27 +4,32 @@
   ...
 }:
 {
-  config.flake-file.inputs = {
-    # TODO: move this somewhere else
-    nix-system-graphics = {
-      url = "github:soupglasses/nix-system-graphics";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    system-manager = {
-      url = "github:numtide/system-manager";
-      inputs = {
-        flake-compat.follows = "";
-        nixpkgs.follows = "nixpkgs";
-        userborn.inputs = {
-          flake-parts.follows = "flake-parts";
+  config = {
+    flake-file.inputs = {
+      # TODO: move this somewhere else
+      nix-system-graphics = {
+        url = "github:soupglasses/nix-system-graphics";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+      system-manager = {
+        url = "github:numtide/system-manager";
+        inputs = {
+          flake-compat.follows = "";
           nixpkgs.follows = "nixpkgs";
-          pre-commit-hooks-nix.inputs = {
-            gitignore.follows = "gitignore";
+          userborn.inputs = {
+            flake-parts.follows = "flake-parts";
             nixpkgs.follows = "nixpkgs";
+            pre-commit-hooks-nix.inputs = {
+              gitignore.follows = "gitignore";
+              nixpkgs.follows = "nixpkgs";
+            };
+            systems.follows = "systems";
           };
-          systems.follows = "systems";
         };
       };
+    };
+    flake.grove.projectors.host.systemManager = _host: {
+      system-manager.allowAnyDistro = true;
     };
   };
 

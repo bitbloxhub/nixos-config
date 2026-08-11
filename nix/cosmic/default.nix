@@ -1,5 +1,7 @@
 {
+  lib,
   inputs,
+  self,
   ...
 }:
 {
@@ -12,16 +14,18 @@
     };
   };
 
-  flake.aspects.gui =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.cosmic ];
-      _.cosmic.homeManager = {
-        imports = [
-          inputs.cosmic-manager.homeManagerModules.cosmic-manager
-        ];
-
-        wayland.desktopManager.cosmic.enable = true;
+  flake.grove = {
+    types.user.options.cosmic.enable = self.lib.mkDisableOption "Cosmic";
+    projectors.user.homeManager =
+      user:
+      {
+        ...
+      }:
+      {
+        imports = [ inputs.cosmic-manager.homeManagerModules.cosmic-manager ];
+        config = lib.mkIf user.config.cosmic.enable {
+          wayland.desktopManager.cosmic.enable = true;
+        };
       };
-    };
+  };
 }

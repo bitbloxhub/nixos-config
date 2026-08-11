@@ -127,7 +127,6 @@
         treefmt-nix.follows = "treefmt-nix";
       };
     };
-    flake-aspects.url = "github:vic/flake-aspects";
     flake-file.url = "github:vic/flake-file";
     flake-firefox-nightly = {
       url = "github:nix-community/flake-firefox-nightly";
@@ -226,6 +225,10 @@
         nuschtosSearch.follows = "";
         treefmt-nix.follows = "treefmt-nix";
       };
+    };
+    nix-grove = {
+      url = "github:bitbloxhub/nix-grove";
+      flake = false;
     };
     nix-storage-plugin = {
       url = "github:bitbloxhub/nix-storage-plugin";

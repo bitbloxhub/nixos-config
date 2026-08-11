@@ -1,5 +1,6 @@
 {
   inputs,
+  self,
   ...
 }:
 {
@@ -19,44 +20,16 @@
     };
   };
 
-  flake.aspects.system =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.podman ];
-      _.podman =
-        let
-          mountPath = "/run/nix-storage-plugin/layer-store";
-          port = 59447;
-        in
-        {
-          homeManager =
-            {
-              pkgs,
-              inputs',
-              ...
-            }:
-            {
-              home = {
-                packages = [
-                  pkgs.podman
-                  inputs'.nix-storage-plugin.packages.default
-                ];
-                persistence."/persistent".directories = [
-                  ".local/share/containers/storage"
-                ];
-              };
-              nixpkgs.overlays = [
-                inputs.nix-storage-plugin.overlays.default
-              ];
-              xdg.configFile."containers/storage.conf".text = ''
-                [storage]
-                driver = "overlay"
-
-                [storage.options]
-                additionallayerstores = ["${mountPath}:ref"]
-              '';
-            };
-          nixos = {
+  flake.grove = {
+    types.user.options.podman.enable = self.lib.mkDisableOption "Podman";
+    projectors =
+      let
+        mountPath = "/run/nix-storage-plugin/layer-store";
+        port = 59447;
+      in
+      {
+        host = {
+          nixos = _host: {
             imports = [
               inputs.nix-storage-plugin.nixosModules.default
             ];
@@ -80,6 +53,7 @@
             };
           };
           systemManager =
+            _host:
             {
               pkgs,
               inputs',
@@ -179,5 +153,34 @@
               };
             };
         };
-    };
+        user.homeManager =
+          _user:
+          {
+            pkgs,
+            inputs',
+            ...
+          }:
+          {
+            home = {
+              packages = [
+                pkgs.podman
+                inputs'.nix-storage-plugin.packages.default
+              ];
+              persistence."/persistent".directories = [
+                ".local/share/containers/storage"
+              ];
+            };
+            nixpkgs.overlays = [
+              inputs.nix-storage-plugin.overlays.default
+            ];
+            xdg.configFile."containers/storage.conf".text = ''
+              [storage]
+              driver = "overlay"
+
+              [storage.options]
+              additionallayerstores = ["${mountPath}:ref"]
+            '';
+          };
+      };
+  };
 }

@@ -1,6 +1,7 @@
 {
   lib,
   inputs,
+  self,
   ...
 }:
 {
@@ -100,17 +101,16 @@
       };
     };
 
-  flake.aspects.gui =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.spicetify ];
-      _.spicetify.homeManager =
-        {
-          self',
-          ...
-        }:
-        {
-          home.packages = [ self'.packages.spicetify ];
-        };
-    };
+  flake.grove = {
+    types.user.options.spicetify.enable = self.lib.mkDisableOption "Spicetify";
+    projectors.user.homeManager =
+      user:
+      {
+        self',
+        ...
+      }:
+      lib.mkIf user.config.spicetify.enable {
+        home.packages = [ self'.packages.spicetify ];
+      };
+  };
 }

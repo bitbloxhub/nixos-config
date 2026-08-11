@@ -1,16 +1,19 @@
 {
   lib,
+  self,
   ...
 }:
 {
-  flake.aspects.cli =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.fzf ];
-      _.fzf.homeManager.programs.fzf = {
-        enable = true;
-        colors.bg = lib.mkForce "";
-        historyWidget.command = "";
+  flake.grove = {
+    types.user.options.fzf.enable = self.lib.mkDisableOption "fzf";
+    projectors.user.homeManager =
+      user:
+      lib.mkIf user.config.fzf.enable {
+        programs.fzf = {
+          enable = true;
+          colors.bg = lib.mkForce "";
+          historyWidget.command = "";
+        };
       };
-    };
+  };
 }

@@ -1,10 +1,34 @@
 {
-  flake.aspects = {
-    cli =
-      { aspect, ... }:
+  lib,
+  self,
+  ...
+}:
+{
+  flake.grove = {
+    types.user =
+      { config, ... }:
       {
-        includes = [ aspect._.btop ];
-        _.btop.homeManager.programs.btop = {
+        config = lib.mkIf config.btop.enable {
+          unfree.packages = [
+            "cuda_cccl"
+            "cuda_cudart"
+            "libcublas"
+            "cuda_nvcc"
+          ];
+        };
+        options.btop.enable = self.lib.mkDisableOption "btop";
+      };
+    projectors.user.homeManager =
+      user:
+      lib.mkIf user.config.btop.enable {
+        nixpkgs.overlays = [
+          (_final: prev: {
+            btop = prev.btop.override {
+              cudaSupport = true;
+            };
+          })
+        ];
+        programs.btop = {
           enable = true;
           settings = {
             theme_background = false;
@@ -13,13 +37,5 @@
           };
         };
       };
-
-    nvidia.homeManager.nixpkgs.overlays = [
-      (_final: prev: {
-        btop = prev.btop.override {
-          cudaSupport = true;
-        };
-      })
-    ];
   };
 }

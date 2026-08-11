@@ -1,5 +1,7 @@
 {
+  lib,
   inputs,
+  self,
   ...
 }:
 {
@@ -79,48 +81,48 @@
       ];
     };
 
-  flake.aspects.cli =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.pi ];
-      _.pi.homeManager =
-        {
-          pkgs,
-          inputs',
-          self',
-          ...
-        }:
-        let
-          piCatppuccin = pkgs.fetchzip {
-            hash = "sha256-6+4aPGFds6S5VpdWdqfne0mZscHX9nKqNdDlvx+N7lc=";
-            stripRoot = false;
-            url = "https://registry.npmjs.org/@sherif-fanous/pi-catppuccin/-/pi-catppuccin-0.2.0.tgz";
+  flake.grove = {
+    types.user.options.pi.enable = self.lib.mkDisableOption "pi";
+    projectors.user.homeManager =
+      user:
+      {
+        pkgs,
+        inputs',
+        self',
+        ...
+      }:
+      let
+        piCatppuccin = pkgs.fetchzip {
+          hash = "sha256-6+4aPGFds6S5VpdWdqfne0mZscHX9nKqNdDlvx+N7lc=";
+          stripRoot = false;
+          url = "https://registry.npmjs.org/@sherif-fanous/pi-catppuccin/-/pi-catppuccin-0.2.0.tgz";
+        };
+        piHashlineEdit = pkgs.buildNpmPackage rec {
+          dontNpmBuild = true;
+          installPhase = ''
+            runHook preInstall
+            mkdir -p $out
+            cp -r index.ts src prompts README.md LICENSE node_modules $out/
+            runHook postInstall
+          '';
+          npmDepsHash = "sha256-3LimhPRzJm/EoQmbtGHfLtUMTNh7qRUt6DrPOENutAU=";
+          pname = "pi-hashline-edit";
+          postPatch = ''
+            cp ${./pi-hashline-edit/package-lock.json} package-lock.json
+            cp ${./pi-hashline-edit/package.json} package.json
+          '';
+          src = pkgs.fetchFromGitHub {
+            hash = "sha256-ylpq7+rXDk2+c0Lvd73D1rkJ6onHo+1QiCiEbFA8MKY=";
+            owner = "RimuruW";
+            repo = "pi-hashline-edit";
+            rev = "v${version}";
           };
-          piHashlineEdit = pkgs.buildNpmPackage rec {
-            dontNpmBuild = true;
-            installPhase = ''
-              runHook preInstall
-              mkdir -p $out
-              cp -r index.ts src prompts README.md LICENSE node_modules $out/
-              runHook postInstall
-            '';
-            npmDepsHash = "sha256-3LimhPRzJm/EoQmbtGHfLtUMTNh7qRUt6DrPOENutAU=";
-            pname = "pi-hashline-edit";
-            postPatch = ''
-              cp ${./pi-hashline-edit/package-lock.json} package-lock.json
-              cp ${./pi-hashline-edit/package.json} package.json
-            '';
-            src = pkgs.fetchFromGitHub {
-              hash = "sha256-ylpq7+rXDk2+c0Lvd73D1rkJ6onHo+1QiCiEbFA8MKY=";
-              owner = "RimuruW";
-              repo = "pi-hashline-edit";
-              rev = "v${version}";
-            };
-            version = "0.6.0";
-          };
-        in
-        {
-          imports = [ inputs.skills-flake.homeModules.default ];
+          version = "0.6.0";
+        };
+      in
+      {
+        imports = [ inputs.skills-flake.homeModules.default ];
+        config = lib.mkIf user.config.pi.enable {
           home = {
             file = {
               ".pi/agent/extensions" = {
@@ -178,5 +180,6 @@
             };
           };
         };
-    };
+      };
+  };
 }

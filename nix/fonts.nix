@@ -1,34 +1,39 @@
 {
-  flake.aspects.gui =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.fonts ];
-      _.fonts = {
-        homeManager =
-          {
-            pkgs,
-            ...
-          }:
-          {
-            gtk = {
-              enable = true;
-              font = {
-                package = pkgs.fira-code;
-                name = "Fira Code";
-              };
+  lib,
+  self,
+  ...
+}:
+{
+  flake.grove = {
+    types.user.options.fonts.enable = self.lib.mkDisableOption "fonts";
+    projectors.user = {
+      homeManager =
+        user:
+        {
+          pkgs,
+          ...
+        }:
+        lib.mkIf user.config.fonts.enable {
+          gtk = {
+            enable = true;
+            font = {
+              package = pkgs.fira-code;
+              name = "Fira Code";
             };
           };
-        nixos =
-          {
-            pkgs,
-            ...
-          }:
-          {
-            fonts.packages = [
-              pkgs.fira-code
-              pkgs.nerd-fonts.symbols-only
-            ];
-          };
-      };
+        };
+      nixos =
+        user:
+        {
+          pkgs,
+          ...
+        }:
+        lib.mkIf user.config.fonts.enable {
+          fonts.packages = [
+            pkgs.fira-code
+            pkgs.nerd-fonts.symbols-only
+          ];
+        };
     };
+  };
 }

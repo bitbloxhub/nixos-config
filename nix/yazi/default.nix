@@ -1,5 +1,6 @@
 {
   lib,
+  self,
   ...
 }:
 {
@@ -11,17 +12,17 @@
     };
   };
 
-  flake.aspects.cli =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.yazi ];
-      _.yazi.homeManager =
-        {
-          config,
-          pkgs,
-          inputs',
-          ...
-        }:
+  flake.grove = {
+    types.user.options.yazi.enable = self.lib.mkDisableOption "Yazi";
+    projectors.user.homeManager =
+      user:
+      {
+        config,
+        pkgs,
+        inputs',
+        ...
+      }:
+      lib.mkIf user.config.yazi.enable (
         let
           npins = import ./npins;
         in
@@ -161,6 +162,7 @@
               }
             ];
           };
-        };
-    };
+        }
+      );
+  };
 }

@@ -9,18 +9,22 @@ last = ["<defaulted>", "..."]
 sort = true
 
 [attrs]
-first = ["flake-file", "imports", "perSystem", "flake.aspects"]
+first = ["flake-file", "imports", "perSystem", "flake.grove"]
 flatten = true
 merge = true
-
-[[overrides]]
-path = "flake.aspects.**"
-attrs.first = ["includes", "_", "imports", "enable", "package", "settings"]
 
 [[overrides]]
 path = "**.flake-file.inputs.*"
 attrs.first = ["url", "inputs", "flake"]
 
 [[overrides]]
-path = "flake.aspects.**.homeManager"
+path = "flake.grove"
+attrs.first = ["types", "projectors", "overrides", "finalized"]
+
+[[overrides]]
+path = "flake.grove.projectors.**"
+attrs.first = ["imports", "enable", "package", "settings"]
+
+[[overrides]]
+path = "flake.grove.projectors.**.homeManager"
 attrs.last = ["home.persistence"]

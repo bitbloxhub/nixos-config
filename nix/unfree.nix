@@ -3,27 +3,42 @@
   ...
 }:
 {
-  flake.aspects.system =
-    let
-      unfreeModule =
-        { config, ... }:
-        {
-          config.nixpkgs.config.allowUnfreePredicate =
-            pkg: builtins.elem (lib.getName pkg) config.unfree.packages;
-          options.unfree.packages = lib.mkOption {
+  flake.grove = {
+    types = {
+      host.options.unfree = lib.mkOption {
+        default = { };
+        type = lib.types.submodule {
+          options.packages = lib.mkOption {
             default = [ ];
             type = lib.types.listOf lib.types.str;
           };
         };
-    in
-    {
-      _.unfree = unfreePackages: {
-        homeManager.unfree.packages = unfreePackages;
-        nixos.unfree.packages = unfreePackages;
-        systemManager.unfree.packages = unfreePackages;
       };
-      homeManager = unfreeModule;
-      nixos = unfreeModule;
-      systemManager = unfreeModule;
+      user.options.unfree = lib.mkOption {
+        default = { };
+        type = lib.types.submodule {
+          options.packages = lib.mkOption {
+            default = [ ];
+            type = lib.types.listOf lib.types.str;
+          };
+        };
+      };
     };
+    projectors = {
+      host = {
+        nixos = host: {
+          nixpkgs.config.allowUnfreePredicate =
+            pkg: builtins.elem (lib.getName pkg) host.config.unfree.packages;
+        };
+        systemManager = host: {
+          nixpkgs.config.allowUnfreePredicate =
+            pkg: builtins.elem (lib.getName pkg) host.config.unfree.packages;
+        };
+      };
+      user.homeManager = user: {
+        nixpkgs.config.allowUnfreePredicate =
+          pkg: builtins.elem (lib.getName pkg) user.config.unfree.packages;
+      };
+    };
+  };
 }

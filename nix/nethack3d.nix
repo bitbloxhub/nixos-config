@@ -1,5 +1,6 @@
 {
   lib,
+  self,
   ...
 }:
 {
@@ -75,17 +76,16 @@
       };
     };
 
-  flake.aspects.gaming =
-    { aspect, ... }:
-    {
-      includes = [ aspect._.nethack3d ];
-      _.nethack3d.homeManager =
-        {
-          self',
-          ...
-        }:
-        {
-          home.packages = [ self'.packages.nethack3d ];
-        };
-    };
+  flake.grove = {
+    types.user.options.nethack3d.enable = self.lib.mkDisableOption "NetHack 3D";
+    projectors.user.homeManager =
+      user:
+      {
+        self',
+        ...
+      }:
+      lib.mkIf user.config.nethack3d.enable {
+        home.packages = [ self'.packages.nethack3d ];
+      };
+  };
 }

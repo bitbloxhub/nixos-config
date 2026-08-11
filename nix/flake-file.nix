@@ -7,7 +7,6 @@
     inputs = {
       flake-file.url = "github:vic/flake-file";
       crane.url = "github:ipetkov/crane";
-      flake-aspects.url = "github:vic/flake-aspects";
       flake-parts = {
         url = "github:hercules-ci/flake-parts";
         inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -58,7 +57,6 @@
     inputs.flake-file.flakeModules.default
     inputs.flake-file.flakeModules.import-tree
     inputs.flake-parts.flakeModules.modules
-    inputs.flake-aspects.flakeModule
   ];
 
   systems = [

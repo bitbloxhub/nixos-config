@@ -70,33 +70,29 @@ in
       };
     };
 
-  flake.aspects.system =
-    { aspect, ... }:
+  flake.grove.projectors.host.nixos =
+    _host:
     {
-      includes = [ aspect._.nix ];
-      _.nix.nixos =
-        {
-          pkgs,
-          ...
-        }:
-        {
-          nix = {
-            enable = true;
-            package = lib.mkDefault pkgs.lixPackageSets.latest.lix;
-            settings = {
-              inherit substituters trusted-public-keys;
-              accept-flake-config = true;
-              auto-optimize-store = true;
-              experimental-features = [
-                "nix-command"
-                "flakes"
-              ];
-              trusted-users = [
-                "root"
-                "@wheel"
-              ];
-            };
-          };
+      pkgs,
+      ...
+    }:
+    {
+      nix = {
+        enable = true;
+        package = lib.mkDefault pkgs.lixPackageSets.latest.lix;
+        settings = {
+          inherit substituters trusted-public-keys;
+          accept-flake-config = true;
+          auto-optimize-store = true;
+          experimental-features = [
+            "nix-command"
+            "flakes"
+          ];
+          trusted-users = [
+            "root"
+            "@wheel"
+          ];
         };
+      };
     };
 }
