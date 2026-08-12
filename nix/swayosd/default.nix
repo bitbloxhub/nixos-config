@@ -48,6 +48,9 @@
           stylePath = ./style.css;
           topMargin = 0.97;
         };
+        xdg.configFile."swayosd/config.toml".source = (pkgs.formats.toml { }).generate "swayosd-config" {
+          server.show_percentage = true;
+        };
       };
   };
 }
