@@ -88,7 +88,10 @@ in
                 {
                   libsOnly = true;
                 };
-            extraPackages = [ pkgs.mesa ];
+            extraPackages = [
+              pkgs.mesa
+              pkgs.intel-media-driver
+            ];
           };
           systemd = lib.mkMerge [
             {
