@@ -47,7 +47,7 @@
               end
 
               dpms:
-                timeout 30
+                timeout 300
                 command "niri msg action power-off-monitors"
                 resume_command "niri msg action power-on-monitors"
               end
@@ -60,7 +60,7 @@
               end
 
               dpms:
-                timeout 30
+                timeout 300
                 command "niri msg action power-off-monitors"
                 resume_command "niri msg action power-on-monitors"
               end
