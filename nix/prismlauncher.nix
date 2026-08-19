@@ -13,9 +13,14 @@
         pkgs,
         ...
       }:
-      lib.mkIf user.config.prismlauncher.enable {
+      lib.mkIf user.config.prismlauncher.enable (let
+        bw = (inputs.nix-bwrapper.lib.mkNixBwrapper pkgs);
+      in {
         home.packages = [
-          ((inputs.nix-bwrapper.lib.mkNixBwrapper pkgs).bwrapperEval {
+          (bw.bwrapperEval {
+            imports = [
+              bw.bwrapperPresets.desktop
+            ];
             app = {
               package = pkgs.prismlauncher.override {
                 additionalLibs = [ pkgs.libvlc ];
@@ -29,13 +34,12 @@
                 pkgs.fira-code
               ];
             };
-            mounts.read = [
-              "/run/systemd"
-              "/sys/kernel/mm/hugepages"
-              "/sys/kernel/mm/transparent_hugepage"
-            ];
+            flatpak.manifestFile = pkgs.fetchurl {
+              url = "https://raw.githubusercontent.com/flathub/org.prismlauncher.PrismLauncher/067f68f/org.prismlauncher.PrismLauncher.yml";
+              hash = "sha256-1hGHnLClSKsGWu0/LvamvwbTciFqtvSsHgRMGxk834Q=";
+            };
           }).config.build.package
         ];
-      };
+      });
   };
 }

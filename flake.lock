@@ -855,11 +855,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782126860,
-        "narHash": "sha256-i481CCFjPi4Udrodl5y5AbrFGLmSnI4mYEQpUq7F5Yo=",
+        "lastModified": 1785947071,
+        "narHash": "sha256-0c2X7EeLh8GxDdSN/xIXteX8HCDBko/G0lqqT/ebzs4=",
         "owner": "Naxdy",
         "repo": "nix-bwrapper",
-        "rev": "ad48298ec8f582b2362fea1765973c163c3d038a",
+        "rev": "3502ca28c24917092065e282290cc663ab4105f6",
         "type": "github"
       },
       "original": {
