@@ -112,12 +112,13 @@
             cp ${./pi-hashline-edit/package.json} package.json
           '';
           src = pkgs.fetchFromGitHub {
-            hash = "sha256-ylpq7+rXDk2+c0Lvd73D1rkJ6onHo+1QiCiEbFA8MKY=";
-            owner = "RimuruW";
+            hash = "sha256-8oWGbavk9SjC9JgxBW2UGblpdbwQLnDcC1X3izSuN5g=";
+            # owner = "RimuruW"; # Disappeared?
+            owner = "jesseylin";
             repo = "pi-hashline-edit";
             rev = "v${version}";
           };
-          version = "0.6.0";
+          version = "0.8.3";
         };
       in
       {

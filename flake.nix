@@ -45,13 +45,7 @@
     };
     angrr = {
       url = "github:linyinfeng/angrr";
-      inputs = {
-        flake-compat.follows = "";
-        flake-parts.follows = "flake-parts";
-        nix-darwin.follows = "";
-        nixpkgs.follows = "nixpkgs";
-        treefmt-nix.follows = "treefmt-nix";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     betterfox-nix = {
       url = "github:HeitorAugustoLN/betterfox-nix";
@@ -61,6 +55,10 @@
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems";
       };
+    };
+    callpackage-tree = {
+      url = "github:bitbloxhub/callpackage-tree";
+      flake = false;
     };
     catppuccin = {
       url = "github:catppuccin/nix/main";
@@ -116,6 +114,7 @@
       url = "github:firefox-extensions-declarative/firefox-extensions-declarative";
       inputs = {
         actions-nix.follows = "actions-nix";
+        callpackage-tree.follows = "callpackage-tree";
         flake-file.follows = "flake-file";
         flake-parts.follows = "flake-parts";
         flint.follows = "flint";
@@ -152,7 +151,6 @@
       url = "github:cachix/git-hooks.nix";
       inputs = {
         flake-compat.follows = "";
-        gitignore.follows = "gitignore";
         nixpkgs.follows = "nixpkgs";
       };
     };
@@ -286,7 +284,7 @@
       };
     };
     sops-nix = {
-      url = "github:Mic92/sops-nix/pull/779/merge";
+      url = "github:Mic92/sops-nix/pull/970/merge";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     spicetify-nix = {
@@ -316,6 +314,7 @@
     tree-sitter-manager-flake = {
       url = "github:bitbloxhub/tree-sitter-manager-flake";
       inputs = {
+        callpackage-tree.follows = "callpackage-tree";
         flake-file.follows = "flake-file";
         flake-parts.follows = "flake-parts";
         flint.follows = "flint";

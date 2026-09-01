@@ -43,13 +43,7 @@ in
 {
   flake-file.inputs.angrr = {
     url = "github:linyinfeng/angrr";
-    inputs = {
-      flake-compat.follows = "";
-      flake-parts.follows = "flake-parts";
-      nix-darwin.follows = "";
-      nixpkgs.follows = "nixpkgs";
-      treefmt-nix.follows = "treefmt-nix";
-    };
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   flake.grove.projectors.host = {

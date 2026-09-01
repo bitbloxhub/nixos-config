@@ -10,9 +10,6 @@
       ...
     }:
     let
-      appimageContents = pkgs.appimageTools.extractType2 {
-        inherit pname version src;
-      };
       libs = [
         pkgs.glib
         pkgs.nss
@@ -51,13 +48,13 @@
       version = "1.3.2";
     in
     {
-      packages.nethack3d = pkgs.appimageTools.wrapType2 {
+      packages.nethack3d = pkgs.appimageTools.wrapType2 (finalAttrs: {
         inherit pname version src;
         extraInstallCommands = ''
-          install -m 444 -D ${appimageContents}/nethack3d.desktop -t $out/share/applications
+          install -m 444 -D ${finalAttrs.contents}/nethack3d.desktop -t $out/share/applications
           substituteInPlace $out/share/applications/nethack3d.desktop \
             --replace-fail 'Exec=AppRun --no-sandbox %U' "Exec=$out/bin/nethack3d"
-          cp -r ${appimageContents}/usr/share/icons $out/share
+          cp -r ${finalAttrs.contents}/usr/share/icons $out/share
 
           source "${pkgs.makeWrapper}/nix-support/setup-hook"
 
@@ -73,7 +70,7 @@
           platforms = [ "x86_64-linux" ];
         };
         multiPkgs = null;
-      };
+      });
     };
 
   flake.grove = {

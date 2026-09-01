@@ -60,6 +60,10 @@
                     family = "Fira Code";
                     size = 12;
                   };
+                  launcher_window = {
+                    material = "none";
+                    opacity = 1;
+                  };
                   pop_to_root_on_close = true;
                   providers = {
                     "@sovereign/vicinae-extension-awww-switcher-0".preferences.wallpaperPath = ../wallpapers;

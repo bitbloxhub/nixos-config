@@ -15,6 +15,7 @@
       url = "github:bitbloxhub/tree-sitter-manager-flake";
       inputs = {
         flake-file.follows = "flake-file";
+        callpackage-tree.follows = "callpackage-tree";
         flake-parts.follows = "flake-parts";
         flint.follows = "flint";
         import-tree.follows = "import-tree";

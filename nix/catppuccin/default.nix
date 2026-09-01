@@ -101,6 +101,7 @@
               name = "Catppuccin-GTK-Dark";
             };
           };
+          home.pointerCursor.enable = true;
           programs = {
             nushell.extraConfig = ''
               $env.LS_COLORS = (${pkgs.vivid}/bin/vivid generate ${config.programs.vivid.activeTheme})

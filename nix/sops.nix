@@ -6,7 +6,7 @@
 }:
 {
   flake-file.inputs.sops-nix = {
-    url = "github:Mic92/sops-nix/pull/779/merge";
+    url = "github:Mic92/sops-nix/pull/970/merge";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 

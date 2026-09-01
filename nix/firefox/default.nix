@@ -23,6 +23,7 @@
       inputs = {
         flake-file.follows = "flake-file";
         actions-nix.follows = "actions-nix";
+        callpackage-tree.follows = "callpackage-tree";
         flake-parts.follows = "flake-parts";
         flint.follows = "flint";
         git-hooks.follows = "git-hooks";
@@ -96,6 +97,8 @@
               settings = {
                 "apz.overscroll.enabled" = false;
                 "browser.download.useDownloadDir" = false;
+                # TODO: Redo my userchrome to be nova-based
+                "browser.nova.enabled" = false;
                 "browser.search.separatePrivateDefault" = false;
                 # Remove the annoying message about restoring sessions
                 "browser.startup.couldRestoreSession.count" = 2;
