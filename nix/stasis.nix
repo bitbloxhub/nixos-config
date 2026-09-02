@@ -33,40 +33,48 @@
             command = [ "stasis" ];
           }
         ];
-        xdg.configFile."stasis/stasis.rune".text = ''
-          default:
-            enable_loginctl true
-            enable_dbus_inhibit true
+        xdg.configFile."stasis/stasis.rune" = {
+          force = true;
+          text = ''
+            default:
+              enable_loginctl_integration true
+              enable_dbus_inhibit true
+              lid_close_action "${lockCommand}"
+              monitor_media true
+              ignore_remote_media true
+              suspend_inhibit_media [ ]
+              inhibit_apps [ ]
+              suspend_inhibit_apps [ ]
 
-            prepare_sleep_command "${lockCommand}"
 
-            ac:
-              lock_screen:
-                timeout 300
-                command "${lockCommand}"
+              ac:
+                lock_screen:
+                  timeout 300
+                  command "${lockCommand}"
+                end
+
+                dpms:
+                  timeout 300
+                  command "niri msg action power-off-monitors"
+                  resume_command "niri msg action power-on-monitors"
+                end
               end
 
-              dpms:
-                timeout 300
-                command "niri msg action power-off-monitors"
-                resume_command "niri msg action power-on-monitors"
+              battery:
+                lock_screen:
+                  timeout 300
+                  command "${lockCommand}"
+                end
+
+                dpms:
+                  timeout 300
+                  command "niri msg action power-off-monitors"
+                  resume_command "niri msg action power-on-monitors"
+                end
               end
             end
-
-            battery:
-              lock_screen:
-                timeout 300
-                command "${lockCommand}"
-              end
-
-              dpms:
-                timeout 300
-                command "niri msg action power-off-monitors"
-                resume_command "niri msg action power-on-monitors"
-              end
-            end
-          end
-        '';
+          '';
+        };
       };
   };
 }
