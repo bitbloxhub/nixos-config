@@ -32,22 +32,22 @@
               closePopup = true;
               toggles = [
                 {
-                  default_state = true;
+                  default_state = false;
                   enabled = true;
-                  name = "Hide Left Sidebar";
+                  name = "Hide Sidebar";
                   # Fix for nix not doing \u correctly
                   prefix = builtins.fromJSON ''"\u180E"'';
                 }
                 {
                   default_state = false;
                   enabled = true;
-                  name = "Hide Right Sidebar";
+                  name = "Hide Navbar";
                   prefix = builtins.fromJSON ''"\u200B"'';
                 }
                 {
                   default_state = false;
                   enabled = true;
-                  name = "Hide Navbar";
+                  name = "not used";
                   prefix = builtins.fromJSON ''"\u200C"'';
                 }
                 {

@@ -28,8 +28,7 @@ vbox#titlebar {
 	}
 }
 
-#sidebar-container,
-#sb2-main {
+#sidebar-container {
 	background-color: var(--tinted-background-color) !important;
 }
 
@@ -38,8 +37,7 @@ vbox#titlebar {
 }
 
 #sidebar-splitter,
-#sidebar-launcher-splitter,
-#sb2-splitter-pinned {
+#sidebar-launcher-splitter {
 	appearance: none !important;
 	-moz-default-appearance: none !important;
 
@@ -58,19 +56,6 @@ vbox#titlebar {
 
 .browserContainer {
 	border-radius: 0 !important;
-}
-
-/* firefox-second-sidebar fixes */
-html[taskbartab] {
-	#sb2-main,
-	#sb2-splitter-pinned {
-		display: none !important;
-	}
-}
-
-#sb2-splitter-pinned {
-	/* the toolbar is order: 17 */
-	order: 16;
 }
 
 /* floating urlbar from potatofox, see CREDITS.org for link */
@@ -126,13 +111,6 @@ html[taskbartab] {
 }
 
 :root[titlepreface*="\200B"] {
-	#sb2-main,
-	#sb2-splitter-pinned {
-		display: none !important;
-	}
-}
-
-:root[titlepreface*="\200C"] {
 	#navigator-toolbox {
 		display: none !important;
 	}
