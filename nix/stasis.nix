@@ -39,7 +39,7 @@
             default:
               enable_loginctl_integration true
               enable_dbus_inhibit true
-              lid_close_action "${lockCommand}"
+              prepare_sleep_command "${lockCommand}"
               monitor_media true
               ignore_remote_media true
               suspend_inhibit_media [ ]
