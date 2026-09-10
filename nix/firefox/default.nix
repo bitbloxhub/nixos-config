@@ -86,7 +86,11 @@
             };
             betterfox = {
               enable = true;
-              profiles.nix.enableAllSections = true;
+              profiles.nix = {
+                # Breaks about:crashes
+                settings.securefox.crash-reports.enable = false;
+                enableAllSections = true;
+              };
             };
             configPath = ".mozilla/firefox";
             policies.Permissions.Notifications.Allow = [
