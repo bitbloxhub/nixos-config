@@ -1,12 +1,16 @@
 keys:
-    - &extreme-creeper-jonagam ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFKcRyyxNuDUOd9RtuzYevGWKf0iMN0lGSmjc3Wdv3n/
+    - &extreme-creeper-jonahgam ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFKcRyyxNuDUOd9RtuzYevGWKf0iMN0lGSmjc3Wdv3n/
     - &nixos-bill ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP9+Xfs7hetjrxuMkRJVGNNYFIGDjm8IPw7loqL+oiVu
 creation_rules:
-    - path_regex: hosts/extreme-creeper/secrets/jonahgam\.yaml
+    - path_regex: nix/hosts/extreme-creeper/secrets/jonahgam\.yaml
       key_groups:
           - age:
-                - *extreme-creeper-jonagam
-    - path_regex: hosts/nixos-bill/secrets/machine\.yaml
+                - *extreme-creeper-jonahgam
+    - path_regex: nix/hosts/nixos-bill/secrets/machine\.yaml
       key_groups:
           - age:
                 - *nixos-bill
+    - path_regex: nix/gopass/id_ed25519\.sops
+      key_groups:
+          - age:
+                - *extreme-creeper-jonahgam
