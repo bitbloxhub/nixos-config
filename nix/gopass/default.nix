@@ -26,6 +26,9 @@
               version = "1.17.2";
             }
           );
+      treefmt.settings.global.excludes = [
+        "nix/gopass/vicinae/assets/extension_icon.svg"
+      ];
     };
 
   flake.grove = {
@@ -34,14 +37,36 @@
       user:
       {
         config,
+        pkgs,
         self',
         ...
       }:
+      let
+        gopassVicinae = pkgs.stdenv.mkDerivation rec {
+          buildPhase = "pnpm build --out=$out";
+          installPhase = "true";
+          nativeBuildInputs = [
+            pkgs.pnpmConfigHook
+            pkgs.pnpm_11
+            pkgs.nodejs
+          ];
+          pname = "gopass-vicinae";
+          pnpmDeps = pkgs.fetchPnpmDeps {
+            inherit pname src version;
+            fetcherVersion = 4;
+            hash = "sha256-Wkw2Xgmhq9v1ZBszcsqPqpuND+Hxub1gMX+oTrUehcI=";
+            pnpm = pkgs.pnpm_11;
+          };
+          src = ./vicinae;
+          version = "0.1.0";
+        };
+      in
       lib.mkIf user.config.gopass.enable {
         home = {
           packages = [ self'.packages.gopass-latest ];
           persistence."/persistent".directories = [ ".local/share/gopass" ];
         };
+        programs.vicinae.extensions = [ gopassVicinae ];
         xdg.configFile."gopass/config".text = lib.generators.toGitINI {
           age = {
             agent-enabled = false;

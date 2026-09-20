@@ -1,0 +1,46 @@
+{
+	"$schema": "https://raw.githubusercontent.com/vicinaehq/vicinae/refs/heads/main/extra/schemas/extension.json",
+	"name": "gopass",
+	"title": "gopass",
+	"description": "Browse, decrypt, copy, and edit secrets from your gopass vault",
+	"categories": [
+		"Security"
+	],
+	"license": "MIT",
+	"platforms": [
+		"Linux"
+	],
+	"author": "bitbloxhub",
+	"icon": "extension_icon.svg",
+	"commands": [
+		{
+			"name": "gopass",
+			"title": "Search password entries",
+			"subtitle": "gopass",
+			"description": "List and create stored credentials and view and edit their fields",
+			"mode": "view"
+		}
+	],
+	"scripts": {
+		"build": "vici build",
+		"dev": "vici develop"
+	},
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "^11.22.0",
+			"onFail": "download"
+		}
+	},
+	"dependencies": {
+		"@vicinae/api": "0.29.0",
+		"react": "19.3.0",
+		"react-dom": "19.3.0"
+	},
+	"devDependencies": {
+		"@types/node": "26.6.1",
+		"@types/react": "19.3.0",
+		"prettier": "3.9.8",
+		"typescript": "7.0.2"
+	}
+}
