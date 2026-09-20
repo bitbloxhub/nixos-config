@@ -75,6 +75,7 @@
                   "Mod+Ctrl+K".action.move-window-up = { };
                   "Mod+Ctrl+L".action.move-column-right = { };
                   "Mod+Ctrl+Left".action.move-column-left = { };
+                  "Mod+Ctrl+P".action.power-off-monitors = { };
                   "Mod+Ctrl+Page_Down".action.move-column-to-workspace-down = { };
                   "Mod+Ctrl+Page_Up".action.move-column-to-workspace-up = { };
                   "Mod+Ctrl+R".action.reset-window-height = { };
@@ -106,10 +107,6 @@
                   "Mod+Left".action.focus-column-left = { };
                   "Mod+Minus".action.set-column-width = "-10%";
                   "Mod+O".action.toggle-overview = { };
-                  "Mod+P".action.spawn = [
-                    "hyprpicker"
-                    "-an"
-                  ]; # Color Picker
                   "Mod+Page_Down".action.focus-workspace-down = { };
                   "Mod+Page_Up".action.focus-workspace-up = { };
                   "Mod+Period".action.expel-window-from-column = { };
@@ -122,7 +119,10 @@
                   "Mod+Shift+F".action.fullscreen-window = { };
                   "Mod+Shift+I".action.move-workspace-up = { };
                   "Mod+Shift+Minus".action.set-window-height = "-10%";
-                  "Mod+Shift+P".action.power-off-monitors = { };
+                  "Mod+Shift+P".action.spawn = [
+                    "hyprpicker"
+                    "-an"
+                  ]; # Color Picker
                   "Mod+Shift+Page_Down".action.move-workspace-down = { };
                   "Mod+Shift+Page_Up".action.move-workspace-up = { };
                   "Mod+Shift+R".action.switch-preset-window-height = { };

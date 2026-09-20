@@ -49,6 +49,7 @@
                   favicon_service = "twenty";
                   favorites = [
                     "wm:switch-windows"
+                    "@bitbloxhub/gopass-vicinae-0.1.0:gopass"
                     "@yalishanda/kaomoji-search:index"
                     "core:search-emojis"
                     "@sovereign/vicinae-extension-awww-switcher-0:wpgrid"
@@ -112,6 +113,10 @@
                 "Mod+Ctrl+Space".action.spawn = [
                   "vicinae"
                   "vicinae://launch/core/search-emojis"
+                ];
+                "Mod+P".action.spawn = [
+                  "vicinae"
+                  "vicinae://launch/@bitbloxhub/gopass-vicinae-0.1.0/gopass"
                 ];
                 "Mod+Return".action.spawn = [
                   "vicinae"
