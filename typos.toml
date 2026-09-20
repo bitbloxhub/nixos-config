@@ -16,6 +16,8 @@ ist = "ist"
 hda = "hda"
 # nix-storage-plugin Additional Layer Store service name
 als = "als"
+# Look-alikes
+alikes = "alikes"
 
 [default]
 extend-ignore-re = [

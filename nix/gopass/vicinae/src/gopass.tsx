@@ -1,4 +1,5 @@
 import { execFile } from "node:child_process"
+import { randomInt } from "node:crypto"
 import { Fragment, useEffect, useState } from "react"
 import {
 	Action,
@@ -19,6 +20,330 @@ import type {
 } from "@vicinae/api"
 
 const gopass = "gopass"
+
+const maxPasswordLength = 128
+
+type PasswordOptions = {
+	length: number
+	uppercase: boolean
+	lowercase: boolean
+	digits: boolean
+	symbols: boolean
+	extendedAscii: boolean
+	customInclude: string
+	exclude: string
+	excludeLookalikes: boolean
+	pickEveryGroup: boolean
+	hex: boolean
+}
+
+const passwordCharacterSets = {
+	uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+	lowercase: "abcdefghijklmnopqrstuvwxyz",
+	digits: "0123456789",
+	symbols: "!@#$%^&*()-_=+[]{};:,.?/",
+}
+
+function generatePassword(options: PasswordOptions): string {
+	const selectedSets = [
+		options.uppercase ? passwordCharacterSets.uppercase : "",
+		options.lowercase ? passwordCharacterSets.lowercase : "",
+		options.digits ? passwordCharacterSets.digits : "",
+		options.symbols ? passwordCharacterSets.symbols : "",
+		options.extendedAscii
+			? Array.from({ length: 95 }, (_, index) =>
+					String.fromCharCode(161 + index),
+				).join("")
+			: "",
+	].filter(Boolean)
+	const excluded = new Set([
+		...options.exclude,
+		...(options.excludeLookalikes ? "Il1O0o" : ""),
+	])
+	const passwordCharacters = [
+		...new Set([
+			...selectedSets.join(""),
+			...(options.hex ? "0123456789abcdef" : options.customInclude),
+		]),
+	]
+		.filter((character) => !excluded.has(character))
+		.join("")
+	if (!selectedSets.length)
+		throw new Error("Select at least one character type")
+	if (!passwordCharacters.length)
+		throw new Error("No characters remain after exclusions")
+	if (options.length < 1) throw new Error("Length must be positive")
+
+	const characters: string[] = []
+	if (options.pickEveryGroup) {
+		for (const group of selectedSets) {
+			const available = [...group].filter(
+				(character) => !excluded.has(character),
+			)
+			if (available.length) {
+				characters.push(available[randomInt(available.length)]!)
+			}
+		}
+	}
+
+	while (characters.length < options.length) {
+		characters.push(
+			passwordCharacters[randomInt(passwordCharacters.length)]!,
+		)
+	}
+
+	for (let index = characters.length - 1; index > 0; index -= 1) {
+		const swapIndex = randomInt(index + 1)
+		;[characters[index], characters[swapIndex]] = [
+			characters[swapIndex]!,
+			characters[index]!,
+		]
+	}
+	return characters.join("")
+}
+
+function passwordEntropy(options: PasswordOptions): number {
+	const characters = [
+		options.uppercase ? passwordCharacterSets.uppercase : "",
+		options.lowercase ? passwordCharacterSets.lowercase : "",
+		options.digits ? passwordCharacterSets.digits : "",
+		options.symbols ? passwordCharacterSets.symbols : "",
+		options.extendedAscii
+			? Array.from({ length: 95 }, (_, index) =>
+					String.fromCharCode(161 + index),
+				).join("")
+			: "",
+		options.hex ? "0123456789abcdef" : options.customInclude,
+	].join("")
+	const excluded = new Set([
+		...options.exclude,
+		...(options.excludeLookalikes ? "Il1O0o" : ""),
+	])
+	const poolSize = [...new Set(characters)].filter(
+		(character) => !excluded.has(character),
+	).length
+	return poolSize ? options.length * Math.log2(poolSize) : 0
+}
+
+function PasswordGenerator({
+	onGenerated,
+}: {
+	onGenerated: (password: string) => void
+}) {
+	const { pop } = useNavigation()
+	const [options, setOptions] = useState<PasswordOptions>({
+		length: 20,
+		uppercase: true,
+		lowercase: true,
+		digits: true,
+		symbols: true,
+		extendedAscii: false,
+		customInclude: "",
+		exclude: "",
+		excludeLookalikes: true,
+		pickEveryGroup: false,
+		hex: false,
+	})
+	const [generated, setGenerated] = useState(() => generatePassword(options))
+	const [showGenerated, setShowGenerated] = useState(true)
+	useEffect(() => {
+		try {
+			setGenerated(generatePassword(options))
+		} catch {
+			// Keep current password while options are temporarily invalid.
+		}
+	}, [
+		options.length,
+		options.uppercase,
+		options.lowercase,
+		options.digits,
+		options.symbols,
+		options.extendedAscii,
+		options.customInclude,
+		options.exclude,
+		options.excludeLookalikes,
+		options.pickEveryGroup,
+		options.hex,
+	])
+	const entropy = passwordEntropy(options)
+	const quality =
+		entropy >= 100 ? "Excellent" : entropy >= 70 ? "Strong" : "Weak"
+
+	function regenerate() {
+		try {
+			setGenerated(generatePassword(options))
+		} catch (error) {
+			void showToast({
+				style: Toast.Style.Failure,
+				title: "Cannot generate password",
+				message: errorMessage(error),
+			})
+		}
+	}
+
+	return (
+		<Form
+			navigationTitle="Generate password"
+			actions={
+				<ActionPanel>
+					<Action
+						title="Use password"
+						icon={Icon.Checkmark}
+						shortcut={{ key: "enter", modifiers: ["ctrl"] }}
+						onAction={() => {
+							onGenerated(generated)
+							pop()
+						}}
+					/>
+					<Action
+						title={
+							showGenerated ? "Hide password" : "Show password"
+						}
+						icon={showGenerated ? Icon.EyeDisabled : Icon.Eye}
+						shortcut={{ key: "h", modifiers: ["ctrl"] }}
+						onAction={() => setShowGenerated((shown) => !shown)}
+					/>
+					<Action
+						title="Regenerate password"
+						icon={Icon.ArrowClockwise}
+						shortcut={{ key: "r", modifiers: ["ctrl"] }}
+						onAction={regenerate}
+					/>
+				</ActionPanel>
+			}
+		>
+			{showGenerated ? (
+				<Form.TextField
+					id="generated"
+					title="Password"
+					value={generated}
+					onChange={setGenerated}
+				/>
+			) : (
+				<Form.PasswordField
+					id="generated"
+					title="Password"
+					value={generated}
+					onChange={setGenerated}
+				/>
+			)}
+			<Form.Description
+				title="Password quality"
+				text={`${quality} · ${options.length} characters · ${entropy.toFixed(2)} bits entropy`}
+			/>
+			<Form.TextField
+				id="length"
+				title="Length"
+				value={String(options.length)}
+				onChange={(value) => {
+					const length = Number.parseInt(value, 10)
+					if (Number.isInteger(length)) {
+						setOptions((current) => ({
+							...current,
+							length: Math.min(
+								Math.max(length, 1),
+								maxPasswordLength,
+							),
+						}))
+					}
+				}}
+			/>
+			<Form.Separator />
+			<Form.Description
+				title="Character types"
+				text="Select allowed characters"
+			/>
+			<Form.Checkbox
+				id="uppercase"
+				title="A-Z"
+				label="Uppercase letters"
+				value={options.uppercase}
+				onChange={(uppercase) =>
+					setOptions((current) => ({ ...current, uppercase }))
+				}
+			/>
+			<Form.Checkbox
+				id="lowercase"
+				title="a-z"
+				label="Lowercase letters"
+				value={options.lowercase}
+				onChange={(lowercase) =>
+					setOptions((current) => ({ ...current, lowercase }))
+				}
+			/>
+			<Form.Checkbox
+				id="digits"
+				title="0-9"
+				label="Numbers"
+				value={options.digits}
+				onChange={(digits) =>
+					setOptions((current) => ({ ...current, digits }))
+				}
+			/>
+			<Form.Checkbox
+				id="symbols"
+				title="/ * + & ..."
+				label="Symbols"
+				value={options.symbols}
+				onChange={(symbols) =>
+					setOptions((current) => ({ ...current, symbols }))
+				}
+			/>
+			<Form.Checkbox
+				id="extended-ascii"
+				title="Extended ASCII"
+				label="Extended ASCII characters"
+				value={options.extendedAscii}
+				onChange={(extendedAscii) =>
+					setOptions((current) => ({ ...current, extendedAscii }))
+				}
+			/>
+			<Form.TextField
+				id="custom-include"
+				title="Also choose from"
+				value={options.customInclude}
+				onChange={(customInclude) =>
+					setOptions((current) => ({ ...current, customInclude }))
+				}
+			/>
+			<Form.TextField
+				id="exclude"
+				title="Do not include"
+				value={options.exclude}
+				onChange={(exclude) =>
+					setOptions((current) => ({ ...current, exclude }))
+				}
+			/>
+			<Form.Checkbox
+				id="hex"
+				title="Hex"
+				label="Hexadecimal"
+				value={options.hex}
+				onChange={(hex) =>
+					setOptions((current) => ({ ...current, hex }))
+				}
+			/>
+			<Form.Checkbox
+				id="exclude-lookalikes"
+				title="Look-alikes"
+				label="Exclude I, l, 1, O, 0, o"
+				value={options.excludeLookalikes}
+				onChange={(excludeLookalikes) =>
+					setOptions((current) => ({ ...current, excludeLookalikes }))
+				}
+			/>
+			<Form.Checkbox
+				id="pick-every-group"
+				title="Every group"
+				label="Pick from each selected group"
+				value={options.pickEveryGroup}
+				onChange={(pickEveryGroup) =>
+					setOptions((current) => ({ ...current, pickEveryGroup }))
+				}
+			/>
+		</Form>
+	)
+}
 
 type Entry = {
 	path: string
@@ -233,6 +558,9 @@ async function saveEntry(path: string, content: string): Promise<void> {
 
 function EntryForm({ entry, onSaved }: { entry?: Entry; onSaved: () => void }) {
 	const [isLoading, setIsLoading] = useState(false)
+	const [passwordValue, setPasswordValue] = useState(() =>
+		entry ? parseSecret(entry.content ?? "").password : "",
+	)
 	const { pop } = useNavigation()
 	const initial = entry ? parseSecret(entry.content ?? "") : undefined
 	const initialHiddenKeys = hiddenKeys(initial?.fields ?? [])
@@ -308,6 +636,14 @@ function EntryForm({ entry, onSaved }: { entry?: Entry; onSaved: () => void }) {
 						title={isEditing ? "Save entry" : "Create entry"}
 						onSubmit={submit}
 					/>
+					<Action.Push
+						title="Generate password"
+						icon={Icon.Key}
+						shortcut={{ key: "g", modifiers: ["ctrl"] }}
+						target={
+							<PasswordGenerator onGenerated={setPasswordValue} />
+						}
+					/>
 					<Action
 						title="Add field"
 						icon={Icon.Plus}
@@ -343,7 +679,8 @@ function EntryForm({ entry, onSaved }: { entry?: Entry; onSaved: () => void }) {
 			<Form.PasswordField
 				id="password"
 				title="Password"
-				defaultValue={initial?.password}
+				value={passwordValue}
+				onChange={setPasswordValue}
 			/>
 			<Form.Separator />
 			{fields.map((field, index) => (
@@ -399,6 +736,7 @@ function FieldForm({
 	onSaved: (password: string, fields: SecretField[]) => void
 }) {
 	const [isLoading, setIsLoading] = useState(false)
+	const [passwordValue, setPasswordValue] = useState(password)
 	const { pop } = useNavigation()
 
 	async function submit(values: FormTypes.Values) {
@@ -471,6 +809,18 @@ function FieldForm({
 						title={field ? "Save field" : "Add field"}
 						onSubmit={submit}
 					/>
+					{passwordMode ? (
+						<Action.Push
+							title="Generate password"
+							icon={Icon.Key}
+							shortcut={{ key: "g", modifiers: ["ctrl"] }}
+							target={
+								<PasswordGenerator
+									onGenerated={setPasswordValue}
+								/>
+							}
+						/>
+					) : null}
 				</ActionPanel>
 			}
 		>
@@ -485,7 +835,8 @@ function FieldForm({
 				<Form.PasswordField
 					id="value"
 					title="Password"
-					defaultValue={password}
+					value={passwordValue}
+					onChange={setPasswordValue}
 				/>
 			) : (
 				<Form.TextArea
