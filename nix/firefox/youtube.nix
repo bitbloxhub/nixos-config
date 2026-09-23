@@ -31,13 +31,17 @@
           policies = {
             "3rdparty".Extensions = {
               ${dearrow-declarative.extensionId} = {
+                casualMode = true;
+                countReplacements = false;
                 shouldCleanEmojis = false;
                 showDonationLink = false;
                 showUpsells = false;
+                titleFormatting = -1;
               };
               ${sponsorblock-declarative.extensionId} = {
                 showDonationLink = false;
                 showUpsells = false;
+                trackViewCountInPrivate = false;
               };
             };
             ExtensionSettings = {
