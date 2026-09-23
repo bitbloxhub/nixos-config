@@ -136,7 +136,6 @@
                       "urlbar-container"
                       "vertical-spacer"
                       "userchrome-toggle-extended_n2ezr_ru-browser-action"
-                      "keepassxc-browser_keepassxc_org-browser-action"
                       "tab-session-manager_sienori-browser-action"
                       "_aecec67f-0d10-4fa7-b7c7-609a2db280cf_-browser-action"
                       "_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action"
@@ -172,7 +171,6 @@
                     "developer-button"
                     "new-web-panel"
                     "screenshot-button"
-                    "keepassxc-browser_keepassxc_org-browser-action"
                   ];
                 };
                 "browser.urlbar.trimHttps" = lib.mkForce false;
@@ -201,7 +199,7 @@
               };
               extensions.packages = with inputs'.firefox-addons.packages; [
                 tab-session-manager
-                keepassxc-browser
+                # keepassxc-browser
               ];
               id = 0;
               isDefault = true;
