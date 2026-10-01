@@ -79,6 +79,7 @@
       }:
       {
         imports = [ wlib.wrapperModules.neovim ];
+        hosts.ruby.nvim-host.enable = false;
         runtimePkgs = with pkgs; [
           typos-lsp
           basedpyright
