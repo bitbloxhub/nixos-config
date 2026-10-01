@@ -1,6 +1,3 @@
-[submodule "nix/wezterm/resurrect.wezterm"]
-	path = nix/wezterm/resurrect.wezterm
-	url = https://github.com/MLFlexer/resurrect.wezterm
 [submodule "nix/wezterm/wezterm-types"]
 	path = nix/wezterm/wezterm-types
 	url = https://github.com/DrKJeff16/wezterm-types
