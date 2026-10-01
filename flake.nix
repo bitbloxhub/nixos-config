@@ -102,6 +102,14 @@
         utils.follows = "flake-utils";
       };
     };
+    fast-nix-gc = {
+      url = "github:Mic92/fast-nix-gc";
+      inputs = {
+        nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
