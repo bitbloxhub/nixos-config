@@ -10,33 +10,31 @@
     flake = false;
   };
 
-  perSystem =
-    _:
-    {
-      # treefmt.settings.formatter."elisp-autofmt" = {
-      #   command = pkgs.bash;
-      #   includes = [ "**/*.el" ];
-      #   options = [
-      #     "-euc"
-      #     ''
-      #       autofmt_el="$(echo ${pkgs.emacsPackages.elisp-autofmt}/share/emacs/site-lisp/elpa/elisp-autofmt-*/elisp-autofmt.el)"
-      #       for f in "$@"; do
-      #         ELISP_AUTOFMT_FILE="$f" ${pkgs.emacs}/bin/emacs --batch --quick \
-      #           --eval "(progn
-      #             (load-file \"$autofmt_el\")
-      #             (setq elisp-autofmt-python-bin \"${pkgs.python3}/bin/python3\")
-      #             (setq elisp-autofmt-cache-directory (expand-file-name \"elisp-autofmt-cache\" temporary-file-directory))
-      #             (let ((file (getenv \"ELISP_AUTOFMT_FILE\")))
-      #               (find-file file)
-      #               (emacs-lisp-mode)
-      #               (elisp-autofmt-buffer)
-      #               (save-buffer)))"
-      #       done
-      #     ''
-      #     "--"
-      #   ];
-      # };
-    };
+  perSystem = {
+    # treefmt.settings.formatter."elisp-autofmt" = {
+    #   command = pkgs.bash;
+    #   includes = [ "**/*.el" ];
+    #   options = [
+    #     "-euc"
+    #     ''
+    #       autofmt_el="$(echo ${pkgs.emacsPackages.elisp-autofmt}/share/emacs/site-lisp/elpa/elisp-autofmt-*/elisp-autofmt.el)"
+    #       for f in "$@"; do
+    #         ELISP_AUTOFMT_FILE="$f" ${pkgs.emacs}/bin/emacs --batch --quick \
+    #           --eval "(progn
+    #             (load-file \"$autofmt_el\")
+    #             (setq elisp-autofmt-python-bin \"${pkgs.python3}/bin/python3\")
+    #             (setq elisp-autofmt-cache-directory (expand-file-name \"elisp-autofmt-cache\" temporary-file-directory))
+    #             (let ((file (getenv \"ELISP_AUTOFMT_FILE\")))
+    #               (find-file file)
+    #               (emacs-lisp-mode)
+    #               (elisp-autofmt-buffer)
+    #               (save-buffer)))"
+    #       done
+    #     ''
+    #     "--"
+    #   ];
+    # };
+  };
 
   # even though emacs is technically an OS, it goes under the editors aspect.
   flake.grove = {
