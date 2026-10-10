@@ -282,7 +282,23 @@ export async function startNotifications(): Promise<NotificationService> {
 
 	try {
 		bus = dbus.sessionBus()
-		const result = await bus.requestName(notificationBusName, dbus.NameFlag.DO_NOT_QUEUE)
+		let result = await bus.requestName(
+			notificationBusName,
+			dbus.NameFlag.DO_NOT_QUEUE,
+		)
+		for (let attempt = 0; attempt < 20; attempt++) {
+			if (
+				result === dbus.RequestNameReply.PRIMARY_OWNER ||
+				result === dbus.RequestNameReply.ALREADY_OWNER
+			)
+				break
+
+			await new Promise((resolve) => setTimeout(resolve, 100))
+			result = await bus.requestName(
+				notificationBusName,
+				dbus.NameFlag.DO_NOT_QUEUE,
+			)
+		}
 		if (
 			result !== dbus.RequestNameReply.PRIMARY_OWNER &&
 			result !== dbus.RequestNameReply.ALREADY_OWNER
