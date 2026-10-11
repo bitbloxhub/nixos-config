@@ -8,11 +8,23 @@
     types.user.options.hyprlock.enable = self.lib.mkDisableOption "Hyprlock";
     projectors.user.homeManager =
       user:
+      {
+        pkgs,
+        ...
+      }:
+      let
+        hyprlock = pkgs.hyprlock.overrideAttrs (old: {
+          patches = (old.patches or [ ]) ++ [
+            ./fingerprint-resume.patch
+          ];
+        });
+      in
       lib.mkIf (user.config.hyprlock.enable && user.config.niri.enable) {
         catppuccin.hyprlock.enable = false;
         programs = {
           hyprlock = {
             enable = true;
+            package = hyprlock;
             settings = {
               auth = {
                 fingerprint.enabled = true;

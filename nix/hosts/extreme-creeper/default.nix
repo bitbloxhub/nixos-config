@@ -26,52 +26,58 @@ in
           imports = [
             inputs.nix-system-graphics.systemModules.default
           ];
-          # initramfs patch for bind-mounting /nix
-          # Run `sudo update-initramfs -u -k all` after changing
-          environment.etc."initramfs-tools/scripts/local-bottom/mount-nix" = {
-            mode = "0755";
-            text =
-              # sh
-              ''
-                #!/bin/sh
-                set -eu
+          environment.etc = {
+            # initramfs patch for bind-mounting /nix
+            # Run `sudo update-initramfs -u -k all` after changing
+            "initramfs-tools/scripts/local-bottom/mount-nix" = {
+              mode = "0755";
+              text =
+                # sh
+                ''
+                  #!/bin/sh
+                  set -eu
 
-                PREREQ=""
+                  PREREQ=""
 
-                prereqs() {
-                  echo "$PREREQ"
-                }
+                  prereqs() {
+                    echo "$PREREQ"
+                  }
 
-                case "''${1:-}" in
-                  prereqs)
-                    prereqs
-                    exit 0
-                    ;;
-                esac
+                  case "''${1:-}" in
+                    prereqs)
+                      prereqs
+                      exit 0
+                      ;;
+                  esac
 
-                . /scripts/functions
+                  . /scripts/functions
 
-                rootmnt="''${rootmnt:-/root}"
+                  rootmnt="''${rootmnt:-/root}"
 
-                device="/dev/mapper/crypt-wd-blue-2tb"
-                backing="$rootmnt/mnt/wd-blue-2tb"
-                nix="$rootmnt/nix"
+                  device="/dev/mapper/crypt-wd-blue-2tb"
+                  backing="$rootmnt/mnt/wd-blue-2tb"
+                  nix="$rootmnt/nix"
 
-                [ -b "$device" ] || panic "$device was not unlocked"
+                  [ -b "$device" ] || panic "$device was not unlocked"
 
-                mkdir -p "$backing" "$nix"
+                  mkdir -p "$backing" "$nix"
 
-                mount -t ext4 \
-                  -o noatime,nosuid,nodev,errors=remount-ro \
-                  "$device" "$backing" \
-                  || panic "failed to mount $device"
+                  mount -t ext4 \
+                    -o noatime,nosuid,nodev,errors=remount-ro \
+                    "$device" "$backing" \
+                    || panic "failed to mount $device"
 
-                mount -o bind "$backing/nix" "$nix" \
-                  || panic "failed to bind-mount /nix"
+                  mount -o bind "$backing/nix" "$nix" \
+                    || panic "failed to bind-mount /nix"
 
-                mount -o remount,bind,nosuid,nodev "$nix" \
-                  || panic "failed to apply /nix bind-mount flags"
-              '';
+                  mount -o remount,bind,nosuid,nodev "$nix" \
+                    || panic "failed to apply /nix bind-mount flags"
+                '';
+            };
+            "systemd/logind.conf.d/stasis-lid.conf".text = ''
+              [Login]
+              HandleLidSwitch=ignore
+            '';
           };
           nixpkgs.hostPlatform = "x86_64-linux";
           system-graphics = {

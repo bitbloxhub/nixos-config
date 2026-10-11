@@ -1089,11 +1089,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787709353,
-        "narHash": "sha256-jlHw4wuIxCZ9NWRYLKkFvV95p6sEtqe5Jr66AVykjzk=",
+        "lastModified": 1788573661,
+        "narHash": "sha256-nDAJ7Th/e08LPseucE9lBfcNgZUURdlrI9IShm86WZM=",
         "owner": "Swarsel",
         "repo": "pedantix",
-        "rev": "df5823a5bc20cbed07b62aa437838186df97e7b8",
+        "rev": "b78f55ac88a0ecf2f809e7d5c45a88e5f2337697",
         "type": "github"
       },
       "original": {
