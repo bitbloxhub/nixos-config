@@ -139,18 +139,13 @@
                 source = piHashlineEdit;
               };
               ".pi/agent/settings.json".text = builtins.toJSON {
-                defaultModel = "gpt-5.6-luna";
+                defaultModel = "gpt-6-luna";
                 defaultProvider = "openai-codex";
                 defaultThinkingLevel = "medium";
                 enableInstallTelemetry = false;
                 enabledModels = [
-                  "openrouter/z-ai/glm-5"
-                  "openrouter/moonshotai/kimi-k2.5"
-                  "openrouter/minimax/minimax-m2.7"
-                  "openrouter/openai/gpt-oss-120b"
-                  "openrouter/mistralai/mistral-small-2603"
-                  "openai-codex/gpt-5.6-luna"
-                  "openai-codex/gpt-5.6-terra"
+                  "openai-codex/gpt-6-luna"
+                  "openai-codex/gpt-6.1-sol"
                 ];
                 followUpMode = "all";
                 hideThinkingBlock = false;
