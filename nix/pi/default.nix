@@ -151,6 +151,7 @@
                 hideThinkingBlock = false;
                 steeringMode = "all";
                 theme = "catppuccin-mocha";
+                agentRoam.reflection.onCompaction = false; # reflection is useless and a waste of tokens, i need to replace agent-roam
               };
               ".pi/agent/themes/catppuccin-mocha.json".source =
                 piCatppuccin + "/package/themes/catppuccin-mocha.json";
