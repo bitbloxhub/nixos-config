@@ -139,6 +139,7 @@
                 source = piHashlineEdit;
               };
               ".pi/agent/settings.json".text = builtins.toJSON {
+                agentRoam.reflection.onCompaction = false; # reflection is useless and a waste of tokens, i need to replace agent-roam
                 defaultModel = "gpt-6-luna";
                 defaultProvider = "openai-codex";
                 defaultThinkingLevel = "medium";
@@ -151,7 +152,6 @@
                 hideThinkingBlock = false;
                 steeringMode = "all";
                 theme = "catppuccin-mocha";
-                agentRoam.reflection.onCompaction = false; # reflection is useless and a waste of tokens, i need to replace agent-roam
               };
               ".pi/agent/themes/catppuccin-mocha.json".source =
                 piCatppuccin + "/package/themes/catppuccin-mocha.json";

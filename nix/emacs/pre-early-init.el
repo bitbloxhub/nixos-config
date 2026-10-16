@@ -7,6 +7,14 @@
       (expand-file-name "elpa" minimal-emacs-var-dir))
 (setq user-emacs-directory minimal-emacs-var-dir)
 
+;; Native compilation may create the writable ~/.local/state/nix/profile from NIX_PROFILES.
+;; Nix's shell init prefers that existing path over ~/.nix-profile, so shells lose
+;; the real profile's bin from PATH.
+(when (boundp 'native-comp-eln-load-path)
+  (let ((eln-cache (expand-file-name "eln-cache" minimal-emacs-var-dir)))
+    (setq native-comp-eln-load-path
+          (cons eln-cache (delete eln-cache native-comp-eln-load-path)))))
+
 (defun display-startup-time ()
   "Display the startup time and number of garbage collections."
   (message

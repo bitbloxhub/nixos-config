@@ -140,7 +140,7 @@
                 };
                 nix-storage-plugin-registry = {
                   description = "nix-storage-plugin registry adapter";
-                  path = [ pkgs.lix ];
+                  path = [ pkgs.lixPackageSets.lix_2_96.lix ];
                   serviceConfig = {
                     Environment = [ "RUST_LOG=debug" ];
                     ExecStart = "${inputs'.nix-storage-plugin.packages.default}/bin/nix-storage-plugin serve-image --bind 127.0.0.1:${toString port}";

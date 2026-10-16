@@ -9,6 +9,7 @@
       url = "github:vicinaehq/vicinae";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+        soulver-cpp.follows = ""; # MacOS only, closed-source, also adds an additional nixpkgs
         systems.follows = "systems";
       };
     };

@@ -36,6 +36,12 @@
         inputs = {
           nixpkgs.follows = "nixpkgs";
           nuschtosSearch.follows = "";
+          sscli.inputs = {
+            crane.follows = "crane";
+            fenix.follows = "fenix";
+            nixpkgs.follows = "nixpkgs";
+            treefmt-nix.follows = "treefmt-nix";
+          };
           treefmt-nix.follows = "treefmt-nix";
         };
       };

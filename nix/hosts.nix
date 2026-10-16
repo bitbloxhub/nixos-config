@@ -21,7 +21,9 @@
           {
             imports = map (userId: self.grove.finalized.user.nixos.${userId}) host.config.users;
           };
-        systemManager = _host: { };
+        systemManager = host: {
+          imports = map (userId: self.grove.finalized.user.systemManager.${userId}) host.config.users;
+        };
       };
     };
     lib.configs = {

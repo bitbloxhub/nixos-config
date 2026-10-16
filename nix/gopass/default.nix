@@ -4,32 +4,9 @@
   ...
 }:
 {
-  perSystem =
-    {
-      pkgs,
-      ...
-    }:
-    {
-      packages.gopass-latest =
-        lib.warnIf (lib.versionAtLeast pkgs.gopass.version "1.17.2")
-          "gopass is now 1.17.2 or newer; remove the local override"
-          pkgs.gopass.overrideAttrs
-          (
-            finalAttrs: _oldAttrs: {
-              src = pkgs.fetchFromGitHub {
-                hash = "sha256-BzYy6STOldUZexty8af3RJy6QD7qsTuN7CC8j04V57c=";
-                owner = "gopasspw";
-                repo = "gopass";
-                rev = "v${finalAttrs.version}";
-              };
-              vendorHash = "sha256-/NW9/lul/ytz8otXqNeJcqbKBBWMJ3wKGrrQciEcXhE=";
-              version = "1.17.2";
-            }
-          );
-      treefmt.settings.global.excludes = [
-        "nix/gopass/vicinae/assets/extension_icon.svg"
-      ];
-    };
+  perSystem.treefmt.settings.global.excludes = [
+    "nix/gopass/vicinae/assets/extension_icon.svg"
+  ];
 
   flake.grove = {
     types.user.options.gopass.enable = self.lib.mkDisableOption "gopass";
@@ -38,7 +15,6 @@
       {
         config,
         pkgs,
-        self',
         ...
       }:
       let
@@ -63,7 +39,7 @@
       in
       lib.mkIf user.config.gopass.enable {
         home = {
-          packages = [ self'.packages.gopass-latest ];
+          packages = [ pkgs.gopass ];
           persistence."/persistent".directories = [ ".local/share/gopass" ];
         };
         programs.vicinae.extensions = [ gopassVicinae ];

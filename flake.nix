@@ -1,4 +1,4 @@
-# DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
+# DO-NOT-EDIT. This file was auto-generated using github:denful/flake-file.
 # Use `nix run .#write-flake` to regenerate it.
 {
   outputs =
@@ -229,6 +229,12 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         nuschtosSearch.follows = "";
+        sscli.inputs = {
+          crane.follows = "crane";
+          fenix.follows = "fenix";
+          nixpkgs.follows = "nixpkgs";
+          treefmt-nix.follows = "treefmt-nix";
+        };
         treefmt-nix.follows = "treefmt-nix";
       };
     };
@@ -340,6 +346,7 @@
       url = "github:vicinaehq/vicinae";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+        soulver-cpp.follows = "";
         systems.follows = "systems";
       };
     };
