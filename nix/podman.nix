@@ -11,13 +11,13 @@
       crate2nix.follows = "crate2nix";
       fenix.follows = "fenix";
       flake-parts.follows = "flake-parts";
+      git-hooks-nix.follows = "git-hooks";
       hegel.follows = "";
       import-tree.follows = "import-tree";
       make-shell.follows = "make-shell";
       nixpkgs.follows = "nixpkgs";
-      treefmt-nix.follows = "treefmt-nix";
       pedantix.follows = "pedantix";
-      git-hooks-nix.follows = "git-hooks";
+      treefmt-nix.follows = "treefmt-nix";
     };
   };
 
