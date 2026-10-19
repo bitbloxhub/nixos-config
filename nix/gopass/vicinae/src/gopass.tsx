@@ -456,7 +456,7 @@ function parseSecret(content: string): SecretFields {
 			let nextIndex = index + 1
 			while (nextIndex < lines.length) {
 				const next = lines[nextIndex]
-				if (!next?.trim() || (key !== "notes" && isField(next))) break
+				if (!next?.trim() || isField(next)) break
 				continuation.push(next.trim())
 				nextIndex += 1
 			}
