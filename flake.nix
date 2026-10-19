@@ -249,11 +249,12 @@
         fenix.follows = "fenix";
         flake-file.follows = "flake-file";
         flake-parts.follows = "flake-parts";
-        flint.follows = "flint";
+        git-hooks-nix.follows = "git-hooks";
         hegel.follows = "";
         import-tree.follows = "import-tree";
         make-shell.follows = "make-shell";
         nixpkgs.follows = "nixpkgs";
+        pedantix.follows = "pedantix";
         treefmt-nix.follows = "treefmt-nix";
       };
     };
