@@ -14,13 +14,15 @@
           ...
         }:
         lib.mkIf user.config.fonts.enable {
+          fonts.fontconfig.enable = true;
           gtk = {
             enable = true;
-            font = {
-              package = pkgs.fira-code;
-              name = "Fira Code";
-            };
+            font.name = "Fira Code";
           };
+          home.packages = [
+            pkgs.fira-code
+            pkgs.nerd-fonts.symbols-only
+          ];
         };
       nixos =
         user:
