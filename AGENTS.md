@@ -11,6 +11,7 @@ This repository contains multi-host NixOS configurations managed with `flake-par
 - **Host/User Attachment**: User IDs always use `username@host` format. Configure attachments with `host.<name>.users = [ "username@host" ];`. Do not add `hostname` to user instances.
 - **Flake Inputs**: Modularize flake inputs. Define `flake-file.inputs` in the module that needs them.
 - **Flake Generation**: Do NOT edit `flake.nix` manually. Update source modules, then run `nix run .#write-flake`.
+- **Deployment**: Never run rebuild, switch, or equivalent deployment commands directly. Deploy host changes only with `sjust deploy`, and only after explicit user approval.
 - **Commit Style**: Use conventional commits (e.g., `feat:`, `fix:`, `chore:`, `docs:`).
 - **Nix Formatting Style**: For NixOS, system-manager, and Home Manager module functions, keep arguments split across multiple lines.
 - **Nix Spacing Style**: Preserve intentional blank lines between logical sections.
