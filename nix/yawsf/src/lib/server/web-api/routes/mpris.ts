@@ -1,7 +1,7 @@
 import { Elysia } from "elysia"
 import { z } from "zod"
 
-import { mprisPlayersSchema } from "$lib/types"
+import { mprisPlayersSchema, mprisSourceSchema, mprisSourceSelectionSchema } from "$lib/types"
 import { services } from "$lib/server/services"
 import { eventStream } from "$lib/server/web-api/event-stream"
 import { toOpenApiSchema } from "$lib/server/web-api/openapi"
@@ -19,6 +19,21 @@ export const mprisRoutes = (app: Elysia) =>
 			detail: { operationId: "listMprisPlayers", tags: ["mpris"] },
 			response: mprisPlayersSchema,
 		})
+		.put(
+			"/mpris/source",
+			({ body, status }) => {
+				const mpris = services()?.mpris
+				if (!mpris) return status(503, "MPRIS unavailable")
+
+				mpris.setSource(body.serviceName)
+				return { ok: true as const }
+			},
+			{
+				body: mprisSourceSelectionSchema,
+				detail: { operationId: "setMprisSource", tags: ["mpris"] },
+				response: { 200: commandResultSchema, 503: z.string() },
+			},
+		)
 		.post(
 			"/mpris/:serviceName/actions/:action",
 			async ({ params, body, status }) => {
@@ -58,6 +73,29 @@ export const mprisRoutes = (app: Elysia) =>
 								},
 							},
 							description: "MPRIS player updates",
+						},
+						503: { description: "MPRIS unavailable" },
+					},
+					tags: ["mpris"],
+				},
+			},
+		)
+		.get(
+			"/mpris/source/events",
+			({ request, status }) => {
+				const mpris = services()?.mpris
+				if (!mpris) return status(503, "MPRIS unavailable")
+				return eventStream(request, "source", (emit) => mpris.subscribeSource(emit))
+			},
+			{
+				detail: {
+					operationId: "streamMprisSource",
+					responses: {
+						200: {
+							content: {
+								"text/event-stream": { schema: toOpenApiSchema(mprisSourceSchema) },
+							},
+							description: "MPRIS source updates",
 						},
 						503: { description: "MPRIS unavailable" },
 					},

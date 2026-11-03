@@ -48,6 +48,9 @@ import type {
 	ResizeNotificationsData,
 	ResizeNotificationsErrors,
 	ResizeNotificationsResponses,
+	SetMprisSourceData,
+	SetMprisSourceErrors,
+	SetMprisSourceResponses,
 	ShutdownSystemData,
 	ShutdownSystemResponses,
 	StreamCavaData,
@@ -58,6 +61,10 @@ import type {
 	StreamMprisPlayersErrors,
 	StreamMprisPlayersResponse,
 	StreamMprisPlayersResponses,
+	StreamMprisSourceData,
+	StreamMprisSourceErrors,
+	StreamMprisSourceResponse,
+	StreamMprisSourceResponses,
 	StreamNiriEventsData,
 	StreamNiriEventsErrors,
 	StreamNiriEventsResponse,
@@ -96,9 +103,12 @@ import {
 	zRebootSystemResponse,
 	zResizeNotificationsBody,
 	zResizeNotificationsResponse,
+	zSetMprisSourceBody,
+	zSetMprisSourceResponse,
 	zShutdownSystemResponse,
 	zStreamCavaResponse,
 	zStreamMprisPlayersResponse,
+	zStreamMprisSourceResponse,
 	zStreamNiriEventsResponse,
 	zStreamNotificationsQuery,
 	zStreamNotificationsResponse,
@@ -157,6 +167,27 @@ export const listMprisPlayers = <ThrowOnError extends boolean = false>(
 		...options,
 	})
 
+export const setMprisSource = <ThrowOnError extends boolean = false>(
+	options: Options<SetMprisSourceData, ThrowOnError>,
+): RequestResult<SetMprisSourceResponses, SetMprisSourceErrors, ThrowOnError> =>
+	(options.client ?? client).put<SetMprisSourceResponses, SetMprisSourceErrors, ThrowOnError>({
+		requestValidator: async (data) =>
+			await z
+				.object({
+					body: zSetMprisSourceBody,
+					path: z.never().optional(),
+					query: z.never().optional(),
+				})
+				.parseAsync(data),
+		responseValidator: async (data) => await zSetMprisSourceResponse.parseAsync(data),
+		url: "/api/mpris/source",
+		...options,
+		headers: {
+			"Content-Type": "application/json",
+			...options.headers,
+		},
+	})
+
 export const actOnMprisPlayer = <ThrowOnError extends boolean = false>(
 	options: Options<ActOnMprisPlayerData, ThrowOnError>,
 ): RequestResult<ActOnMprisPlayerResponses, ActOnMprisPlayerErrors, ThrowOnError> =>
@@ -200,6 +231,27 @@ export const streamMprisPlayers = <ThrowOnError extends boolean = false>(
 				.parseAsync(data),
 		responseValidator: async (data) => await zStreamMprisPlayersResponse.parseAsync(data),
 		url: "/api/mpris/events",
+		...options,
+	})
+
+export const streamMprisSource = <ThrowOnError extends boolean = false>(
+	options?: Options<StreamMprisSourceData, ThrowOnError, StreamMprisSourceResponse>,
+): Promise<ServerSentEventsResult<StreamMprisSourceResponses>> =>
+	(options?.client ?? client).sse.get<
+		StreamMprisSourceResponses,
+		StreamMprisSourceErrors,
+		ThrowOnError
+	>({
+		requestValidator: async (data) =>
+			await z
+				.object({
+					body: z.never().optional(),
+					path: z.never().optional(),
+					query: z.never().optional(),
+				})
+				.parseAsync(data),
+		responseValidator: async (data) => await zStreamMprisSourceResponse.parseAsync(data),
+		url: "/api/mpris/source/events",
 		...options,
 	})
 

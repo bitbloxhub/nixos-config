@@ -27,6 +27,17 @@ export const zListMprisPlayersResponse = z.array(
 	}),
 )
 
+export const zSetMprisSourceBody = z.object({
+	serviceName: z.string().nullable(),
+})
+
+/**
+ * Response for status 200
+ */
+export const zSetMprisSourceResponse = z.object({
+	ok: z.literal(true),
+})
+
 export const zActOnMprisPlayerBody = z.object({
 	offset: z.number().optional(),
 })
@@ -63,6 +74,14 @@ export const zStreamMprisPlayersResponse = z.array(
 		canGoPrevious: z.boolean(),
 	}),
 )
+
+/**
+ * MPRIS source updates
+ */
+export const zStreamMprisSourceResponse = z.object({
+	serviceName: z.string().nullable(),
+	lastPlayingServiceName: z.string().nullable(),
+})
 
 /**
  * Response for status 200

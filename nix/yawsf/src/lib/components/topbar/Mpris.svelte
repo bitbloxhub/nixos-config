@@ -4,8 +4,10 @@
 	import { onMount } from "svelte"
 	import { animate } from "animejs"
 	import Icon from "@iconify/svelte"
-	import { streamMprisPlayers } from "$lib/web-api/sdk.gen"
+	import { streamMprisPlayers, streamMprisSource } from "$lib/web-api/sdk.gen"
 	import type { StreamMprisPlayersResponse } from "$lib/web-api/types.gen"
+	import { activeMprisPlayer, defaultMprisSource } from "$lib/mpris-source.svelte"
+	import type { MprisSource } from "$lib/types"
 
 	let now = $state(Date.now())
 	let playerUpdatedAt = $state(Date.now())
@@ -19,8 +21,20 @@
 		}),
 		enabled: false,
 	}))
+
+	const sourceQuery = createQuery(() => ({
+		queryKey: ["mpris-source-stream"],
+		queryFn: experimental_streamedQuery<MprisSource, MprisSource>({
+			initialValue: defaultMprisSource,
+			refetchMode: "replace",
+			reducer: (_, chunk) => chunk,
+			streamFn: async ({ signal }) => (await streamMprisSource({ signal })).stream,
+		}),
+		enabled: false,
+	}))
 	let players = $derived(playersQuery.data ?? [])
-	let activePlayer = $derived(players[0])
+	let mprisSource = $derived(sourceQuery.data ?? defaultMprisSource)
+	let activePlayer = $derived(activeMprisPlayer(players, mprisSource))
 	let progress = $derived.by(() => {
 		if (!activePlayer?.length) return 0
 		const elapsed = activePlayer.playbackStatus === "Playing" ? (now - playerUpdatedAt) * 1000 : 0
@@ -29,6 +43,7 @@
 
 	onMount(() => {
 		void playersQuery.refetch()
+		void sourceQuery.refetch()
 		const timer = window.setInterval(() => {
 			now = Date.now()
 		}, 1000)

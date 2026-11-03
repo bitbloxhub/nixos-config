@@ -43,6 +43,35 @@ export type ListMprisPlayersResponses = {
 
 export type ListMprisPlayersResponse = ListMprisPlayersResponses[keyof ListMprisPlayersResponses]
 
+export type SetMprisSourceData = {
+	body: {
+		serviceName: string | null
+	}
+	path?: never
+	query?: never
+	url: "/api/mpris/source"
+}
+
+export type SetMprisSourceErrors = {
+	/**
+	 * Response for status 503
+	 */
+	503: string
+}
+
+export type SetMprisSourceError = SetMprisSourceErrors[keyof SetMprisSourceErrors]
+
+export type SetMprisSourceResponses = {
+	/**
+	 * Response for status 200
+	 */
+	200: {
+		ok: true
+	}
+}
+
+export type SetMprisSourceResponse = SetMprisSourceResponses[keyof SetMprisSourceResponses]
+
 export type ActOnMprisPlayerData = {
 	body: {
 		offset?: number
@@ -112,6 +141,32 @@ export type StreamMprisPlayersResponses = {
 
 export type StreamMprisPlayersResponse =
 	StreamMprisPlayersResponses[keyof StreamMprisPlayersResponses]
+
+export type StreamMprisSourceData = {
+	body?: never
+	path?: never
+	query?: never
+	url: "/api/mpris/source/events"
+}
+
+export type StreamMprisSourceErrors = {
+	/**
+	 * MPRIS unavailable
+	 */
+	503: unknown
+}
+
+export type StreamMprisSourceResponses = {
+	/**
+	 * MPRIS source updates
+	 */
+	200: {
+		serviceName: string | null
+		lastPlayingServiceName: string | null
+	}
+}
+
+export type StreamMprisSourceResponse = StreamMprisSourceResponses[keyof StreamMprisSourceResponses]
 
 export type ListNotificationsData = {
 	body?: never

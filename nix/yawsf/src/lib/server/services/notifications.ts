@@ -282,10 +282,7 @@ export async function startNotifications(): Promise<NotificationService> {
 
 	try {
 		bus = dbus.sessionBus()
-		let result = await bus.requestName(
-			notificationBusName,
-			dbus.NameFlag.DO_NOT_QUEUE,
-		)
+		let result = await bus.requestName(notificationBusName, dbus.NameFlag.DO_NOT_QUEUE)
 		for (let attempt = 0; attempt < 20; attempt++) {
 			if (
 				result === dbus.RequestNameReply.PRIMARY_OWNER ||
@@ -294,10 +291,7 @@ export async function startNotifications(): Promise<NotificationService> {
 				break
 
 			await new Promise((resolve) => setTimeout(resolve, 100))
-			result = await bus.requestName(
-				notificationBusName,
-				dbus.NameFlag.DO_NOT_QUEUE,
-			)
+			result = await bus.requestName(notificationBusName, dbus.NameFlag.DO_NOT_QUEUE)
 		}
 		if (
 			result !== dbus.RequestNameReply.PRIMARY_OWNER &&

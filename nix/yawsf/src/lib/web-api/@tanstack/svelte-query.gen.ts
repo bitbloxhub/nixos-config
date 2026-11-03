@@ -20,6 +20,7 @@ import {
 	type Options,
 	rebootSystem,
 	resizeNotifications,
+	setMprisSource,
 	shutdownSystem,
 	suspendSystem,
 } from "../sdk.gen"
@@ -60,6 +61,9 @@ import type {
 	ResizeNotificationsData,
 	ResizeNotificationsError,
 	ResizeNotificationsResponse,
+	SetMprisSourceData,
+	SetMprisSourceError,
+	SetMprisSourceResponse,
 	ShutdownSystemData,
 	ShutdownSystemResponse,
 	SuspendSystemData,
@@ -143,6 +147,26 @@ export const listMprisPlayersOptions = (options?: Options<ListMprisPlayersData>)
 		},
 		queryKey: listMprisPlayersQueryKey(options),
 	})
+
+export const setMprisSourceMutation = (
+	options?: Partial<Options<SetMprisSourceData>>,
+): MutationOptions<SetMprisSourceResponse, SetMprisSourceError, Options<SetMprisSourceData>> => {
+	const mutationOptions: MutationOptions<
+		SetMprisSourceResponse,
+		SetMprisSourceError,
+		Options<SetMprisSourceData>
+	> = {
+		mutationFn: async (fnOptions) => {
+			const { data } = await setMprisSource({
+				...options,
+				...fnOptions,
+				throwOnError: true,
+			})
+			return data
+		},
+	}
+	return mutationOptions
+}
 
 export const actOnMprisPlayerMutation = (
 	options?: Partial<Options<ActOnMprisPlayerData>>,

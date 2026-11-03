@@ -17,6 +17,11 @@ export const mprisPlayerSchema = z.object({
 })
 export const mprisPlayersSchema = z.array(mprisPlayerSchema)
 export type MprisPlayer = z.infer<typeof mprisPlayerSchema>
+export const mprisSourceSelectionSchema = z.object({ serviceName: z.string().nullable() })
+export const mprisSourceSchema = mprisSourceSelectionSchema.extend({
+	lastPlayingServiceName: z.string().nullable(),
+})
+export type MprisSource = z.infer<typeof mprisSourceSchema>
 
 export const notificationActionSchema = z.object({
 	id: z.string(),

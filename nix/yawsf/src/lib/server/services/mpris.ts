@@ -2,7 +2,7 @@ import { resolveMediaAssetUrl } from "$lib/server/media-assets"
 
 import * as dbus from "@jellybrick/dbus-next"
 import type { MessageBus, ProxyInterface, Variant } from "@jellybrick/dbus-next"
-import type { MprisPlayer } from "$lib/types"
+import type { MprisPlayer, MprisSource } from "$lib/types"
 
 const playerInterfaceName = "org.mpris.MediaPlayer2.Player"
 const propertiesInterfaceName = "org.freedesktop.DBus.Properties"
@@ -25,10 +25,14 @@ type PropertiesProxy = ProxyInterface & {
 }
 
 type MprisListener = (players: MprisPlayer[]) => void
+type MprisSourceListener = (source: MprisSource) => void
 
 export interface MprisService {
 	players(): MprisPlayer[]
 	subscribe(listener: MprisListener): () => void
+	source(): MprisSource
+	setSource(serviceName: string | null): void
+	subscribeSource(listener: MprisSourceListener): () => void
 	playPause(serviceName: string): Promise<void>
 	next(serviceName: string): Promise<void>
 	previous(serviceName: string): Promise<void>
@@ -45,14 +49,57 @@ interface PlayerEntry {
 
 export async function startMpris(): Promise<MprisService> {
 	const listeners = new Set<MprisListener>()
+	const sourceListeners = new Set<MprisSourceListener>()
 	const entries = new Map<string, PlayerEntry>()
+	const playbackStatuses = new Map<string, string>()
+	let selectedServiceName: string | null = null
+	let lastPlayingServiceName: string | null = null
 	let bus: MessageBus | null = null
 	let stopped = false
 	let refreshing = false
 	let positionTimer: ReturnType<typeof setInterval> | null = null
 
+	const source = (): MprisSource => ({
+		serviceName: selectedServiceName,
+		lastPlayingServiceName,
+	})
+
+	const notifySource = () => {
+		const currentSource = source()
+		for (const listener of sourceListeners) {
+			listener(currentSource)
+		}
+	}
+
 	const notify = () => {
 		const current = [...entries.values()].map((entry) => entry.data)
+		const playing = current.filter((player) => player.playbackStatus === "Playing")
+		const newlyPlaying = playing.filter(
+			(player) => playbackStatuses.get(player.serviceName) !== "Playing",
+		)
+		const firstObservation = playbackStatuses.size === 0
+		const preferredPlayer =
+			playing.find(isSpotify) ??
+			(firstObservation
+				? (playing.find((player) => player.serviceName === lastPlayingServiceName) ??
+					playing[playing.length - 1])
+				: (newlyPlaying[newlyPlaying.length - 1] ??
+					playing.find((player) => player.serviceName === lastPlayingServiceName) ??
+					playing[0]))
+
+		for (const serviceName of playbackStatuses.keys()) {
+			if (!current.some((player) => player.serviceName === serviceName)) {
+				playbackStatuses.delete(serviceName)
+			}
+		}
+		for (const player of current) {
+			playbackStatuses.set(player.serviceName, player.playbackStatus)
+		}
+		if (preferredPlayer && preferredPlayer.serviceName !== lastPlayingServiceName) {
+			lastPlayingServiceName = preferredPlayer.serviceName
+			notifySource()
+		}
+
 		for (const listener of listeners) {
 			listener(current)
 		}
@@ -166,6 +213,17 @@ export async function startMpris(): Promise<MprisService> {
 			listener([...entries.values()].map((entry) => entry.data))
 			return () => listeners.delete(listener)
 		},
+		source,
+		setSource(serviceName) {
+			if (serviceName === selectedServiceName) return
+			selectedServiceName = serviceName
+			notifySource()
+		},
+		subscribeSource(listener) {
+			sourceListeners.add(listener)
+			listener(source())
+			return () => sourceListeners.delete(listener)
+		},
 		async playPause(serviceName) {
 			await entries.get(serviceName)?.player.PlayPause()
 		},
@@ -185,7 +243,9 @@ export async function startMpris(): Promise<MprisService> {
 				entry.properties.off("PropertiesChanged", entry.propertiesChanged)
 			}
 			entries.clear()
+			playbackStatuses.clear()
 			listeners.clear()
+			sourceListeners.clear()
 			bus?.disconnect()
 		},
 	}
@@ -209,6 +269,9 @@ function emptyPlayer(serviceName: string): MprisPlayer {
 	}
 }
 
+function isSpotify(player: MprisPlayer): boolean {
+	return `${player.identity} ${player.serviceName}`.toLowerCase().includes("spotify")
+}
 function unwrap(value: unknown): unknown {
 	if (value && typeof value === "object" && "value" in value) {
 		return unwrap((value as Variant).value)
