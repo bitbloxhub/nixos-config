@@ -29,6 +29,8 @@
                   additionalPrograms = [
                     pkgs.ffmpeg
                     pkgs.vlc
+                    pkgs.unzip
+                    pkgs.zip
                   ];
                 };
                 addPkgs = [
