@@ -43,6 +43,15 @@
       url = "github:bitbloxhub/agent-roam";
       flake = false;
     };
+    albedo = {
+      url = "git+https://tangled.org/okami.mom/albedo";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+        tg.follows = "";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     angrr = {
       url = "github:linyinfeng/angrr";
       inputs.nixpkgs.follows = "nixpkgs";

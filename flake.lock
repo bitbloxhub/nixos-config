@@ -42,6 +42,34 @@
         "type": "github"
       }
     },
+    "albedo": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "tg": [],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ],
+        "usage-core": "usage-core"
+      },
+      "locked": {
+        "lastModified": 1793972369,
+        "narHash": "sha256-QsXnNf6OqOt+KgtjCRdi4wLK6KBWCzxWJwM15+n2Z88=",
+        "ref": "refs/heads/main",
+        "rev": "4a49c7e554676ea34ebb9b7af38b57e5bba939ae",
+        "revCount": 1758,
+        "type": "git",
+        "url": "https://tangled.org/okami.mom/albedo"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://tangled.org/okami.mom/albedo"
+      }
+    },
     "angrr": {
       "inputs": {
         "nixpkgs": [
@@ -1195,6 +1223,7 @@
       "inputs": {
         "actions-nix": "actions-nix",
         "agent-roam": "agent-roam",
+        "albedo": "albedo",
         "angrr": "angrr",
         "betterfox-nix": "betterfox-nix",
         "callpackage-tree": "callpackage-tree",
@@ -1502,6 +1531,18 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "type": "github"
+      }
+    },
+    "usage-core": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-dKjqffpCenUg0nKEiAepCfRsQxRk5odins7AR+1CA0c=",
+        "type": "file",
+        "url": "https://api.next.tangled.org/xrpc/org.tangled.temp.git.getArchive?repo=did%3Aplc%3A2lf7buutfnfcucljnmaypf7u&ref=3951be3&format=tar.gz&prefix=provide-usage-main"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://api.next.tangled.org/xrpc/org.tangled.temp.git.getArchive?repo=did%3Aplc%3A2lf7buutfnfcucljnmaypf7u&ref=3951be3&format=tar.gz&prefix=provide-usage-main"
       }
     },
     "userborn": {
