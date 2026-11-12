@@ -23,10 +23,14 @@
         ...
       }:
       lib.mkIf user.config.firefox.darkreader.enable {
+        # importJSON reads the JSON into the Firefox config but does not keep
+        # a reference to this derivation. home.packages gcroots the output,
+        # preventing GC from forcing a rebuild of the Rust extractor.
+        home.packages = [ self'.packages.catppuccin-userstyles-domains ];
         programs.firefox = {
           policies = {
             "3rdparty".Extensions."addon@darkreader.org" = {
-              disabledFor = (lib.importJSON self'.packages.catppuccin-userstyles-domains) ++ [
+              disabledFor = (lib.importJSON "${self'.packages.catppuccin-userstyles-domains}/domains.json") ++ [
                 "github.com"
                 "en.wikipedia.org"
               ];

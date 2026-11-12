@@ -26,7 +26,8 @@
         inherit catppuccin-userstyles-extractor;
         catppuccin-userstyles = pkgs.stdenv.mkDerivation {
           buildPhase = ''
-            catppuccin_userstyles_extractor stylus-declarative mocha mocha mauve $out
+            mkdir -p $out
+            catppuccin_userstyles_extractor stylus-declarative mocha mocha mauve $out/styles.json
           '';
           name = "catppuccin-userstyles";
           nativeBuildInputs = [
@@ -36,7 +37,8 @@
         };
         catppuccin-userstyles-domains = pkgs.stdenv.mkDerivation {
           buildPhase = ''
-            catppuccin_userstyles_extractor domains ./styles/*/catppuccin.user.less $out
+            mkdir -p $out
+            catppuccin_userstyles_extractor domains ./styles/*/catppuccin.user.less $out/domains.json
           '';
           name = "catppuccin-userstyles-domains";
           nativeBuildInputs = [
