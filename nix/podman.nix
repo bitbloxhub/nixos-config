@@ -166,6 +166,7 @@
               packages = [
                 pkgs.podman
                 inputs'.nix-storage-plugin.packages.default
+                pkgs.docker-compose # Backend for `podman compose`
               ];
               persistence."/persistent".directories = [
                 ".local/share/containers/storage"
