@@ -17,6 +17,7 @@
             warn_timeout = 0;
           };
           enableNushellIntegration = true;
+          nix-direnv.enable = true;
         };
       };
   };
