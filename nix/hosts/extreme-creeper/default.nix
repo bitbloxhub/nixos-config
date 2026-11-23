@@ -84,12 +84,12 @@ in
             enable = true;
             package =
               (pkgs.linuxPackages.nvidiaPackages.mkDriver {
-                openSha256 = "sha256-os1BzxAKgdkN6dXKGSuCjtimNAgzCs73kx3wBIes2C8=";
-                persistencedSha256 = "sha256-AHW5j7cJ8IXJH1q4R6Wvwjg4//40yK0Co+1c7jtUnig=";
-                settingsSha256 = "sha256-A7JrYiH1YkIE5b1LZ8T0hqsEUJ4HDkDetrPJsW873qo=";
-                sha256_64bit = "sha256-jY65AB4FqaimY9PV0wT+tk7yhE7hhczf2VJ4aCD0bhs=";
-                sha256_aarch64 = "sha256-1lvVYIfvTXjwSoCNp4g8NaWQHF/TfpXRUKdgLrqXqoA=";
-                version = "580.173.02";
+                openSha256 = "sha256-7eXEROG2rQK9+Ag26nG4jFPrnKeveVUQ0ugIAshJZPQ=";
+                persistencedSha256 = "sha256-3Omj160wtWdKAZDzWt/m/cbUTQ9DMJ1rSxMrnIrKXiw=";
+                settingsSha256 = "sha256-KcrGHoR+ZMdsFyI4myU8/eVls2f8GkNSX/j2JnZndyM=";
+                sha256_64bit = "sha256-WXWobuRb/8tib1GuM9EWmxCBhqLqR61lHnLxP6S21vk=";
+                sha256_aarch64 = "sha256-71nsXSSFDhLW91UOwffPhNtTqEzpxj6zulXvXtDE8Ek=";
+                version = "580.178.04";
               }).override
                 {
                   libsOnly = true;
